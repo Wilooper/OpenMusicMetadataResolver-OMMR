@@ -1,5 +1,8 @@
-# Build Stage
-FROM golang:1.24-alpine AS builder
+# Build Stage (Native Host Compilation with Target Cross-Arch)
+FROM --platform=$BUILDPLATFORM golang:1.24-alpine AS builder
+
+ARG TARGETOS
+ARG TARGETARCH
 
 WORKDIR /app
 
@@ -10,7 +13,7 @@ RUN go mod download
 
 COPY . .
 
-RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-w -s" -o /app/bin/ommr-server ./cmd/server
+RUN CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -ldflags="-w -s" -o /app/bin/ommr-server ./cmd/server
 
 # Final Runtime Stage
 FROM alpine:3.21
