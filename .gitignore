@@ -6,9 +6,9 @@ bin/
 *.so
 *.dylib
 
-# Cache and local runtime directories
-cache/
-cache_data/
+# Root cache and local runtime directories only
+/cache/
+/cache_data/
 *.log
 
 # IDE & OS files
