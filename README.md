@@ -93,7 +93,7 @@ Server starts listening on `http://localhost:8080`.
 docker run -d \
   --name ommr-server \
   -p 8080:8080 \
-  ghcr.io/wilooper/openmusicmetadataresolver-ommr-:latest
+  ghcr.io/wilooper/ommr:latest
 ```
 
 ### 3. Docker Compose (Recommended for Self-Hosting)
