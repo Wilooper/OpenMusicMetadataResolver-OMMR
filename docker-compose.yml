@@ -1,0 +1,37 @@
+services:
+  ommr-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ommr-server
+    ports:
+      - "8080:8080"
+    environment:
+      - OMMR_PORT=8080
+      - OMMR_CACHE_PROVIDER=disk
+      - OMMR_CACHE_DIR=/app/cache_data
+      - OMMR_CACHE_TTL=24h
+      - OMMR_RATE_LIMIT_RPS=50
+    volumes:
+      - ommr_cache:/app/cache_data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8080/v1/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+
+  redis:
+    image: redis:7-alpine
+    container_name: ommr-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    profiles:
+      - redis
+    restart: unless-stopped
+
+volumes:
+  ommr_cache:
+  redis_data:
