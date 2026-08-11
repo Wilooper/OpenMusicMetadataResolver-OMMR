@@ -1,5 +1,6 @@
 services:
   ommr-server:
+    image: ghcr.io/wilooper/openmusicmetadataresolver-ommr-:latest
     build:
       context: .
       dockerfile: Dockerfile

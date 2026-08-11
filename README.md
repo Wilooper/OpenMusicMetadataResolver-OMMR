@@ -86,7 +86,17 @@ go build -o bin/ommr-server.exe ./cmd/server
 
 Server starts listening on `http://localhost:8080`.
 
-### 2. Docker Compose (Recommended for Self-Hosting)
+### 2. Prebuilt Docker Container (GHCR)
+
+```bash
+# Pull and run prebuilt container from GitHub Container Registry
+docker run -d \
+  --name ommr-server \
+  -p 8080:8080 \
+  ghcr.io/wilooper/openmusicmetadataresolver-ommr-:latest
+```
+
+### 3. Docker Compose (Recommended for Self-Hosting)
 
 ```bash
 # Start OMMR with Redis cache via Docker Compose
