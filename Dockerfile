@@ -4,6 +4,8 @@ FROM --platform=$BUILDPLATFORM golang:1.24-alpine AS builder
 ARG TARGETOS
 ARG TARGETARCH
 
+ENV GOTOOLCHAIN=auto
+
 WORKDIR /app
 
 RUN apk add --no-cache git ca-certificates
