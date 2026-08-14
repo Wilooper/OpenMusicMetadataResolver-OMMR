@@ -25,6 +25,22 @@ func floatPtr(v float64) *float64 {
 func (m *Matcher) ScoreCandidate(cand canonical.TrackCandidate, target adapters.Query) (float64, canonical.MatchBreakdown) {
 	var breakdown canonical.MatchBreakdown
 
+	// 0. Direct Platform ID Match
+	// When the query carried a specific platform ID (e.g. youtube_id) and the
+	// candidate's provider ID matches it exactly, this is a verified direct
+	// lookup and is scored at full confidence.
+	if directIDMatch(target, cand) {
+		breakdown.Title = floatPtr(1.0)
+		breakdown.Artists = floatPtr(1.0)
+		if cand.Track.DurationMS > 0 {
+			breakdown.Duration = floatPtr(1.0)
+		}
+		if cand.Track.ReleaseDate != "" {
+			breakdown.ReleaseDate = floatPtr(1.0)
+		}
+		return 1.0, breakdown
+	}
+
 	// 1. ISRC Match
 	if target.ISRC != "" && cand.Track.ISRC != "" {
 		if strings.EqualFold(target.ISRC, cand.Track.ISRC) {
@@ -52,21 +68,29 @@ func (m *Matcher) ScoreCandidate(cand canonical.TrackCandidate, target adapters.
 		breakdown.Title = floatPtr(score)
 	}
 
-	// 3. Artist Similarity
+	// 3. Artist Similarity (composite: Jaro-Winkler + Token Set Ratio, so
+	//    unrelated artists sharing a common prefix are not over-scored)
 	targetArtist := query.CleanArtist(target.Artist)
 	if targetArtist != "" && len(cand.Track.Artists) > 0 {
 		candArtist := query.CleanArtist(cand.Track.Artists[0].Name)
-		score := JaroWinkler(targetArtist, candArtist)
+		jw := JaroWinkler(targetArtist, candArtist)
+		ts := TokenSetRatio(targetArtist, candArtist)
+		score := 0.6*jw + 0.4*ts
 		breakdown.Artists = floatPtr(score)
 	} else if len(cand.Track.Artists) > 0 {
 		breakdown.Artists = floatPtr(0.8)
 	}
 
-	// 4. Album Similarity
-	if targetTitle != "" && cand.Track.Album.Title != "" {
+	// 4. Album Similarity (only evaluated when the target query carries album context)
+	if target.Album != "" && cand.Track.Album.Title != "" {
+		targetAlbum := query.CleanTitle(target.Album)
 		candAlbum := query.CleanTitle(cand.Track.Album.Title)
-		score := JaroWinkler(targetTitle, candAlbum)
-		breakdown.Album = floatPtr(score)
+		if targetAlbum != "" && candAlbum != "" {
+			jw := JaroWinkler(targetAlbum, candAlbum)
+			ts := TokenSetRatio(targetAlbum, candAlbum)
+			score := 0.6*jw + 0.4*ts
+			breakdown.Album = floatPtr(score)
+		}
 	}
 
 	// 5. Duration & Release Date Availability
@@ -91,8 +115,16 @@ func (m *Matcher) ScoreCandidate(cand canonical.TrackCandidate, target adapters.
 		albumScore = *breakdown.Album
 	}
 
-	// Calibrated composite scoring: Title (0.50), Artist (0.40), Album (0.10)
-	rawScore := 0.50*titleScore + 0.40*artistScore + 0.10*albumScore
+	// Calibrated composite scoring.
+	// When album context is unavailable in the target query, weights are
+	// normalized across Title (0.55) and Artist (0.45) so a missing album
+	// reference never deflates otherwise-exact matches.
+	var rawScore float64
+	if breakdown.Album == nil {
+		rawScore = 0.55*titleScore + 0.45*artistScore
+	} else {
+		rawScore = 0.50*titleScore + 0.40*artistScore + 0.10*albumScore
+	}
 
 	// Cap exact non-ISRC matches at 0.96 (Reserved 1.00 for verified ISRC match)
 	if rawScore >= 0.99 && (target.ISRC == "" || cand.Track.ISRC == "") {
@@ -119,4 +151,34 @@ func (m *Matcher) ScoreCandidates(candidates []canonical.TrackCandidate, target 
 		scored[i] = c
 	}
 	return scored
+}
+
+// directIDMatch reports whether the target query carries a platform ID that
+// exactly matches one of the candidate's IDs.
+func directIDMatch(target adapters.Query, c canonical.TrackCandidate) bool {
+	for k, v := range c.Track.IDs {
+		switch k {
+		case "spotify":
+			if target.SpotifyID != "" && strings.EqualFold(v, target.SpotifyID) {
+				return true
+			}
+		case "ytmusic":
+			if target.YouTubeID != "" && strings.EqualFold(v, target.YouTubeID) {
+				return true
+			}
+		case "deezer":
+			if target.DeezerID != "" && strings.EqualFold(v, target.DeezerID) {
+				return true
+			}
+		case "applemusic":
+			if target.AppleID != "" && strings.EqualFold(v, target.AppleID) {
+				return true
+			}
+		case "soundcloud":
+			if target.SoundCloudID != "" && strings.EqualFold(v, target.SoundCloudID) {
+				return true
+			}
+		}
+	}
+	return false
 }

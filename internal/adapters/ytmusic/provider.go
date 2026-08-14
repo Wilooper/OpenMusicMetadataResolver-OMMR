@@ -7,6 +7,7 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"strconv"
 	"strings"
 	"time"
 
@@ -18,19 +19,22 @@ import (
 
 const (
 	ProviderName    = "ytmusic"
-	ProviderVersion = "ytmusic-oembed-v1"
+	ProviderVersion = "ytmusic-innertube-v1"
 	OembedURL       = "https://www.youtube.com/oembed"
 )
 
 type Provider struct {
 	httpClient *http.Client
+	innerTube  *InnerTube
 }
 
 var _ adapters.ProviderAdapter = (*Provider)(nil)
 
 func New() *Provider {
+	client := &http.Client{Timeout: 8 * time.Second}
 	return &Provider{
-		httpClient: &http.Client{Timeout: 5 * time.Second},
+		httpClient: client,
+		innerTube:  NewInnerTube(client),
 	}
 }
 
@@ -47,6 +51,21 @@ func (p *Provider) FetchByID(ctx context.Context, idType string, id string) (*ca
 		return nil, fmt.Errorf("unsupported ID type %q for YTMusic", idType)
 	}
 
+	// Preferred path: InnerTube player metadata (exact title, channel, duration).
+	if player, err := p.innerTube.FetchPlayer(ctx, id); err == nil {
+		track := p.normalizePlayer(id, *player)
+		return &canonical.TrackCandidate{
+			Provider:   ProviderName,
+			Track:      track,
+			MatchScore: 1.0,
+		}, nil
+	}
+
+	// Fallback path: public oEmbed endpoint.
+	return p.fetchByOembed(ctx, id)
+}
+
+func (p *Provider) fetchByOembed(ctx context.Context, id string) (*canonical.TrackCandidate, error) {
 	watchURL := fmt.Sprintf("https://www.youtube.com/watch?v=%s", url.QueryEscape(id))
 	reqURL := fmt.Sprintf("%s?url=%s&format=json", OembedURL, url.QueryEscape(watchURL))
 
@@ -85,8 +104,7 @@ func (p *Provider) FetchByID(ctx context.Context, idType string, id string) (*ca
 }
 
 func (p *Provider) Search(ctx context.Context, q adapters.Query) ([]canonical.TrackCandidate, error) {
-	// YouTube oEmbed does not support arbitrary text search without video ID;
-	// If YouTube ID is provided in query, fetch by ID.
+	// If YouTube ID is provided, fetch by ID.
 	if q.YouTubeID != "" {
 		cand, err := p.FetchByID(ctx, "youtube", q.YouTubeID)
 		if err != nil {
@@ -94,7 +112,65 @@ func (p *Provider) Search(ctx context.Context, q adapters.Query) ([]canonical.Tr
 		}
 		return []canonical.TrackCandidate{*cand}, nil
 	}
-	return nil, nil
+
+	searchTerm := q.Title
+	if q.Artist != "" && q.Title != "" {
+		searchTerm = fmt.Sprintf("%s %s", query.CleanArtist(q.Artist), query.CleanTitle(q.Title))
+	} else if q.Artist != "" {
+		searchTerm = query.CleanArtist(q.Artist)
+	}
+	if searchTerm == "" {
+		return nil, nil
+	}
+
+	videos, err := p.innerTube.SearchYouTube(ctx, searchTerm, 8)
+	if err != nil {
+		return nil, err
+	}
+
+	candidates := make([]canonical.TrackCandidate, 0, len(videos))
+	for _, v := range videos {
+		if v.VideoID == "" {
+			continue
+		}
+		candidates = append(candidates, canonical.TrackCandidate{
+			Provider:   ProviderName,
+			Track:      p.innerTube.parseVideo(v),
+			MatchScore: 0.90,
+		})
+	}
+	return candidates, nil
+}
+
+func (p *Provider) normalizePlayer(videoID string, player provider.YTPlayerResponse) canonical.Track {
+	details := player.VideoDetails
+
+	title := details.Title
+	artistName := CleanChannelName(details.Author)
+	if artistName == "" {
+		artistName = details.Author
+	}
+
+	durationMS := int64(0)
+	if details.LengthSeconds != "" {
+		if secs, err := strconv.ParseInt(details.LengthSeconds, 10, 64); err == nil {
+			durationMS = secs * 1000
+		}
+	}
+
+	images := make([]canonical.Image, 0, len(details.Thumbnail.Thumbnails))
+	for _, th := range details.Thumbnail.Thumbnails {
+		images = append(images, canonical.Image{URL: th.URL, Width: th.Width, Height: th.Height, Type: "thumbnail"})
+	}
+
+	return canonical.Track{
+		Title:      title,
+		Artists:    []canonical.Artist{{Name: artistName, Role: "main"}},
+		DurationMS: durationMS,
+		Images:     images,
+		IDs:        map[string]string{"ytmusic": videoID},
+		Sources:    []string{ProviderName},
+	}
 }
 
 func (p *Provider) normalizeOembed(videoID string, oembed provider.YTOembedResponse) canonical.Track {
@@ -103,7 +179,7 @@ func (p *Provider) normalizeOembed(videoID string, oembed provider.YTOembedRespo
 
 	// If title is formatted as "Artist - Song", parse out artist and title
 	title := oembed.Title
-	artistName := oembed.AuthorName
+	artistName := CleanChannelName(oembed.AuthorName)
 	if strings.Contains(oembed.Title, " - ") {
 		parts := strings.SplitN(oembed.Title, " - ", 2)
 		artistName = strings.TrimSpace(parts[0])

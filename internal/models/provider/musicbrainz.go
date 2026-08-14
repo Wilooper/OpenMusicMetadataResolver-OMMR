@@ -9,15 +9,15 @@ type MusicBrainzSearchResponse struct {
 }
 
 type MusicBrainzRecording struct {
-	ID           string                    `json:"id"`
-	Score        int                       `json:"score"`
-	Title        string                    `json:"title"`
-	Length       int64                     `json:"length"` // in milliseconds
-	Disambiguation string                  `json:"disambiguation"`
-	ISRCs        []string                  `json:"isrcs"`
-	ArtistCredit []MusicBrainzArtistCredit `json:"artist-credit"`
-	Releases     []MusicBrainzRelease      `json:"releases"`
-	Tags         []MusicBrainzTag          `json:"tags"`
+	ID             string                    `json:"id"`
+	Score          int                       `json:"score"`
+	Title          string                    `json:"title"`
+	Length         int64                     `json:"length"` // in milliseconds
+	Disambiguation string                    `json:"disambiguation"`
+	ISRCs          []string                  `json:"isrcs"`
+	ArtistCredit   []MusicBrainzArtistCredit `json:"artist-credit"`
+	Releases       []MusicBrainzRelease      `json:"releases"`
+	Tags           []MusicBrainzTag          `json:"tags"`
 }
 
 type MusicBrainzArtistCredit struct {
@@ -33,11 +33,11 @@ type MusicBrainzArtist struct {
 }
 
 type MusicBrainzRelease struct {
-	ID         string `json:"id"`
-	Title      string `json:"title"`
-	Date       string `json:"date"`
-	Country    string `json:"country"`
-	Status     string `json:"status"`
+	ID      string `json:"id"`
+	Title   string `json:"title"`
+	Date    string `json:"date"`
+	Country string `json:"country"`
+	Status  string `json:"status"`
 }
 
 type MusicBrainzTag struct {

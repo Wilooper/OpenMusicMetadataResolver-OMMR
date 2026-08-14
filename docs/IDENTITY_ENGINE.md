@@ -1,6 +1,6 @@
 # OMMR Identity Engine & Graph Storage
 
-The **Identity Engine** (`internal/identity/`) resolves cross-platform identities and generates stable, recording-based canonical track IDs.
+The **Identity Engine** (`internal/identity/`) resolves cross-platform identities and generates stable, recording-based canonical track IDs. The `IdentityGraph` (`internal/identity/graph.go`) maps a canonical track to platform IDs for `spotify`, `youtube` (`ytmusic`), `applemusic`, `deezer`, `soundcloud`, `jiosaavn`, and `musicbrainz`.
 
 ---
 

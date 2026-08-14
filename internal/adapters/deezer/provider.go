@@ -170,6 +170,8 @@ func (p *Provider) normalizeTrack(dt provider.DeezerTrackResponse) canonical.Tra
 	album := canonical.Album{
 		Title:       dt.Album.Title,
 		ReleaseDate: dt.Album.ReleaseDate,
+		Label:       dt.Album.Label,
+		UPC:         dt.Album.UPC,
 		Images:      images,
 		IDs:         map[string]string{"deezer": strconv.FormatInt(dt.Album.ID, 10)},
 	}
@@ -182,6 +184,13 @@ func (p *Provider) normalizeTrack(dt provider.DeezerTrackResponse) canonical.Tra
 		ReleaseDate: dt.ReleaseDate,
 		Explicit:    dt.ExplicitLyrics,
 		ISRC:        dt.ISRC,
+		ISWC:        dt.ISWC,
+		PreviewURL:  dt.Preview,
+		TrackNumber: dt.TrackPosition,
+		DiscNumber:  dt.DiskNumber,
+		Label:       dt.Label,
+		Barcode:     dt.Barcode,
+		PlayCount:   dt.Fans,
 		Images:      images,
 		IDs:         map[string]string{"deezer": strconv.FormatInt(dt.ID, 10)},
 		Sources:     []string{ProviderName},

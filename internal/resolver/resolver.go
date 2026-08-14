@@ -44,28 +44,28 @@ type ResolveResponse struct {
 }
 
 type Resolver struct {
-	registry                  *adapters.Registry
-	cache                     cache.Cache
-	limiter                   *ratelimit.ProviderLimiter
-	matcher                   *matcher.Matcher
-	merger                    *merger.Merger
-	identityEngine            *identity.IdentityEngine
-	ttl                       time.Duration
+	registry                 *adapters.Registry
+	cache                    cache.Cache
+	limiter                  *ratelimit.ProviderLimiter
+	matcher                  *matcher.Matcher
+	merger                   *merger.Merger
+	identityEngine           *identity.IdentityEngine
+	ttl                      time.Duration
 	maxCandidatesPerProvider int
-	logger                    *slog.Logger
+	logger                   *slog.Logger
 }
 
 func New(r *adapters.Registry, c cache.Cache, l *ratelimit.ProviderLimiter, ttl time.Duration) *Resolver {
 	return &Resolver{
-		registry:                  r,
-		cache:                     c,
-		limiter:                   l,
-		matcher:                   matcher.New(),
-		merger:                    merger.New(),
-		identityEngine:            identity.New(),
-		ttl:                       ttl,
+		registry:                 r,
+		cache:                    c,
+		limiter:                  l,
+		matcher:                  matcher.New(),
+		merger:                   merger.New(),
+		identityEngine:           identity.New(),
+		ttl:                      ttl,
 		maxCandidatesPerProvider: 10,
-		logger:                    slog.Default(),
+		logger:                   slog.Default(),
 	}
 }
 
@@ -149,6 +149,13 @@ func (res *Resolver) Resolve(ctx context.Context, req ResolveRequest) (*ResolveR
 					fetched = append(fetched, *cand)
 					primarySource = ad.Name()
 				}
+			} else if req.Query.SoundCloudID != "" && ad.Name() == "soundcloud" {
+				cand, err := ad.FetchByID(gCtx, "soundcloud", req.Query.SoundCloudID)
+				fetchErr = err
+				if cand != nil {
+					fetched = append(fetched, *cand)
+					primarySource = ad.Name()
+				}
 			} else if req.Query.YouTubeID != "" && ad.Name() == "ytmusic" {
 				cand, err := ad.FetchByID(gCtx, "youtube", req.Query.YouTubeID)
 				fetchErr = err
@@ -199,6 +206,7 @@ func (res *Resolver) Resolve(ctx context.Context, req ResolveRequest) (*ResolveR
 			secQuery := adapters.Query{
 				Title:  cleanTitle,
 				Artist: cleanArtist,
+				Album:  query.CleanTitle(initialMerged.Album.Title),
 				ISRC:   initialMerged.ISRC,
 			}
 
@@ -260,6 +268,9 @@ func (res *Resolver) Resolve(ctx context.Context, req ResolveRequest) (*ResolveR
 			if evalQuery.Artist == "" {
 				evalQuery.Artist = getPrimaryArtist(initMerged.Artists)
 			}
+			if evalQuery.Album == "" {
+				evalQuery.Album = initMerged.Album.Title
+			}
 			if evalQuery.ISRC == "" {
 				evalQuery.ISRC = initMerged.ISRC
 			}
@@ -271,7 +282,30 @@ func (res *Resolver) Resolve(ctx context.Context, req ResolveRequest) (*ResolveR
 	acceptedCandidates := make([]canonical.TrackCandidate, 0, len(scored))
 	identityMatches := make([]canonical.IdentityMatch, 0, len(scored))
 
-	for _, c := range scored {
+	// A candidate below this score is never merged into the result. The
+	// single best candidate is only surfaced (see below) when it still clears
+	// an absolute minimum, preventing unrelated tracks from polluting IDs.
+	const (
+		rejectThreshold    = 0.40
+		minReportableScore = 0.30
+		minArtistScore     = 0.45
+	)
+
+	// When the query carries an explicit artist, reject title-only matches on a
+	// different artist (e.g. another "Get Lucky"). This stops wrong-artist
+	// candidates from leaking their IDs/metadata even when their combined score
+	// clears the overall threshold.
+	artistGate := func(c canonical.TrackCandidate) bool {
+		if strings.TrimSpace(evalQuery.Artist) == "" {
+			return true
+		}
+		if c.Track.MatchBreakdown.Artists == nil {
+			return true
+		}
+		return *c.Track.MatchBreakdown.Artists >= minArtistScore
+	}
+
+	emitIdentityMatches := func(c canonical.TrackCandidate) {
 		method := "exact_title_artist"
 		idConf := identity.CalculateIdentityConfidence(c.MatchScore, c.Provider)
 		if c.Track.ISRC != "" {
@@ -289,26 +323,57 @@ func (res *Resolver) Resolve(ctx context.Context, req ResolveRequest) (*ResolveR
 				Method:     method,
 			})
 		}
+	}
 
-		if c.MatchScore < 0.35 {
+	bestCandidate := canonical.TrackCandidate{MatchScore: -1}
+	bestScoreByProvider := make(map[string]float64)
+	for _, c := range scored {
+		if c.MatchScore > bestCandidate.MatchScore {
+			bestCandidate = c
+		}
+		if c.MatchScore > bestScoreByProvider[c.Provider] {
+			bestScoreByProvider[c.Provider] = c.MatchScore
+		}
+
+		if c.MatchScore < rejectThreshold || !artistGate(c) {
 			res.logger.Debug("candidate match rejected",
 				slog.String("provider", c.Provider),
 				slog.Float64("match_score", c.MatchScore),
 				slog.String("title", c.Track.Title),
 			)
-			for idx := range sourcesStatus {
-				if strings.EqualFold(sourcesStatus[idx].Name, c.Provider) && !sourcesStatus[idx].Matched {
-					sourcesStatus[idx].RejectionReason = "below_threshold"
-					sourcesStatus[idx].CandidateScore = c.MatchScore
-				}
-			}
-		} else {
-			acceptedCandidates = append(acceptedCandidates, c)
+			continue
 		}
+
+		emitIdentityMatches(c)
+		acceptedCandidates = append(acceptedCandidates, c)
 	}
 
-	if len(acceptedCandidates) == 0 {
-		acceptedCandidates = scored
+	// If no candidate cleared the acceptance threshold, surface only the single
+	// highest-scoring candidate (still guarded by an absolute minimum). This
+	// avoids merging a pool of mutually-inconsistent, sub-threshold tracks and
+	// returning track/video IDs that do not match what was requested.
+	if len(acceptedCandidates) == 0 && bestCandidate.MatchScore >= minReportableScore && artistGate(bestCandidate) {
+		emitIdentityMatches(bestCandidate)
+		acceptedCandidates = append(acceptedCandidates, bestCandidate)
+	}
+
+	// Derive per-provider status: a provider is "matched" when at least one of
+	// its candidates was accepted; otherwise it is rejected as below_threshold.
+	acceptedByProvider := make(map[string]bool)
+	for _, c := range acceptedCandidates {
+		acceptedByProvider[strings.ToLower(c.Provider)] = true
+	}
+	for idx := range sourcesStatus {
+		name := strings.ToLower(sourcesStatus[idx].Name)
+		if acceptedByProvider[name] {
+			sourcesStatus[idx].Matched = true
+			sourcesStatus[idx].RejectionReason = ""
+			sourcesStatus[idx].CandidateScore = 0
+		} else if _, ok := bestScoreByProvider[name]; ok {
+			sourcesStatus[idx].Matched = false
+			sourcesStatus[idx].RejectionReason = "below_threshold"
+			sourcesStatus[idx].CandidateScore = bestScoreByProvider[name]
+		}
 	}
 
 	// Stage 6: Final Merge, Post-Enrichment Identity Stability & Canonical ID Generation
@@ -401,6 +466,9 @@ func determineInputType(q adapters.Query) string {
 	if q.AppleID != "" {
 		return "apple_id"
 	}
+	if q.SoundCloudID != "" {
+		return "soundcloud_id"
+	}
 	if q.ISRC != "" {
 		return "isrc"
 	}
@@ -415,7 +483,8 @@ func getPrimaryArtist(artists []canonical.Artist) string {
 }
 
 func hashQuery(q adapters.Query) string {
-	raw := fmt.Sprintf("%s|%s|%s|%s|%s|%s|%s", q.SpotifyID, q.YouTubeID, q.DeezerID, q.AppleID, q.ISRC, q.Artist, q.Title)
+	raw := fmt.Sprintf("%s|%s|%s|%s|%s|%s|%s|%s|%s",
+		q.SpotifyID, q.YouTubeID, q.DeezerID, q.AppleID, q.SoundCloudID, q.ISRC, q.Artist, q.Title, q.Album)
 	h := sha256.Sum256([]byte(raw))
 	return hex.EncodeToString(h[:])
 }

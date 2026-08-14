@@ -31,4 +31,7 @@ type AppleTrackResult struct {
 	Currency               string `json:"currency"`
 	PrimaryGenreName       string `json:"primaryGenreName"`
 	ISRC                   string `json:"isrc,omitempty"`
+	PreviewURL             string `json:"previewUrl,omitempty"`
+	TrackNumber            int    `json:"trackNumber,omitempty"`
+	DiscNumber             int    `json:"discNumber,omitempty"`
 }

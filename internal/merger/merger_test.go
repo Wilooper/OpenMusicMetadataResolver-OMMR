@@ -74,3 +74,68 @@ func TestMergerFieldPriorities(t *testing.T) {
 		t.Errorf("expected positive completeness score, got %f", merged.Completeness)
 	}
 }
+
+func TestMergerExtendedFields(t *testing.T) {
+	m := New()
+
+	candSpotify := canonical.TrackCandidate{
+		Provider:   "spotify",
+		MatchScore: 0.98,
+		Track: canonical.Track{
+			Title:       "Test Song",
+			PreviewURL:  "https://p.scdn.co/preview",
+			TrackNumber: 3,
+			DiscNumber:  1,
+			Label:       "Label A",
+			Barcode:     "UPC-123",
+			Copyrights:  []canonical.Copyright{{Type: "C", Text: "(C) 2024 Label A"}},
+			Album: canonical.Album{
+				Title: "Album A", TotalTracks: 10,
+				Label: "Label A", UPC: "UPC-123",
+				Copyrights: []canonical.Copyright{{Type: "P", Text: "(P) 2024 Label A"}},
+			},
+			IDs: map[string]string{"spotify": "s1"},
+		},
+	}
+
+	candDeezer := canonical.TrackCandidate{
+		Provider:   "deezer",
+		MatchScore: 0.90,
+		Track: canonical.Track{
+			Title:     "Test Song",
+			ISWC:      "T-123",
+			ISRC:      "USABC123",
+			PlayCount: 99999,
+			IDs:       map[string]string{"deezer": "d1"},
+		},
+	}
+
+	merged := m.MergeCandidates([]canonical.TrackCandidate{candSpotify, candDeezer})
+	if merged == nil {
+		t.Fatalf("expected non-nil merged track")
+	}
+	if merged.PreviewURL != "https://p.scdn.co/preview" {
+		t.Errorf("expected preview url from spotify, got %q", merged.PreviewURL)
+	}
+	if merged.TrackNumber != 3 || merged.DiscNumber != 1 {
+		t.Errorf("expected track/disc 3/1, got %d/%d", merged.TrackNumber, merged.DiscNumber)
+	}
+	if merged.Label != "Label A" {
+		t.Errorf("expected label 'Label A', got %q", merged.Label)
+	}
+	if merged.ISWC != "T-123" {
+		t.Errorf("expected ISWC 'T-123', got %q", merged.ISWC)
+	}
+	if merged.PlayCount != 99999 {
+		t.Errorf("expected play count 99999, got %d", merged.PlayCount)
+	}
+	if merged.Album.TotalTracks != 10 || merged.Album.Label != "Label A" || merged.Album.UPC != "UPC-123" {
+		t.Errorf("unexpected merged album enrichment: %+v", merged.Album)
+	}
+	if len(merged.Copyrights) == 0 {
+		t.Errorf("expected merged copyrights")
+	}
+	if merged.Barcode != "UPC-123" {
+		t.Errorf("expected barcode 'UPC-123', got %q", merged.Barcode)
+	}
+}

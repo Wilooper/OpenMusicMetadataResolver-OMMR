@@ -56,7 +56,7 @@ Follow the best practices outlined in `SKILL.md` files within those directories.
    ```bash
    go test -v -cover ./...
    ```
-4. **Zero-Key Requirement**: All provider adapters **MUST NOT** require API keys or developer authentication credentials.
+4. **Zero-Key Requirement**: Provider adapters **MUST NOT require** API keys or developer authentication credentials to function. A key-based mode is permitted only as an *optional* upgrade on top of a working zero-key path (e.g. Spotify's official Web API mode).
 5. **Clean Commit Messages**: Use conventional commits (e.g. `feat: add Deezer genre parsing`, `fix: correct ISRC merge priority`).
 
 ---

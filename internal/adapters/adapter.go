@@ -8,13 +8,15 @@ import (
 
 // Query represents a resolution query sent to provider adapters.
 type Query struct {
-	SpotifyID  string
-	YouTubeID  string
-	DeezerID   string
-	AppleID    string
-	ISRC       string
-	Artist     string
-	Title      string
+	SpotifyID    string
+	YouTubeID    string
+	DeezerID     string
+	AppleID      string
+	SoundCloudID string
+	ISRC         string
+	Artist       string
+	Title        string
+	Album        string
 }
 
 // ProviderAdapter defines the common contract implemented by all music metadata providers.

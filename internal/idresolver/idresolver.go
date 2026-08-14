@@ -43,3 +43,17 @@ func (r *IDResolver) ExtractYouTubeID(input string) string {
 	}
 	return input
 }
+
+// ExtractSoundCloudID parses a raw SoundCloud permalink or URL
+// (e.g., https://soundcloud.com/artist/track or artist/track).
+func (r *IDResolver) ExtractSoundCloudID(input string) string {
+	input = strings.TrimSpace(input)
+	if strings.Contains(input, "soundcloud.com/") {
+		parts := strings.Split(input, "soundcloud.com/")
+		if len(parts) > 1 {
+			id := strings.Split(parts[1], "?")[0]
+			return strings.Trim(id, "/")
+		}
+	}
+	return strings.TrimPrefix(strings.TrimSpace(input), "/")
+}

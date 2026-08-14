@@ -41,3 +41,23 @@ func TestExtractYouTubeID(t *testing.T) {
 		}
 	}
 }
+
+func TestExtractSoundCloudID(t *testing.T) {
+	r := New()
+	tests := []struct {
+		input    string
+		expected string
+	}{
+		{"m83/midnight-city", "m83/midnight-city"},
+		{"https://soundcloud.com/m83/midnight-city", "m83/midnight-city"},
+		{"https://soundcloud.com/m83/midnight-city?in=user/sets/xyz", "m83/midnight-city"},
+		{"/m83/midnight-city", "m83/midnight-city"},
+	}
+
+	for _, tt := range tests {
+		got := r.ExtractSoundCloudID(tt.input)
+		if got != tt.expected {
+			t.Errorf("ExtractSoundCloudID(%q) = %q; want %q", tt.input, got, tt.expected)
+		}
+	}
+}

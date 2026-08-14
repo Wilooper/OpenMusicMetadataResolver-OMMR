@@ -13,7 +13,9 @@ import (
 	"github.com/ommr/ommr/internal/adapters"
 	"github.com/ommr/ommr/internal/adapters/applemusic"
 	"github.com/ommr/ommr/internal/adapters/deezer"
+	"github.com/ommr/ommr/internal/adapters/jiosaavn"
 	"github.com/ommr/ommr/internal/adapters/musicbrainz"
+	"github.com/ommr/ommr/internal/adapters/soundcloud"
 	"github.com/ommr/ommr/internal/adapters/spotify"
 	"github.com/ommr/ommr/internal/adapters/ytmusic"
 	"github.com/ommr/ommr/internal/api"
@@ -70,7 +72,12 @@ func main() {
 	registry.Register(deezer.New())
 	registry.Register(applemusic.New())
 	registry.Register(ytmusic.New())
-	registry.Register(spotify.New())
+	registry.Register(spotify.New(spotify.Config{
+		ClientID:     cfg.SpotifyClientID,
+		ClientSecret: cfg.SpotifyClientSecret,
+	}))
+	registry.Register(soundcloud.New())
+	registry.Register(jiosaavn.New())
 
 	limiter := ratelimit.NewProviderLimiter()
 	res := resolver.New(registry, cacheBackend, limiter, cfg.CacheTTL)

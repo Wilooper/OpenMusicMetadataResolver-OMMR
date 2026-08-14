@@ -40,7 +40,7 @@ func setupTestServer(t *testing.T) *httptest.Server {
 	reg.Register(deezer.New())
 	reg.Register(applemusic.New())
 	reg.Register(ytmusic.New())
-	reg.Register(spotify.New())
+	reg.Register(spotify.New(spotify.Config{}))
 
 	limiter := ratelimit.NewProviderLimiter()
 	res := resolver.New(reg, diskCache, limiter, 1*time.Hour)

@@ -17,6 +17,12 @@ type Config struct {
 	ProviderTimeout time.Duration `mapstructure:"provider_timeout"`
 	BulkMaxItems    int           `mapstructure:"bulk_max_items"`
 	BulkWorkers     int           `mapstructure:"bulk_workers"`
+
+	// Spotify for Developers credentials. When both are set the Spotify
+	// adapter uses the official client-credentials OAuth flow; otherwise it
+	// falls back to the unofficial anonymous/embed/oEmbed methods.
+	SpotifyClientID     string `mapstructure:"spotify_client_id"`
+	SpotifyClientSecret string `mapstructure:"spotify_client_secret"`
 }
 
 func LoadConfig() (*Config, error) {
@@ -45,6 +51,8 @@ func LoadConfig() (*Config, error) {
 	cfg.ProviderTimeout = v.GetDuration("provider_timeout")
 	cfg.BulkMaxItems = v.GetInt("bulk_max_items")
 	cfg.BulkWorkers = v.GetInt("bulk_workers")
+	cfg.SpotifyClientID = v.GetString("spotify_client_id")
+	cfg.SpotifyClientSecret = v.GetString("spotify_client_secret")
 
 	return &cfg, nil
 }

@@ -28,13 +28,17 @@ Base Path: `/v1`
 | `youtube_id` | string | Optional | YouTube video ID or full video URL |
 | `deezer_id` | string | Optional | Deezer track ID or full track URL |
 | `apple_id` | string | Optional | Apple Music track ID or full track URL |
+| `soundcloud_id` | string | Optional | SoundCloud permalink (`artist/track`) or full track URL |
 | `artist` | string | Optional | Artist name (used together with `title`) |
 | `title` | string | Optional | Track title (used together with `artist`) |
+| `album` | string | Optional | Album title (used together with `artist`/`title` for disambiguation) |
 | `isrc` | string | Optional | International Standard Recording Code |
-| `sources` | string | Optional | Comma-separated adapter filter (`spotify,ytmusic,applemusic,deezer,musicbrainz`) |
+| `sources` | string | Optional | Comma-separated adapter filter (`spotify,ytmusic,applemusic,deezer,musicbrainz,soundcloud,jiosaavn`) |
 | `bypass_cache` | boolean | Optional | If `true`, forces live provider fetch bypassing cache |
 
 ### Response 200 OK
+
+> Note: The payload below is illustrative. Track/video IDs shown are example values and do not represent a specific real release.
 
 ```json
 {
@@ -105,10 +109,10 @@ Base Path: `/v1`
   "metadata_sources": ["ytmusic", "applemusic", "musicbrainz"],
   "provider_status": [
     { "name": "applemusic", "success": true, "matched": true, "contributed": true, "cached": false, "latency_ms": 61, "version": "applemusic-v1" },
-    { "name": "ytmusic", "success": true, "matched": true, "contributed": true, "cached": false, "latency_ms": 153, "version": "ytmusic-oembed-v1" },
+    { "name": "ytmusic", "success": true, "matched": true, "contributed": true, "cached": false, "latency_ms": 153, "version": "ytmusic-innertube-v1" },
     { "name": "musicbrainz", "success": true, "matched": true, "contributed": true, "cached": false, "latency_ms": 340, "version": "musicbrainz-v2" },
     { "name": "deezer", "success": true, "matched": false, "contributed": false, "cached": false, "latency_ms": 286, "rejection_reason": "no_results", "version": "deezer-v1" },
-    { "name": "spotify", "success": true, "matched": false, "contributed": false, "cached": false, "latency_ms": 0, "rejection_reason": "no_results", "version": "spotify-web-oembed" }
+    { "name": "spotify", "success": true, "matched": false, "contributed": false, "cached": false, "latency_ms": 0, "rejection_reason": "no_results", "version": "spotify-web-v2" }
   ],
   "resolution_strategy": {
     "input_type": "youtube_id",
@@ -116,7 +120,7 @@ Base Path: `/v1`
     "cross_resolved": true
   },
   "resolver_stats": {
-    "providers_queried": 5,
+    "providers_queried": 7,
     "providers_matched": 3,
     "providers_contributed": 3,
     "candidates_evaluated": 6

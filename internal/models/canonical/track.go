@@ -70,11 +70,19 @@ type Track struct {
 	ReleaseDate     string                     `json:"release_date"`
 	Explicit        bool                       `json:"explicit"`
 	ISRC            string                     `json:"isrc,omitempty"`
+	ISWC            string                     `json:"iswc,omitempty"` // International Standard Musical Work Code
 	Genres          []string                   `json:"genres"`
 	Language        string                     `json:"language,omitempty"`
 	Credits         []Credit                   `json:"credits"`
 	Images          []Image                    `json:"images"`
-	IDs             map[string]string          `json:"ids"` // Provider name -> Track/Video ID
+	PreviewURL      string                     `json:"preview_url,omitempty"` // 30s audio preview (e.g. Spotify/Apple)
+	TrackNumber     int                        `json:"track_number,omitempty"`
+	DiscNumber      int                        `json:"disc_number,omitempty"`
+	Label           string                     `json:"label,omitempty"`
+	Barcode         string                     `json:"barcode,omitempty"`
+	Copyrights      []Copyright                `json:"copyrights,omitempty"`
+	PlayCount       int64                      `json:"play_count,omitempty"` // Provider-reported play/rank count
+	IDs             map[string]string          `json:"ids"`                  // Provider name -> Track/Video ID
 	IdentityMatches []IdentityMatch            `json:"identity_matches,omitempty"`
 	Sources         []string                   `json:"sources"` // List of contributing provider names
 	FieldSources    map[string][]string        `json:"field_sources,omitempty"`
@@ -139,31 +147,49 @@ func GetIdentityStatus(score float64, isrcMatchCount int, hasMBID bool, hasISRC 
 func CalculateCompleteness(t Track) float64 {
 	score := 0.0
 	if t.Title != "" {
-		score += 0.15
+		score += 0.12
 	}
 	if len(t.Artists) > 0 {
-		score += 0.15
+		score += 0.12
 	}
 	if t.ISRC != "" {
-		score += 0.15
+		score += 0.12
 	}
 	if t.Album.Title != "" {
-		score += 0.10
+		score += 0.08
 	}
 	if t.DurationMS > 0 {
-		score += 0.10
+		score += 0.08
 	}
 	if len(t.Images) > 0 {
-		score += 0.10
+		score += 0.08
 	}
 	if len(t.Genres) > 0 {
-		score += 0.10
+		score += 0.07
 	}
 	if len(t.Credits) > 0 {
-		score += 0.10
+		score += 0.07
 	}
 	if t.ReleaseDate != "" {
 		score += 0.05
+	}
+	if t.PreviewURL != "" {
+		score += 0.05
+	}
+	if t.Label != "" {
+		score += 0.04
+	}
+	if t.TrackNumber > 0 {
+		score += 0.03
+	}
+	if len(t.Copyrights) > 0 {
+		score += 0.03
+	}
+	if t.ISWC != "" {
+		score += 0.03
+	}
+	if t.PlayCount > 0 {
+		score += 0.03
 	}
 	if score > 1.0 {
 		score = 1.0

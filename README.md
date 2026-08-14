@@ -6,7 +6,7 @@
 [![License](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
 [![Release](https://img.shields.io/badge/Release-v1.0.0-green?style=for-the-badge)](https://github.com/Wilooper/OpenMusicMetadataResolver-OMMR-/releases)
 [![Build Status](https://img.shields.io/badge/Build-Passing-brightgreen?style=for-the-badge)](https://github.com/Wilooper/OpenMusicMetadataResolver-OMMR-/actions)
-[![Zero Key](https://img.shields.io/badge/Zero--Key-100%25-orange?style=for-the-badge)](#no-api-keys-required)
+[![Zero Key](https://img.shields.io/badge/Zero--Key-First-orange?style=for-the-badge)](#no-api-keys-required)
 [![Docker Ready](https://img.shields.io/badge/Docker-Ready-2496ED?style=for-the-badge&logo=docker)](docker-compose.yml)
 
 ---
@@ -20,18 +20,18 @@ Music metadata across streaming services is heavily fragmented:
 * Commercial metadata resolution APIs require expensive developer credentials, secret keys, or restrictive API quotas for every service.
 
 ### The OMMR Solution
-OMMR accepts **any single platform identifier** (YouTube Video ID, Spotify Track ID, Apple Music ID, Deezer ID, or raw Artist + Song Title) and resolves it into a single **Canonical Track Record** containing cross-platform IDs, ISRC, contributor credits, cover artwork, genres, and identity confidence metrics — **without requiring any API keys or paid subscriptions**.
+OMMR accepts **any single platform identifier** (YouTube Video ID, Spotify Track ID, Apple Music ID, Deezer ID, SoundCloud permalink, or raw Artist + Song Title) and resolves it into a single **Canonical Track Record** containing cross-platform IDs, ISRC/ISWC, contributor credits, cover artwork, genres, and identity confidence metrics — **without requiring any API keys or paid subscriptions**.
 
 ---
 
 ## ✨ Key Features
 
-* **🌐 Zero-Key Architecture**: Resolves metadata via unauthenticated public endpoints and web embeds across Spotify, YouTube Music, Apple Music, Deezer, and MusicBrainz.
-* **🔗 6-Stage Cross-Platform Identity Pipeline**: Translates input IDs into cross-platform identifiers (`spotify`, `youtube`, `applemusic`, `deezer`, `musicbrainz`, `isrc`).
+* **🌐 Zero-Key Architecture**: Resolves metadata via unauthenticated public endpoints and web embeds across Spotify (dual-mode), YouTube Music (InnerTube), Apple Music, Deezer, MusicBrainz, SoundCloud, and JioSaavn — 7 providers, zero keys required.
+* **🔗 6-Stage Cross-Platform Identity Pipeline**: Translates input IDs into cross-platform identifiers (`spotify`, `youtube`, `applemusic`, `deezer`, `soundcloud`, `jiosaavn`, `musicbrainz`, `isrc`).
 * **🆔 Path-Independent Canonical Track IDs**: Generates deterministic, collision-resistant track identifiers (`ommr_track_<hash>`) that collapse the same recording to identical IDs regardless of query entry point.
-* **📊 Multi-Source Metadata Merging**: Prioritizes higher-quality metadata fields across providers (e.g. MusicBrainz credits, Spotify genres, Apple Music cover art).
+* **📊 Multi-Source Metadata Merging**: Prioritizes higher-quality metadata fields across providers (e.g. MusicBrainz credits, Spotify genres, Apple Music cover art) with deduplicated source attribution.
 * **🕵️ Source Transparency & Field Provenance**: Returns `metadata_sources`, `provider_status` diagnostics (latency, cached status, rejection reasons), and `field_sources` (attributing every field to its source provider).
-* **🧠 Composite Matching & Calibrated Scores**: Combines Jaro-Winkler, Token Set Ratio, and provider trust coefficients (`MusicBrainz: 1.00`, `Apple Music: 0.95`, `Spotify: 0.95`, `Deezer: 0.90`, `YTMusic: 0.80`).
+* **🧠 Composite Matching & Calibrated Scores**: Combines Jaro-Winkler + Token Set Ratio composites, strict candidate acceptance (score threshold + artist gate), and provider trust coefficients (`MusicBrainz: 1.00`, `Apple: 0.95`, `Spotify: 0.95`, `Deezer: 0.90`, `JioSaavn: 0.85`, `YTMusic: 0.80`, `SoundCloud: 0.75`).
 * **🎯 Structured Identity Verification**: Assigns `identity_status` (`verified`, `strong`, `probable`, `weak`) and `identity_reasons` (`isrc_match`, `musicbrainz_match`, `exact_title_artist_match`).
 * **⚡ Dual-Tier Caching**: Sub-divided local disk cache (`raw/`, `normalized/`, `resolved/`) and Redis caching.
 * **📦 Production Ready**: Includes Prometheus metrics (`/metrics`), request tracing (`request_id`), token-bucket provider rate limiting, worker-pooled bulk resolution, and Docker Compose deployment.
@@ -60,6 +60,8 @@ flowchart TD
     Adapters --> Apple[Apple Music Adapter]
     Adapters --> Deezer[Deezer Adapter]
     Adapters --> MB[MusicBrainz Adapter]
+    Adapters --> SC[SoundCloud Adapter]
+    Adapters --> JS[JioSaavn Adapter]
     
     S6 --> Cache[(Disk / Redis Cache)]
     S6 --> Response[Canonical Track Response]
@@ -135,6 +137,12 @@ curl "http://localhost:8080/v1/resolve?youtube_id=x18b0D8sTwo"
 curl "http://localhost:8080/v1/resolve?artist=Talwiinder&title=Tu"
 ```
 
+### Resolve by SoundCloud Permalink
+
+```bash
+curl "http://localhost:8080/v1/resolve?soundcloud_id=m83/midnight-city"
+```
+
 ### Lightweight Track Search
 
 ```bash
@@ -144,6 +152,8 @@ curl "http://localhost:8080/v1/search?q=boom%20shaka&page=1&limit=5"
 ---
 
 ## 📋 Example Response Payload (`/v1/resolve`)
+
+> Note: The payload below is illustrative. Track/video IDs shown are example values and do not represent a specific real release.
 
 ```json
 {
@@ -214,10 +224,10 @@ curl "http://localhost:8080/v1/search?q=boom%20shaka&page=1&limit=5"
   "metadata_sources": ["ytmusic", "applemusic", "musicbrainz"],
   "provider_status": [
     { "name": "applemusic", "success": true, "matched": true, "contributed": true, "cached": false, "latency_ms": 61, "version": "applemusic-v1" },
-    { "name": "ytmusic", "success": true, "matched": true, "contributed": true, "cached": false, "latency_ms": 153, "version": "ytmusic-oembed-v1" },
+    { "name": "ytmusic", "success": true, "matched": true, "contributed": true, "cached": false, "latency_ms": 153, "version": "ytmusic-innertube-v1" },
     { "name": "musicbrainz", "success": true, "matched": true, "contributed": true, "cached": false, "latency_ms": 340, "version": "musicbrainz-v2" },
     { "name": "deezer", "success": true, "matched": false, "contributed": false, "cached": false, "latency_ms": 286, "rejection_reason": "no_results", "version": "deezer-v1" },
-    { "name": "spotify", "success": true, "matched": false, "contributed": false, "cached": false, "latency_ms": 0, "rejection_reason": "no_results", "version": "spotify-web-oembed" }
+    { "name": "spotify", "success": true, "matched": false, "contributed": false, "cached": false, "latency_ms": 0, "rejection_reason": "no_results", "version": "spotify-web-v2" }
   ],
   "resolution_strategy": {
     "input_type": "youtube_id",
@@ -225,7 +235,7 @@ curl "http://localhost:8080/v1/search?q=boom%20shaka&page=1&limit=5"
     "cross_resolved": true
   },
   "resolver_stats": {
-    "providers_queried": 5,
+    "providers_queried": 7,
     "providers_matched": 3,
     "providers_contributed": 3,
     "candidates_evaluated": 6
@@ -250,6 +260,8 @@ OMMR is configured via environment variables or a `.env` file:
 | `PROVIDER_TIMEOUT` | Duration | `5s` | Timeout per provider HTTP request |
 | `BULK_MAX_ITEMS` | Integer | `100` | Maximum queries allowed in `POST /v1/bulk` |
 | `BULK_WORKERS` | Integer | `10` | Worker pool concurrency for bulk resolution |
+| `SPOTIFY_CLIENT_ID` | String | *(empty)* | Optional: Spotify official Web API client ID |
+| `SPOTIFY_CLIENT_SECRET` | String | *(empty)* | Optional: Spotify official Web API client secret |
 
 ---
 
@@ -283,10 +295,11 @@ Detailed technical specifications are located in the `docs/` directory:
 ## 🗺️ Roadmap
 
 ### Version 1.0 (Current)
-- [x] Zero-key provider adapters (Spotify, YouTube Music, Apple Music, Deezer, MusicBrainz)
+- [x] Zero-key provider adapters (Spotify dual-mode, YouTube Music InnerTube, Apple Music, Deezer, MusicBrainz, SoundCloud, JioSaavn)
 - [x] 6-stage cross-platform ID discovery pipeline
 - [x] Path-independent canonical track IDs (`ommr_track_<hash>`)
-- [x] Calibrated composite matching engine & provider trust weights
+- [x] Calibrated composite matching engine, strict candidate acceptance & provider trust weights
+- [x] Extended canonical schema (ISWC, preview URLs, track/disc numbers, labels, barcodes, copyrights, play counts)
 - [x] Source attribution & provenance diagnostics (`field_sources`, `provider_status`, `resolver_stats`)
 - [x] Disk and Redis dual caching backends
 

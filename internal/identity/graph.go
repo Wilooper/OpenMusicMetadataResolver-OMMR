@@ -14,7 +14,9 @@ var ProviderTrustWeights = map[string]float64{
 	"applemusic":  0.95,
 	"spotify":     0.95,
 	"deezer":      0.90,
+	"jiosaavn":    0.85,
 	"ytmusic":     0.80,
+	"soundcloud":  0.75,
 }
 
 // IdentityGraph stores canonical identity mappings across platform IDs.
@@ -24,6 +26,8 @@ type IdentityGraph struct {
 	YouTubeID     string                    `json:"youtube_id,omitempty"`
 	AppleMusicID  string                    `json:"applemusic_id,omitempty"`
 	DeezerID      string                    `json:"deezer_id,omitempty"`
+	SoundCloudID  string                    `json:"soundcloud_id,omitempty"`
+	JioSaavnID    string                    `json:"jiosaavn_id,omitempty"`
 	MusicBrainzID string                    `json:"musicbrainz_id,omitempty"`
 	ISRC          string                    `json:"isrc,omitempty"`
 	Matches       []canonical.IdentityMatch `json:"matches"`
@@ -47,6 +51,8 @@ func BuildGraph(t canonical.Track) IdentityGraph {
 		YouTubeID:     t.IDs["ytmusic"],
 		AppleMusicID:  t.IDs["applemusic"],
 		DeezerID:      t.IDs["deezer"],
+		SoundCloudID:  t.IDs["soundcloud"],
+		JioSaavnID:    t.IDs["jiosaavn"],
 		MusicBrainzID: t.IDs["musicbrainz"],
 		ISRC:          t.ISRC,
 		Matches:       t.IdentityMatches,

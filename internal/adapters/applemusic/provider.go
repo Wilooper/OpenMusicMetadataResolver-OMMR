@@ -126,6 +126,11 @@ func (p *Provider) Search(ctx context.Context, q adapters.Query) ([]canonical.Tr
 		if item.WrapperType != "track" && item.Kind != "song" {
 			continue
 		}
+		// When resolving by ISRC, only exact ISRC matches are kept so that a
+		// fuzzy search never returns a wrong Apple Music track ID.
+		if q.ISRC != "" && !strings.EqualFold(strings.TrimSpace(item.ISRC), strings.TrimSpace(q.ISRC)) {
+			continue
+		}
 		cand := canonical.TrackCandidate{
 			Provider:    ProviderName,
 			Track:       p.normalizeResult(item),
@@ -178,6 +183,9 @@ func (p *Provider) normalizeResult(item provider.AppleTrackResult) canonical.Tra
 		Explicit:    explicit,
 		ISRC:        item.ISRC,
 		Genres:      genres,
+		PreviewURL:  item.PreviewURL,
+		TrackNumber: item.TrackNumber,
+		DiscNumber:  item.DiscNumber,
 		Images:      images,
 		IDs:         map[string]string{"applemusic": strconv.FormatInt(item.TrackID, 10)},
 		Sources:     []string{ProviderName},

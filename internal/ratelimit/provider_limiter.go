@@ -27,11 +27,15 @@ func NewProviderLimiter() *ProviderLimiter {
 	// Apple Music: 20 req/sec (burst 5)
 	// YTMusic: 20 req/sec (burst 5)
 	// Spotify: 10 req/sec (burst 3)
+	// SoundCloud: 10 req/sec (burst 3)
+	// JioSaavn: 5 req/sec (burst 2)
 	pl.SetLimit("musicbrainz", 1, 2)
 	pl.SetLimit("deezer", 50, 10)
 	pl.SetLimit("applemusic", 20, 5)
 	pl.SetLimit("ytmusic", 20, 5)
 	pl.SetLimit("spotify", 10, 3)
+	pl.SetLimit("soundcloud", 10, 3)
+	pl.SetLimit("jiosaavn", 5, 2)
 
 	return pl
 }

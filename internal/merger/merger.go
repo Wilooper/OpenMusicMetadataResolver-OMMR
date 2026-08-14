@@ -10,10 +10,12 @@ import (
 
 // Priorities for metadata fields per provider
 var (
-	titlePriority   = []string{"spotify", "applemusic", "musicbrainz", "deezer", "ytmusic"}
-	creditsPriority = []string{"musicbrainz", "applemusic", "spotify", "deezer", "ytmusic"}
-	genresPriority  = []string{"spotify", "applemusic", "musicbrainz", "deezer", "ytmusic"}
-	isrcPriority    = []string{"spotify", "musicbrainz", "applemusic", "deezer", "ytmusic"}
+	titlePriority   = []string{"spotify", "applemusic", "musicbrainz", "deezer", "soundcloud", "jiosaavn", "ytmusic"}
+	creditsPriority = []string{"musicbrainz", "applemusic", "spotify", "deezer", "soundcloud", "jiosaavn", "ytmusic"}
+	genresPriority  = []string{"spotify", "applemusic", "musicbrainz", "deezer", "soundcloud", "jiosaavn", "ytmusic"}
+	isrcPriority    = []string{"spotify", "musicbrainz", "applemusic", "deezer", "soundcloud", "jiosaavn", "ytmusic"}
+	labelPriority   = []string{"spotify", "applemusic", "deezer", "musicbrainz", "jiosaavn"}
+	previewPriority = []string{"spotify", "applemusic", "deezer"}
 )
 
 type Merger struct {
@@ -193,11 +195,129 @@ func (m *Merger) MergeCandidates(candidates []canonical.TrackCandidate) *canonic
 		res.FieldSources["images"] = imageSources
 	}
 
+	// 9b. Preview URL
+	for _, prov := range previewPriority {
+		if cand, ok := byProvider[prov]; ok && cand.Track.PreviewURL != "" {
+			res.PreviewURL = cand.Track.PreviewURL
+			res.FieldSources["preview_url"] = []string{prov}
+			break
+		}
+	}
+
+	// 9c. Track / Disc Number
+	for _, prov := range titlePriority {
+		if cand, ok := byProvider[prov]; ok && cand.Track.TrackNumber > 0 {
+			res.TrackNumber = cand.Track.TrackNumber
+			res.FieldSources["track_number"] = []string{prov}
+			break
+		}
+	}
+	for _, cand := range candidates {
+		if cand.Track.DiscNumber > 0 {
+			res.DiscNumber = cand.Track.DiscNumber
+			res.FieldSources["disc_number"] = []string{cand.Provider}
+			break
+		}
+	}
+
+	// 9d. Label, Barcode, ISWC, PlayCount
+	for _, prov := range labelPriority {
+		if cand, ok := byProvider[prov]; ok && cand.Track.Label != "" {
+			res.Label = cand.Track.Label
+			res.FieldSources["label"] = []string{prov}
+			break
+		}
+	}
+	if res.Label == "" {
+		for _, cand := range candidates {
+			if cand.Track.Label != "" {
+				res.Label = cand.Track.Label
+				res.FieldSources["label"] = []string{cand.Provider}
+				break
+			}
+		}
+	}
+	for _, cand := range candidates {
+		if cand.Track.Barcode != "" && res.Barcode == "" {
+			res.Barcode = cand.Track.Barcode
+		}
+		if cand.Track.ISWC != "" && res.ISWC == "" {
+			res.ISWC = cand.Track.ISWC
+		}
+		if cand.Track.PlayCount > res.PlayCount {
+			res.PlayCount = cand.Track.PlayCount
+		}
+	}
+
+	// 9e. Copyrights (deduplicated union)
+	copyrightMap := make(map[string]canonical.Copyright)
+	for _, cand := range candidates {
+		for _, c := range cand.Track.Copyrights {
+			if c.Text != "" {
+				copyrightMap[c.Type+":"+c.Text] = c
+			}
+		}
+	}
+	res.Copyrights = make([]canonical.Copyright, 0, len(copyrightMap))
+	for _, c := range copyrightMap {
+		res.Copyrights = append(res.Copyrights, c)
+	}
+
+	// 9f. Album enrichment (label, UPC/barcode, total tracks, copyrights)
+	if res.Album.Label == "" {
+		for _, cand := range candidates {
+			if cand.Track.Album.Label != "" {
+				res.Album.Label = cand.Track.Album.Label
+				break
+			}
+		}
+	}
+	if res.Album.UPC == "" {
+		for _, cand := range candidates {
+			if cand.Track.Album.UPC != "" {
+				res.Album.UPC = cand.Track.Album.UPC
+				break
+			}
+		}
+	}
+	if res.Album.Barcode == "" {
+		for _, cand := range candidates {
+			if cand.Track.Album.Barcode != "" {
+				res.Album.Barcode = cand.Track.Album.Barcode
+				break
+			}
+		}
+	}
+	if res.Album.TotalTracks == 0 {
+		for _, cand := range candidates {
+			if cand.Track.Album.TotalTracks > 0 {
+				res.Album.TotalTracks = cand.Track.Album.TotalTracks
+				break
+			}
+		}
+	}
+	if len(res.Album.Copyrights) == 0 {
+		albumCopyrights := make(map[string]canonical.Copyright)
+		for _, cand := range candidates {
+			for _, c := range cand.Track.Album.Copyrights {
+				if c.Text != "" {
+					albumCopyrights[c.Type+":"+c.Text] = c
+				}
+			}
+		}
+		res.Album.Copyrights = make([]canonical.Copyright, 0, len(albumCopyrights))
+		for _, c := range albumCopyrights {
+			res.Album.Copyrights = append(res.Album.Copyrights, c)
+		}
+	}
+
 	// 10. Merge IDs & Sources
 	topScore := 0.0
 	topBreakdown := canonical.MatchBreakdown{}
 	for _, cand := range candidates {
-		res.Sources = append(res.Sources, cand.Provider)
+		if !contains(res.Sources, cand.Provider) {
+			res.Sources = append(res.Sources, cand.Provider)
+		}
 		for k, v := range cand.Track.IDs {
 			res.IDs[k] = v
 		}

@@ -55,14 +55,16 @@ func (h *Handler) HandleResolve(w http.ResponseWriter, r *http.Request) {
 	youtubeID := h.idResolver.ExtractYouTubeID(q.Get("youtube_id"))
 	deezerID := q.Get("deezer_id")
 	appleID := q.Get("apple_id")
+	soundcloudID := h.idResolver.ExtractSoundCloudID(q.Get("soundcloud_id"))
 	isrc := q.Get("isrc")
 	artist := q.Get("artist")
 	title := q.Get("title")
+	album := q.Get("album")
 
-	if spotifyID == "" && youtubeID == "" && deezerID == "" && appleID == "" && isrc == "" && (artist == "" || title == "") {
+	if spotifyID == "" && youtubeID == "" && deezerID == "" && appleID == "" && soundcloudID == "" && isrc == "" && (artist == "" || title == "") {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusBadRequest)
-		_, _ = w.Write([]byte(`{"error":"Missing query parameter. Provide spotify_id, youtube_id, deezer_id, apple_id, isrc, or both artist and title."}`))
+		_, _ = w.Write([]byte(`{"error":"Missing query parameter. Provide spotify_id, youtube_id, deezer_id, apple_id, soundcloud_id, isrc, or both artist and title."}`))
 		return
 	}
 
@@ -75,13 +77,15 @@ func (h *Handler) HandleResolve(w http.ResponseWriter, r *http.Request) {
 
 	req := resolver.ResolveRequest{
 		Query: adapters.Query{
-			SpotifyID: spotifyID,
-			YouTubeID: youtubeID,
-			DeezerID:  deezerID,
-			AppleID:   appleID,
-			ISRC:      isrc,
-			Artist:    artist,
-			Title:     title,
+			SpotifyID:    spotifyID,
+			YouTubeID:    youtubeID,
+			DeezerID:     deezerID,
+			AppleID:      appleID,
+			SoundCloudID: soundcloudID,
+			ISRC:         isrc,
+			Artist:       artist,
+			Title:        title,
+			Album:        album,
 		},
 		Sources:     sources,
 		BypassCache: bypassCache,
@@ -144,6 +148,7 @@ func (h *Handler) HandleBulk(w http.ResponseWriter, r *http.Request) {
 				itemQuery := req.Queries[idx]
 				itemQuery.SpotifyID = h.idResolver.ExtractSpotifyID(itemQuery.SpotifyID)
 				itemQuery.YouTubeID = h.idResolver.ExtractYouTubeID(itemQuery.YouTubeID)
+				itemQuery.SoundCloudID = h.idResolver.ExtractSoundCloudID(itemQuery.SoundCloudID)
 
 				resReq := resolver.ResolveRequest{
 					Query:   itemQuery,

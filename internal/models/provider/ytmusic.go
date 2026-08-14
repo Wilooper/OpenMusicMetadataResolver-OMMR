@@ -19,14 +19,14 @@ type YTPlayerResponse struct {
 }
 
 type YTVideoDetails struct {
-	VideoID           string   `json:"videoId"`
-	Title             string   `json:"title"`
-	LengthSeconds     string   `json:"lengthSeconds"`
-	Keywords          []string `json:"keywords"`
-	ChannelID         string   `json:"channelId"`
-	Author            string   `json:"author"`
-	ShortDescription  string   `json:"shortDescription"`
-	Thumbnail         YTThumb  `json:"thumbnail"`
+	VideoID          string   `json:"videoId"`
+	Title            string   `json:"title"`
+	LengthSeconds    string   `json:"lengthSeconds"`
+	Keywords         []string `json:"keywords"`
+	ChannelID        string   `json:"channelId"`
+	Author           string   `json:"author"`
+	ShortDescription string   `json:"shortDescription"`
+	Thumbnail        YTThumb  `json:"thumbnail"`
 }
 
 type YTThumb struct {
