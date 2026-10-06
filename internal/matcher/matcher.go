@@ -25,6 +25,11 @@ func floatPtr(v float64) *float64 {
 func (m *Matcher) ScoreCandidate(cand canonical.TrackCandidate, target adapters.Query) (float64, canonical.MatchBreakdown) {
 	var breakdown canonical.MatchBreakdown
 
+	if target.ISRC != "" && cand.Track.ISRC != "" && !strings.EqualFold(strings.TrimSpace(target.ISRC), strings.TrimSpace(cand.Track.ISRC)) {
+		breakdown.ISRC = floatPtr(0)
+		return 0, breakdown
+	}
+
 	// 0. Direct Platform ID Match
 	// When the query carried a specific platform ID (e.g. youtube_id) and the
 	// candidate's provider ID matches it exactly, this is a verified direct
@@ -157,25 +162,44 @@ func (m *Matcher) ScoreCandidates(candidates []canonical.TrackCandidate, target 
 // exactly matches one of the candidate's IDs.
 func directIDMatch(target adapters.Query, c canonical.TrackCandidate) bool {
 	for k, v := range c.Track.IDs {
+		if !strings.EqualFold(k, c.Provider) {
+			continue
+		}
 		switch k {
 		case "spotify":
-			if target.SpotifyID != "" && strings.EqualFold(v, target.SpotifyID) {
+			if target.SpotifyID != "" && v == target.SpotifyID {
 				return true
 			}
 		case "ytmusic":
-			if target.YouTubeID != "" && strings.EqualFold(v, target.YouTubeID) {
+			if target.YouTubeID != "" && v == target.YouTubeID {
 				return true
 			}
 		case "deezer":
-			if target.DeezerID != "" && strings.EqualFold(v, target.DeezerID) {
+			if target.DeezerID != "" && v == target.DeezerID {
 				return true
 			}
 		case "applemusic":
-			if target.AppleID != "" && strings.EqualFold(v, target.AppleID) {
+			if target.AppleID != "" && v == target.AppleID {
 				return true
 			}
 		case "soundcloud":
-			if target.SoundCloudID != "" && strings.EqualFold(v, target.SoundCloudID) {
+			if target.SoundCloudID != "" && v == target.SoundCloudID {
+				return true
+			}
+		case "qobuz":
+			if target.QobuzID != "" && v == target.QobuzID {
+				return true
+			}
+		case "tidal":
+			if target.TidalID != "" && v == target.TidalID {
+				return true
+			}
+		case "amazonmusic":
+			if target.AmazonMusicID != "" && v == target.AmazonMusicID {
+				return true
+			}
+		case "pandora":
+			if target.PandoraID != "" && v == target.PandoraID {
 				return true
 			}
 		}

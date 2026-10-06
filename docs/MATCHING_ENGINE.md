@@ -47,6 +47,8 @@ The resolver (`internal/resolver/resolver.go`) gates candidate acceptance beyond
 1. **Score threshold**: `match_score < 0.40` → rejected (`rejectThreshold`).
 2. **Artist gate**: when the query carries an explicit artist, candidates whose primary-artist composite score is `< 0.45` are rejected, even if the overall score passes. This blocks wrong-artist title matches (e.g. a different artist's "Get Lucky" scoring 0.55 on title alone).
 3. **No forced merge**: sub-threshold candidates are never merged; if nothing clears the threshold only the single best candidate is surfaced (minimum `0.30`), otherwise the request returns no track.
+4. **ID-seeded resolution**: the provider result whose provider name and ID exactly match the requested platform ID supplies the trusted title, artist, album, and ISRC. Cross-provider results cannot redefine that comparison target. Their title and artist scores must each reach `0.72` to contribute IDs, unless they have an exact matching ISRC.
+5. **ISRC conflict**: when both the trusted query and a candidate have an ISRC, a mismatch rejects the candidate. A direct-ID match is valid only when the ID belongs to that candidate's own provider namespace.
 
 ---
 

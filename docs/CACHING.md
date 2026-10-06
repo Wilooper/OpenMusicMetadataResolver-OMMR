@@ -34,3 +34,5 @@ flowchart LR
 
 - **Default TTL**: Configured via `CACHE_TTL` (default: `168h` / 7 days).
 - **Cache Bypass**: Append `bypass_cache=true` to any `/v1/resolve` request to bypass cache reads and force live provider fetches.
+- Resolved-response cache keys include the normalized query and selected provider set, so filtered requests cannot reuse a response created from a different provider set. Provider names are case-insensitive and order-independent in the key.
+- Resolved responses use the `resolved:links-v1:` key namespace so earlier responses lacking the link catalog are not reused. Old entries expire under their existing TTL.

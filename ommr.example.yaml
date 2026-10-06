@@ -1,0 +1,5 @@
+# Copy to ommr.yaml, chmod 600 ommr.yaml, and set OMMR_CONFIG_FILE=ommr.yaml.
+# Environment variables override these values. Prefer environment secrets.
+port: 8080
+provider_timeout: 8s
+apple_storefront: us

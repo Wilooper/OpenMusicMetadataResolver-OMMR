@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"github.com/ommr/ommr/internal/adapters"
+	"github.com/ommr/ommr/internal/enrichment/wikipedia"
 	"github.com/ommr/ommr/internal/models/canonical"
 	"github.com/ommr/ommr/internal/models/provider"
 	"github.com/ommr/ommr/pkg/query"
@@ -50,9 +51,9 @@ func (p *Provider) FetchByID(ctx context.Context, idType string, id string) (*ca
 
 	var reqURL string
 	if idType == "isrc" {
-		reqURL = fmt.Sprintf("%s/isrc/%s?fmt=json", BaseURL, url.PathEscape(id))
+		reqURL = fmt.Sprintf("%s/isrc/%s?inc=artists+releases+isrcs+tags&fmt=json", BaseURL, url.PathEscape(id))
 	} else {
-		reqURL = fmt.Sprintf("%s/recording/%s?inc=artists+releases+isrcs+tags&fmt=json", BaseURL, url.PathEscape(id))
+		reqURL = fmt.Sprintf("%s/recording/%s?inc=artists+releases+isrcs+tags+artist-rels+work-rels+work-level-rels+url-rels&fmt=json", BaseURL, url.PathEscape(id))
 	}
 
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, reqURL, nil)
@@ -85,20 +86,87 @@ func (p *Provider) FetchByID(ctx context.Context, idType string, id string) (*ca
 		if err := json.Unmarshal(body, &isrcResp); err != nil || len(isrcResp.Recordings) == 0 {
 			return nil, fmt.Errorf("no MusicBrainz recording found for ISRC %s", id)
 		}
+		if len(isrcResp.Recordings) > 1 {
+			return nil, fmt.Errorf("ISRC maps to multiple MusicBrainz recordings; use a recording MBID or title and artist")
+		}
 		rec = isrcResp.Recordings[0]
+		if !selectISRC(&rec, id) {
+			return nil, fmt.Errorf("MusicBrainz recording does not report requested ISRC")
+		}
 	} else {
 		if err := json.Unmarshal(body, &rec); err != nil {
 			return nil, err
 		}
+		if rec.ID != id {
+			return nil, fmt.Errorf("MusicBrainz recording ID does not match requested ID")
+		}
 	}
 
 	track := p.normalizeRecording(rec)
+	workIDs := make(map[string]bool)
+	for _, relation := range rec.Relations {
+		if relation.Work.ID != "" {
+			workIDs[relation.Work.ID] = true
+		}
+	}
+	if idType != "isrc" && len(workIDs) == 1 {
+		for _, rel := range rec.Relations {
+			if rel.Work.ID == "" {
+				continue
+			}
+			for _, workRel := range rel.Work.Relations {
+				var context *wikipedia.Context
+				var err error
+				switch workRel.Type {
+				case "wikipedia":
+					context, err = wikipedia.Fetch(ctx, workRel.URL.Resource)
+				case "wikidata":
+					context, err = wikipedia.FetchFromWikidata(ctx, workRel.URL.Resource)
+				default:
+					continue
+				}
+				if err == nil {
+					encoded, _ := json.Marshal(context)
+					if track.Extensions == nil {
+						track.Extensions = make(map[string]json.RawMessage)
+					}
+					track.Extensions["wikipedia"] = encoded
+					break
+				}
+			}
+			if len(track.Extensions["wikipedia"]) > 0 {
+				break
+			}
+		}
+	}
 	return &canonical.TrackCandidate{
 		Provider:    ProviderName,
 		Track:       track,
 		MatchScore:  1.0,
 		RawResponse: body,
 	}, nil
+}
+
+func (p *Provider) Enrich(ctx context.Context, track canonical.Track) (*canonical.Track, error) {
+	id := track.IDs[ProviderName]
+	if id == "" {
+		return nil, fmt.Errorf("MusicBrainz enrichment requires a recording ID")
+	}
+	candidate, err := p.FetchByID(ctx, ProviderName, id)
+	if err != nil {
+		return nil, err
+	}
+	if track.ISRC != "" {
+		var recording provider.MusicBrainzRecording
+		if err := json.Unmarshal(candidate.RawResponse, &recording); err != nil {
+			return nil, err
+		}
+		if !selectISRC(&recording, track.ISRC) {
+			return nil, fmt.Errorf("MusicBrainz enriched recording has conflicting ISRC")
+		}
+		candidate.Track.ISRC = recording.ISRCs[0]
+	}
+	return &candidate.Track, nil
 }
 
 func (p *Provider) Search(ctx context.Context, q adapters.Query) ([]canonical.TrackCandidate, error) {
@@ -143,6 +211,9 @@ func (p *Provider) Search(ctx context.Context, q adapters.Query) ([]canonical.Tr
 
 	candidates := make([]canonical.TrackCandidate, 0, len(searchResp.Recordings))
 	for _, rec := range searchResp.Recordings {
+		if q.ISRC != "" && !selectISRC(&rec, q.ISRC) {
+			continue
+		}
 		cand := canonical.TrackCandidate{
 			Provider:    ProviderName,
 			Track:       p.normalizeRecording(rec),
@@ -153,6 +224,19 @@ func (p *Provider) Search(ctx context.Context, q adapters.Query) ([]canonical.Tr
 	}
 
 	return candidates, nil
+}
+
+// Preserve the ISRC that established the match when a recording has multiple
+// codes; provider array order is not identity evidence.
+func selectISRC(recording *provider.MusicBrainzRecording, expected string) bool {
+	for index, isrc := range recording.ISRCs {
+		if strings.EqualFold(strings.TrimSpace(isrc), strings.TrimSpace(expected)) {
+			copy(recording.ISRCs[1:index+1], recording.ISRCs[:index])
+			recording.ISRCs[0] = isrc
+			return true
+		}
+	}
+	return false
 }
 
 func (p *Provider) normalizeRecording(rec provider.MusicBrainzRecording) canonical.Track {
@@ -192,8 +276,35 @@ func (p *Provider) normalizeRecording(rec provider.MusicBrainzRecording) canonic
 	}
 
 	credits := make([]canonical.Credit, 0, len(artists))
+	var iswc, language string
+	var extensions map[string]json.RawMessage
+	works := make(map[string]bool)
+	for _, relation := range rec.Relations {
+		if relation.Work.ID != "" {
+			works[relation.Work.ID] = true
+		}
+	}
 	for _, a := range artists {
 		credits = append(credits, canonical.Credit{Name: a.Name, Roles: []string{"Artist"}})
+	}
+	for _, rel := range rec.Relations {
+		if rel.Work.ID != "" {
+			if len(works) == 1 && extensions == nil {
+				workID, _ := json.Marshal(rel.Work.ID)
+				extensions = map[string]json.RawMessage{"musicbrainz_work_id": workID}
+			}
+			if len(works) == 1 && iswc == "" && len(rel.Work.ISWCs) > 0 {
+				iswc = rel.Work.ISWCs[0]
+			}
+			if len(works) == 1 && language == "" {
+				language = rel.Work.Language
+			}
+			for _, workRel := range rel.Work.Relations {
+				appendRelationCredit(&credits, workRel)
+			}
+		} else {
+			appendRelationCredit(&credits, rel)
+		}
 	}
 
 	return canonical.Track{
@@ -203,11 +314,38 @@ func (p *Provider) normalizeRecording(rec provider.MusicBrainzRecording) canonic
 		DurationMS:  rec.Length,
 		ReleaseDate: album.ReleaseDate,
 		ISRC:        isrc,
+		ISWC:        iswc,
+		Language:    language,
 		Genres:      genres,
 		Credits:     credits,
 		IDs:         map[string]string{"musicbrainz": rec.ID},
 		Sources:     []string{ProviderName},
+		Extensions:  extensions,
 	}
+}
+
+func appendRelationCredit(credits *[]canonical.Credit, relation provider.MusicBrainzRelation) {
+	role := strings.ToLower(relation.Type)
+	switch role {
+	case "lyricist", "composer", "writer", "producer", "engineer", "performer", "arranger":
+	default:
+		return
+	}
+	if relation.Artist.Name == "" {
+		return
+	}
+	for n := range *credits {
+		if (*credits)[n].Name == relation.Artist.Name {
+			for _, existing := range (*credits)[n].Roles {
+				if strings.EqualFold(existing, role) {
+					return
+				}
+			}
+			(*credits)[n].Roles = append((*credits)[n].Roles, strings.ToUpper(role[:1])+role[1:])
+			return
+		}
+	}
+	*credits = append(*credits, canonical.Credit{Name: relation.Artist.Name, Roles: []string{strings.ToUpper(role[:1]) + role[1:]}})
 }
 
 func escapeLucene(input string) string {

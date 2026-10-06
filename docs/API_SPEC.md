@@ -9,12 +9,28 @@ Base Path: `/v1`
 | Method | Route | Description |
 | --- | --- | --- |
 | `GET` | `/v1/resolve` | Resolves unified track metadata and cross-platform identities by ID or Query |
+| `GET` | `/v1/extract` | Returns independent normalized metadata and field coverage from one or more providers |
 | `POST` | `/v1/bulk` | Batch resolves up to 100 queries in a single request |
 | `GET` | `/v1/search` | Performs raw search across metadata providers returning lightweight `SearchResult` objects |
 | `GET` | `/v1/health` | System health check and uptime probe |
 | `GET` | `/metrics` | Prometheus metrics endpoint |
 
 ---
+
+## 1. Provider Extraction Endpoint
+
+`GET /v1/extract`
+
+Pass `provider` and `id` to fetch a single provider's track, or pass `artist` and `title` to compare provider search results independently. For title/artist extraction, `sources` can limit the comma-separated provider list.
+
+```text
+/v1/extract?artist=Example%20artist&title=Example%20track&sources=deezer,tidal,qobuz
+/v1/extract?provider=deezer&id=123456
+```
+
+Each source result includes the normalized `track`, `year`, `thumbnail_url`, and `present_fields` / `missing_fields` arrays. Coverage fields include title, artists, album, year, artwork, duration, ISRC, credits, and lyricist. Missing optional fields are reported as missing; OMMR does not infer or synthesize credits. Provider failures are isolated to that source's `status` and `error`.
+
+## 2. Single Resolution Endpoint
 
 ## 1. Single Resolution Endpoint
 
@@ -29,12 +45,18 @@ Base Path: `/v1`
 | `deezer_id` | string | Optional | Deezer track ID or full track URL |
 | `apple_id` | string | Optional | Apple Music track ID or full track URL |
 | `soundcloud_id` | string | Optional | SoundCloud permalink (`artist/track`) or full track URL |
+| `qobuz_id` | string | Optional | Qobuz track ID |
+| `tidal_id` | string | Optional | TIDAL track ID |
+| `amazonmusic_id` | string | Optional | Amazon Music track ID (also accepts `amazon_music_id`) |
+| `pandora_id` | string | Optional | Pandora track entity ID (with or without `TR:` prefix) |
 | `artist` | string | Optional | Artist name (used together with `title`) |
 | `title` | string | Optional | Track title (used together with `artist`) |
 | `album` | string | Optional | Album title (used together with `artist`/`title` for disambiguation) |
 | `isrc` | string | Optional | International Standard Recording Code |
-| `sources` | string | Optional | Comma-separated adapter filter (`spotify,ytmusic,applemusic,deezer,musicbrainz,soundcloud,jiosaavn`) |
+| `sources` | string | Optional | Comma-separated adapter filter (`spotify,ytmusic,applemusic,deezer,musicbrainz,soundcloud,jiosaavn,qobuz,tidal,amazonmusic,pandora`) |
 | `bypass_cache` | boolean | Optional | If `true`, forces live provider fetch bypassing cache |
+
+For ID-based resolution, providers may report `rejection_reason: "unverified_candidate"` when their result cannot be tied to the exact source-ID result, or `"identity_mismatch"` when its metadata fails the source-track identity checks.
 
 ### Response 200 OK
 
@@ -50,18 +72,18 @@ Base Path: `/v1`
       "musicbrainz_match",
       "exact_title_artist_match"
     ],
-    "title": "Tu",
+    "title": "Example Song",
     "artists": [
-      { "name": "Talwiinder", "role": "main" }
+      { "name": "Example Artist", "role": "main" }
     ],
     "album": {
-      "title": "Tu - Single",
+      "title": "Example Album",
       "release_date": "2024-06-21"
     },
     "duration_ms": 218400,
     "release_date": "2024-06-21",
     "explicit": false,
-    "isrc": "QZRP52317311",
+    "isrc": "XX-XXX-24-00001",
     "genres": ["Punjabi Pop"],
     "credits": [
       { "name": "Talwiinder", "roles": ["Artist", "Composer"] }
@@ -71,9 +93,9 @@ Base Path: `/v1`
       { "url": "https://is1-ssl.mzstatic.com/.../600x600bb.jpg", "width": 600, "height": 600, "type": "cover" }
     ],
     "ids": {
-      "ytmusic": "FVNSACXFAy0",
-      "applemusic": "1749982113",
-      "musicbrainz": "400436a5-99fa-44d9-b51f-5c63be233454"
+      "ytmusic": "example-video-id",
+      "applemusic": "example-track-id",
+      "musicbrainz": "00000000-0000-0000-0000-000000000000"
     },
     "identity_matches": [
       { "provider": "applemusic", "id": "1749982113", "confidence": 0.94, "method": "title_artist_duration" },
@@ -130,21 +152,22 @@ Base Path: `/v1`
 
 ---
 
-## 2. Bulk Resolution Endpoint
+## 3. Bulk Resolution Endpoint
 
 `POST /v1/bulk`
 
 ### Constraints
 * Max array length: **100 items**
 * Concurrency: Configurable worker pool (default: 10 workers)
+* Request body: **1 MiB maximum** and must contain exactly one JSON object
 
 ### Request Payload
 
 ```json
 {
   "queries": [
-    { "youtube_id": "FVNSACXFAy0" },
-    { "artist": "Talwiinder", "title": "Wishes" }
+    { "youtube_id": "example-video-id" },
+    { "artist": "Example Artist", "title": "Example Song" }
   ],
   "sources": ["applemusic", "deezer", "musicbrainz"]
 }
@@ -190,3 +213,13 @@ Base Path: `/v1`
   "total": 5
 }
 ```
+
+
+## GET /v1/links
+
+Uses the same query parameters and identity gates as `/v1/resolve`. Returns
+`links` (OMMR ID, ISRC, accepted native IDs and song URLs, unavailable platforms),
+title, artists, identity status and provider status. Unknown IDs/URLs are omitted.
+See [PLATFORM_LINKS.md](PLATFORM_LINKS.md) for field definitions and supported services.
+Resolved and bulk tracks include the same catalog in `extensions.platform_links`;
+per-source extraction adds `links` without asserting cross-provider equivalence.

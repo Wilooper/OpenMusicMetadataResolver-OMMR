@@ -1,6 +1,6 @@
 # 🎵 OMMR — Open Music Metadata Resolver
 
-> **Production-grade, self-hostable, zero-key music metadata resolution engine and cross-platform identity translator written in Go.**
+> **Self-hostable Go music metadata resolver with source-by-source extraction and guarded cross-platform matching.**
 
 [![Go Version](https://img.shields.io/badge/Go-1.22%2B-00ADD8?style=for-the-badge&logo=go)](https://go.dev/)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
@@ -20,7 +20,23 @@ Music metadata across streaming services is heavily fragmented:
 * Commercial metadata resolution APIs require expensive developer credentials, secret keys, or restrictive API quotas for every service.
 
 ### The OMMR Solution
-OMMR accepts **any single platform identifier** (YouTube Video ID, Spotify Track ID, Apple Music ID, Deezer ID, SoundCloud permalink, or raw Artist + Song Title) and resolves it into a single **Canonical Track Record** containing cross-platform IDs, ISRC/ISWC, contributor credits, cover artwork, genres, and identity confidence metrics — **without requiring any API keys or paid subscriptions**.
+OMMR accepts a platform identifier or artist and title and returns a canonical record with field provenance and identity confidence. Public paths require no keys; richer official catalog modes and some partner APIs require credentials and may have account restrictions. See [metadata fields and provider evidence](docs/METADATA_CATALOG.md).
+
+### Private configuration
+
+Cross-platform identifiers and song URLs are available at
+`/v1/links?youtube_id=<video-id>` (or another supported ID, ISRC, artist/title).
+Resolved tracks also include `extensions.platform_links`. See
+[platform IDs, URLs and availability](docs/PLATFORM_LINKS.md).
+
+Configuration precedence is process environment (including explicitly empty
+values), YAML configuration, env-file values, then built-in defaults. Spotify
+official mode requires both client credentials. YouTube cookies must be a single
+header value containing `SAPISID` or `__Secure-3PAPISID`; invalid configuration
+fails at startup without echoing the cookie. Apple and Spotify credentialed
+clients refuse HTTP redirects.
+
+Copy `.env.example` to `.env`, fill only the credentials you have, run `chmod 600 .env`, and start with `OMMR_ENV_FILE=.env ./bin/ommr-server`. Alternatively copy `ommr.example.yaml` to `ommr.yaml`, run `chmod 600 ommr.yaml`, and set `OMMR_CONFIG_FILE=ommr.yaml`. Process environment overrides the file. Neither file is committed. Never put cookies or tokens in API URLs or logs. `OMMR_YTMUSIC_COOKIE_FILE` points to a private file containing a browser Cookie header; the optional cookie is used only on YouTube InnerTube calls. Apple uses an operator-generated **developer token** and storefront for the official catalog endpoint; the public iTunes lookup remains the keyless fallback. Spotify uses client credentials; current Spotify Development Mode requires the app owner to have Premium. Amazon Music V2 requires approved beta access. Optional credentialed modes have fixture tests, but live provider calls require your own authorized credentials.
 
 ---
 
@@ -34,7 +50,7 @@ OMMR accepts **any single platform identifier** (YouTube Video ID, Spotify Track
 * **🧠 Composite Matching & Calibrated Scores**: Combines Jaro-Winkler + Token Set Ratio composites, strict candidate acceptance (score threshold + artist gate), and provider trust coefficients (`MusicBrainz: 1.00`, `Apple: 0.95`, `Spotify: 0.95`, `Deezer: 0.90`, `JioSaavn: 0.85`, `YTMusic: 0.80`, `SoundCloud: 0.75`).
 * **🎯 Structured Identity Verification**: Assigns `identity_status` (`verified`, `strong`, `probable`, `weak`) and `identity_reasons` (`isrc_match`, `musicbrainz_match`, `exact_title_artist_match`).
 * **⚡ Dual-Tier Caching**: Sub-divided local disk cache (`raw/`, `normalized/`, `resolved/`) and Redis caching.
-* **📦 Production Ready**: Includes Prometheus metrics (`/metrics`), request tracing (`request_id`), token-bucket provider rate limiting, worker-pooled bulk resolution, and Docker Compose deployment.
+* **📦 Operations**: Includes Prometheus metrics (`/metrics`), request IDs, provider rate limiting, bulk resolution, and Docker Compose deployment. Credentialed integrations still require live validation with your accounts.
 
 ---
 
