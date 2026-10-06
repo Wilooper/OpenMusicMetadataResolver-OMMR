@@ -3,7 +3,16 @@ package api
 import (
 	"github.com/ommr/ommr/internal/adapters"
 	"github.com/ommr/ommr/internal/models/canonical"
+	"github.com/ommr/ommr/internal/platformlinks"
 )
+
+type linksResponse struct {
+	Links          platformlinks.Catalog    `json:"links"`
+	Title          string                   `json:"title,omitempty"`
+	Artists        []canonical.Artist       `json:"artists,omitempty"`
+	IdentityStatus string                   `json:"identity_status,omitempty"`
+	ProviderStatus []canonical.SourceStatus `json:"provider_status"`
+}
 
 // ResolutionStrategy provides transparency into how a query was resolved.
 type ResolutionStrategy struct {

@@ -344,6 +344,9 @@ func (m *Merger) MergeCandidates(candidates []canonical.TrackCandidate) *canonic
 			res.Sources = append(res.Sources, cand.Provider)
 		}
 		for k, v := range cand.Track.IDs {
+			if k != cand.Provider && k != cand.Provider+"_url" && k != cand.Provider+"_track_id" {
+				continue
+			}
 			res.IDs[k] = v
 		}
 		if cand.MatchScore > topScore {

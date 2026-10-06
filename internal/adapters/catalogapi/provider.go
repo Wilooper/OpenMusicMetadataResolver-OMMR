@@ -15,6 +15,7 @@ import (
 
 	"github.com/ommr/ommr/internal/adapters"
 	"github.com/ommr/ommr/internal/models/canonical"
+	"github.com/ommr/ommr/internal/platformlinks"
 )
 
 type Config struct {
@@ -285,6 +286,14 @@ func normalize(obj map[string]any, provider string) canonical.Track {
 	id := firstString(obj, "id", "trackId")
 	if id != "" {
 		track.IDs[provider] = id
+	}
+	platformlinks.SetProviderURL(&track, provider, firstString(obj, "url", "webUrl", "shareUrl", "permalink_url"))
+	if external, ok := obj["externalLinks"].([]any); ok {
+		for _, item := range external {
+			if link, ok := item.(map[string]any); ok {
+				platformlinks.SetProviderURL(&track, provider, firstString(link, "href", "url"))
+			}
+		}
 	}
 	if preview := firstString(obj, "previewUrl", "preview_url"); preview != "" {
 		track.PreviewURL = preview

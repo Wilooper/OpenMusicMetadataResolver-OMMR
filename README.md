@@ -24,6 +24,11 @@ OMMR accepts a platform identifier or artist and title and returns a canonical r
 
 ### Private configuration
 
+Cross-platform identifiers and song URLs are available at
+`/v1/links?youtube_id=<video-id>` (or another supported ID, ISRC, artist/title).
+Resolved tracks also include `extensions.platform_links`. See
+[platform IDs, URLs and availability](docs/PLATFORM_LINKS.md).
+
 Configuration precedence is process environment (including explicitly empty
 values), YAML configuration, env-file values, then built-in defaults. Spotify
 official mode requires both client credentials. YouTube cookies must be a single

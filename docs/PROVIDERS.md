@@ -105,3 +105,12 @@ Configuration variables:
 
 - **Shazam**: A Shazam adapter was initially evaluated, but Shazam's public web search endpoint now returns HTTP 405 for non-browser clients, so it was replaced by JioSaavn.
 - **Rate limits** are enforced via token buckets in `internal/ratelimit/provider_limiter.go`; MusicBrainz is kept at 1 RPS out of respect for the service.
+
+
+## Recording links
+
+Adapters retain validated provider share URLs when present. SoundCloud's public
+oEmbed widget may expose a numeric track ID; JioSaavn's API song ID is retained
+separately from its share token. Amazon requests `id` and `url` in sparse track
+fieldsets. `/v1/links` and `extensions.platform_links` expose accepted IDs/URLs
+with their identifier namespace. See [PLATFORM_LINKS.md](PLATFORM_LINKS.md).

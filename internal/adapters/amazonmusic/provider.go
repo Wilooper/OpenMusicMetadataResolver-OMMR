@@ -21,7 +21,7 @@ func NewWithConfig(baseURL, token, apiKey string) adapters.ProviderAdapter {
 			if token == "" || apiKey == "" {
 				return "", fmt.Errorf("Amazon Music requires approved API credentials (OMMR_AMAZON_MUSIC_TOKEN and OMMR_AMAZON_MUSIC_API_KEY)")
 			}
-			return "/v2/tracks/" + catalogapi.EscapedID(id) + "?fields[track]=title,duration,isrc,album,artists,releaseDate,label,images", nil
+			return "/v2/tracks/" + catalogapi.EscapedID(id) + "?fields[track]=id,title,url,duration,isrc,album,artists,releaseDate,label,images", nil
 		},
 		Search: func(q adapters.Query) (string, string, []byte, error) {
 			if token == "" || apiKey == "" {
@@ -42,7 +42,7 @@ func NewWithConfig(baseURL, token, apiKey string) adapters.ProviderAdapter {
 				return "", "", nil, nil
 			}
 			body, err := json.Marshal(map[string]any{"searchFilters": filters, "sortBy": "relevance"})
-			return "POST", "/v2/search/tracks?first=5&fields[track]=title,duration,isrc,album,artists&fields[album]=title,releaseDate,images", body, err
+			return "POST", "/v2/search/tracks?first=5&fields[track]=id,title,url,duration,isrc,album,artists&fields[album]=title,releaseDate,images", body, err
 		},
 		ExtraHeader: map[string]string{"x-marketplace": "US"},
 	})

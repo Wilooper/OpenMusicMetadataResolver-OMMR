@@ -64,6 +64,22 @@ func TestHandleExtractReportsPerSourceFieldsWithoutFillingMissingCredits(t *test
 	t.Fatalf("lyricist credit should be reported as present: %+v", result)
 }
 
+func TestExtractionLinksAreScopedToTheExtractedProvider(t *testing.T) {
+	registry := adapters.NewRegistry()
+	registry.Register(extractionFixtureAdapter{name: "tidal", track: canonical.Track{Title: "Song", IDs: map[string]string{"tidal": "123", "spotify": "4cOdK2wGLETKBW3PvgPWqT"}}})
+	handler := NewHandler(nil, registry, &config.Config{ProviderTimeout: time.Second})
+	response := httptest.NewRecorder()
+	handler.HandleExtract(response, httptest.NewRequest("GET", "/v1/extract?provider=tidal&id=123", nil))
+	var got extractionResponse
+	if err := json.Unmarshal(response.Body.Bytes(), &got); err != nil {
+		t.Fatal(err)
+	}
+	result := got.Sources[0].Results[0]
+	if len(result.Links.Platforms) != 1 || result.Links.Platforms["tidal"].URL != "https://tidal.com/track/123" || result.Track.IDs["spotify"] != "" {
+		t.Fatal("extraction leaked another provider's identity")
+	}
+}
+
 func TestDescribeExtractedTrackMarksUnavailableMetadata(t *testing.T) {
 	result := describeExtractedTrack(canonical.Track{Title: "Title", Artists: []canonical.Artist{{Name: "Artist"}}})
 	if len(result.MissingFields) == 0 {

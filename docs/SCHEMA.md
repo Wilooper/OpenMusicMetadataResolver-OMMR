@@ -135,3 +135,13 @@ type ResolverStats struct {
     CandidatesEvaluated  int `json:"candidates_evaluated"`
 }
 ```
+
+
+### Platform link extension
+
+`Track` remains unchanged. `extensions.platform_links` contains `ommr_id`, `isrc`,
+`platforms`, and `unavailable_platforms`. Each platform entry contains `id`,
+`id_type`, optional `lookup_id`, `url`, `url_source`, `confidence`, and
+`match_method`. See [PLATFORM_LINKS.md](PLATFORM_LINKS.md). Unknown identifiers
+and URLs are omitted. Only a provider's own ID is emitted as an IdentityMatch;
+provider `_url` and `_track_id` helpers in `ids` do not assert extra matches.

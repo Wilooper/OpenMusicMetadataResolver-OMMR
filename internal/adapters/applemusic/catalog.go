@@ -12,6 +12,7 @@ import (
 
 	"github.com/ommr/ommr/internal/adapters"
 	"github.com/ommr/ommr/internal/models/canonical"
+	"github.com/ommr/ommr/internal/platformlinks"
 	"github.com/ommr/ommr/pkg/query"
 )
 
@@ -22,6 +23,7 @@ type catalogSong struct {
 	Type       string `json:"type"`
 	Attributes struct {
 		Name          string   `json:"name"`
+		URL           string   `json:"url"`
 		ArtistName    string   `json:"artistName"`
 		AlbumName     string   `json:"albumName"`
 		ComposerName  string   `json:"composerName"`
@@ -149,10 +151,12 @@ func normalizeCatalogSong(song catalogSong) canonical.Track {
 	if len(a.Previews) > 0 {
 		preview = a.Previews[0].URL
 	}
-	return canonical.Track{Title: a.Name, Artists: []canonical.Artist{{Name: a.ArtistName, Role: "main"}},
+	track := canonical.Track{Title: a.Name, Artists: []canonical.Artist{{Name: a.ArtistName, Role: "main"}},
 		Album:      canonical.Album{Title: a.AlbumName, ReleaseDate: a.ReleaseDate, Images: images},
 		DurationMS: a.Duration, ReleaseDate: a.ReleaseDate, ISRC: a.ISRC,
 		Explicit: a.ContentRating == "explicit", Genres: a.GenreNames, Images: images, Credits: credits,
 		PreviewURL: preview, TrackNumber: a.TrackNumber, DiscNumber: a.DiscNumber,
 		IDs: map[string]string{ProviderName: song.ID}, Sources: []string{ProviderName}}
+	platformlinks.SetProviderURL(&track, ProviderName, a.URL)
+	return track
 }

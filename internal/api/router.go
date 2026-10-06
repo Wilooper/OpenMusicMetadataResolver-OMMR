@@ -15,6 +15,7 @@ func NewRouter(h *Handler, logger *slog.Logger, rps float64) http.Handler {
 
 	// REST API Endpoints
 	mux.HandleFunc("/v1/resolve", h.HandleResolve)
+	mux.HandleFunc("/v1/links", h.HandleLinks)
 	mux.HandleFunc("/v1/extract", h.HandleExtract)
 	mux.HandleFunc("/v1/bulk", h.HandleBulk)
 	mux.HandleFunc("/v1/search", h.HandleSearch)

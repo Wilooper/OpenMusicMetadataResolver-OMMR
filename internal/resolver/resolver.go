@@ -19,6 +19,7 @@ import (
 	"github.com/ommr/ommr/internal/matcher"
 	"github.com/ommr/ommr/internal/merger"
 	"github.com/ommr/ommr/internal/models/canonical"
+	"github.com/ommr/ommr/internal/platformlinks"
 	"github.com/ommr/ommr/internal/ratelimit"
 	"github.com/ommr/ommr/pkg/query"
 	"golang.org/x/sync/errgroup"
@@ -84,7 +85,7 @@ func (res *Resolver) Resolve(ctx context.Context, req ResolveRequest) (*ResolveR
 	req.Query.Artist = query.CleanArtist(req.Query.Artist)
 
 	inputType := determineInputType(req.Query)
-	cacheKey := "resolved:rich-v1:" + hashQuery(req.Query, req.Sources)
+	cacheKey := "resolved:links-v1:" + hashQuery(req.Query, req.Sources)
 
 	// 1. Check cache unless bypass_cache is true
 	if !req.BypassCache && res.cache != nil {
@@ -270,10 +271,26 @@ func (res *Resolver) Resolve(ctx context.Context, req ResolveRequest) (*ResolveR
 				ad := adapter
 				if !sourcesStatus[idx].Matched {
 					secG.Go(func() error {
+						start := time.Now()
+						defer func() { sourcesStatus[idx].LatencyMS += time.Since(start).Milliseconds() }()
 						if err := res.limiter.Wait(secCtx, ad.Name()); err != nil {
+							sourcesStatus[idx].Success = false
+							sourcesStatus[idx].Error = err.Error()
+							sourcesStatus[idx].RejectionReason = "provider_error"
 							return nil
 						}
 						cands, err := ad.Search(secCtx, secQuery)
+						if err != nil {
+							sourcesStatus[idx].Success = false
+							sourcesStatus[idx].Error = err.Error()
+							sourcesStatus[idx].RejectionReason = "provider_error"
+							return nil
+						}
+						sourcesStatus[idx].Error = ""
+						sourcesStatus[idx].Success = true
+						if len(cands) == 0 {
+							sourcesStatus[idx].RejectionReason = "no_results"
+						}
 						if err == nil && len(cands) > 0 {
 							if len(cands) > res.maxCandidatesPerProvider {
 								cands = cands[:res.maxCandidatesPerProvider]
@@ -378,7 +395,9 @@ func (res *Resolver) Resolve(ctx context.Context, req ResolveRequest) (*ResolveR
 	emitIdentityMatches := func(c canonical.TrackCandidate) {
 		method := "exact_title_artist"
 		idConf := identity.CalculateIdentityConfidence(c.MatchScore, c.Provider)
-		if evalQuery.ISRC != "" && c.Track.ISRC != "" && strings.EqualFold(strings.TrimSpace(evalQuery.ISRC), strings.TrimSpace(c.Track.ISRC)) {
+		if candidateMatchesDirectID(req.Query, c) {
+			method = "direct_id"
+		} else if evalQuery.ISRC != "" && c.Track.ISRC != "" && strings.EqualFold(strings.TrimSpace(evalQuery.ISRC), strings.TrimSpace(c.Track.ISRC)) {
 			method = "isrc"
 			idConf = identity.CalculateIdentityConfidence(1.0, "isrc")
 		} else if c.Track.DurationMS > 0 {
@@ -386,6 +405,9 @@ func (res *Resolver) Resolve(ctx context.Context, req ResolveRequest) (*ResolveR
 		}
 
 		for prov, pID := range c.Track.IDs {
+			if prov != c.Provider || pID == "" {
+				continue
+			}
 			identityMatches = append(identityMatches, canonical.IdentityMatch{
 				Provider:   prov,
 				ID:         pID,
@@ -481,6 +503,7 @@ func (res *Resolver) Resolve(ctx context.Context, req ResolveRequest) (*ResolveR
 
 		mergedTrack.IdentityStatus, mergedTrack.IdentityReasons = canonical.GetIdentityStatus(mergedTrack.MatchScore, isrcCount, hasMBID, hasISRC)
 		mergedTrack.CanonicalID = res.identityEngine.GenerateID(*mergedTrack)
+		platformlinks.Attach(mergedTrack)
 	}
 
 	metadataSources := make([]string, 0)

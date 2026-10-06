@@ -18,6 +18,7 @@ import (
 	"github.com/ommr/ommr/internal/idresolver"
 	"github.com/ommr/ommr/internal/matcher"
 	"github.com/ommr/ommr/internal/models/canonical"
+	"github.com/ommr/ommr/internal/platformlinks"
 	"github.com/ommr/ommr/internal/resolver"
 	"github.com/ommr/ommr/pkg/query"
 )
@@ -46,6 +47,14 @@ func NewHandler(res *resolver.Resolver, reg *adapters.Registry, cfg *config.Conf
 
 // HandleResolve handles GET /v1/resolve
 func (h *Handler) HandleResolve(w http.ResponseWriter, r *http.Request) {
+	h.handleResolve(w, r, false)
+}
+
+func (h *Handler) HandleLinks(w http.ResponseWriter, r *http.Request) {
+	h.handleResolve(w, r, true)
+}
+
+func (h *Handler) handleResolve(w http.ResponseWriter, r *http.Request, linksOnly bool) {
 	if r.Method != http.MethodGet {
 		http.Error(w, `{"error":"Method not allowed"}`, http.StatusMethodNotAllowed)
 		return
@@ -115,6 +124,19 @@ func (h *Handler) HandleResolve(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
+	if linksOnly {
+		result := linksResponse{ProviderStatus: resp.ProviderStatus}
+		if resp.Track != nil {
+			result.Links = platformlinks.Build(*resp.Track)
+			result.Title = resp.Track.Title
+			result.Artists = resp.Track.Artists
+			result.IdentityStatus = resp.Track.IdentityStatus
+		} else {
+			result.Links = platformlinks.Build(canonical.Track{})
+		}
+		_ = json.NewEncoder(w).Encode(result)
+		return
+	}
 	_ = json.NewEncoder(w).Encode(resp)
 }
 

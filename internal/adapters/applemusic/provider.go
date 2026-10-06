@@ -14,6 +14,7 @@ import (
 	"github.com/ommr/ommr/internal/adapters"
 	"github.com/ommr/ommr/internal/models/canonical"
 	"github.com/ommr/ommr/internal/models/provider"
+	"github.com/ommr/ommr/internal/platformlinks"
 	"github.com/ommr/ommr/pkg/query"
 )
 
@@ -208,7 +209,7 @@ func (p *Provider) normalizeResult(item provider.AppleTrackResult) canonical.Tra
 
 	explicit := strings.EqualFold(item.TrackExplicitness, "explicit")
 
-	return canonical.Track{
+	track := canonical.Track{
 		Title:       item.TrackName,
 		Artists:     artists,
 		Album:       album,
@@ -224,6 +225,8 @@ func (p *Provider) normalizeResult(item provider.AppleTrackResult) canonical.Tra
 		IDs:         map[string]string{"applemusic": strconv.FormatInt(item.TrackID, 10)},
 		Sources:     []string{ProviderName},
 	}
+	platformlinks.SetProviderURL(&track, ProviderName, item.TrackViewURL)
+	return track
 }
 
 func parseDate(d string) string {

@@ -213,3 +213,13 @@ For ID-based resolution, providers may report `rejection_reason: "unverified_can
   "total": 5
 }
 ```
+
+
+## GET /v1/links
+
+Uses the same query parameters and identity gates as `/v1/resolve`. Returns
+`links` (OMMR ID, ISRC, accepted native IDs and song URLs, unavailable platforms),
+title, artists, identity status and provider status. Unknown IDs/URLs are omitted.
+See [PLATFORM_LINKS.md](PLATFORM_LINKS.md) for field definitions and supported services.
+Resolved and bulk tracks include the same catalog in `extensions.platform_links`;
+per-source extraction adds `links` without asserting cross-provider equivalence.

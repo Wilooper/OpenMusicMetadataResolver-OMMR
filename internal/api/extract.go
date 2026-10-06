@@ -12,6 +12,7 @@ import (
 
 	"github.com/ommr/ommr/internal/adapters"
 	"github.com/ommr/ommr/internal/models/canonical"
+	"github.com/ommr/ommr/internal/platformlinks"
 )
 
 var extractionFields = []string{"title", "artists", "album", "album_type", "release_date", "year", "artwork", "duration_ms", "isrc", "iswc", "genres", "language", "explicit", "preview_url", "track_number", "disc_number", "label", "barcode", "credits", "lyricist", "composer", "producer", "wikipedia_context"}
@@ -25,11 +26,12 @@ type extractionSource struct {
 }
 
 type extractedTrack struct {
-	Track         canonical.Track `json:"track"`
-	Year          int             `json:"year,omitempty"`
-	ThumbnailURL  string          `json:"thumbnail_url,omitempty"`
-	PresentFields []string        `json:"present_fields"`
-	MissingFields []string        `json:"missing_fields"`
+	Track         canonical.Track       `json:"track"`
+	Year          int                   `json:"year,omitempty"`
+	ThumbnailURL  string                `json:"thumbnail_url,omitempty"`
+	PresentFields []string              `json:"present_fields"`
+	MissingFields []string              `json:"missing_fields"`
+	Links         platformlinks.Catalog `json:"links"`
 }
 
 type extractionResponse struct {
@@ -113,6 +115,7 @@ func (h *Handler) HandleExtract(w http.ResponseWriter, r *http.Request) {
 				source.Status = "ok"
 				source.Results = make([]extractedTrack, 0, len(candidates))
 				for _, candidate := range candidates {
+					candidate.Track.IDs = platformlinks.ProviderIDs(adapter.Name(), candidate.Track.IDs)
 					source.Results = append(source.Results, describeExtractedTrack(candidate.Track))
 				}
 			}
@@ -126,6 +129,7 @@ func (h *Handler) HandleExtract(w http.ResponseWriter, r *http.Request) {
 
 func describeExtractedTrack(track canonical.Track) extractedTrack {
 	result := extractedTrack{Track: track, PresentFields: make([]string, 0, len(extractionFields)), MissingFields: make([]string, 0, len(extractionFields))}
+	result.Links = platformlinks.Build(track)
 	if len(track.Images) > 0 {
 		var best canonical.Image
 		for _, image := range track.Images {

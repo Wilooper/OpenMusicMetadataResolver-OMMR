@@ -4,15 +4,18 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"html"
 	"io"
 	"net/http"
 	"net/url"
+	"regexp"
 	"strings"
 	"time"
 
 	"github.com/ommr/ommr/internal/adapters"
 	"github.com/ommr/ommr/internal/models/canonical"
 	"github.com/ommr/ommr/internal/models/provider"
+	"github.com/ommr/ommr/internal/platformlinks"
 )
 
 const (
@@ -79,6 +82,7 @@ func (p *Provider) FetchByID(ctx context.Context, idType string, id string) (*ca
 	}
 
 	track := p.normalizeOembed(permalinkOf(trackURL), oembed)
+	platformlinks.SetProviderURL(&track, ProviderName, trackURL)
 	return &canonical.TrackCandidate{
 		Provider:    ProviderName,
 		Track:       track,
@@ -121,7 +125,7 @@ func (p *Provider) normalizeOembed(permalink string, oembed provider.SoundCloudO
 		})
 	}
 
-	return canonical.Track{
+	track := canonical.Track{
 		Title:   title,
 		Artists: []canonical.Artist{{Name: artist, Role: "main"}},
 		Album: canonical.Album{
@@ -132,6 +136,34 @@ func (p *Provider) normalizeOembed(permalink string, oembed provider.SoundCloudO
 		IDs:     map[string]string{"soundcloud": permalink},
 		Sources: []string{ProviderName},
 	}
+	if id := nativeTrackID(oembed.HTML); id != "" {
+		track.IDs["soundcloud_track_id"] = id
+	}
+	return track
+}
+
+var iframeSource = regexp.MustCompile(`(?i)<iframe\b[^>]*\bsrc\s*=\s*["']([^"']+)["']`)
+var numericTrackPath = regexp.MustCompile(`^/tracks/([0-9]+)$`)
+
+func nativeTrackID(embedHTML string) string {
+	for _, match := range iframeSource.FindAllStringSubmatch(embedHTML, -1) {
+		widget, err := url.Parse(html.UnescapeString(match[1]))
+		if err != nil || widget.Scheme != "https" || widget.Host != "w.soundcloud.com" || widget.User != nil {
+			continue
+		}
+		values := widget.Query()["url"]
+		if len(values) != 1 {
+			continue
+		}
+		api, err := url.Parse(values[0])
+		if err != nil || api.Scheme != "https" || api.Host != "api.soundcloud.com" || api.User != nil || api.RawQuery != "" {
+			continue
+		}
+		if match := numericTrackPath.FindStringSubmatch(api.Path); len(match) == 2 {
+			return match[1]
+		}
+	}
+	return ""
 }
 
 // normalizeTrackURL converts a SoundCloud permalink or URL into a full URL.
