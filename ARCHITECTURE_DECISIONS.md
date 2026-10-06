@@ -50,3 +50,35 @@
 - **Status**: Approved
 - **Context**: ytmusic's oEmbed-only flow could not search by artist/title and returned sparse player data.
 - **Decision**: Use YouTube's public InnerTube endpoints (`/youtubei/v1/search` and `/youtubei/v1/player`) with the public web API key to enable zero-key artist/title search and rich player metadata, with oEmbed retained as fallback (`ytmusic-innertube-v1`).
+
+## ADR-008: Trusted Seed for Cross-Provider Identity
+- **Status**: Approved
+- **Context**: When resolving a platform ID, cross-provider candidates could be merged before the comparison query was constructed. A higher-priority provider could replace the directly fetched track's title and artist, allowing unrelated platform IDs to appear as matches.
+- **Decision**:
+  1. For a platform-ID request, seed resolution only from the candidate returned by the matching provider with the exact requested ID. For an ISRC request, seed only from candidates with that exact ISRC.
+  2. Build the cross-provider search and comparison query from this seed before evaluating secondary candidates.
+  3. Require both title and artist component scores of at least `0.72` for cross-provider candidates when resolving from a platform ID; an exact seed ISRC is accepted as stronger identity evidence.
+  4. Reject conflicting ISRCs and do not treat another provider's claimed ID namespace as a direct match.
+- **Consequence**: A weak or unavailable seed can produce no cross-platform IDs, but a secondary provider cannot redefine the requested recording and contaminate its identity.
+
+## ADR-009: Modular Provider Extraction and Credential-Gated Catalog Sources
+- **Status**: Approved
+- **Context**: A merged canonical record obscures what each catalog actually returned, while new commercial providers have different access requirements and metadata coverage.
+- **Decision**:
+  1. Add `/v1/extract` to return per-provider normalized track data, release year, thumbnail URL, and explicit present/missing field coverage without merging provider responses.
+  2. Add separate Qobuz, TIDAL, Amazon Music, and Pandora adapters and keep source IDs namespaced to their provider.
+  3. Use provider-issued credentials for gated APIs; do not scrape provider pages or invent missing credits. Test adapter requests and normalization with deterministic JSON fixtures.
+- **Consequence**: Source comparison is observable and reproducible. Live tests against credential-gated services require valid access and catalog availability may differ by territory.
+
+## ADR-010: Rich Catalog Credentials and Work-Linked Context
+- **Status**: Approved
+- **Context**: Catalog providers vary in documented fields and access; free-text matching can assign a video or article to the wrong recording.
+- **Decision**: Keep keyless lookup available and add operator-supplied official Spotify client credentials and Apple Music developer token, optional YouTube browser cookie for its unofficial InnerTube interface, and Amazon closed-beta credentials. Read private env/config files only with owner-only permissions; restrict credentialed hosts and redirects. MusicBrainz work relations provide explicit lyricist/composer roles. Wikipedia context is fetched only from a linked work article and carried in `extensions.wikipedia`; it cannot assert an ID match. `/v1/extract` exposes a field inventory for each source.
+- **Consequence**: Optional richer fields require authorized credentials and catalog availability. Context can be absent even for a known recording; no inferred lyricist or song history is fabricated.
+
+
+## ADR-011: Enrich Only Accepted Recording Identities
+- **Status**: Implemented
+- **Context**: MusicBrainz search responses omit work relationships, so normal resolution could not provide the credits and article context available from direct recording extraction.
+- **Decision**: Perform a rate-limited, time-bounded recording lookup only for an accepted MusicBrainz candidate. Require the same MBID, title, primary artist and known ISRC before attaching credits, ISWC, language or extensions. Do not replace recording identity or add IDs through enrichment. Report enrichment outcome separately from lookup success. Preserve the requested ISRC when a recording reports multiple codes. Fetch article context only for a single linked work; reject disambiguation summaries and conflicting Wikidata IDs. Retain revision/entity attribution when available. Use a new resolved-cache namespace for enriched results.
+- **Consequence**: Resolution adds a bounded lookup for accepted MusicBrainz records. Lookup failure preserves the accepted result with sparse metadata. Multiple-work recordings retain linked credits but omit ambiguous singular composition fields and context. Fixture tests verify requests and identity constraints; live credentialed service equivalence remains unverified.

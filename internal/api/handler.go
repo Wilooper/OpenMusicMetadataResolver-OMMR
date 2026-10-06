@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
 	"sort"
 	"strconv"
@@ -56,15 +57,22 @@ func (h *Handler) HandleResolve(w http.ResponseWriter, r *http.Request) {
 	deezerID := q.Get("deezer_id")
 	appleID := q.Get("apple_id")
 	soundcloudID := h.idResolver.ExtractSoundCloudID(q.Get("soundcloud_id"))
+	qobuzID := q.Get("qobuz_id")
+	tidalID := q.Get("tidal_id")
+	amazonMusicID := q.Get("amazonmusic_id")
+	if amazonMusicID == "" {
+		amazonMusicID = q.Get("amazon_music_id")
+	}
+	pandoraID := q.Get("pandora_id")
 	isrc := q.Get("isrc")
 	artist := q.Get("artist")
 	title := q.Get("title")
 	album := q.Get("album")
 
-	if spotifyID == "" && youtubeID == "" && deezerID == "" && appleID == "" && soundcloudID == "" && isrc == "" && (artist == "" || title == "") {
+	if spotifyID == "" && youtubeID == "" && deezerID == "" && appleID == "" && soundcloudID == "" && qobuzID == "" && tidalID == "" && amazonMusicID == "" && pandoraID == "" && isrc == "" && (artist == "" || title == "") {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusBadRequest)
-		_, _ = w.Write([]byte(`{"error":"Missing query parameter. Provide spotify_id, youtube_id, deezer_id, apple_id, soundcloud_id, isrc, or both artist and title."}`))
+		_, _ = w.Write([]byte(`{"error":"Provide a supported provider ID, isrc, or both artist and title."}`))
 		return
 	}
 
@@ -77,15 +85,19 @@ func (h *Handler) HandleResolve(w http.ResponseWriter, r *http.Request) {
 
 	req := resolver.ResolveRequest{
 		Query: adapters.Query{
-			SpotifyID:    spotifyID,
-			YouTubeID:    youtubeID,
-			DeezerID:     deezerID,
-			AppleID:      appleID,
-			SoundCloudID: soundcloudID,
-			ISRC:         isrc,
-			Artist:       artist,
-			Title:        title,
-			Album:        album,
+			SpotifyID:     spotifyID,
+			YouTubeID:     youtubeID,
+			DeezerID:      deezerID,
+			AppleID:       appleID,
+			SoundCloudID:  soundcloudID,
+			QobuzID:       qobuzID,
+			TidalID:       tidalID,
+			AmazonMusicID: amazonMusicID,
+			PandoraID:     pandoraID,
+			ISRC:          isrc,
+			Artist:        artist,
+			Title:         title,
+			Album:         album,
 		},
 		Sources:     sources,
 		BypassCache: bypassCache,
@@ -113,9 +125,17 @@ func (h *Handler) HandleBulk(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	const maxBulkRequestBytes = 1 << 20
+	r.Body = http.MaxBytesReader(w, r.Body, maxBulkRequestBytes)
+	decoder := json.NewDecoder(r.Body)
 	var req BulkResolveRequest
-	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+	if err := decoder.Decode(&req); err != nil {
 		http.Error(w, `{"error":"Invalid JSON payload"}`, http.StatusBadRequest)
+		return
+	}
+	var trailing any
+	if err := decoder.Decode(&trailing); err != io.EOF {
+		http.Error(w, `{"error":"Request body must contain a single JSON object"}`, http.StatusBadRequest)
 		return
 	}
 

@@ -24,15 +24,31 @@ const (
 )
 
 type Provider struct {
-	httpClient *http.Client
+	httpClient     *http.Client
+	catalogToken   string
+	storefront     string
+	catalogBaseURL string
 }
 
 var _ adapters.ProviderAdapter = (*Provider)(nil)
 
 func New() *Provider {
 	return &Provider{
-		httpClient: &http.Client{Timeout: 5 * time.Second},
+		httpClient: &http.Client{Timeout: 5 * time.Second, CheckRedirect: func(_ *http.Request, _ []*http.Request) error { return http.ErrUseLastResponse }},
 	}
+}
+
+// NewWithCatalog enables Apple's official Music catalog API. A developer token
+// is supplied by the operator; the keyless iTunes path remains the fallback.
+func NewWithCatalog(token, storefront string) *Provider {
+	p := New()
+	p.catalogToken = token
+	if storefront == "" {
+		storefront = "us"
+	}
+	p.storefront = storefront
+	p.catalogBaseURL = "https://api.music.apple.com"
+	return p
 }
 
 func (p *Provider) Name() string {
@@ -46,6 +62,9 @@ func (p *Provider) Version() string {
 func (p *Provider) FetchByID(ctx context.Context, idType string, id string) (*canonical.TrackCandidate, error) {
 	if idType != "applemusic" && idType != "apple_id" && idType != "itunes" {
 		return nil, fmt.Errorf("unsupported ID type %q for Apple Music", idType)
+	}
+	if p.catalogToken != "" && idType != "itunes" {
+		return p.fetchCatalogID(ctx, id)
 	}
 
 	reqURL := fmt.Sprintf("%s/lookup?id=%s&entity=song", BaseURL, url.QueryEscape(id))
@@ -74,7 +93,19 @@ func (p *Provider) FetchByID(ctx context.Context, idType string, id string) (*ca
 		return nil, fmt.Errorf("apple music track %s not found", id)
 	}
 
-	track := p.normalizeResult(searchResp.Results[0])
+	var item *provider.AppleTrackResult
+	for n := range searchResp.Results {
+		result := &searchResp.Results[n]
+		if result.TrackID == 0 || strconv.FormatInt(result.TrackID, 10) != id || (result.WrapperType != "track" && result.Kind != "song") {
+			continue
+		}
+		item = result
+		break
+	}
+	if item == nil {
+		return nil, fmt.Errorf("apple music song %s not found", id)
+	}
+	track := p.normalizeResult(*item)
 	return &canonical.TrackCandidate{
 		Provider:    ProviderName,
 		Track:       track,
@@ -84,6 +115,9 @@ func (p *Provider) FetchByID(ctx context.Context, idType string, id string) (*ca
 }
 
 func (p *Provider) Search(ctx context.Context, q adapters.Query) ([]canonical.TrackCandidate, error) {
+	if p.catalogToken != "" {
+		return p.searchCatalog(ctx, q)
+	}
 	var term string
 	if q.Artist != "" && q.Title != "" {
 		term = fmt.Sprintf("%s %s", query.CleanArtist(q.Artist), query.CleanTitle(q.Title))

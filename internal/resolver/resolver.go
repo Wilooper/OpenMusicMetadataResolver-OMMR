@@ -7,8 +7,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"log/slog"
+	"sort"
 	"strings"
 	"sync"
+	"sync/atomic"
 	"time"
 
 	"github.com/ommr/ommr/internal/adapters"
@@ -69,13 +71,20 @@ func New(r *adapters.Registry, c cache.Cache, l *ratelimit.ProviderLimiter, ttl 
 	}
 }
 
+func (res *Resolver) WaitProvider(ctx context.Context, provider string) error {
+	if res == nil || res.limiter == nil {
+		return nil
+	}
+	return res.limiter.Wait(ctx, provider)
+}
+
 func (res *Resolver) Resolve(ctx context.Context, req ResolveRequest) (*ResolveResponse, error) {
 	// Clean text inputs
 	req.Query.Title = query.CleanTitle(req.Query.Title)
 	req.Query.Artist = query.CleanArtist(req.Query.Artist)
 
 	inputType := determineInputType(req.Query)
-	cacheKey := "resolved:" + hashQuery(req.Query)
+	cacheKey := "resolved:rich-v1:" + hashQuery(req.Query, req.Sources)
 
 	// 1. Check cache unless bypass_cache is true
 	if !req.BypassCache && res.cache != nil {
@@ -104,7 +113,7 @@ func (res *Resolver) Resolve(ctx context.Context, req ResolveRequest) (*ResolveR
 	candidatesMu := sync.Mutex{}
 	candidates := make([]canonical.TrackCandidate, 0, len(activeAdapters))
 	sourcesStatus := make([]canonical.SourceStatus, len(activeAdapters))
-	primarySource := ""
+	var primarySource string
 
 	for i, adapter := range activeAdapters {
 		idx := i
@@ -133,35 +142,54 @@ func (res *Resolver) Resolve(ctx context.Context, req ResolveRequest) (*ResolveR
 				fetchErr = err
 				if cand != nil {
 					fetched = append(fetched, *cand)
-					primarySource = ad.Name()
 				}
 			} else if req.Query.DeezerID != "" && ad.Name() == "deezer" {
 				cand, err := ad.FetchByID(gCtx, "deezer", req.Query.DeezerID)
 				fetchErr = err
 				if cand != nil {
 					fetched = append(fetched, *cand)
-					primarySource = ad.Name()
 				}
 			} else if req.Query.AppleID != "" && ad.Name() == "applemusic" {
 				cand, err := ad.FetchByID(gCtx, "applemusic", req.Query.AppleID)
 				fetchErr = err
 				if cand != nil {
 					fetched = append(fetched, *cand)
-					primarySource = ad.Name()
 				}
 			} else if req.Query.SoundCloudID != "" && ad.Name() == "soundcloud" {
 				cand, err := ad.FetchByID(gCtx, "soundcloud", req.Query.SoundCloudID)
 				fetchErr = err
 				if cand != nil {
 					fetched = append(fetched, *cand)
-					primarySource = ad.Name()
+				}
+			} else if req.Query.QobuzID != "" && ad.Name() == "qobuz" {
+				cand, err := ad.FetchByID(gCtx, "qobuz", req.Query.QobuzID)
+				fetchErr = err
+				if cand != nil {
+					fetched = append(fetched, *cand)
+				}
+			} else if req.Query.TidalID != "" && ad.Name() == "tidal" {
+				cand, err := ad.FetchByID(gCtx, "tidal", req.Query.TidalID)
+				fetchErr = err
+				if cand != nil {
+					fetched = append(fetched, *cand)
+				}
+			} else if req.Query.AmazonMusicID != "" && ad.Name() == "amazonmusic" {
+				cand, err := ad.FetchByID(gCtx, "amazonmusic", req.Query.AmazonMusicID)
+				fetchErr = err
+				if cand != nil {
+					fetched = append(fetched, *cand)
+				}
+			} else if req.Query.PandoraID != "" && ad.Name() == "pandora" {
+				cand, err := ad.FetchByID(gCtx, "pandora", req.Query.PandoraID)
+				fetchErr = err
+				if cand != nil {
+					fetched = append(fetched, *cand)
 				}
 			} else if req.Query.YouTubeID != "" && ad.Name() == "ytmusic" {
 				cand, err := ad.FetchByID(gCtx, "youtube", req.Query.YouTubeID)
 				fetchErr = err
 				if cand != nil {
 					fetched = append(fetched, *cand)
-					primarySource = ad.Name()
 				}
 			} else {
 				cands, err := ad.Search(gCtx, req.Query)
@@ -195,19 +223,45 @@ func (res *Resolver) Resolve(ctx context.Context, req ResolveRequest) (*ResolveR
 
 	_ = g.Wait()
 
+	seedCandidates := trustedSeedCandidates(req.Query, candidates)
+	if inputType != "artist_title" {
+		candidates = seedCandidates
+		trustedProviders := make(map[string]bool, len(seedCandidates))
+		for _, candidate := range seedCandidates {
+			trustedProviders[strings.ToLower(candidate.Provider)] = true
+		}
+		for i := range sourcesStatus {
+			name := strings.ToLower(sourcesStatus[i].Name)
+			if sourcesStatus[i].Matched && !trustedProviders[name] {
+				sourcesStatus[i].Matched = false
+				sourcesStatus[i].RejectionReason = "unverified_candidate"
+			}
+		}
+	}
+	seedTrack := res.merger.MergeCandidates(seedCandidates)
+
+	directSource := directProvider(req.Query)
+	if directSource != "" {
+		for _, status := range sourcesStatus {
+			if strings.EqualFold(status.Name, directSource) && status.Matched {
+				primarySource = directSource
+				break
+			}
+		}
+	}
+
 	// Stage 2 & 3: ISRC & Cleaned Metadata Cross-Platform ID Discovery
-	crossResolved := false
-	if len(candidates) > 0 && inputType != "artist_title" {
-		initialMerged := res.merger.MergeCandidates(candidates)
-		if initialMerged != nil && (initialMerged.Title != "" || initialMerged.ISRC != "") {
-			cleanTitle := query.CleanTitle(initialMerged.Title)
-			cleanArtist := query.CleanArtist(getPrimaryArtist(initialMerged.Artists))
+	var crossResolved atomic.Bool
+	if seedTrack != nil && len(candidates) > 0 && inputType != "artist_title" {
+		if seedTrack.Title != "" || seedTrack.ISRC != "" {
+			cleanTitle := query.CleanTitle(seedTrack.Title)
+			cleanArtist := query.CleanArtist(getPrimaryArtist(seedTrack.Artists))
 
 			secQuery := adapters.Query{
 				Title:  cleanTitle,
 				Artist: cleanArtist,
-				Album:  query.CleanTitle(initialMerged.Album.Title),
-				ISRC:   initialMerged.ISRC,
+				Album:  query.CleanTitle(seedTrack.Album.Title),
+				ISRC:   seedTrack.ISRC,
 			}
 
 			secG, secCtx := errgroup.WithContext(ctx)
@@ -221,10 +275,13 @@ func (res *Resolver) Resolve(ctx context.Context, req ResolveRequest) (*ResolveR
 						}
 						cands, err := ad.Search(secCtx, secQuery)
 						if err == nil && len(cands) > 0 {
+							if len(cands) > res.maxCandidatesPerProvider {
+								cands = cands[:res.maxCandidatesPerProvider]
+							}
 							sourcesStatus[idx].Matched = true
 							sourcesStatus[idx].Success = true
 							sourcesStatus[idx].RejectionReason = ""
-							crossResolved = true
+							crossResolved.Store(true)
 							candidatesMu.Lock()
 							candidates = append(candidates, cands...)
 							candidatesMu.Unlock()
@@ -259,20 +316,19 @@ func (res *Resolver) Resolve(ctx context.Context, req ResolveRequest) (*ResolveR
 
 	// Construct evaluation query for unified matcher pipeline
 	evalQuery := req.Query
-	if evalQuery.Title == "" || evalQuery.Artist == "" {
-		initMerged := res.merger.MergeCandidates(candidates)
-		if initMerged != nil {
-			if evalQuery.Title == "" {
-				evalQuery.Title = initMerged.Title
-			}
-			if evalQuery.Artist == "" {
-				evalQuery.Artist = getPrimaryArtist(initMerged.Artists)
-			}
+	if seedTrack != nil {
+		if evalQuery.Title == "" {
+			evalQuery.Title = seedTrack.Title
+		}
+		if evalQuery.Artist == "" {
+			evalQuery.Artist = getPrimaryArtist(seedTrack.Artists)
+		}
+		if inputType != "artist_title" {
 			if evalQuery.Album == "" {
-				evalQuery.Album = initMerged.Album.Title
+				evalQuery.Album = seedTrack.Album.Title
 			}
 			if evalQuery.ISRC == "" {
-				evalQuery.ISRC = initMerged.ISRC
+				evalQuery.ISRC = seedTrack.ISRC
 			}
 		}
 	}
@@ -304,11 +360,25 @@ func (res *Resolver) Resolve(ctx context.Context, req ResolveRequest) (*ResolveR
 		}
 		return *c.Track.MatchBreakdown.Artists >= minArtistScore
 	}
+	strictIdentityGate := func(c canonical.TrackCandidate) bool {
+		if evalQuery.ISRC != "" {
+			return c.Track.ISRC != "" && strings.EqualFold(strings.TrimSpace(c.Track.ISRC), strings.TrimSpace(evalQuery.ISRC))
+		}
+		if candidateMatchesDirectID(evalQuery, c) {
+			return true
+		}
+		if directProvider(req.Query) == "" {
+			return true
+		}
+		const minIdentityComponentScore = 0.72
+		return c.Track.MatchBreakdown.Title != nil && *c.Track.MatchBreakdown.Title >= minIdentityComponentScore &&
+			c.Track.MatchBreakdown.Artists != nil && *c.Track.MatchBreakdown.Artists >= minIdentityComponentScore
+	}
 
 	emitIdentityMatches := func(c canonical.TrackCandidate) {
 		method := "exact_title_artist"
 		idConf := identity.CalculateIdentityConfidence(c.MatchScore, c.Provider)
-		if c.Track.ISRC != "" {
+		if evalQuery.ISRC != "" && c.Track.ISRC != "" && strings.EqualFold(strings.TrimSpace(evalQuery.ISRC), strings.TrimSpace(c.Track.ISRC)) {
 			method = "isrc"
 			idConf = identity.CalculateIdentityConfidence(1.0, "isrc")
 		} else if c.Track.DurationMS > 0 {
@@ -327,12 +397,15 @@ func (res *Resolver) Resolve(ctx context.Context, req ResolveRequest) (*ResolveR
 
 	bestCandidate := canonical.TrackCandidate{MatchScore: -1}
 	bestScoreByProvider := make(map[string]float64)
-	for _, c := range scored {
+	acceptedByProvider := make(map[string]int)
+	identityRejectedByProvider := make(map[string]bool)
+	for i, c := range scored {
 		if c.MatchScore > bestCandidate.MatchScore {
 			bestCandidate = c
 		}
-		if c.MatchScore > bestScoreByProvider[c.Provider] {
-			bestScoreByProvider[c.Provider] = c.MatchScore
+		provider := strings.ToLower(c.Provider)
+		if c.MatchScore > bestScoreByProvider[provider] {
+			bestScoreByProvider[provider] = c.MatchScore
 		}
 
 		if c.MatchScore < rejectThreshold || !artistGate(c) {
@@ -343,40 +416,62 @@ func (res *Resolver) Resolve(ctx context.Context, req ResolveRequest) (*ResolveR
 			)
 			continue
 		}
+		if !strictIdentityGate(c) {
+			identityRejectedByProvider[provider] = true
+			res.logger.Debug("candidate identity rejected",
+				slog.String("provider", c.Provider),
+				slog.Float64("match_score", c.MatchScore),
+				slog.String("title", c.Track.Title),
+			)
+			continue
+		}
 
-		emitIdentityMatches(c)
-		acceptedCandidates = append(acceptedCandidates, c)
+		previousIndex, exists := acceptedByProvider[provider]
+		if !exists || c.MatchScore > scored[previousIndex].MatchScore {
+			acceptedByProvider[provider] = i
+		}
+	}
+
+	for i, c := range scored {
+		if selectedIndex, ok := acceptedByProvider[strings.ToLower(c.Provider)]; ok && selectedIndex == i {
+			acceptedCandidates = append(acceptedCandidates, c)
+			emitIdentityMatches(c)
+		}
 	}
 
 	// If no candidate cleared the acceptance threshold, surface only the single
 	// highest-scoring candidate (still guarded by an absolute minimum). This
 	// avoids merging a pool of mutually-inconsistent, sub-threshold tracks and
 	// returning track/video IDs that do not match what was requested.
-	if len(acceptedCandidates) == 0 && bestCandidate.MatchScore >= minReportableScore && artistGate(bestCandidate) {
+	if len(acceptedCandidates) == 0 && bestCandidate.MatchScore >= minReportableScore && artistGate(bestCandidate) && strictIdentityGate(bestCandidate) {
 		emitIdentityMatches(bestCandidate)
 		acceptedCandidates = append(acceptedCandidates, bestCandidate)
 	}
 
 	// Derive per-provider status: a provider is "matched" when at least one of
 	// its candidates was accepted; otherwise it is rejected as below_threshold.
-	acceptedByProvider := make(map[string]bool)
+	acceptedProviderNames := make(map[string]bool)
 	for _, c := range acceptedCandidates {
-		acceptedByProvider[strings.ToLower(c.Provider)] = true
+		acceptedProviderNames[strings.ToLower(c.Provider)] = true
 	}
 	for idx := range sourcesStatus {
 		name := strings.ToLower(sourcesStatus[idx].Name)
-		if acceptedByProvider[name] {
+		if acceptedProviderNames[name] {
 			sourcesStatus[idx].Matched = true
 			sourcesStatus[idx].RejectionReason = ""
 			sourcesStatus[idx].CandidateScore = 0
 		} else if _, ok := bestScoreByProvider[name]; ok {
 			sourcesStatus[idx].Matched = false
 			sourcesStatus[idx].RejectionReason = "below_threshold"
+			if identityRejectedByProvider[name] {
+				sourcesStatus[idx].RejectionReason = "identity_mismatch"
+			}
 			sourcesStatus[idx].CandidateScore = bestScoreByProvider[name]
 		}
 	}
 
 	// Stage 6: Final Merge, Post-Enrichment Identity Stability & Canonical ID Generation
+	res.enrichAccepted(ctx, acceptedCandidates, sourcesStatus)
 	mergedTrack := res.merger.MergeCandidates(acceptedCandidates)
 	if mergedTrack != nil {
 		mergedTrack.IdentityMatches = deduplicateIdentityMatches(identityMatches)
@@ -420,7 +515,7 @@ func (res *Resolver) Resolve(ctx context.Context, req ResolveRequest) (*ResolveR
 		ResolutionStrategy: canonical.ResolutionStrategy{
 			InputType:     inputType,
 			PrimarySource: primarySource,
-			CrossResolved: crossResolved,
+			CrossResolved: crossResolved.Load(),
 		},
 		ResolverStats: ResolverStats{
 			ProvidersQueried:     len(activeAdapters),
@@ -469,6 +564,18 @@ func determineInputType(q adapters.Query) string {
 	if q.SoundCloudID != "" {
 		return "soundcloud_id"
 	}
+	if q.QobuzID != "" {
+		return "qobuz_id"
+	}
+	if q.TidalID != "" {
+		return "tidal_id"
+	}
+	if q.AmazonMusicID != "" {
+		return "amazonmusic_id"
+	}
+	if q.PandoraID != "" {
+		return "pandora_id"
+	}
 	if q.ISRC != "" {
 		return "isrc"
 	}
@@ -482,9 +589,115 @@ func getPrimaryArtist(artists []canonical.Artist) string {
 	return ""
 }
 
-func hashQuery(q adapters.Query) string {
-	raw := fmt.Sprintf("%s|%s|%s|%s|%s|%s|%s|%s|%s",
-		q.SpotifyID, q.YouTubeID, q.DeezerID, q.AppleID, q.SoundCloudID, q.ISRC, q.Artist, q.Title, q.Album)
+func hashQuery(q adapters.Query, sources []string) string {
+	normalizedSources := make([]string, 0, len(sources))
+	seen := make(map[string]struct{}, len(sources))
+	for _, source := range sources {
+		source = strings.ToLower(strings.TrimSpace(source))
+		if source == "" {
+			continue
+		}
+		if _, ok := seen[source]; ok {
+			continue
+		}
+		seen[source] = struct{}{}
+		normalizedSources = append(normalizedSources, source)
+	}
+	sort.Strings(normalizedSources)
+	raw, _ := json.Marshal(struct {
+		Query   adapters.Query `json:"query"`
+		Sources []string       `json:"sources"`
+	}{Query: q, Sources: normalizedSources})
 	h := sha256.Sum256([]byte(raw))
 	return hex.EncodeToString(h[:])
+}
+
+func directProvider(q adapters.Query) string {
+	switch {
+	case q.SpotifyID != "":
+		return "spotify"
+	case q.YouTubeID != "":
+		return "ytmusic"
+	case q.DeezerID != "":
+		return "deezer"
+	case q.AppleID != "":
+		return "applemusic"
+	case q.SoundCloudID != "":
+		return "soundcloud"
+	case q.QobuzID != "":
+		return "qobuz"
+	case q.TidalID != "":
+		return "tidal"
+	case q.AmazonMusicID != "":
+		return "amazonmusic"
+	case q.PandoraID != "":
+		return "pandora"
+	default:
+		return ""
+	}
+}
+
+func trustedSeedCandidates(q adapters.Query, candidates []canonical.TrackCandidate) []canonical.TrackCandidate {
+	provider := directProvider(q)
+	if provider != "" {
+		id := ""
+		switch provider {
+		case "spotify":
+			id = q.SpotifyID
+		case "ytmusic":
+			id = q.YouTubeID
+		case "deezer":
+			id = q.DeezerID
+		case "applemusic":
+			id = q.AppleID
+		case "soundcloud":
+			id = q.SoundCloudID
+		case "qobuz":
+			id = q.QobuzID
+		case "tidal":
+			id = q.TidalID
+		case "amazonmusic":
+			id = q.AmazonMusicID
+		case "pandora":
+			id = q.PandoraID
+		}
+		trusted := make([]canonical.TrackCandidate, 0, 1)
+		for _, candidate := range candidates {
+			if !strings.EqualFold(candidate.Provider, provider) || candidate.Track.IDs[provider] != id {
+				continue
+			}
+			trusted = append(trusted, candidate)
+		}
+		return trusted
+	}
+
+	if q.ISRC == "" {
+		return candidates
+	}
+	trusted := make([]canonical.TrackCandidate, 0, len(candidates))
+	for _, candidate := range candidates {
+		if strings.EqualFold(strings.TrimSpace(candidate.Track.ISRC), strings.TrimSpace(q.ISRC)) {
+			trusted = append(trusted, candidate)
+		}
+	}
+	return trusted
+}
+
+func candidateMatchesDirectID(q adapters.Query, candidate canonical.TrackCandidate) bool {
+	provider := directProvider(q)
+	if provider == "" || !strings.EqualFold(candidate.Provider, provider) {
+		return false
+	}
+	id := map[string]string{
+		"spotify":     q.SpotifyID,
+		"ytmusic":     q.YouTubeID,
+		"deezer":      q.DeezerID,
+		"applemusic":  q.AppleID,
+		"soundcloud":  q.SoundCloudID,
+		"qobuz":       q.QobuzID,
+		"tidal":       q.TidalID,
+		"amazonmusic": q.AmazonMusicID,
+		"pandora":     q.PandoraID,
+	}[provider]
+	return id != "" && candidate.Track.IDs[provider] == id
 }

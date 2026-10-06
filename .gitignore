@@ -16,3 +16,13 @@ bin/
 .idea/
 .DS_Store
 Thumbs.db
+
+# Operator credentials
+.env
+.env.*
+!.env.example
+ommr.yaml
+ommr.yml
+*.local.yaml
+*.local.yml
+*.cookie

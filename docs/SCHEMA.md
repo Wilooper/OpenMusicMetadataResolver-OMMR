@@ -6,6 +6,9 @@
 
 The `Track` entity represents the unified canonical track metadata object.
 
+`extensions.wikipedia` is present only when a MusicBrainz work relationship names a validated English Wikipedia article or a Wikidata entity with an English sitelink. It contains `title`, optional `description` and `summary`, `article_url`, and `source` (`musicbrainz_work_wikipedia_link` or `musicbrainz_work_wikidata_link`). It is contextual prose, not a contributor credit or platform ID. See [field definitions](METADATA_CATALOG.md).
+`extensions.musicbrainz_work_id` is a composition ID. MusicBrainz work relations can also supply `iswc` and `language`; these remain separate from recording ISRC and release metadata.
+
 ```go
 type Track struct {
     CanonicalID     string                     `json:"canonical_id"`
@@ -111,12 +114,19 @@ type SourceStatus struct {
     LatencyMS       int64   `json:"latency_ms"`
     Error           string  `json:"error,omitempty"`
     RejectionReason string  `json:"rejection_reason,omitempty"`
+    EnrichmentStatus string `json:"enrichment_status,omitempty"`
     CandidateScore  float64 `json:"candidate_score,omitempty"`
     Version         string  `json:"version"`
 }
 ```
 
 #### Resolver Statistics (`ResolverStats`)
+
+`enrichment_status` is present for accepted candidates with an enrichment adapter:
+`ok`, `unavailable`, or `identity_mismatch`. Enrichment failure preserves the
+accepted candidate; it cannot add IDs or change the matched recording. Source
+latency includes the enrichment request and its rate-limit wait.
+
 ```go
 type ResolverStats struct {
     ProvidersQueried     int `json:"providers_queried"`

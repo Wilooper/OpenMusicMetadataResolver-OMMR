@@ -40,8 +40,8 @@ var _ adapters.ProviderAdapter = (*Provider)(nil)
 
 func New(cfg Config) *Provider {
 	return &Provider{
-		httpClient: &http.Client{Timeout: 8 * time.Second},
-		tokens:     newTokenManager(&http.Client{Timeout: 8 * time.Second}, cfg.ClientID, cfg.ClientSecret),
+		httpClient: &http.Client{Timeout: 8 * time.Second, CheckRedirect: func(_ *http.Request, _ []*http.Request) error { return http.ErrUseLastResponse }},
+		tokens:     newTokenManager(&http.Client{Timeout: 8 * time.Second, CheckRedirect: func(_ *http.Request, _ []*http.Request) error { return http.ErrUseLastResponse }}, cfg.ClientID, cfg.ClientSecret),
 		config:     cfg,
 	}
 }
@@ -152,7 +152,7 @@ func (p *Provider) fetchByWebAPI(ctx context.Context, id string) (*canonical.Tra
 		return nil, err
 	}
 	if resp.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("spotify web track status %d: %s", resp.StatusCode, string(body))
+		return nil, fmt.Errorf("spotify web track status %d", resp.StatusCode)
 	}
 
 	var track provider.SpotifyWebTrack
