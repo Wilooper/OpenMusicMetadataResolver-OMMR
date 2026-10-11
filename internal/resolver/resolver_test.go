@@ -15,6 +15,62 @@ type mockProvider struct {
 	name string
 }
 
+type youtubeSeedProvider struct{}
+
+func (youtubeSeedProvider) Name() string    { return "ytmusic" }
+func (youtubeSeedProvider) Version() string { return "test-v1" }
+func (youtubeSeedProvider) FetchByID(_ context.Context, _, id string) (*canonical.TrackCandidate, error) {
+	return &canonical.TrackCandidate{
+		Provider: "ytmusic",
+		Track: canonical.Track{
+			Title:      "Right Song",
+			Artists:    []canonical.Artist{{Name: "Right Artist"}},
+			DurationMS: 210000,
+			IDs:        map[string]string{"ytmusic": id},
+		},
+	}, nil
+}
+func (youtubeSeedProvider) Search(context.Context, adapters.Query) ([]canonical.TrackCandidate, error) {
+	return nil, nil
+}
+
+type misleadingCrossProvider struct {
+	name string
+}
+
+type duplicateResultsProvider struct{}
+
+func (duplicateResultsProvider) Name() string    { return "spotify" }
+func (duplicateResultsProvider) Version() string { return "test-v1" }
+func (duplicateResultsProvider) FetchByID(context.Context, string, string) (*canonical.TrackCandidate, error) {
+	return nil, nil
+}
+func (duplicateResultsProvider) Search(_ context.Context, _ adapters.Query) ([]canonical.TrackCandidate, error) {
+	return []canonical.TrackCandidate{
+		{Provider: "spotify", Track: canonical.Track{Title: "Same Song", Artists: []canonical.Artist{{Name: "Same Artist"}}, IDs: map[string]string{"spotify": "best-first"}}},
+		{Provider: "spotify", Track: canonical.Track{Title: "Same Song", Artists: []canonical.Artist{{Name: "Same Artist"}}, IDs: map[string]string{"spotify": "duplicate-second"}}},
+	}, nil
+}
+
+func (m misleadingCrossProvider) Name() string    { return m.name }
+func (m misleadingCrossProvider) Version() string { return "test-v1" }
+func (m misleadingCrossProvider) FetchByID(context.Context, string, string) (*canonical.TrackCandidate, error) {
+	return nil, nil
+}
+func (m misleadingCrossProvider) Search(_ context.Context, q adapters.Query) ([]canonical.TrackCandidate, error) {
+	if q.Title == "" {
+		return nil, nil
+	}
+	return []canonical.TrackCandidate{{
+		Provider: m.name,
+		Track: canonical.Track{
+			Title:   "Wrong Song",
+			Artists: []canonical.Artist{{Name: "Wrong Artist"}},
+			IDs:     map[string]string{m.name: "wrong-" + m.name + "-id"},
+		},
+	}}, nil
+}
+
 func (m *mockProvider) Name() string    { return m.name }
 func (m *mockProvider) Version() string { return m.name + "-v1" }
 func (m *mockProvider) FetchByID(ctx context.Context, idType string, id string) (*canonical.TrackCandidate, error) {
@@ -84,6 +140,84 @@ func TestResolver(t *testing.T) {
 	}
 	if len(respCached.ProviderStatus) > 0 && !respCached.ProviderStatus[0].Cached {
 		t.Errorf("expected provider status to be marked cached")
+	}
+}
+
+func TestDirectYouTubeResolutionRejectsCrossProviderWrongSong(t *testing.T) {
+	c, err := disk.NewDiskCache(t.TempDir())
+	if err != nil {
+		t.Fatalf("failed to create disk cache: %v", err)
+	}
+	reg := adapters.NewRegistry()
+	reg.Register(youtubeSeedProvider{})
+	reg.Register(misleadingCrossProvider{name: "spotify"})
+	reg.Register(misleadingCrossProvider{name: "applemusic"})
+	res := New(reg, c, ratelimit.NewProviderLimiter(), time.Hour)
+
+	resp, err := res.Resolve(context.Background(), ResolveRequest{
+		Query: adapters.Query{YouTubeID: "source-video-id"},
+	})
+	if err != nil {
+		t.Fatalf("resolve failed: %v", err)
+	}
+	if resp.Track == nil {
+		t.Fatal("expected the directly identified YouTube track")
+	}
+	if resp.Track.Title != "Right Song" {
+		t.Fatalf("expected metadata anchored to the YouTube result, got title %q", resp.Track.Title)
+	}
+	if got := resp.Track.IDs["ytmusic"]; got != "source-video-id" {
+		t.Errorf("expected original YouTube ID to be preserved, got %q", got)
+	}
+	if got := resp.Track.IDs["spotify"]; got != "" {
+		t.Errorf("unverified Spotify ID leaked into result: %q", got)
+	}
+	if got := resp.Track.IDs["applemusic"]; got != "" {
+		t.Errorf("unverified Apple Music ID leaked into result: %q", got)
+	}
+	for _, status := range resp.ProviderStatus {
+		if status.Name == "spotify" || status.Name == "applemusic" {
+			if status.Matched || status.RejectionReason != "identity_mismatch" {
+				t.Errorf("expected %s to report identity_mismatch, got matched=%t reason=%q", status.Name, status.Matched, status.RejectionReason)
+			}
+		}
+	}
+}
+
+func TestResolverKeepsOnlyBestCandidatePerProvider(t *testing.T) {
+	c, err := disk.NewDiskCache(t.TempDir())
+	if err != nil {
+		t.Fatalf("failed to create disk cache: %v", err)
+	}
+	reg := adapters.NewRegistry()
+	reg.Register(duplicateResultsProvider{})
+	res := New(reg, c, ratelimit.NewProviderLimiter(), time.Hour)
+	resp, err := res.Resolve(context.Background(), ResolveRequest{
+		Query: adapters.Query{Title: "Same Song", Artist: "Same Artist"},
+	})
+	if err != nil {
+		t.Fatalf("resolve failed: %v", err)
+	}
+	if resp.Track == nil {
+		t.Fatal("expected a resolved track")
+	}
+	if got := resp.Track.IDs["spotify"]; got != "best-first" {
+		t.Fatalf("expected the best provider result to supply the ID, got %q", got)
+	}
+}
+
+func TestHashQueryIncludesNormalizedSources(t *testing.T) {
+	q := adapters.Query{Title: "test song", Artist: "test artist"}
+	allSources := hashQuery(q, nil)
+	deezerOnly := hashQuery(q, []string{"deezer"})
+	if allSources == deezerOnly {
+		t.Fatal("provider selection must be part of the cache key")
+	}
+	if deezerOnly != hashQuery(q, []string{" Deezer ", "DEEZER"}) {
+		t.Fatal("equivalent provider selections should share a cache key")
+	}
+	if hashQuery(q, []string{"deezer", "spotify"}) != hashQuery(q, []string{"spotify", "deezer"}) {
+		t.Fatal("provider selection order should not affect the cache key")
 	}
 }
 

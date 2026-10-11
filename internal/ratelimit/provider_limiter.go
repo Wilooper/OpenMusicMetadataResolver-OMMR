@@ -36,6 +36,10 @@ func NewProviderLimiter() *ProviderLimiter {
 	pl.SetLimit("spotify", 10, 3)
 	pl.SetLimit("soundcloud", 10, 3)
 	pl.SetLimit("jiosaavn", 5, 2)
+	pl.SetLimit("qobuz", 5, 2)
+	pl.SetLimit("tidal", 10, 3)
+	pl.SetLimit("amazonmusic", 5, 2)
+	pl.SetLimit("pandora", 5, 2)
 
 	return pl
 }

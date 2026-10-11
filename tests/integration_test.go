@@ -118,6 +118,35 @@ func TestBulkEndpointValidation(t *testing.T) {
 	}
 }
 
+func TestBulkRejectsTrailingJSON(t *testing.T) {
+	ts := setupTestServer(t)
+	defer ts.Close()
+
+	resp, err := http.Post(ts.URL+"/v1/bulk", "application/json", bytes.NewBufferString(`{"queries":[{}]} {}`))
+	if err != nil {
+		t.Fatalf("bulk request failed: %v", err)
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode != http.StatusBadRequest {
+		t.Fatalf("expected 400 for multiple JSON values, got %d", resp.StatusCode)
+	}
+}
+
+func TestBulkRejectsOversizedBody(t *testing.T) {
+	ts := setupTestServer(t)
+	defer ts.Close()
+
+	body := bytes.Repeat([]byte(" "), (1<<20)+1)
+	resp, err := http.Post(ts.URL+"/v1/bulk", "application/json", bytes.NewReader(body))
+	if err != nil {
+		t.Fatalf("bulk request failed: %v", err)
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode != http.StatusBadRequest {
+		t.Fatalf("expected 400 for oversized body, got %d", resp.StatusCode)
+	}
+}
+
 func TestSearchEndpointPagination(t *testing.T) {
 	ts := setupTestServer(t)
 	defer ts.Close()

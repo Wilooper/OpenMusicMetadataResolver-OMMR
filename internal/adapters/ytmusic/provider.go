@@ -38,6 +38,15 @@ func New() *Provider {
 	}
 }
 
+func NewWithCookie(cookie string) *Provider {
+	p := New()
+	if cookie != "" {
+		p.innerTube.cookie = cookie
+		p.innerTube.httpClient = &http.Client{Timeout: 8 * time.Second, CheckRedirect: func(_ *http.Request, _ []*http.Request) error { return http.ErrUseLastResponse }}
+	}
+	return p
+}
+
 func (p *Provider) Name() string {
 	return ProviderName
 }

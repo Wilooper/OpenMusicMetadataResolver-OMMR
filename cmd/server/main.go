@@ -11,12 +11,16 @@ import (
 	"time"
 
 	"github.com/ommr/ommr/internal/adapters"
+	"github.com/ommr/ommr/internal/adapters/amazonmusic"
 	"github.com/ommr/ommr/internal/adapters/applemusic"
 	"github.com/ommr/ommr/internal/adapters/deezer"
 	"github.com/ommr/ommr/internal/adapters/jiosaavn"
 	"github.com/ommr/ommr/internal/adapters/musicbrainz"
+	"github.com/ommr/ommr/internal/adapters/pandora"
+	"github.com/ommr/ommr/internal/adapters/qobuz"
 	"github.com/ommr/ommr/internal/adapters/soundcloud"
 	"github.com/ommr/ommr/internal/adapters/spotify"
+	"github.com/ommr/ommr/internal/adapters/tidal"
 	"github.com/ommr/ommr/internal/adapters/ytmusic"
 	"github.com/ommr/ommr/internal/api"
 	"github.com/ommr/ommr/internal/cache"
@@ -70,14 +74,18 @@ func main() {
 	registry := adapters.NewRegistry()
 	registry.Register(musicbrainz.New())
 	registry.Register(deezer.New())
-	registry.Register(applemusic.New())
-	registry.Register(ytmusic.New())
+	registry.Register(applemusic.NewWithCatalog(cfg.AppleDeveloperToken, cfg.AppleStorefront))
+	registry.Register(ytmusic.NewWithCookie(cfg.YTMusicCookie))
 	registry.Register(spotify.New(spotify.Config{
 		ClientID:     cfg.SpotifyClientID,
 		ClientSecret: cfg.SpotifyClientSecret,
 	}))
 	registry.Register(soundcloud.New())
 	registry.Register(jiosaavn.New())
+	registry.Register(qobuz.New())
+	registry.Register(tidal.New())
+	registry.Register(amazonmusic.NewWithConfig(cfg.AmazonMusicBaseURL, cfg.AmazonMusicToken, cfg.AmazonMusicAPIKey))
+	registry.Register(pandora.New())
 
 	limiter := ratelimit.NewProviderLimiter()
 	res := resolver.New(registry, cacheBackend, limiter, cfg.CacheTTL)

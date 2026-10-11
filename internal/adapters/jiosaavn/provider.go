@@ -172,6 +172,9 @@ func (p *Provider) normalize(r provider.JioSaavnSongResult) canonical.Track {
 	}
 
 	ids := map[string]string{"jiosaavn": jioSaavnID(r)}
+	if r.ID != "" {
+		ids["jiosaavn_track_id"] = r.ID
+	}
 	if r.PermaURL != "" {
 		ids["jiosaavn_url"] = r.PermaURL
 	}

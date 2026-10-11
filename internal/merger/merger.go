@@ -1,6 +1,7 @@
 package merger
 
 import (
+	"encoding/json"
 	"sort"
 	"strings"
 
@@ -10,12 +11,12 @@ import (
 
 // Priorities for metadata fields per provider
 var (
-	titlePriority   = []string{"spotify", "applemusic", "musicbrainz", "deezer", "soundcloud", "jiosaavn", "ytmusic"}
-	creditsPriority = []string{"musicbrainz", "applemusic", "spotify", "deezer", "soundcloud", "jiosaavn", "ytmusic"}
-	genresPriority  = []string{"spotify", "applemusic", "musicbrainz", "deezer", "soundcloud", "jiosaavn", "ytmusic"}
-	isrcPriority    = []string{"spotify", "musicbrainz", "applemusic", "deezer", "soundcloud", "jiosaavn", "ytmusic"}
-	labelPriority   = []string{"spotify", "applemusic", "deezer", "musicbrainz", "jiosaavn"}
-	previewPriority = []string{"spotify", "applemusic", "deezer"}
+	titlePriority   = []string{"spotify", "applemusic", "tidal", "qobuz", "amazonmusic", "pandora", "musicbrainz", "deezer", "soundcloud", "jiosaavn", "ytmusic"}
+	creditsPriority = []string{"musicbrainz", "applemusic", "spotify", "tidal", "qobuz", "amazonmusic", "pandora", "deezer", "soundcloud", "jiosaavn", "ytmusic"}
+	genresPriority  = []string{"spotify", "applemusic", "tidal", "qobuz", "amazonmusic", "pandora", "musicbrainz", "deezer", "soundcloud", "jiosaavn", "ytmusic"}
+	isrcPriority    = []string{"spotify", "musicbrainz", "applemusic", "tidal", "qobuz", "amazonmusic", "pandora", "deezer", "soundcloud", "jiosaavn", "ytmusic"}
+	labelPriority   = []string{"spotify", "applemusic", "tidal", "qobuz", "amazonmusic", "pandora", "deezer", "musicbrainz", "jiosaavn"}
+	previewPriority = []string{"spotify", "applemusic", "tidal", "qobuz", "amazonmusic", "deezer"}
 )
 
 type Merger struct {
@@ -44,6 +45,25 @@ func (m *Merger) MergeCandidates(candidates []canonical.TrackCandidate) *canonic
 		Sources:      make([]string, 0, len(candidates)),
 		FieldSources: make(map[string][]string),
 		Relations:    canonical.Relations{},
+	}
+	for _, candidate := range candidates {
+		if candidate.Provider != "musicbrainz" {
+			continue
+		}
+		for key, value := range candidate.Track.Extensions {
+			if (key != "wikipedia" && key != "musicbrainz_work_id") || !json.Valid(value) {
+				continue
+			}
+			if res.Extensions == nil {
+				res.Extensions = make(map[string]json.RawMessage)
+			}
+			res.Extensions[key] = append(json.RawMessage(nil), value...)
+			res.FieldSources["extensions."+key] = []string{"musicbrainz"}
+			if key == "wikipedia" {
+				res.FieldSources["extensions.wikipedia"] = []string{"musicbrainz", "wikipedia"}
+			}
+		}
+		break
 	}
 
 	// 1. Resolve Title
@@ -243,6 +263,11 @@ func (m *Merger) MergeCandidates(candidates []canonical.TrackCandidate) *canonic
 		}
 		if cand.Track.ISWC != "" && res.ISWC == "" {
 			res.ISWC = cand.Track.ISWC
+			res.FieldSources["iswc"] = []string{cand.Provider}
+		}
+		if cand.Track.Language != "" && res.Language == "" {
+			res.Language = cand.Track.Language
+			res.FieldSources["language"] = []string{cand.Provider}
 		}
 		if cand.Track.PlayCount > res.PlayCount {
 			res.PlayCount = cand.Track.PlayCount
@@ -319,6 +344,9 @@ func (m *Merger) MergeCandidates(candidates []canonical.TrackCandidate) *canonic
 			res.Sources = append(res.Sources, cand.Provider)
 		}
 		for k, v := range cand.Track.IDs {
+			if k != cand.Provider && k != cand.Provider+"_url" && k != cand.Provider+"_track_id" {
+				continue
+			}
 			res.IDs[k] = v
 		}
 		if cand.MatchScore > topScore {

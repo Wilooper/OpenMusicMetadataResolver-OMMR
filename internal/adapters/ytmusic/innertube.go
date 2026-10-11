@@ -2,6 +2,7 @@ package ytmusic
 
 import (
 	"context"
+	"crypto/sha1"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -9,6 +10,7 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/ommr/ommr/internal/models/canonical"
 	"github.com/ommr/ommr/internal/models/provider"
@@ -25,10 +27,37 @@ var innerTubeBaseURL = "https://www.youtube.com/youtubei/v1"
 // (search + player) used to enrich and search video metadata without keys.
 type InnerTube struct {
 	httpClient *http.Client
+	cookie     string
 }
 
 func NewInnerTube(client *http.Client) *InnerTube {
 	return &InnerTube{httpClient: client}
+}
+
+func (i *InnerTube) setAuth(req *http.Request) {
+	if i.cookie == "" || req.URL.Scheme != "https" || req.URL.Hostname() != "www.youtube.com" {
+		return
+	}
+	if strings.ContainsAny(i.cookie, "\r\n") {
+		return
+	}
+	var sapisid string
+	for _, part := range strings.Split(i.cookie, ";") {
+		key, value, ok := strings.Cut(strings.TrimSpace(part), "=")
+		if ok && (key == "SAPISID" || key == "__Secure-3PAPISID") {
+			sapisid = value
+			break
+		}
+	}
+	if sapisid == "" {
+		return
+	}
+	origin := "https://www.youtube.com"
+	timestamp := fmt.Sprint(time.Now().Unix())
+	digest := sha1.Sum([]byte(timestamp + " " + sapisid + " " + origin))
+	req.Header.Set("Cookie", i.cookie)
+	req.Header.Set("Origin", origin)
+	req.Header.Set("Authorization", fmt.Sprintf("SAPISIDHASH %s_%x", timestamp, digest))
 }
 
 // SearchYouTube searches YouTube for videos matching the given query and
@@ -55,6 +84,7 @@ func (i *InnerTube) SearchYouTube(ctx context.Context, query string, limit int) 
 		return nil, err
 	}
 	req.Header.Set("Content-Type", "application/json")
+	i.setAuth(req)
 	req.Header.Set("User-Agent", "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36")
 
 	resp, err := i.httpClient.Do(req)
@@ -118,6 +148,7 @@ func (i *InnerTube) FetchPlayer(ctx context.Context, videoID string) (*provider.
 		return nil, err
 	}
 	req.Header.Set("Content-Type", "application/json")
+	i.setAuth(req)
 	req.Header.Set("User-Agent", "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36")
 
 	resp, err := i.httpClient.Do(req)

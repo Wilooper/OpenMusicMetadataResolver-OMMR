@@ -40,3 +40,15 @@ func TestGenerateIDHierarchy(t *testing.T) {
 		t.Errorf("expected different canonical_id for Tu vs Wishes")
 	}
 }
+
+func TestLinkHelpersDoNotChangeSparseCanonicalID(t *testing.T) {
+	e := New()
+	base := canonical.Track{IDs: map[string]string{"soundcloud": "m83/midnight-city"}}
+	withLinks := canonical.Track{IDs: map[string]string{"soundcloud": "m83/midnight-city", "soundcloud_track_id": "123456", "soundcloud_url": "https://soundcloud.com/m83/midnight-city"}}
+	if e.GenerateID(base) != e.GenerateID(withLinks) {
+		t.Fatal("adding native ID/share URL changed OMMR identity")
+	}
+	if e.GenerateID(canonical.Track{IDs: map[string]string{"soundcloud_url": "https://soundcloud.com/m83/midnight-city"}}) != e.GenerateID(canonical.Track{}) {
+		t.Fatal("helper-only map asserted recording identity")
+	}
+}

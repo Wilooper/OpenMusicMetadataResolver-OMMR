@@ -96,7 +96,7 @@ func (t *tokenManager) fetchOfficialToken(ctx context.Context) (string, int, err
 		return "", 0, err
 	}
 	if resp.StatusCode != http.StatusOK {
-		return "", 0, fmt.Errorf("spotify accounts token status %d: %s", resp.StatusCode, string(body))
+		return "", 0, fmt.Errorf("spotify accounts token status %d", resp.StatusCode)
 	}
 
 	var tok provider.SpotifyWebTokenResponse
@@ -136,7 +136,7 @@ func (t *tokenManager) fetchAnonymousToken(ctx context.Context) (string, int, er
 		return "", 0, err
 	}
 	if resp.StatusCode != http.StatusOK {
-		return "", 0, fmt.Errorf("spotify anonymous token status %d: %s", resp.StatusCode, string(body))
+		return "", 0, fmt.Errorf("spotify anonymous token status %d", resp.StatusCode)
 	}
 
 	var tok provider.SpotifyAnonymousTokenResponse

@@ -18,6 +18,21 @@ type MusicBrainzRecording struct {
 	ArtistCredit   []MusicBrainzArtistCredit `json:"artist-credit"`
 	Releases       []MusicBrainzRelease      `json:"releases"`
 	Tags           []MusicBrainzTag          `json:"tags"`
+	Relations      []MusicBrainzRelation     `json:"relations"`
+}
+
+type MusicBrainzRelation struct {
+	Type   string            `json:"type"`
+	Artist MusicBrainzArtist `json:"artist"`
+	URL    struct {
+		Resource string `json:"resource"`
+	} `json:"url"`
+	Work struct {
+		ID        string                `json:"id"`
+		ISWCs     []string              `json:"iswcs"`
+		Language  string                `json:"language"`
+		Relations []MusicBrainzRelation `json:"relations"`
+	} `json:"work"`
 }
 
 type MusicBrainzArtistCredit struct {

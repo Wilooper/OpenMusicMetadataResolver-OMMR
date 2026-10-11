@@ -78,3 +78,16 @@ func TestSearchReturnsNilWithoutID(t *testing.T) {
 		t.Errorf("expected no search results, got %d", len(cands))
 	}
 }
+
+func TestNativeTrackIDRequiresSoundCloudWidgetAndTrackResource(t *testing.T) {
+	for _, tt := range []struct{ html, want string }{
+		{`<iframe src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F123456&amp;auto_play=false"></iframe>`, "123456"},
+		{`<iframe src="https://evil.test/player/?url=https%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F123456"></iframe>`, ""},
+		{`<iframe src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fapi.soundcloud.com%2Fplaylists%2F123456"></iframe>`, ""},
+		{`<iframe src="https://w.soundcloud.com/player/?url=https%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F123456%3Fsecret_token%3Dsecret"></iframe>`, ""},
+	} {
+		if got := nativeTrackID(tt.html); got != tt.want {
+			t.Errorf("nativeTrackID=%q;want %q", got, tt.want)
+		}
+	}
+}

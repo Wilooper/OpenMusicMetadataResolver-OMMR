@@ -51,12 +51,16 @@ func (e *IdentityEngine) GenerateID(t canonical.Track) string {
 	} else if len(t.IDs) > 0 {
 		idPairs := make([]string, 0, len(t.IDs))
 		for k, v := range t.IDs {
-			if v != "" {
+			if v != "" && !strings.HasSuffix(k, "_url") && !strings.HasSuffix(k, "_track_id") {
 				idPairs = append(idPairs, k+":"+v)
 			}
 		}
 		sort.Strings(idPairs)
-		rawKey = "ids:" + strings.Join(idPairs, "|")
+		if len(idPairs) > 0 {
+			rawKey = "ids:" + strings.Join(idPairs, "|")
+		} else {
+			rawKey = fmt.Sprintf("raw:%s", t.Title)
+		}
 	} else {
 		rawKey = fmt.Sprintf("raw:%s", t.Title)
 	}

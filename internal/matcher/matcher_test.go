@@ -101,3 +101,50 @@ func TestMatcherDirectIDMatch(t *testing.T) {
 		t.Errorf("expected score 1.0 for direct ID match, got %f", score)
 	}
 }
+
+func TestMatcherRejectsConflictingISRC(t *testing.T) {
+	candidate := canonical.TrackCandidate{
+		Provider: "spotify",
+		Track: canonical.Track{
+			Title:   "Get Lucky",
+			Artists: []canonical.Artist{{Name: "Daft Punk"}},
+			ISRC:    "USGBR1300002",
+		},
+	}
+	score, breakdown := New().ScoreCandidate(candidate, adapters.Query{
+		Title: "Get Lucky", Artist: "Daft Punk", ISRC: "USGBR1300001",
+	})
+	if score != 0 {
+		t.Fatalf("expected conflicting ISRC to reject the candidate, got score %f", score)
+	}
+	if breakdown.ISRC == nil || *breakdown.ISRC != 0 {
+		t.Fatalf("expected zero ISRC breakdown for conflict, got %v", breakdown.ISRC)
+	}
+}
+
+func TestMatcherDoesNotTrustAnotherProvidersClaimedID(t *testing.T) {
+	candidate := canonical.TrackCandidate{
+		Provider: "spotify",
+		Track: canonical.Track{
+			Title: "Unrelated",
+			IDs:   map[string]string{"ytmusic": "video-id"},
+		},
+	}
+	score, _ := New().ScoreCandidate(candidate, adapters.Query{YouTubeID: "video-id"})
+	if score == 1 {
+		t.Fatal("a Spotify candidate must not be treated as a direct YouTube ID match")
+	}
+}
+
+func TestMatcherTreatsPlatformIDsAsCaseSensitive(t *testing.T) {
+	candidate := canonical.TrackCandidate{
+		Provider: "ytmusic",
+		Track: canonical.Track{
+			IDs: map[string]string{"ytmusic": "AbCdEf12345"},
+		},
+	}
+	score, _ := New().ScoreCandidate(candidate, adapters.Query{YouTubeID: "abcdef12345"})
+	if score == 1 {
+		t.Fatal("case-different platform IDs must not be treated as a direct match")
+	}
+}
