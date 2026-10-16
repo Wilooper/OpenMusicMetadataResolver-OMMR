@@ -59,3 +59,20 @@ func TestImportedSessionTokenMustPassProtectedProfile(t *testing.T) {
 		t.Fatal("invalid token accepted or leaked")
 	}
 }
+
+func TestAnonymousAccessFailureIsActionableAndSecretFree(t *testing.T) {
+	client := &http.Client{Transport: sessionTransport(func(r *http.Request) (*http.Response, error) {
+		if r.URL.Path != "/api/token" || r.URL.Query().Get("productType") != "web-player" {
+			t.Errorf("obsolete endpoint: %s", r.URL)
+		}
+		if r.Header.Get("Cookie") != "" || r.Header.Get("Authorization") != "" {
+			t.Error("anonymous request sent credentials")
+		}
+		return &http.Response{StatusCode: 400, Body: io.NopCloser(strings.NewReader(`{"error":"private-response-value"}`)), Header: http.Header{}}, nil
+	})}
+	manager := newTokenManager(client, "", "")
+	_, err := manager.Get(context.Background())
+	if err == nil || !strings.Contains(err.Error(), "configure validated credentials") || strings.Contains(err.Error(), "private-response-value") {
+		t.Fatalf("unexpected failure: %v", err)
+	}
+}

@@ -118,3 +118,10 @@
 - **Status**: Implemented
 - **Decision**: Suspend repeatedly failing sources, admit one cooldown recovery probe, and ignore stale-generation results. Exclude unavailable sources from selection and isolate cache partitions across health changes. Auto-load private YAML, allow explicit --config, apply API defaults/locks to all routes, and provide a JSON gateway plus redacted provider status.
 - **Consequence**: Clients can use configured behavior without repeated URL controls. Source objects remain resident while suspended; no dynamic code unloading occurs. Source policy and status are local to each process.
+
+
+## ADR-018: Prefer Music Catalog Search and Reject Non-JSON Access Pages
+- **Status**: Implemented
+- **Context**: The credential-free Boyfriend live test accepted a noisy video title while the public Apple request expired at five seconds. Other origins returned HTTP 200 HTML access-error pages.
+- **Decision**: Prefer signed-out YouTube Music song-filter results, parse artist/album navigation evidence and audio-track types, and retain same-entity catalog extras. Keep general video search as a fallback. Raise five-second Apple/Deezer/MusicBrainz HTTP safety caps to fifteen seconds while retaining the configured resolver deadline. Apply storefront to public Apple requests. Reject non-JSON/oversized original adapter responses with body-free diagnostics. Use Spotify's current token path and report anonymous rejection without circumventing access controls. Bump resolved-cache namespace to rich-v3.
+- **Consequence**: Keyless metadata quality improves where origins are accessible. HTTP 200 does not imply catalog success. Spotify text search can still require validated access; host/network restrictions remain visible. Identity gates are unchanged, and cached weak video results do not mask the new song search.

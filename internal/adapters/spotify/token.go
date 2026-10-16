@@ -123,7 +123,7 @@ func (t *tokenManager) fetchOfficialToken(ctx context.Context) (string, int, err
 // fetchAnonymousToken obtains a read-only token from the public web player
 // endpoint without requiring developer credentials.
 func (t *tokenManager) fetchAnonymousToken(ctx context.Context) (string, int, error) {
-	reqURL := "https://open.spotify.com/get_access_token?reason=transport&productType=web_player"
+	reqURL := "https://open.spotify.com/api/token?reason=transport&productType=web-player"
 
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, reqURL, nil)
 	if err != nil {
@@ -143,7 +143,7 @@ func (t *tokenManager) fetchAnonymousToken(ctx context.Context) (string, int, er
 		return "", 0, err
 	}
 	if resp.StatusCode != http.StatusOK {
-		return "", 0, fmt.Errorf("spotify anonymous token status %d", resp.StatusCode)
+		return "", 0, fmt.Errorf("spotify anonymous metadata access unavailable (HTTP %d); configure validated credentials or use a Spotify track ID for public embed lookup", resp.StatusCode)
 	}
 
 	var tok provider.SpotifyAnonymousTokenResponse

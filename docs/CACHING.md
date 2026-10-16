@@ -20,7 +20,7 @@ Provider errors are not negative-cached. Catalog JSON with top-level `error`/`er
 
 ## Keys and isolation
 
-Resolved keys use `resolved:rich-v2:` plus a policy/enrichment-capability digest and a hash of the normalized query and unique sorted source set. Changing merge policy or enabled enrichment names invalidates the previous presentation. Earlier `links-v1` entries expire naturally.
+Resolved keys use `resolved:rich-v3:` plus a policy/enrichment-capability digest and a hash of the normalized query and unique sorted source set. Changing merge policy or enabled enrichment names invalidates the previous presentation. Earlier `links-v1` entries expire naturally.
 
 Raw catalog keys use `raw:catalog:` plus a SHA-256 digest of provider, endpoint and authorization value. Keys contain no plaintext API keys or tokens. Cached JSON contains the provider's response, never request headers. Operators should secure disk/Redis access as metadata responses can be large and include provider context.
 

@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"io"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -36,7 +35,7 @@ var _ adapters.ProviderAdapter = (*Provider)(nil)
 
 func New() *Provider {
 	return &Provider{
-		httpClient: &http.Client{Timeout: 5 * time.Second, CheckRedirect: func(_ *http.Request, _ []*http.Request) error { return http.ErrUseLastResponse }},
+		httpClient: &http.Client{Timeout: 15 * time.Second, CheckRedirect: func(_ *http.Request, _ []*http.Request) error { return http.ErrUseLastResponse }},
 	}
 }
 
@@ -70,6 +69,7 @@ func (p *Provider) FetchByID(ctx context.Context, idType string, id string) (*ca
 	}
 
 	reqURL := fmt.Sprintf("%s/lookup?id=%s&entity=song", BaseURL, url.QueryEscape(id))
+	reqURL += "&country=" + url.QueryEscape(p.publicStorefront())
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, reqURL, nil)
 	if err != nil {
 		return nil, err
@@ -85,7 +85,7 @@ func (p *Provider) FetchByID(ctx context.Context, idType string, id string) (*ca
 		return nil, fmt.Errorf("apple music API returned status %d", resp.StatusCode)
 	}
 
-	body, err := io.ReadAll(resp.Body)
+	body, err := adapters.ReadJSONBody(resp)
 	if err != nil {
 		return nil, err
 	}
@@ -132,6 +132,7 @@ func (p *Provider) Search(ctx context.Context, q adapters.Query) ([]canonical.Tr
 	}
 
 	reqURL := fmt.Sprintf("%s/search?term=%s&entity=song&limit=5", BaseURL, url.QueryEscape(term))
+	reqURL += "&country=" + url.QueryEscape(p.publicStorefront())
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, reqURL, nil)
 	if err != nil {
 		return nil, err
@@ -147,7 +148,7 @@ func (p *Provider) Search(ctx context.Context, q adapters.Query) ([]canonical.Tr
 		return nil, fmt.Errorf("apple music search returned status %d", resp.StatusCode)
 	}
 
-	body, err := io.ReadAll(resp.Body)
+	body, err := adapters.ReadJSONBody(resp)
 	if err != nil {
 		return nil, err
 	}
@@ -248,4 +249,11 @@ func NewWithSession(developerToken, userToken, storefront string) *Provider {
 	p := NewWithCatalog(developerToken, storefront)
 	p.userToken = userToken
 	return p
+}
+
+func (p *Provider) publicStorefront() string {
+	if p.storefront == "" {
+		return "us"
+	}
+	return p.storefront
 }

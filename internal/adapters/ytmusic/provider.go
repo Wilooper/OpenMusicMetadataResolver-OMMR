@@ -19,7 +19,7 @@ import (
 
 const (
 	ProviderName    = "ytmusic"
-	ProviderVersion = "ytmusic-innertube-v1"
+	ProviderVersion = "ytmusic-innertube-v2"
 	OembedURL       = "https://www.youtube.com/oembed"
 )
 
@@ -134,6 +134,13 @@ func (p *Provider) Search(ctx context.Context, q adapters.Query) ([]canonical.Tr
 		return nil, nil
 	}
 
+	songs, musicErr := p.innerTube.searchSongs(ctx, searchTerm, 8)
+	if musicErr == nil && len(songs) > 0 {
+		return songs, nil
+	}
+	if ctx.Err() != nil {
+		return nil, ctx.Err()
+	}
 	videos, err := p.innerTube.SearchYouTube(ctx, searchTerm, 8)
 	if err != nil {
 		return nil, err
@@ -149,6 +156,9 @@ func (p *Provider) Search(ctx context.Context, q adapters.Query) ([]canonical.Tr
 			Track:      p.innerTube.parseVideo(v),
 			MatchScore: 0.90,
 		})
+	}
+	if len(candidates) == 0 && musicErr != nil {
+		return nil, musicErr
 	}
 	return candidates, nil
 }

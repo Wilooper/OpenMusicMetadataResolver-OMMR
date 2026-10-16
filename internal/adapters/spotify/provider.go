@@ -18,7 +18,7 @@ import (
 
 const (
 	ProviderName    = "spotify"
-	ProviderVersion = "spotify-web-v2" // dual-mode: official Web API + anonymous Web API / oEmbed / embed scraping
+	ProviderVersion = "spotify-web-v3" // dual-mode: official Web API + anonymous Web API / oEmbed / embed scraping
 	apiBaseURL      = "https://api.spotify.com/v1"
 )
 

@@ -25,7 +25,7 @@ Updated 2026-10-16. This replaces the earlier research-only assessment with the 
 - SoundCloud's keyless integration is permalink lookup, not broad text search. Search still paginates a finite per-provider result pool and can contain the same recording from several providers; it does not fetch arbitrary upstream pages.
 - ISRC/title/artist evidence is imperfect for live, remastered, clean and regional editions. Existing identity gates remain; adding context does not weaken them. Canonical IDs use the existing metadata-based identity scheme and can still conflate versions with identical cleaned title/artist.
 - Source consensus counts catalogs, not guaranteed independent editorial origins. Durations vote exactly, so small timing differences use deterministic tie-breaking rather than clustered voting. Caller trust overrides and preserved alternatives make disagreements inspectable.
-- Local provider budgets and in-flight sharing are not distributed across replicas. Some existing adapter-internal fallback/detail calls still need transport-level quota accounting. No automatic Retry-After backoff/circuit breaker is implemented.
+- Local provider budgets and in-flight sharing are not distributed across replicas. Some existing adapter-internal fallback/detail calls still need transport-level quota accounting. Runtime circuits suspend repeatedly failing providers; automatic Retry-After backoff is not implemented.
 - `bypass_cache` refreshes resolved entries but does not bypass the 24h catalog GET cache. Normalized candidate caching and reusable raw caching for the original identity adapters are not implemented. Cache TTLs are not a guarantee that deleted provider data disappears immediately from deployments.
 - Broader country/region selection is incomplete. Apple storefront is configurable; other provider markets may be fixed or inferred. Country/territory fields remain source data rather than a single inferred root value.
 - Provider data is intentionally richer and can enlarge production responses. Diagnostics remain hidden by default, but no field-selection API or HTTP compression was added in this change.
@@ -44,3 +44,7 @@ Updated 2026-10-16. This replaces the earlier research-only assessment with the 
 ## Startup/lifecycle update
 
 Implemented credential discovery, actual boot probes, public fallback, required-source exclusion, runtime suspension/recovery, endpoint/default API policy and a configured JSON gateway. Unavailable optional sources no longer incur ordinary resolution attempts. Runtime circuits do not solve distributed budgeting or guarantee that browser session refresh remains compatible with private web interfaces. Documentation: [PROVIDER_LIFECYCLE.md](PROVIDER_LIFECYCLE.md).
+
+## Credential-free live retry (2026-10-16)
+
+YouTube Music now searches catalog songs before general videos; Apple public requests honor storefront and no longer expire at five seconds. The Boyfriend regression resolves a strong Apple/YouTube Music match without credentials. Spotify anonymous access was rejected, while Deezer/MusicBrainz/JioSaavn returned HTTP 200 HTML access-error pages in this environment. These are reported as failures rather than claimed as working integrations. See [LIVE_TEST_BOYFRIEND.md](LIVE_TEST_BOYFRIEND.md).
