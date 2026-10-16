@@ -21,13 +21,17 @@ var (
 
 type Merger struct {
 	identityEngine *identity.IdentityEngine
+	policy         Policy
 }
 
 func New() *Merger {
 	return &Merger{
 		identityEngine: identity.New(),
+		policy:         Policy{Mode: "consensus"},
 	}
 }
+
+func NewWithPolicy(policy Policy) *Merger { m := New(); m.policy = policy; return m }
 
 // MergeCandidates merges a slice of scored TrackCandidates into a single unified canonical Track.
 func (m *Merger) MergeCandidates(candidates []canonical.TrackCandidate) *canonical.Track {
@@ -35,6 +39,25 @@ func (m *Merger) MergeCandidates(candidates []canonical.TrackCandidate) *canonic
 		return nil
 	}
 
+	candidates = append([]canonical.TrackCandidate(nil), candidates...)
+	sort.SliceStable(candidates, func(i, j int) bool {
+		if candidates[i].Provider != candidates[j].Provider {
+			return candidates[i].Provider < candidates[j].Provider
+		}
+		if candidates[i].MatchScore != candidates[j].MatchScore {
+			return candidates[i].MatchScore > candidates[j].MatchScore
+		}
+		a, _ := json.Marshal(candidates[i].Track)
+		b, _ := json.Marshal(candidates[j].Track)
+		return string(a) < string(b)
+	})
+	unique := candidates[:0]
+	for _, candidate := range candidates {
+		if len(unique) == 0 || !strings.EqualFold(unique[len(unique)-1].Provider, candidate.Provider) {
+			unique = append(unique, candidate)
+		}
+	}
+	candidates = unique
 	byProvider := make(map[string]canonical.TrackCandidate)
 	for _, c := range candidates {
 		byProvider[strings.ToLower(c.Provider)] = c
@@ -208,6 +231,9 @@ func (m *Merger) MergeCandidates(candidates []canonical.TrackCandidate) *canonic
 	}
 	// Sort ascending: lowest resolution (width*height) to highest resolution
 	sort.Slice(images, func(i, j int) bool {
+		if images[i].Width*images[i].Height == images[j].Width*images[j].Height {
+			return images[i].URL < images[j].URL
+		}
 		return (images[i].Width * images[i].Height) < (images[j].Width * images[j].Height)
 	})
 	res.Images = images
@@ -367,6 +393,14 @@ func (m *Merger) MergeCandidates(candidates []canonical.TrackCandidate) *canonic
 	}
 
 	// Canonical ID & Completeness calculation
+	m.applyPolicy(res, candidates)
+	sort.Strings(res.Genres)
+	sort.Slice(res.Copyrights, func(i, j int) bool {
+		return res.Copyrights[i].Type+res.Copyrights[i].Text < res.Copyrights[j].Type+res.Copyrights[j].Text
+	})
+	sort.Slice(res.Album.Copyrights, func(i, j int) bool {
+		return res.Album.Copyrights[i].Type+res.Album.Copyrights[i].Text < res.Album.Copyrights[j].Type+res.Album.Copyrights[j].Text
+	})
 	res.CanonicalID = m.identityEngine.GenerateID(*res)
 	res.Completeness = canonical.CalculateCompleteness(*res)
 

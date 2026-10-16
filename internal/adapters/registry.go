@@ -2,6 +2,7 @@ package adapters
 
 import (
 	"fmt"
+	"sort"
 	"strings"
 	"sync"
 )
@@ -42,6 +43,7 @@ func (r *Registry) List() []ProviderAdapter {
 	for _, a := range r.adapters {
 		list = append(list, a)
 	}
+	sort.Slice(list, func(i, j int) bool { return list[i].Name() < list[j].Name() })
 	return list
 }
 
@@ -55,9 +57,10 @@ func (r *Registry) ListActive(names []string) ([]ProviderAdapter, error) {
 	defer r.mu.RUnlock()
 
 	active := make([]ProviderAdapter, 0, len(names))
+	seen := map[string]bool{}
 	for _, name := range names {
 		cleanName := strings.TrimSpace(strings.ToLower(name))
-		if cleanName == "" {
+		if cleanName == "" || seen[cleanName] {
 			continue
 		}
 		adapter, ok := r.adapters[cleanName]
@@ -65,6 +68,8 @@ func (r *Registry) ListActive(names []string) ([]ProviderAdapter, error) {
 			return nil, fmt.Errorf("provider %q is not registered", name)
 		}
 		active = append(active, adapter)
+		seen[cleanName] = true
 	}
+	sort.Slice(active, func(i, j int) bool { return active[i].Name() < active[j].Name() })
 	return active, nil
 }

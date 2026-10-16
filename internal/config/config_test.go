@@ -74,3 +74,18 @@ func TestEmptyProcessEnvironmentDisablesFileCredential(t *testing.T) {
 		t.Fatal("empty process credential did not override file")
 	}
 }
+
+func TestNewCatalogCredentialsLoadFromPrivateEnvFile(t *testing.T) {
+	path := filepath.Join(t.TempDir(), "catalog.env")
+	if err := os.WriteFile(path, []byte("OMMR_LASTFM_API_KEY=lastfm-test\nOMMR_DISCOGS_TOKEN=discogs-test\nOMMR_ACOUSTID_API_KEY=acoustid-test\nOMMR_QOBUZ_APP_ID=qobuz-test\nOMMR_TIDAL_TOKEN=tidal-test\nOMMR_PANDORA_TOKEN=pandora-test\n"), 0600); err != nil {
+		t.Fatal(err)
+	}
+	t.Setenv("OMMR_ENV_FILE", path)
+	cfg, err := LoadConfig()
+	if err != nil {
+		t.Fatal(err)
+	}
+	if cfg.LastFMKey != "lastfm-test" || cfg.DiscogsToken != "discogs-test" || cfg.AcoustIDKey != "acoustid-test" || cfg.QobuzAppID != "qobuz-test" || cfg.TidalToken != "tidal-test" || cfg.PandoraToken != "pandora-test" {
+		t.Fatal("private-file credentials lost")
+	}
+}

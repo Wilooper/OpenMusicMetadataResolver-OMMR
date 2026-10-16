@@ -10,7 +10,7 @@ OMMR integrates 11 metadata provider adapters implementing the `adapters.Provide
 | --- | --- | --- | --- | --- | --- |
 | **Spotify** | `spotify` | `spotify-web-v2` | Official Web API (optional keys) + anonymous Web API / oEmbed / embed scraping | **Optional** | Token Bucket (10 RPS) |
 | **YouTube Music** | `ytmusic` | `ytmusic-innertube-v1` | InnerTube search & player (public API key) + oEmbed fallback | **Zero** | Token Bucket (20 RPS) |
-| **Apple Music** | `applemusic` | `applemusic-v1` | iTunes Search & Lookup API | **Zero** | Token Bucket (20 RPS) |
+| **Apple Music** | `applemusic` | `applemusic-v1` | iTunes Search & Lookup API | **Zero** | Keyless: approximately 20/minute, burst 1; token catalog: conservative 5 RPS |
 | **Deezer** | `deezer` | `deezer-v1` | Public API (`api.deezer.com`) | **Zero** | Token Bucket (50 RPS) |
 | **MusicBrainz** | `musicbrainz` | `musicbrainz-v2` | MusicBrainz REST API v2 | **Zero** | Token Bucket (1 RPS) |
 | **SoundCloud** | `soundcloud` | `soundcloud-oembed-v1` | Public oEmbed endpoint | **Zero** | Token Bucket (10 RPS) |
@@ -48,7 +48,7 @@ Dual-mode adapter (`spotify-web-v2`):
 
 ### 4. Deezer Adapter (`internal/adapters/deezer/`)
 - Queries Deezer public REST endpoints.
-- Provides ISRC/ISWC codes, album metadata, duration, track & disc positions, barcode, label, preview URL, and fan counts.
+- Normalizes ISRC/ISWC codes when supplied, album metadata, duration, track & disc positions, barcode, label, preview URL, and fan counts.
 
 ### 5. MusicBrainz Adapter (`internal/adapters/musicbrainz/`)
 - After strict candidate acceptance, resolution looks up the accepted recording MBID for credited recording/work relationships. Identity disagreement or lookup failure skips enrichment without replacing the accepted recording. ISRC search/lookup retains the requested code even when a recording reports several codes in a different order.
@@ -118,3 +118,9 @@ with their identifier namespace. See [PLATFORM_LINKS.md](PLATFORM_LINKS.md).
 ## Response modes
 
 Per-source execution/version/error and field coverage described above require `debug=true`. Default `/v1/extract` returns an independent flat `results` array of public tracks; it does not claim these records match each other. Default resolve/bulk responses omit provenance and matching diagnostics. See [API_SPEC.md](API_SPEC.md#production-and-debug-responses).
+
+## Catalog enrichment services
+
+Four post-merge services complement the 11 identity adapters: Cover Art Archive (keyless), MusicBrainz release details (keyless), Last.fm (`OMMR_LASTFM_API_KEY`) and Discogs (`OMMR_DISCOGS_TOKEN`). AcoustID (`OMMR_ACOUSTID_API_KEY`) is available through a separate fingerprint endpoint. These are not streaming adapter IDs and do not create unverified recording matches. See [ENRICHMENT.md](ENRICHMENT.md) for fields and access conditions.
+
+Local limits are implementation budgets, not guaranteed upstream quotas: MusicBrainz 1 RPS with burst 1; keyless iTunes one request every 3 seconds; Apple catalog 5 RPS; Cover Art Archive/Last.fm/AcoustID 3 RPS; Discogs 1 RPS. Search now uses the same limiter as resolution/extraction. Each catalog enrichment request passes through its budget; multiple server processes do not share budgets. Existing adapter-internal fallback/detail requests do not yet all have transport-level accounting.

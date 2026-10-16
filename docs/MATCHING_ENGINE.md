@@ -76,3 +76,7 @@ IdentityConfidence = CandidateMatchScore * ProviderTrustWeight[provider]
 ## Nullable `MatchBreakdown` (`unknown != mismatch`)
 
 Un-evaluated fields in `MatchBreakdown` serialize as `null` / omitted pointers (`*float64`). A `null` value indicates that the field was not available in the candidate, distinguishing missing data from active field mismatches.
+
+## Metadata conflict selection
+
+Acceptance thresholds and artist/direct-ID/ISRC gates are unchanged. **After acceptance**, one candidate per provider contributes a vote; metadata consensus does not admit rejected candidates or weaken identity checks. Explicit per-field trust overrides and all alternate provider values are described in [ENRICHMENT.md](ENRICHMENT.md). Deterministic source ordering removes arrival-order-dependent metadata selection.

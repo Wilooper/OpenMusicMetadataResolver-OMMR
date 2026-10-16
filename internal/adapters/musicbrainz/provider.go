@@ -166,6 +166,10 @@ func (p *Provider) Enrich(ctx context.Context, track canonical.Track) (*canonica
 		}
 		candidate.Track.ISRC = recording.ISRCs[0]
 	}
+	if candidate.Track.Extensions == nil {
+		candidate.Track.Extensions = map[string]json.RawMessage{}
+	}
+	candidate.Track.Extensions["recording_details"] = append(json.RawMessage(nil), candidate.RawResponse...)
 	return &candidate.Track, nil
 }
 

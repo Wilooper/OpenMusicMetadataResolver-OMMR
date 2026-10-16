@@ -19,6 +19,7 @@ func NewRouter(h *Handler, logger *slog.Logger, rps float64) http.Handler {
 	mux.HandleFunc("/v1/extract", h.HandleExtract)
 	mux.HandleFunc("/v1/bulk", h.HandleBulk)
 	mux.HandleFunc("/v1/search", h.HandleSearch)
+	mux.HandleFunc("/v1/fingerprint", h.HandleFingerprint)
 	mux.HandleFunc("/v1/health", h.HandleHealth)
 
 	// Metrics endpoint

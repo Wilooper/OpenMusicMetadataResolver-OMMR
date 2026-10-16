@@ -11,15 +11,27 @@ import (
 )
 
 type Config struct {
-	Port            int           `mapstructure:"port"`
-	CacheProvider   string        `mapstructure:"cache_provider"` // "disk" or "redis"
-	CacheDir        string        `mapstructure:"cache_dir"`
-	CacheTTL        time.Duration `mapstructure:"cache_ttl"`
-	RedisURL        string        `mapstructure:"redis_url"`
-	RateLimitRPS    float64       `mapstructure:"rate_limit_rps"`
-	ProviderTimeout time.Duration `mapstructure:"provider_timeout"`
-	BulkMaxItems    int           `mapstructure:"bulk_max_items"`
-	BulkWorkers     int           `mapstructure:"bulk_workers"`
+	QobuzAppID       string        `mapstructure:"qobuz_app_id"`
+	QobuzToken       string        `mapstructure:"qobuz_token"`
+	QobuzBaseURL     string        `mapstructure:"qobuz_base_url"`
+	TidalToken       string        `mapstructure:"tidal_token"`
+	TidalBaseURL     string        `mapstructure:"tidal_base_url"`
+	PandoraToken     string        `mapstructure:"pandora_token"`
+	PandoraBaseURL   string        `mapstructure:"pandora_base_url"`
+	LastFMKey        string        `mapstructure:"lastfm_api_key"`
+	DiscogsToken     string        `mapstructure:"discogs_token"`
+	AcoustIDKey      string        `mapstructure:"acoustid_api_key"`
+	MetadataPolicy   string        `mapstructure:"metadata_policy"`
+	EnableEnrichment bool          `mapstructure:"enable_enrichment"`
+	Port             int           `mapstructure:"port"`
+	CacheProvider    string        `mapstructure:"cache_provider"` // "disk" or "redis"
+	CacheDir         string        `mapstructure:"cache_dir"`
+	CacheTTL         time.Duration `mapstructure:"cache_ttl"`
+	RedisURL         string        `mapstructure:"redis_url"`
+	RateLimitRPS     float64       `mapstructure:"rate_limit_rps"`
+	ProviderTimeout  time.Duration `mapstructure:"provider_timeout"`
+	BulkMaxItems     int           `mapstructure:"bulk_max_items"`
+	BulkWorkers      int           `mapstructure:"bulk_workers"`
 
 	// Spotify for Developers credentials. When both are set the Spotify
 	// adapter uses the official client-credentials OAuth flow; otherwise it
@@ -61,15 +73,31 @@ func LoadConfig() (*Config, error) {
 	v.SetDefault("cache_ttl", "24h")
 	v.SetDefault("redis_url", "redis://localhost:6379/0")
 	v.SetDefault("rate_limit_rps", 50.0)
-	v.SetDefault("provider_timeout", "3s")
+	v.SetDefault("provider_timeout", "10s")
+	v.SetDefault("enable_enrichment", true)
 	v.SetDefault("bulk_max_items", 100)
 	v.SetDefault("bulk_workers", 10)
 	v.SetDefault("apple_storefront", "us")
+	v.SetDefault("qobuz_base_url", "https://www.qobuz.com")
+	v.SetDefault("tidal_base_url", "https://openapi.tidal.com")
+	v.SetDefault("pandora_base_url", "https://ce.pandora.com/api/v1/graphql")
 	for key, value := range fileValues {
 		v.SetDefault(key, value)
 	}
 
 	var cfg Config
+	cfg.QobuzAppID = v.GetString("qobuz_app_id")
+	cfg.QobuzToken = v.GetString("qobuz_token")
+	cfg.QobuzBaseURL = v.GetString("qobuz_base_url")
+	cfg.TidalToken = v.GetString("tidal_token")
+	cfg.TidalBaseURL = v.GetString("tidal_base_url")
+	cfg.PandoraToken = v.GetString("pandora_token")
+	cfg.PandoraBaseURL = v.GetString("pandora_base_url")
+	cfg.LastFMKey = v.GetString("lastfm_api_key")
+	cfg.DiscogsToken = v.GetString("discogs_token")
+	cfg.AcoustIDKey = v.GetString("acoustid_api_key")
+	cfg.MetadataPolicy = v.GetString("metadata_policy")
+	cfg.EnableEnrichment = v.GetBool("enable_enrichment")
 	cfg.Port = v.GetInt("port")
 	cfg.CacheProvider = v.GetString("cache_provider")
 	cfg.CacheDir = v.GetString("cache_dir")

@@ -63,10 +63,12 @@ func (p *Provider) FetchByID(ctx context.Context, idType string, id string) (*ca
 	// Preferred path: InnerTube player metadata (exact title, channel, duration).
 	if player, err := p.innerTube.FetchPlayer(ctx, id); err == nil {
 		track := p.normalizePlayer(id, *player)
+		raw, _ := json.Marshal(player)
 		return &canonical.TrackCandidate{
-			Provider:   ProviderName,
-			Track:      track,
-			MatchScore: 1.0,
+			Provider:    ProviderName,
+			RawResponse: raw,
+			Track:       track,
+			MatchScore:  1.0,
 		}, nil
 	}
 

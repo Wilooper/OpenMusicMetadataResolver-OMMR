@@ -21,9 +21,9 @@ All data endpoints (`resolve`, `links`, `bulk`, `search`, `extract`) default to 
 | `/search` | Title, artists, album, images, canonical ID, available platforms; pagination | Also matching scores, confidence, identity diagnostics, source count |
 | `/extract` | `{ "results": [ ...public tracks ] }` (independent records, never merged) | Existing per-source `query`/`sources` response, execution status/error, version and field coverage |
 
-Production tracks retain music metadata, credits, artwork, accepted provider IDs, artist/album IDs, identity status, and compact `extensions.platform_links`. They omit matching scores/breakdowns, confidence calculations, completeness, identity reasons/methods, field provenance, contributing sources and internal relation graphs. Only the public extensions `platform_links` and `wikipedia` are exposed; Wikipedia context keeps its attribution. Platform names in IDs/links represent usable catalog identifiers, not fetch diagnostics. Optional empty metadata arrays are omitted. No country code is added.
+Production tracks retain music metadata, credits, artwork, accepted provider IDs, artist/album IDs, identity status, and compact `extensions.platform_links`. They omit matching scores/breakdowns, confidence calculations, completeness, identity reasons/methods, field provenance, contributing sources and internal relation graphs. Provider metadata is exposed in `track.provider_data`; only the public extensions `platform_links` and `wikipedia` remain under `extensions`; Wikipedia context keeps its attribution. Platform names in IDs/links represent usable catalog identifiers, not fetch diagnostics. Optional empty metadata arrays are omitted. No country code is added to the unified root; source-reported territory/country information is retained within provider data.
 
-The internal canonical schema and shared disk/Redis cache remain complete. The presentation flag is not part of the resolver request/cache key: switching modes reuses the same cached resolution without changing its diagnostics or repeating provider work. It reduces transmitted bytes; it does not reduce stored cache-entry bytes or upstream work on a cache miss. Debug is an output mode, not an authorization boundary. A hosting-level switch to disable it is deferred.
+Production tracks also include `explicit_status` (`explicit`, `clean`, `unknown`). The internal canonical schema and shared disk/Redis cache remain complete. The presentation flag is not part of the resolver request/cache key: switching modes reuses the same cached resolution without changing its diagnostics or repeating provider work. It reduces transmitted bytes; it does not reduce stored cache-entry bytes or upstream work on a cache miss. Debug is an output mode, not an authorization boundary. A hosting-level switch to disable it is deferred.
 
 **Migration:** clients relying on the previous diagnostic fields or extraction source envelopes must add `debug=true`. Detailed response examples below show debug mode unless otherwise noted. Default extraction returns an empty results array if all providers fail or find nothing; use debug mode to distinguish those outcomes.
 
@@ -36,6 +36,7 @@ The internal canonical schema and shared disk/Redis cache remain complete. The p
 | `GET` | `/v1/resolve` | Resolves unified track metadata and cross-platform identities by ID or Query |
 | `GET` | `/v1/links` | Returns accepted recording IDs and links |
 | `GET` | `/v1/extract` | Returns independent normalized metadata and field coverage from one or more providers |
+| `POST` | `/v1/fingerprint` | AcoustID candidate lookup from a client-supplied fingerprint and duration |
 | `POST` | `/v1/bulk` | Batch resolves up to 100 queries in a single request |
 | `GET` | `/v1/search` | Performs raw search across metadata providers returning lightweight `SearchResult` objects |
 | `GET` | `/v1/health` | System health check and uptime probe |
@@ -247,3 +248,7 @@ title, artists, identity status and provider status. Unknown IDs/URLs are omitte
 See [PLATFORM_LINKS.md](PLATFORM_LINKS.md) for field definitions and supported services.
 Resolved and bulk tracks include the same catalog in `extensions.platform_links`;
 per-source extraction adds `links` without asserting cross-provider equivalence.
+
+## Catalog enrichment, provider extras and fingerprint lookup
+
+See [ENRICHMENT.md](ENRICHMENT.md) for `provider_data`, field trust/consensus, exact source activation and the fingerprint request/response contract. Debug responses store extra data inside `track.extensions.provider_data`; production promotes it to `track.provider_data`. Search remains a lightweight provider result pool; retrieve a full resolution for all accepted provider metadata. `sources` filters identity adapters; it does not select post-merge catalog services.

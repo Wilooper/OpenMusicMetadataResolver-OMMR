@@ -44,10 +44,10 @@ Copy `.env.example` to `.env`, fill only the credentials you have, run `chmod 60
 
 * **🌐 Zero-Key Architecture**: Resolves metadata via unauthenticated public endpoints and web embeds across Spotify (dual-mode), YouTube Music (InnerTube), Apple Music, Deezer, MusicBrainz, SoundCloud, and JioSaavn — 7 providers, zero keys required.
 * **🔗 6-Stage Cross-Platform Identity Pipeline**: Translates input IDs into cross-platform identifiers (`spotify`, `youtube`, `applemusic`, `deezer`, `soundcloud`, `jiosaavn`, `musicbrainz`, `isrc`).
-* **🆔 Path-Independent Canonical Track IDs**: Generates deterministic, collision-resistant track identifiers (`ommr_track_<hash>`) that collapse the same recording to identical IDs regardless of query entry point.
+* **🆔 Path-Independent Canonical Track IDs**: Generates deterministic, collision-resistant track identifiers (`ommr_track_<hash>`) from normalized metadata regardless of query entry point; identically named recording versions can still share a seed.
 * **📊 Multi-Source Metadata Merging**: Prioritizes higher-quality metadata fields across providers (e.g. MusicBrainz credits, Spotify genres, Apple Music cover art) with deduplicated source attribution.
-* **🕵️ Source Transparency & Field Provenance**: Returns `metadata_sources`, `provider_status` diagnostics (latency, cached status, rejection reasons), and `field_sources` (attributing every field to its source provider).
-* **🧠 Composite Matching & Calibrated Scores**: Combines Jaro-Winkler + Token Set Ratio composites, strict candidate acceptance (score threshold + artist gate), and provider trust coefficients (`MusicBrainz: 1.00`, `Apple: 0.95`, `Spotify: 0.95`, `Deezer: 0.90`, `JioSaavn: 0.85`, `YTMusic: 0.80`, `SoundCloud: 0.75`).
+* **🕵️ Source Transparency & Field Provenance**: With `debug=true`, returns `metadata_sources`, `provider_status` diagnostics (latency, cached status, rejection reasons), and `field_sources` (attributing every field to its source provider).
+* **🧠 Composite Matching & Weighted Scores**: Combines Jaro-Winkler + Token Set Ratio composites, strict candidate acceptance (score threshold + artist gate), and provider trust coefficients (`MusicBrainz: 1.00`, `Apple: 0.95`, `Spotify: 0.95`, `Deezer: 0.90`, `JioSaavn: 0.85`, `YTMusic: 0.80`, `SoundCloud: 0.75`).
 * **🎯 Structured Identity Verification**: Assigns `identity_status` (`verified`, `strong`, `probable`, `weak`) and `identity_reasons` (`isrc_match`, `musicbrainz_match`, `exact_title_artist_match`).
 * **⚡ Dual-Tier Caching**: Sub-divided local disk cache (`raw/`, `normalized/`, `resolved/`) and Redis caching.
 * **📦 Operations**: Includes Prometheus metrics (`/metrics`), request IDs, provider rate limiting, bulk resolution, and Docker Compose deployment. Credentialed integrations still require live validation with your accounts.
@@ -267,17 +267,22 @@ OMMR is configured via environment variables or a `.env` file:
 
 | Variable | Type | Default | Description |
 | --- | --- | --- | --- |
-| `PORT` | Integer | `8080` | HTTP server listening port |
-| `CACHE_PROVIDER` | String | `disk` | Caching backend (`disk` or `redis`) |
-| `CACHE_DIR` | String | `./cache` | Storage directory for disk cache |
-| `REDIS_URL` | String | `redis://localhost:6379/0` | Redis connection URL |
-| `CACHE_TTL` | Duration | `168h` (7 days) | Cache expiration TTL |
-| `RATE_LIMIT_RPS` | Float | `100.0` | Global API rate limit in requests/sec |
-| `PROVIDER_TIMEOUT` | Duration | `5s` | Timeout per provider HTTP request |
-| `BULK_MAX_ITEMS` | Integer | `100` | Maximum queries allowed in `POST /v1/bulk` |
-| `BULK_WORKERS` | Integer | `10` | Worker pool concurrency for bulk resolution |
-| `SPOTIFY_CLIENT_ID` | String | *(empty)* | Optional: Spotify official Web API client ID |
-| `SPOTIFY_CLIENT_SECRET` | String | *(empty)* | Optional: Spotify official Web API client secret |
+| `OMMR_PORT` | Integer | `8080` | HTTP listening port |
+| `OMMR_CACHE_PROVIDER` | String | `disk` | `disk` or `redis` |
+| `OMMR_CACHE_DIR` | String | `./cache_data` | Disk storage |
+| `OMMR_REDIS_URL` | String | `redis://localhost:6379/0` | Redis URL |
+| `OMMR_CACHE_TTL` | Duration | `24h` | Positive resolution TTL |
+| `OMMR_RATE_LIMIT_RPS` | Float | `50` | Process-wide API request budget |
+| `OMMR_PROVIDER_TIMEOUT` | Duration | `10s` | Entire resolution/search operation budget |
+| `OMMR_BULK_MAX_ITEMS` | Integer | `100` | Max queries per batch |
+| `OMMR_BULK_WORKERS` | Integer | `10` | Bulk workers |
+| `OMMR_ENABLE_ENRICHMENT` | Boolean | `true` | Post-merge catalog context/artwork |
+| `OMMR_METADATA_POLICY` | JSON string | consensus | Field voting and trust overrides |
+| `OMMR_LASTFM_API_KEY` | String | empty | Optional Last.fm context |
+| `OMMR_DISCOGS_TOKEN` | String | empty | Optional Discogs edition context |
+| `OMMR_ACOUSTID_API_KEY` | String | empty | Optional fingerprint lookup |
+| `OMMR_SPOTIFY_CLIENT_ID` / `OMMR_SPOTIFY_CLIENT_SECRET` | String | empty | Optional official Spotify mode |
+
 
 ---
 
@@ -343,3 +348,7 @@ hi
 ### Compact API output
 
 Data endpoints return production metadata by default. Add `&debug=true` to a resolve/search/links/extract query, or use `POST /v1/bulk?debug=true`, for provider execution details and matching diagnostics. Use `?debug=true` when it is the first query parameter. `debug=false` keeps the compact format; malformed or repeated values return 400. Both modes reuse the same complete resolver cache. Existing clients that consume provider diagnostics or per-source extraction envelopes should explicitly enable debug. See [response modes](docs/API_SPEC.md#production-and-debug-responses).
+
+### Rich provider metadata
+
+Accepted provider alternatives and extra catalog fields are now retained in production `track.provider_data`. Canonical fields use deterministic consensus or configured trust; diagnostics remain opt-in. The new catalog services add Cover Art Archive artwork, MusicBrainz release details, optional Last.fm and Discogs context, and a separate AcoustID fingerprint endpoint. See [ENRICHMENT.md](docs/ENRICHMENT.md) for the exact schema, access settings, identity checks and remaining limitations. [CACHING.md](docs/CACHING.md) describes actual cache integration.

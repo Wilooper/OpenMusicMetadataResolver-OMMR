@@ -147,3 +147,7 @@ type ResolverStats struct {
 `match_method`. See [PLATFORM_LINKS.md](PLATFORM_LINKS.md). Unknown identifiers
 and URLs are omitted. Only a provider's own ID is emitted as an IdentityMatch;
 provider `_url` and `_track_id` helpers in `ids` do not assert extra matches.
+
+## Additive metadata extensions and public projection
+
+The immutable internal `Track` stores accepted source records in `extensions.provider_data` and explicit evidence state in `extensions.explicit_status`. Production promotes these to `provider_data` and `explicit_status`. Canonical matching/provenance diagnostics remain debug-only. The public provider-data schema and source scopes are documented in [ENRICHMENT.md](ENRICHMENT.md); new catalog fields do not require changing Track's Go fields.

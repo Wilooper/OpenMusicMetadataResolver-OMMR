@@ -96,3 +96,14 @@
 - **Context**: Returning execution statuses, field provenance and identity scoring with every metadata response increases payload size and couples application consumers to resolver internals.
 - **Decision**: Parse an optional boolean `debug` query parameter on data endpoints. Default responses use explicit public DTOs; `debug=true` retains the detailed canonical output. Project data only after resolution, retaining a single complete cache entry for both modes. Keep useful catalog IDs/links and contextual attribution. Apply the flag to resolve, links, bulk, search and independent extraction. Reject invalid/ambiguous flags before provider work. Do not alter matching gates or introduce hosting policy settings in this change.
 - **Consequence**: Production payloads are smaller while debug cache hits retain diagnostics. Existing consumers of diagnostic fields and the extraction source envelope must opt into debug. Cache storage size and cache-miss provider work do not decrease. Debug remains caller-selectable until a later hosting configuration feature.
+
+
+## ADR-014: Preserve Source Metadata and Separate Recording Identity from Context
+- **Status**: Implemented
+- **Decision**: Keep accepted provider normalized alternatives and exact-entity public extras in `extensions.provider_data` (promoted in production). Remove credentials, tracking, player and unrelated search data. Default scalar merging to deterministic one-provider/one-vote consensus, with explicit configurable field trust. Retain an `explicit_status` tri-state without changing the legacy boolean. Album IDs are combined only for same-title accepted album records.
+- **Consequence**: Extra fields survive even when they lose canonical selection; context sources cannot assert new recording IDs. Production payloads can grow with useful data while diagnostics remain opt-in.
+
+## ADR-015: Bounded Catalog Enrichment and Shared Resolution Work
+- **Status**: Implemented
+- **Decision**: Add Cover Art Archive, MusicBrainz release, optional Last.fm and Discogs post-merge services; expose AcoustID fingerprint candidates separately. Enforce exact identity/scope checks, provider budgets, bounded bodies/timeouts, credential isolation and restricted artwork redirects. Cache catalog GET JSON and healthy empty resolutions. Share in-flight cache-enabled resolutions and clone results per caller. Include policy/capabilities in cache namespaces. Correct the iTunes budget and route search through rate limiting.
+- **Consequence**: Repeated upstream work is reduced within one process. Access permissions, source coverage, different editions, distributed budgeting and upstream pagination remain real constraints. No credentialed live equivalence is claimed without operator keys.

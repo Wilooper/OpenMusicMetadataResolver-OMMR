@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"github.com/ommr/ommr/internal/adapters"
+	"github.com/ommr/ommr/internal/metadata"
 	"github.com/ommr/ommr/internal/models/canonical"
 	"github.com/ommr/ommr/internal/platformlinks"
 )
@@ -120,6 +121,7 @@ func (h *Handler) HandleExtract(w http.ResponseWriter, r *http.Request) {
 				source.Results = make([]extractedTrack, 0, len(candidates))
 				for _, candidate := range candidates {
 					candidate.Track.IDs = platformlinks.ProviderIDs(adapter.Name(), candidate.Track.IDs)
+					metadata.Attach(&candidate.Track, []canonical.TrackCandidate{candidate})
 					source.Results = append(source.Results, describeExtractedTrack(candidate.Track))
 				}
 			}

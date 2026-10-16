@@ -122,3 +122,7 @@ The Spotify adapter (`internal/adapters/spotify/`) operates in two modes:
 
 1. **Official (key-based, optional)**: If `OMMR_SPOTIFY_CLIENT_ID` and `OMMR_SPOTIFY_CLIENT_SECRET` are set, it uses the OAuth client-credentials flow and the Web API.
 2. **Zero-key (default)**: Fetches an anonymous web-player token from `https://open.spotify.com/get_access_token` and calls the Web API; falls back to embed `__NEXT_DATA__` scraping and then oEmbed if the anonymous token is unavailable.
+
+## Deterministic merge and enrichment
+
+Resolution now sorts/deduplicates accepted providers before merging. Scalar fields use configurable consensus or per-field priorities; union fields keep contributions. Accepted source snapshots and safely selected catalog entities survive in provider data. Post-merge catalog services run concurrently and do not assert recording IDs. Identical cache-enabled requests share work and receive independent result objects. See [ENRICHMENT.md](ENRICHMENT.md) and [CACHING.md](CACHING.md) for current behavior and boundaries.

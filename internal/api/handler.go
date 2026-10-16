@@ -14,6 +14,7 @@ import (
 
 	"github.com/ommr/ommr/internal/adapters"
 	"github.com/ommr/ommr/internal/config"
+	"github.com/ommr/ommr/internal/enrichment/catalog"
 	"github.com/ommr/ommr/internal/identity"
 	"github.com/ommr/ommr/internal/idresolver"
 	"github.com/ommr/ommr/internal/matcher"
@@ -24,24 +25,26 @@ import (
 )
 
 type Handler struct {
-	resolver   *resolver.Resolver
-	registry   *adapters.Registry
-	idResolver *idresolver.IDResolver
-	idEngine   *identity.IdentityEngine
-	matcher    *matcher.Matcher
-	cfg        *config.Config
-	startTime  time.Time
+	fingerprint *catalog.AcoustID
+	resolver    *resolver.Resolver
+	registry    *adapters.Registry
+	idResolver  *idresolver.IDResolver
+	idEngine    *identity.IdentityEngine
+	matcher     *matcher.Matcher
+	cfg         *config.Config
+	startTime   time.Time
 }
 
 func NewHandler(res *resolver.Resolver, reg *adapters.Registry, cfg *config.Config) *Handler {
 	return &Handler{
-		resolver:   res,
-		registry:   reg,
-		idResolver: idresolver.New(),
-		idEngine:   identity.New(),
-		matcher:    matcher.New(),
-		cfg:        cfg,
-		startTime:  time.Now(),
+		resolver:    res,
+		fingerprint: catalog.NewAcoustID(catalog.NewClient(res.WaitProvider), cfg.AcoustIDKey),
+		registry:    reg,
+		idResolver:  idresolver.New(),
+		idEngine:    identity.New(),
+		matcher:     matcher.New(),
+		cfg:         cfg,
+		startTime:   time.Now(),
 	}
 }
 
@@ -326,6 +329,9 @@ func (h *Handler) HandleSearch(w http.ResponseWriter, r *http.Request) {
 		wg.Add(1)
 		go func() {
 			defer wg.Done()
+			if err := h.resolver.WaitProvider(ctx, ad.Name()); err != nil {
+				return
+			}
 			cands, err := ad.Search(ctx, searchQuery)
 			if err == nil && len(cands) > 0 {
 				scored := h.matcher.ScoreCandidates(cands, searchQuery)
@@ -333,8 +339,11 @@ func (h *Handler) HandleSearch(w http.ResponseWriter, r *http.Request) {
 				for _, c := range scored {
 					avail := make([]string, 0, len(c.Track.IDs))
 					for k := range c.Track.IDs {
-						avail = append(avail, k)
+						if !strings.HasSuffix(k, "_url") && !strings.HasSuffix(k, "_track_id") {
+							avail = append(avail, k)
+						}
 					}
+					sort.Strings(avail)
 					if len(avail) == 0 {
 						avail = []string{c.Provider}
 					}
@@ -360,12 +369,21 @@ func (h *Handler) HandleSearch(w http.ResponseWriter, r *http.Request) {
 
 	// Sort results descending by match_score
 	sort.Slice(allResults, func(i, j int) bool {
-		return allResults[i].MatchScore > allResults[j].MatchScore
+		if allResults[i].MatchScore != allResults[j].MatchScore {
+			return allResults[i].MatchScore > allResults[j].MatchScore
+		}
+		if allResults[i].CanonicalID != allResults[j].CanonicalID {
+			return allResults[i].CanonicalID < allResults[j].CanonicalID
+		}
+		return strings.Join(allResults[i].AvailableOn, ",") < strings.Join(allResults[j].AvailableOn, ",")
 	})
 
 	// Paginate results
 	total := len(allResults)
-	start := (page - 1) * limit
+	start := total
+	if page-1 <= total/limit {
+		start = (page - 1) * limit
+	}
 	end := start + limit
 
 	var paginated []canonical.SearchResult

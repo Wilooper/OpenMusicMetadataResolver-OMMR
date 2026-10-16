@@ -235,3 +235,10 @@ func parseDate(d string) string {
 	}
 	return d
 }
+
+func (p *Provider) RateLimitKey() string {
+	if p.catalogToken != "" {
+		return "applemusic_catalog"
+	}
+	return ProviderName
+}

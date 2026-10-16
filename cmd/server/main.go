@@ -27,6 +27,8 @@ import (
 	"github.com/ommr/ommr/internal/cache/disk"
 	"github.com/ommr/ommr/internal/cache/redis"
 	"github.com/ommr/ommr/internal/config"
+	"github.com/ommr/ommr/internal/enrichment/catalog"
+	"github.com/ommr/ommr/internal/merger"
 	"github.com/ommr/ommr/internal/ratelimit"
 	"github.com/ommr/ommr/internal/resolver"
 )
@@ -82,13 +84,39 @@ func main() {
 	}))
 	registry.Register(soundcloud.New())
 	registry.Register(jiosaavn.New())
-	registry.Register(qobuz.New())
-	registry.Register(tidal.New())
+	registry.Register(qobuz.NewWithConfig(cfg.QobuzBaseURL, cfg.QobuzAppID, cfg.QobuzToken))
+	registry.Register(tidal.NewWithConfig(cfg.TidalBaseURL, cfg.TidalToken))
 	registry.Register(amazonmusic.NewWithConfig(cfg.AmazonMusicBaseURL, cfg.AmazonMusicToken, cfg.AmazonMusicAPIKey))
-	registry.Register(pandora.New())
+	registry.Register(pandora.NewWithConfig(cfg.PandoraBaseURL, cfg.PandoraToken))
 
 	limiter := ratelimit.NewProviderLimiter()
 	res := resolver.New(registry, cacheBackend, limiter, cfg.CacheTTL)
+	policy, err := merger.ParsePolicy(cfg.MetadataPolicy)
+	if err != nil {
+		logger.Error("invalid metadata policy", slog.Any("error", err))
+		os.Exit(1)
+	}
+	for _, names := range policy.Priorities {
+		for _, name := range names {
+			if _, ok := registry.Get(name); !ok {
+				logger.Error("metadata policy references unknown provider", slog.String("provider", name))
+				os.Exit(1)
+			}
+		}
+	}
+	catalogClient := catalog.NewClient(res.WaitProvider)
+	catalogClient.Cache = cacheBackend
+	enrichers := []catalog.Enricher{}
+	if cfg.EnableEnrichment {
+		enrichers = append(enrichers, catalog.NewCoverArt(catalogClient), catalog.NewMusicBrainzRelease(catalogClient))
+		if cfg.LastFMKey != "" {
+			enrichers = append(enrichers, catalog.NewLastFM(catalogClient, cfg.LastFMKey))
+		}
+		if cfg.DiscogsToken != "" {
+			enrichers = append(enrichers, catalog.NewDiscogs(catalogClient, cfg.DiscogsToken))
+		}
+	}
+	res.Configure(policy, enrichers...)
 	handler := api.NewHandler(res, registry, cfg)
 
 	router := api.NewRouter(handler, logger, cfg.RateLimitRPS)
@@ -97,7 +125,7 @@ func main() {
 		Addr:         fmt.Sprintf(":%d", cfg.Port),
 		Handler:      router,
 		ReadTimeout:  10 * time.Second,
-		WriteTimeout: 15 * time.Second,
+		WriteTimeout: 30 * time.Second,
 		IdleTimeout:  60 * time.Second,
 	}
 
