@@ -41,6 +41,10 @@ type extractionResponse struct {
 
 // HandleExtract returns each provider's own normalized response and field coverage.
 func (h *Handler) HandleExtract(w http.ResponseWriter, r *http.Request) {
+	debug, valid := parseDebug(w, r)
+	if !valid {
+		return
+	}
 	if r.Method != http.MethodGet {
 		http.Error(w, `{"error":"Method not allowed"}`, http.StatusMethodNotAllowed)
 		return
@@ -124,7 +128,19 @@ func (h *Handler) HandleExtract(w http.ResponseWriter, r *http.Request) {
 	}
 	wg.Wait()
 	w.Header().Set("Content-Type", "application/json")
-	_ = json.NewEncoder(w).Encode(response)
+	if debug {
+		_ = json.NewEncoder(w).Encode(response)
+		return
+	}
+	results := make([]any, 0)
+	for _, source := range response.Sources {
+		for _, result := range source.Results {
+			results = append(results, trackResponse(&result.Track, false))
+		}
+	}
+	_ = json.NewEncoder(w).Encode(struct {
+		Results []any `json:"results"`
+	}{results})
 }
 
 func describeExtractedTrack(track canonical.Track) extractedTrack {

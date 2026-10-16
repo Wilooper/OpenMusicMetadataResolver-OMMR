@@ -4,11 +4,37 @@ Base Path: `/v1`
 
 ---
 
+## Production and debug responses
+
+All data endpoints (`resolve`, `links`, `bulk`, `search`, `extract`) default to compact production JSON. Append `debug=true` to request the detailed response. `debug=false` is identical to omitting it. The flag uses Go boolean syntax (`true`/`false`, `1`/`0`, `t`/`f`, and supported case variants); empty, invalid, or repeated values return HTTP 400 before provider calls. It is a URL query parameter, including for `POST /v1/bulk?debug=true`.
+
+```text
+/v1/resolve?artist=Example&title=Song
+/v1/resolve?artist=Example&title=Song&debug=true
+```
+
+| Endpoint | Default | With `debug=true` |
+| --- | --- | --- |
+| `/resolve` | `{ "track": ... }`, or `{ "track": null }` when no match passes the gates | Full canonical track, provider statuses, metadata sources, strategy, resolver statistics |
+| `/bulk` | Item index, success/error, public track; batch totals | Full canonical track and per-item provider statuses (`sources`) |
+| `/links` | Track identity and accepted platform IDs/URLs | Also provider statuses, unavailable platforms, link match methods/confidence and URL provenance |
+| `/search` | Title, artists, album, images, canonical ID, available platforms; pagination | Also matching scores, confidence, identity diagnostics, source count |
+| `/extract` | `{ "results": [ ...public tracks ] }` (independent records, never merged) | Existing per-source `query`/`sources` response, execution status/error, version and field coverage |
+
+Production tracks retain music metadata, credits, artwork, accepted provider IDs, artist/album IDs, identity status, and compact `extensions.platform_links`. They omit matching scores/breakdowns, confidence calculations, completeness, identity reasons/methods, field provenance, contributing sources and internal relation graphs. Only the public extensions `platform_links` and `wikipedia` are exposed; Wikipedia context keeps its attribution. Platform names in IDs/links represent usable catalog identifiers, not fetch diagnostics. Optional empty metadata arrays are omitted. No country code is added.
+
+The internal canonical schema and shared disk/Redis cache remain complete. The presentation flag is not part of the resolver request/cache key: switching modes reuses the same cached resolution without changing its diagnostics or repeating provider work. It reduces transmitted bytes; it does not reduce stored cache-entry bytes or upstream work on a cache miss. Debug is an output mode, not an authorization boundary. A hosting-level switch to disable it is deferred.
+
+**Migration:** clients relying on the previous diagnostic fields or extraction source envelopes must add `debug=true`. Detailed response examples below show debug mode unless otherwise noted. Default extraction returns an empty results array if all providers fail or find nothing; use debug mode to distinguish those outcomes.
+
+---
+
 ## Endpoints
 
 | Method | Route | Description |
 | --- | --- | --- |
 | `GET` | `/v1/resolve` | Resolves unified track metadata and cross-platform identities by ID or Query |
+| `GET` | `/v1/links` | Returns accepted recording IDs and links |
 | `GET` | `/v1/extract` | Returns independent normalized metadata and field coverage from one or more providers |
 | `POST` | `/v1/bulk` | Batch resolves up to 100 queries in a single request |
 | `GET` | `/v1/search` | Performs raw search across metadata providers returning lightweight `SearchResult` objects |
@@ -28,11 +54,9 @@ Pass `provider` and `id` to fetch a single provider's track, or pass `artist` an
 /v1/extract?provider=deezer&id=123456
 ```
 
-Each source result includes the normalized `track`, `year`, `thumbnail_url`, and `present_fields` / `missing_fields` arrays. Coverage fields include title, artists, album, year, artwork, duration, ISRC, credits, and lyricist. Missing optional fields are reported as missing; OMMR does not infer or synthesize credits. Provider failures are isolated to that source's `status` and `error`.
+With `debug=true`, each source result includes the normalized `track`, `year`, `thumbnail_url`, and `present_fields` / `missing_fields` arrays. Coverage fields include title, artists, album, year, artwork, duration, ISRC, credits, and lyricist. Missing optional fields are reported as missing; OMMR does not infer or synthesize credits. Provider failures are isolated to that source's `status` and `error`.
 
 ## 2. Single Resolution Endpoint
-
-## 1. Single Resolution Endpoint
 
 `GET /v1/resolve`
 

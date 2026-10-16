@@ -114,3 +114,7 @@ oEmbed widget may expose a numeric track ID; JioSaavn's API song ID is retained
 separately from its share token. Amazon requests `id` and `url` in sparse track
 fieldsets. `/v1/links` and `extensions.platform_links` expose accepted IDs/URLs
 with their identifier namespace. See [PLATFORM_LINKS.md](PLATFORM_LINKS.md).
+
+## Response modes
+
+Per-source execution/version/error and field coverage described above require `debug=true`. Default `/v1/extract` returns an independent flat `results` array of public tracks; it does not claim these records match each other. Default resolve/bulk responses omit provenance and matching diagnostics. See [API_SPEC.md](API_SPEC.md#production-and-debug-responses).

@@ -339,3 +339,7 @@ Contributions are warmly welcome! Please read [docs/CONTRIBUTING.md](docs/CONTRI
 OMMR is open-source software licensed under the [MIT License](LICENSE).
 
 hi
+
+### Compact API output
+
+Data endpoints return production metadata by default. Add `&debug=true` to a resolve/search/links/extract query, or use `POST /v1/bulk?debug=true`, for provider execution details and matching diagnostics. Use `?debug=true` when it is the first query parameter. `debug=false` keeps the compact format; malformed or repeated values return 400. Both modes reuse the same complete resolver cache. Existing clients that consume provider diagnostics or per-source extraction envelopes should explicitly enable debug. See [response modes](docs/API_SPEC.md#production-and-debug-responses).

@@ -55,6 +55,10 @@ func (h *Handler) HandleLinks(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) handleResolve(w http.ResponseWriter, r *http.Request, linksOnly bool) {
+	debug, valid := parseDebug(w, r)
+	if !valid {
+		return
+	}
 	if r.Method != http.MethodGet {
 		http.Error(w, `{"error":"Method not allowed"}`, http.StatusMethodNotAllowed)
 		return
@@ -125,7 +129,10 @@ func (h *Handler) handleResolve(w http.ResponseWriter, r *http.Request, linksOnl
 
 	w.Header().Set("Content-Type", "application/json")
 	if linksOnly {
-		result := linksResponse{ProviderStatus: resp.ProviderStatus}
+		result := linksResponse{}
+		if debug {
+			result.ProviderStatus = resp.ProviderStatus
+		}
 		if resp.Track != nil {
 			result.Links = platformlinks.Build(*resp.Track)
 			result.Title = resp.Track.Title
@@ -134,14 +141,33 @@ func (h *Handler) handleResolve(w http.ResponseWriter, r *http.Request, linksOnl
 		} else {
 			result.Links = platformlinks.Build(canonical.Track{})
 		}
-		_ = json.NewEncoder(w).Encode(result)
+		if debug {
+			_ = json.NewEncoder(w).Encode(result)
+		} else {
+			_ = json.NewEncoder(w).Encode(struct {
+				Links          any                `json:"links"`
+				Title          string             `json:"title,omitempty"`
+				Artists        []canonical.Artist `json:"artists,omitempty"`
+				IdentityStatus string             `json:"identity_status,omitempty"`
+			}{catalogResponse(result.Links, false), result.Title, result.Artists, result.IdentityStatus})
+		}
 		return
 	}
-	_ = json.NewEncoder(w).Encode(resp)
+	if debug {
+		_ = json.NewEncoder(w).Encode(resp)
+	} else {
+		_ = json.NewEncoder(w).Encode(struct {
+			Track any `json:"track"`
+		}{trackResponse(resp.Track, false)})
+	}
 }
 
 // HandleBulk handles POST /v1/bulk
 func (h *Handler) HandleBulk(w http.ResponseWriter, r *http.Request) {
+	debug, valid := parseDebug(w, r)
+	if !valid {
+		return
+	}
 	if r.Method != http.MethodPost {
 		http.Error(w, `{"error":"Method not allowed"}`, http.StatusMethodNotAllowed)
 		return
@@ -211,8 +237,10 @@ func (h *Handler) HandleBulk(w http.ResponseWriter, r *http.Request) {
 					results[idx] = BulkItemResult{
 						QueryIndex: idx,
 						Success:    res.Track != nil,
-						Track:      res.Track,
-						Sources:    res.ProviderStatus,
+						Track:      trackResponse(res.Track, debug),
+					}
+					if debug {
+						results[idx].Sources = res.ProviderStatus
 					}
 				}
 			}
@@ -248,6 +276,10 @@ func (h *Handler) HandleBulk(w http.ResponseWriter, r *http.Request) {
 
 // HandleSearch handles GET /v1/search?q=query&page=1&limit=10
 func (h *Handler) HandleSearch(w http.ResponseWriter, r *http.Request) {
+	debug, valid := parseDebug(w, r)
+	if !valid {
+		return
+	}
 	if r.Method != http.MethodGet {
 		http.Error(w, `{"error":"Method not allowed"}`, http.StatusMethodNotAllowed)
 		return
@@ -346,9 +378,13 @@ func (h *Handler) HandleSearch(w http.ResponseWriter, r *http.Request) {
 		paginated = []canonical.SearchResult{}
 	}
 
+	publicResults := make([]any, len(paginated))
+	for i, result := range paginated {
+		publicResults[i] = searchResponse(result, debug)
+	}
 	resp := SearchResponse{
 		Query:   cleanedQ,
-		Results: paginated,
+		Results: publicResults,
 		Page:    page,
 		Limit:   limit,
 		Total:   total,

@@ -1,3 +1,5 @@
+> This document describes the full internal canonical schema, returned by data endpoints with `debug=true`. Default production responses use an explicit metadata-only projection; see [API_SPEC.md](API_SPEC.md#production-and-debug-responses). Internal Track JSON and cache entries are unchanged.
+
 # OMMR Domain Schema Specification
 
 ## Canonical Domain Schemas (`internal/models/canonical/`)

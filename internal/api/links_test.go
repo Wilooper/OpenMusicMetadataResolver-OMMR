@@ -32,7 +32,7 @@ func TestSecondaryLinkSearchFailureIsReported(t *testing.T) {
 	registry.Register(unavailableLinkAdapter{extractionFixtureAdapter{name: "applemusic"}})
 	handler := NewHandler(resolver.New(registry, nil, ratelimit.NewProviderLimiter(), time.Hour), registry, &config.Config{ProviderTimeout: time.Second})
 	recorder := httptest.NewRecorder()
-	handler.HandleLinks(recorder, httptest.NewRequest("GET", "/v1/links?youtube_id=x-KOXck57lc", nil))
+	handler.HandleLinks(recorder, httptest.NewRequest("GET", "/v1/links?youtube_id=x-KOXck57lc&debug=true", nil))
 	var got linksResponse
 	if err := json.Unmarshal(recorder.Body.Bytes(), &got); err != nil {
 		t.Fatal(err)
@@ -62,7 +62,7 @@ func TestLinksEndpointReturnsOnlyAcceptedOwnProviderIdentities(t *testing.T) {
 	handler := NewHandler(res, registry, &config.Config{ProviderTimeout: time.Second})
 	router := NewRouter(handler, slog.Default(), 50)
 	recorder := httptest.NewRecorder()
-	router.ServeHTTP(recorder, httptest.NewRequest("GET", "/v1/links?youtube_id=x-KOXck57lc", nil))
+	router.ServeHTTP(recorder, httptest.NewRequest("GET", "/v1/links?youtube_id=x-KOXck57lc&debug=true", nil))
 	if recorder.Code != 200 {
 		t.Fatalf("links failed: %s", recorder.Body)
 	}
@@ -82,7 +82,7 @@ func TestLinksEndpointReturnsOnlyAcceptedOwnProviderIdentities(t *testing.T) {
 		t.Fatal("missing provider diagnostics")
 	}
 	recorder = httptest.NewRecorder()
-	router.ServeHTTP(recorder, httptest.NewRequest("GET", "/v1/resolve?youtube_id=x-KOXck57lc", nil))
+	router.ServeHTTP(recorder, httptest.NewRequest("GET", "/v1/resolve?youtube_id=x-KOXck57lc&debug=true", nil))
 	var resolved resolver.ResolveResponse
 	if err := json.Unmarshal(recorder.Body.Bytes(), &resolved); err != nil {
 		t.Fatal(err)
@@ -102,7 +102,7 @@ func TestLinksEndpointValidationAndEmptyResults(t *testing.T) {
 	for _, tt := range []struct {
 		method, target string
 		code           int
-	}{{"POST", "/v1/links?title=Song&artist=Singer", 405}, {"GET", "/v1/links", 400}, {"GET", "/v1/links?isrc=USABC2300001", 200}} {
+	}{{"POST", "/v1/links?title=Song&artist=Singer&debug=true", 405}, {"GET", "/v1/links", 400}, {"GET", "/v1/links?isrc=USABC2300001&debug=true", 200}} {
 		recorder := httptest.NewRecorder()
 		handler.HandleLinks(recorder, httptest.NewRequest(tt.method, tt.target, nil))
 		if recorder.Code != tt.code {
