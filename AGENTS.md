@@ -21,6 +21,7 @@ Verify all three (`build`, `vet`, `test`) pass before finishing any change.
 
 - `cmd/server/main.go` — server bootstrap; registers provider adapters into the registry.
 - `internal/adapters/` — one package per provider (`ProviderAdapter` interface in `adapters/adapter.go`). Search endpoints return up to `maxCandidatesPerProvider` candidates.
+- `internal/bootstrap/`, `internal/credentials/`, `internal/providerhealth/` — startup credential validation, private session import and runtime source circuits.
 - `internal/metadata/` — accepted provider records and safe entity extra fields.
 - `internal/enrichment/catalog/` — post-merge release/context/artwork services and fingerprint lookup.
 - `internal/merger/policy.go` — deterministic consensus and configurable field trust.
@@ -45,3 +46,7 @@ Verify all three (`build`, `vet`, `test`) pass before finishing any change.
 ## Docs
 
 `README.md` and everything in `docs/` describe the current architecture — keep them in sync with code changes. `ARCHITECTURE_DECISIONS.md` records decisions append-only. `docs/CONTRIBUTING.md` documents the contribution workflow.
+
+## Credential lifecycle
+
+Never probe credentials through a public-fallback adapter method and call that successful authentication. Use protected source-specific checks, keep secrets/account data out of status/logs, refuse credential redirects and preserve owner-only file rules. Required sources remain unloaded without validated access. Ensure endpoint policy applies equally to the JSON gateway. Validate circuit transitions and cancellation without live operator secrets.

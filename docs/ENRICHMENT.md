@@ -79,3 +79,7 @@ An explicit field priority overrides consensus **for that field**. `mode=priorit
 Deterministic tests exercise exact-identity checks, rejected artists/editions, extra-field preservation, credential handling, each new source's request format, shared caching/cancellation, and consensus ordering. Live checks observed Discogs release JSON HTTP 200, Cover Art Archive HTTP 307 to its Archive.org JSON location, and expected missing-credential responses from Last.fm/AcoustID. The Archive.org fetch timed out in this environment; complete Cover Art Archive retrieval is fixture-tested. No operator keys were available for live Last.fm/Discogs search/AcoustID equivalence tests.
 
 Official references: [Cover Art Archive](https://musicbrainz.org/doc/Cover_Art_Archive/API), [MusicBrainz API](https://musicbrainz.org/doc/MusicBrainz_API), [Last.fm track.getInfo](https://www.last.fm/api/show/track.getInfo), [Discogs](https://www.discogs.com/developers/), [AcoustID](https://acoustid.org/webservice).
+
+## Lifecycle activation
+
+The activation variables above are necessary but no longer sufficient: configured Last.fm, Discogs and AcoustID access must pass uncached startup probes. Failed/missing credentials disable the optional service; runtime circuits can suspend repeatedly failing services. Config and redacted status are described in [PROVIDER_LIFECYCLE.md](PROVIDER_LIFECYCLE.md). No live credential reload is implemented.

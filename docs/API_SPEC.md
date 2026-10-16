@@ -252,3 +252,9 @@ per-source extraction adds `links` without asserting cross-provider equivalence.
 ## Catalog enrichment, provider extras and fingerprint lookup
 
 See [ENRICHMENT.md](ENRICHMENT.md) for `provider_data`, field trust/consensus, exact source activation and the fingerprint request/response contract. Debug responses store extra data inside `track.extensions.provider_data`; production promotes it to `track.provider_data`. Search remains a lightweight provider result pool; retrieve a full resolution for all accepted provider metadata. `sources` filters identity adapters; it does not select post-merge catalog services.
+
+## Configured JSON gateway and lifecycle
+
+`POST /v1/query` accepts an optional `operation` plus the selected operation's input fields. A configured default removes the need to select operation/sources/debug per request. Startup YAML controls enabled endpoints, permitted overrides and debug access. `GET /v1/providers` returns redacted lifecycle status; no token/cookie/profile data is included. Required-credential sources are not registered until a startup probe succeeds, and runtime-suspended sources are skipped. See [PROVIDER_LIFECYCLE.md](PROVIDER_LIFECYCLE.md).
+
+When the configured/default source selection has no available identity adapters, resolve/links return HTTP 503. Unknown source names return 400. Existing endpoint routes remain available unless disabled in configuration.

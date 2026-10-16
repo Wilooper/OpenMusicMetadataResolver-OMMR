@@ -28,6 +28,9 @@ const (
 type Config struct {
 	ClientID     string
 	ClientSecret string
+	Cookie       string
+	AccessToken  string
+	ExpiresAt    int64
 }
 
 type Provider struct {
@@ -39,11 +42,20 @@ type Provider struct {
 var _ adapters.ProviderAdapter = (*Provider)(nil)
 
 func New(cfg Config) *Provider {
-	return &Provider{
+	p := &Provider{
 		httpClient: &http.Client{Timeout: 8 * time.Second, CheckRedirect: func(_ *http.Request, _ []*http.Request) error { return http.ErrUseLastResponse }},
 		tokens:     newTokenManager(&http.Client{Timeout: 8 * time.Second, CheckRedirect: func(_ *http.Request, _ []*http.Request) error { return http.ErrUseLastResponse }}, cfg.ClientID, cfg.ClientSecret),
 		config:     cfg,
 	}
+	p.tokens.cookie = cfg.Cookie
+	if cfg.AccessToken != "" {
+		p.tokens.token = cfg.AccessToken
+		p.tokens.expiry = time.Now().Add(time.Hour)
+		if cfg.ExpiresAt > 0 {
+			p.tokens.expiry = time.Unix(cfg.ExpiresAt, 0)
+		}
+	}
+	return p
 }
 
 func (p *Provider) Name() string {
@@ -104,7 +116,7 @@ func (p *Provider) Search(ctx context.Context, q adapters.Query) ([]canonical.Tr
 		return nil, err
 	}
 	if resp.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("spotify web search status %d: %s", resp.StatusCode, string(body))
+		return nil, fmt.Errorf("spotify web search status %d", resp.StatusCode)
 	}
 
 	var searchResp provider.SpotifyWebSearchResponse

@@ -55,8 +55,9 @@ type SearchResponse struct {
 
 // HealthResponse payload returned by GET /v1/health.
 type HealthResponse struct {
-	Status        string `json:"status"`
-	Version       string `json:"version"`
-	UptimeSeconds int64  `json:"uptime_seconds"`
-	CacheProvider string `json:"cache_provider"`
+	Providers     map[string]int `json:"providers,omitempty"`
+	Status        string         `json:"status"`
+	Version       string         `json:"version"`
+	UptimeSeconds int64          `json:"uptime_seconds"`
+	CacheProvider string         `json:"cache_provider"`
 }

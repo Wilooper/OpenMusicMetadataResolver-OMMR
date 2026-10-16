@@ -21,14 +21,14 @@ Updated 2026-10-16. This replaces the earlier research-only assessment with the 
 
 ## Real remaining constraints
 
-- Credentialed catalog access still requires provider-issued keys/tokens. Optional adapters do not imply live access to every catalog. No Spotify cookie-based login was added; it retains official credentials and anonymous/embed fallbacks.
+- Credentialed catalog access still requires provider-issued keys/tokens. Optional adapters do not imply live access to every catalog. Spotify now supports imported browser sessions and a bounded cookie exchange; challenge-dependent refresh is not guaranteed. Apple session cookies still need a developer/browser bearer. See PROVIDER_LIFECYCLE.md.
 - SoundCloud's keyless integration is permalink lookup, not broad text search. Search still paginates a finite per-provider result pool and can contain the same recording from several providers; it does not fetch arbitrary upstream pages.
 - ISRC/title/artist evidence is imperfect for live, remastered, clean and regional editions. Existing identity gates remain; adding context does not weaken them. Canonical IDs use the existing metadata-based identity scheme and can still conflate versions with identical cleaned title/artist.
 - Source consensus counts catalogs, not guaranteed independent editorial origins. Durations vote exactly, so small timing differences use deterministic tie-breaking rather than clustered voting. Caller trust overrides and preserved alternatives make disagreements inspectable.
 - Local provider budgets and in-flight sharing are not distributed across replicas. Some existing adapter-internal fallback/detail calls still need transport-level quota accounting. No automatic Retry-After backoff/circuit breaker is implemented.
 - `bypass_cache` refreshes resolved entries but does not bypass the 24h catalog GET cache. Normalized candidate caching and reusable raw caching for the original identity adapters are not implemented. Cache TTLs are not a guarantee that deleted provider data disappears immediately from deployments.
 - Broader country/region selection is incomplete. Apple storefront is configurable; other provider markets may be fixed or inferred. Country/territory fields remain source data rather than a single inferred root value.
-- Provider data is intentionally richer and can enlarge production responses. Diagnostics remain hidden by default, but no field-selection API, hosting-level debug block, or HTTP compression was added in this change.
+- Provider data is intentionally richer and can enlarge production responses. Diagnostics remain hidden by default, but no field-selection API or HTTP compression was added in this change.
 - Sources can omit metadata, fail, or return no matches. Extra data is preserved only when associated with an accepted entity; unrelated search results/player/auth payloads are not echoed. Body/depth/time limits bound resource use.
 - No operator credentials were available for live Last.fm, Discogs search, or AcoustID matching checks. Live probes verified endpoint behavior, while complete source/identity/error paths are fixture-tested. The Cover Art Archive redirect was observed; Archive.org retrieval timed out in this environment.
 
@@ -40,3 +40,7 @@ Updated 2026-10-16. This replaces the earlier research-only assessment with the 
 - [Last.fm track.getInfo](https://www.last.fm/api/show/track.getInfo)
 - [Discogs developers](https://www.discogs.com/developers/)
 - [AcoustID web service](https://acoustid.org/webservice)
+
+## Startup/lifecycle update
+
+Implemented credential discovery, actual boot probes, public fallback, required-source exclusion, runtime suspension/recovery, endpoint/default API policy and a configured JSON gateway. Unavailable optional sources no longer incur ordinary resolution attempts. Runtime circuits do not solve distributed budgeting or guarantee that browser session refresh remains compatible with private web interfaces. Documentation: [PROVIDER_LIFECYCLE.md](PROVIDER_LIFECYCLE.md).

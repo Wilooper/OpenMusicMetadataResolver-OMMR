@@ -9,14 +9,17 @@ import (
 
 // Registry manages thread-safe registration and retrieval of ProviderAdapters.
 type Registry struct {
-	mu       sync.RWMutex
-	adapters map[string]ProviderAdapter
+	mu           sync.RWMutex
+	adapters     map[string]ProviderAdapter
+	availability func(string) bool
+	known        map[string]bool
 }
 
 // NewRegistry initializes an empty Registry.
 func NewRegistry() *Registry {
 	return &Registry{
 		adapters: make(map[string]ProviderAdapter),
+		known:    map[string]bool{},
 	}
 }
 
@@ -25,6 +28,7 @@ func (r *Registry) Register(adapter ProviderAdapter) {
 	r.mu.Lock()
 	defer r.mu.Unlock()
 	r.adapters[strings.ToLower(adapter.Name())] = adapter
+	r.known[strings.ToLower(adapter.Name())] = true
 }
 
 // Get retrieves a registered ProviderAdapter by name.
@@ -41,7 +45,9 @@ func (r *Registry) List() []ProviderAdapter {
 	defer r.mu.RUnlock()
 	list := make([]ProviderAdapter, 0, len(r.adapters))
 	for _, a := range r.adapters {
-		list = append(list, a)
+		if r.availability == nil || r.availability(a.Name()) {
+			list = append(list, a)
+		}
 	}
 	sort.Slice(list, func(i, j int) bool { return list[i].Name() < list[j].Name() })
 	return list
@@ -65,11 +71,28 @@ func (r *Registry) ListActive(names []string) ([]ProviderAdapter, error) {
 		}
 		adapter, ok := r.adapters[cleanName]
 		if !ok {
+			if r.known[cleanName] {
+				continue
+			}
 			return nil, fmt.Errorf("provider %q is not registered", name)
 		}
-		active = append(active, adapter)
+		if r.availability == nil || r.availability(adapter.Name()) {
+			active = append(active, adapter)
+		}
 		seen[cleanName] = true
 	}
 	sort.Slice(active, func(i, j int) bool { return active[i].Name() < active[j].Name() })
 	return active, nil
+}
+
+func (r *Registry) SetAvailability(check func(string) bool) {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	r.availability = check
+}
+
+func (r *Registry) MarkKnown(name string) {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	r.known[strings.ToLower(name)] = true
 }

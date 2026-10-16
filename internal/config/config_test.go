@@ -50,7 +50,7 @@ func TestPrivateConfigAndEnvironmentPrecedence(t *testing.T) {
 }
 
 func TestInvalidCredentialsFailWithoutEchoingSecrets(t *testing.T) {
-	for _, cookie := range []string{"SID=private-secret", "SAPISID=private-secret\r\nInjected: bad"} {
+	for _, cookie := range []string{"SAPISID=private-secret\r\nInjected: bad"} {
 		t.Setenv("OMMR_YTMUSIC_COOKIE", cookie)
 		_, err := LoadConfig()
 		if err == nil || strings.Contains(err.Error(), "private-secret") {
@@ -87,5 +87,40 @@ func TestNewCatalogCredentialsLoadFromPrivateEnvFile(t *testing.T) {
 	}
 	if cfg.LastFMKey != "lastfm-test" || cfg.DiscogsToken != "discogs-test" || cfg.AcoustIDKey != "acoustid-test" || cfg.QobuzAppID != "qobuz-test" || cfg.TidalToken != "tidal-test" || cfg.PandoraToken != "pandora-test" {
 		t.Fatal("private-file credentials lost")
+	}
+}
+
+func TestMalformedCredentialCanReachStartupFallback(t *testing.T) {
+	t.Setenv("OMMR_YTMUSIC_COOKIE", "SID=private-secret")
+	cfg, err := LoadConfig()
+	if err != nil || cfg.YTMusicCookie == "" {
+		t.Fatal("credential validity belongs to startup probe, not config load")
+	}
+}
+
+func TestConfigurationDiscoversSessionsAndControlsAPI(t *testing.T) {
+	dir := t.TempDir()
+	credentialsDir := filepath.Join(dir, "credentials")
+	os.Mkdir(credentialsDir, 0700)
+	os.WriteFile(filepath.Join(credentialsDir, "spotify.json"), []byte(`{"cookie":"sp_dc=session-cookie","access_token":"session-bearer","expires_at":2000000000}`), 0600)
+	os.WriteFile(filepath.Join(credentialsDir, "applemusic.json"), []byte(`{"headers":{"Cookie":"media-user-token=apple-user","Authorization":"Bearer apple-developer"}}`), 0600)
+	os.WriteFile(filepath.Join(credentialsDir, "lastfm.json"), []byte(`{"api_key":"lastfm-key"}`), 0600)
+	path := filepath.Join(dir, "ommr.yaml")
+	os.WriteFile(path, []byte("credentials_dir: ./credentials\napi:\n  default_operation: links\n  default_sources: [Spotify, deezer]\n  allow_debug: false\n  allow_overrides: false\n  endpoints:\n    search: false\nproviders:\n  failure_threshold: 4\n  cooldown: 2m\n  enabled:\n    tidal: false\n"), 0600)
+	t.Setenv("OMMR_CONFIG_FILE", path)
+	cfg, err := LoadConfig()
+	if err != nil {
+		t.Fatal(err)
+	}
+	if cfg.SpotifyCookie != "sp_dc=session-cookie" || cfg.SpotifyAccessToken != "session-bearer" || cfg.AppleUserToken != "apple-user" || cfg.AppleDeveloperToken != "apple-developer" || cfg.LastFMKey != "lastfm-key" {
+		t.Fatal("credential directory discovery failed")
+	}
+	if cfg.API.DefaultOperation != "links" || cfg.API.DebugAllowed() || cfg.API.OverridesAllowed() || cfg.API.Enabled("search") || cfg.Lifecycle.ProviderEnabled("tidal") || cfg.Lifecycle.FailureThreshold != 4 {
+		t.Fatal("startup API policy not applied")
+	}
+	t.Setenv("OMMR_SPOTIFY_ACCESS_TOKEN", "")
+	cfg, err = LoadConfig()
+	if err != nil || cfg.SpotifyAccessToken != "" {
+		t.Fatal("explicit blank environment did not disable imported bearer")
 	}
 }

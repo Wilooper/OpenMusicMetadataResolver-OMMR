@@ -38,7 +38,19 @@ func (h *Handler) HandleFingerprint(w http.ResponseWriter, r *http.Request) {
 	}
 	ctx, cancel := context.WithTimeout(r.Context(), h.cfg.ProviderTimeout)
 	defer cancel()
+	var lease uint64
+	if h.health != nil {
+		var err error
+		if lease, err = h.health.Begin("acoustid"); err != nil {
+			w.WriteHeader(503)
+			_ = json.NewEncoder(w).Encode(map[string]string{"error": "Fingerprint provider is unavailable"})
+			return
+		}
+	}
 	result, err := h.fingerprint.Lookup(ctx, input.Fingerprint, input.Duration)
+	if h.health != nil {
+		h.health.Finish(ctx, "acoustid", lease, err)
+	}
 	if err != nil {
 		w.WriteHeader(502)
 		_ = json.NewEncoder(w).Encode(map[string]string{"error": "Fingerprint lookup unavailable"})

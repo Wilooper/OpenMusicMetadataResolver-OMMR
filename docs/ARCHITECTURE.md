@@ -126,3 +126,7 @@ The Spotify adapter (`internal/adapters/spotify/`) operates in two modes:
 ## Deterministic merge and enrichment
 
 Resolution now sorts/deduplicates accepted providers before merging. Scalar fields use configurable consensus or per-field priorities; union fields keep contributions. Accepted source snapshots and safely selected catalog entities survive in provider data. Post-merge catalog services run concurrently and do not assert recording IDs. Identical cache-enabled requests share work and receive independent result objects. See [ENRICHMENT.md](ENRICHMENT.md) and [CACHING.md](CACHING.md) for current behavior and boundaries.
+
+## Provider bootstrap and health
+
+`internal/bootstrap` selects validated authentication modes before registration. `internal/credentials` imports only private operator-selected session/key files. `internal/providerhealth` decorates loaded adapters and enrichment with failure circuits; the registry filters unavailable sources. The resolver partitions cache keys across health transitions. API middleware applies startup defaults/locks consistently to original routes and the JSON gateway. See [PROVIDER_LIFECYCLE.md](PROVIDER_LIFECYCLE.md).

@@ -151,3 +151,7 @@ provider `_url` and `_track_id` helpers in `ids` do not assert extra matches.
 ## Additive metadata extensions and public projection
 
 The immutable internal `Track` stores accepted source records in `extensions.provider_data` and explicit evidence state in `extensions.explicit_status`. Production promotes these to `provider_data` and `explicit_status`. Canonical matching/provenance diagnostics remain debug-only. The public provider-data schema and source scopes are documented in [ENRICHMENT.md](ENRICHMENT.md); new catalog fields do not require changing Track's Go fields.
+
+## Provider lifecycle status
+
+`/v1/providers` is an operational schema independent of canonical metadata. It contains name/state/mode, startup credential outcome, failure streak, last evaluation and retry time. Credentials and account profile details are never included. API policy and safe status meanings are defined in [PROVIDER_LIFECYCLE.md](PROVIDER_LIFECYCLE.md).

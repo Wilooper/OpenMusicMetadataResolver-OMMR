@@ -2,7 +2,9 @@ package main
 
 import (
 	"context"
+	"flag"
 	"fmt"
+	"github.com/ommr/ommr/internal/bootstrap"
 	"log/slog"
 	"net/http"
 	"os"
@@ -10,32 +12,21 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/ommr/ommr/internal/adapters"
-	"github.com/ommr/ommr/internal/adapters/amazonmusic"
-	"github.com/ommr/ommr/internal/adapters/applemusic"
-	"github.com/ommr/ommr/internal/adapters/deezer"
-	"github.com/ommr/ommr/internal/adapters/jiosaavn"
-	"github.com/ommr/ommr/internal/adapters/musicbrainz"
-	"github.com/ommr/ommr/internal/adapters/pandora"
-	"github.com/ommr/ommr/internal/adapters/qobuz"
-	"github.com/ommr/ommr/internal/adapters/soundcloud"
-	"github.com/ommr/ommr/internal/adapters/spotify"
-	"github.com/ommr/ommr/internal/adapters/tidal"
-	"github.com/ommr/ommr/internal/adapters/ytmusic"
 	"github.com/ommr/ommr/internal/api"
 	"github.com/ommr/ommr/internal/cache"
 	"github.com/ommr/ommr/internal/cache/disk"
 	"github.com/ommr/ommr/internal/cache/redis"
 	"github.com/ommr/ommr/internal/config"
-	"github.com/ommr/ommr/internal/enrichment/catalog"
-	"github.com/ommr/ommr/internal/merger"
-	"github.com/ommr/ommr/internal/ratelimit"
-	"github.com/ommr/ommr/internal/resolver"
 )
 
 func main() {
 	logger := slog.New(slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{Level: slog.LevelInfo}))
 
+	configPath := flag.String("config", "", "private YAML configuration file")
+	flag.Parse()
+	if *configPath != "" {
+		_ = os.Setenv("OMMR_CONFIG_FILE", *configPath)
+	}
 	cfg, err := config.LoadConfig()
 	if err != nil {
 		logger.Error("failed to load configuration", slog.Any("error", err))
@@ -72,52 +63,16 @@ func main() {
 	}
 	defer cacheBackend.Close()
 
-	// Initialize Provider Registry & Adapters
-	registry := adapters.NewRegistry()
-	registry.Register(musicbrainz.New())
-	registry.Register(deezer.New())
-	registry.Register(applemusic.NewWithCatalog(cfg.AppleDeveloperToken, cfg.AppleStorefront))
-	registry.Register(ytmusic.NewWithCookie(cfg.YTMusicCookie))
-	registry.Register(spotify.New(spotify.Config{
-		ClientID:     cfg.SpotifyClientID,
-		ClientSecret: cfg.SpotifyClientSecret,
-	}))
-	registry.Register(soundcloud.New())
-	registry.Register(jiosaavn.New())
-	registry.Register(qobuz.NewWithConfig(cfg.QobuzBaseURL, cfg.QobuzAppID, cfg.QobuzToken))
-	registry.Register(tidal.NewWithConfig(cfg.TidalBaseURL, cfg.TidalToken))
-	registry.Register(amazonmusic.NewWithConfig(cfg.AmazonMusicBaseURL, cfg.AmazonMusicToken, cfg.AmazonMusicAPIKey))
-	registry.Register(pandora.NewWithConfig(cfg.PandoraBaseURL, cfg.PandoraToken))
-
-	limiter := ratelimit.NewProviderLimiter()
-	res := resolver.New(registry, cacheBackend, limiter, cfg.CacheTTL)
-	policy, err := merger.ParsePolicy(cfg.MetadataPolicy)
+	runtime, err := bootstrap.Build(context.Background(), cfg, cacheBackend)
 	if err != nil {
-		logger.Error("invalid metadata policy", slog.Any("error", err))
+		logger.Error("failed to initialize providers", slog.Any("error", err))
 		os.Exit(1)
 	}
-	for _, names := range policy.Priorities {
-		for _, name := range names {
-			if _, ok := registry.Get(name); !ok {
-				logger.Error("metadata policy references unknown provider", slog.String("provider", name))
-				os.Exit(1)
-			}
-		}
+	for _, status := range runtime.Health.Snapshot() {
+		logger.Info("provider startup status", slog.String("provider", status.Name), slog.String("state", status.State), slog.String("mode", status.Mode), slog.String("credentials", status.Credentials), slog.String("reason", status.Reason))
 	}
-	catalogClient := catalog.NewClient(res.WaitProvider)
-	catalogClient.Cache = cacheBackend
-	enrichers := []catalog.Enricher{}
-	if cfg.EnableEnrichment {
-		enrichers = append(enrichers, catalog.NewCoverArt(catalogClient), catalog.NewMusicBrainzRelease(catalogClient))
-		if cfg.LastFMKey != "" {
-			enrichers = append(enrichers, catalog.NewLastFM(catalogClient, cfg.LastFMKey))
-		}
-		if cfg.DiscogsToken != "" {
-			enrichers = append(enrichers, catalog.NewDiscogs(catalogClient, cfg.DiscogsToken))
-		}
-	}
-	res.Configure(policy, enrichers...)
-	handler := api.NewHandler(res, registry, cfg)
+	handler := api.NewHandler(runtime.Resolver, runtime.Registry, cfg)
+	handler.SetProviderHealth(runtime.Health)
 
 	router := api.NewRouter(handler, logger, cfg.RateLimitRPS)
 

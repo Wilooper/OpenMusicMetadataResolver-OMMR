@@ -107,3 +107,14 @@
 - **Status**: Implemented
 - **Decision**: Add Cover Art Archive, MusicBrainz release, optional Last.fm and Discogs post-merge services; expose AcoustID fingerprint candidates separately. Enforce exact identity/scope checks, provider budgets, bounded bodies/timeouts, credential isolation and restricted artwork redirects. Cache catalog GET JSON and healthy empty resolutions. Share in-flight cache-enabled resolutions and clone results per caller. Include policy/capabilities in cache namespaces. Correct the iTunes budget and route search through rate limiting.
 - **Consequence**: Repeated upstream work is reduced within one process. Access permissions, source coverage, different editions, distributed budgeting and upstream pagination remain real constraints. No credentialed live equivalence is claimed without operator keys.
+
+
+## ADR-016: Private Session Import and Access-Gated Provider Bootstrap
+- **Status**: Implemented
+- **Decision**: Discover only documented owner-only credential files, support browser-session imports for Spotify/Apple/YouTube, and validate actual source access before selecting supplied modes. Try supported public fallbacks without equating them to authentication. Omit missing/failed required-key sources. Keep request probes bounded/uncached and lifecycle output secret-free.
+- **Consequence**: Credentialed source registration reflects tested access. Public modes are monitored during use. Spotify web challenges and Apple's bearer requirement remain external constraints; there is no browser login UI or live credential reload.
+
+## ADR-017: Provider Circuits and Startup API Policy
+- **Status**: Implemented
+- **Decision**: Suspend repeatedly failing sources, admit one cooldown recovery probe, and ignore stale-generation results. Exclude unavailable sources from selection and isolate cache partitions across health changes. Auto-load private YAML, allow explicit --config, apply API defaults/locks to all routes, and provide a JSON gateway plus redacted provider status.
+- **Consequence**: Clients can use configured behavior without repeated URL controls. Source objects remain resident while suspended; no dynamic code unloading occurs. Source policy and status are local to each process.

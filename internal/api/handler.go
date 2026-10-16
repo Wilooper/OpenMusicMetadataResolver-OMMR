@@ -20,11 +20,13 @@ import (
 	"github.com/ommr/ommr/internal/matcher"
 	"github.com/ommr/ommr/internal/models/canonical"
 	"github.com/ommr/ommr/internal/platformlinks"
+	"github.com/ommr/ommr/internal/providerhealth"
 	"github.com/ommr/ommr/internal/resolver"
 	"github.com/ommr/ommr/pkg/query"
 )
 
 type Handler struct {
+	health      *providerhealth.Manager
 	fingerprint *catalog.AcoustID
 	resolver    *resolver.Resolver
 	registry    *adapters.Registry
@@ -125,7 +127,14 @@ func (h *Handler) handleResolve(w http.ResponseWriter, r *http.Request, linksOnl
 	resp, err := h.resolver.Resolve(ctx, req)
 	if err != nil {
 		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusInternalServerError)
+		status := http.StatusInternalServerError
+		if strings.Contains(err.Error(), "not registered") {
+			status = http.StatusBadRequest
+		}
+		if strings.Contains(err.Error(), "no provider adapters available") {
+			status = http.StatusServiceUnavailable
+		}
+		w.WriteHeader(status)
 		_, _ = w.Write([]byte(fmt.Sprintf(`{"error":%q}`, err.Error())))
 		return
 	}
@@ -190,6 +199,13 @@ func (h *Handler) HandleBulk(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if !h.cfg.API.OverridesAllowed() || len(req.Sources) == 0 {
+		if raw := r.URL.Query().Get("sources"); raw != "" {
+			req.Sources = strings.Split(raw, ",")
+		} else {
+			req.Sources = append([]string(nil), h.cfg.API.DefaultSources...)
+		}
+	}
 	if len(req.Queries) == 0 {
 		http.Error(w, `{"error":"Queries array cannot be empty"}`, http.StatusBadRequest)
 		return
@@ -202,6 +218,10 @@ func (h *Handler) HandleBulk(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	bulkBypassCache := h.cfg.API.BypassCache
+	if raw := r.URL.Query().Get("bypass_cache"); raw != "" {
+		bulkBypassCache, _ = strconv.ParseBool(raw)
+	}
 	results := make([]BulkItemResult, len(req.Queries))
 	workers := h.cfg.BulkWorkers
 	if workers <= 0 {
@@ -222,8 +242,9 @@ func (h *Handler) HandleBulk(w http.ResponseWriter, r *http.Request) {
 				itemQuery.SoundCloudID = h.idResolver.ExtractSoundCloudID(itemQuery.SoundCloudID)
 
 				resReq := resolver.ResolveRequest{
-					Query:   itemQuery,
-					Sources: req.Sources,
+					Query:       itemQuery,
+					Sources:     req.Sources,
+					BypassCache: bulkBypassCache,
 				}
 
 				ctx, cancel := context.WithTimeout(r.Context(), h.cfg.ProviderTimeout)
@@ -421,6 +442,15 @@ func (h *Handler) HandleHealth(w http.ResponseWriter, r *http.Request) {
 		CacheProvider: h.cfg.CacheProvider,
 	}
 
+	if h.health != nil {
+		if len(h.registry.List()) == 0 {
+			resp.Status = "degraded"
+		}
+		resp.Providers = map[string]int{}
+		for _, status := range h.health.Snapshot() {
+			resp.Providers[status.State]++
+		}
+	}
 	w.Header().Set("Content-Type", "application/json")
 	_ = json.NewEncoder(w).Encode(resp)
 }

@@ -22,6 +22,7 @@ import (
 	"github.com/ommr/ommr/internal/metadata"
 	"github.com/ommr/ommr/internal/models/canonical"
 	"github.com/ommr/ommr/internal/platformlinks"
+	"github.com/ommr/ommr/internal/providerhealth"
 	"github.com/ommr/ommr/internal/ratelimit"
 	"github.com/ommr/ommr/pkg/query"
 	"golang.org/x/sync/errgroup"
@@ -60,6 +61,7 @@ type Resolver struct {
 	ttl                      time.Duration
 	maxCandidatesPerProvider int
 	logger                   *slog.Logger
+	health                   *providerhealth.Manager
 	flights                  singleflight.Group
 	cacheNamespace           string
 	enrichers                []catalog.Enricher
@@ -98,7 +100,7 @@ func (res *Resolver) Resolve(ctx context.Context, req ResolveRequest) (*ResolveR
 	if res.cache == nil {
 		return res.resolve(ctx, req)
 	}
-	key := res.cacheNamespace + hashQuery(req.Query, req.Sources)
+	key := res.cacheNamespace + res.healthSignature() + hashQuery(req.Query, req.Sources)
 	if req.BypassCache {
 		key += "/bypass"
 	}
@@ -140,7 +142,8 @@ func (res *Resolver) resolve(ctx context.Context, req ResolveRequest) (*ResolveR
 	req.Query.Artist = query.CleanArtist(req.Query.Artist)
 
 	inputType := determineInputType(req.Query)
-	cacheKey := res.cacheNamespace + hashQuery(req.Query, req.Sources)
+	signature := res.healthSignature()
+	cacheKey := res.cacheNamespace + signature + hashQuery(req.Query, req.Sources)
 
 	// 1. Check cache unless bypass_cache is true
 	if !req.BypassCache && res.cache != nil {
@@ -623,9 +626,15 @@ func (res *Resolver) resolve(ctx context.Context, req ResolveRequest) (*ResolveR
 	}
 
 	// Write back to cache
-	if res.cache != nil && mergedTrack != nil {
+	if res.cache != nil && mergedTrack != nil && signature == res.healthSignature() {
 		if data, err := json.Marshal(resp); err == nil {
-			_ = res.cache.Set(ctx, cacheKey, data, res.ttl)
+			ttl := res.ttl
+			for _, status := range sourcesStatus {
+				if !status.Success && ttl > 30*time.Second {
+					ttl = 30 * time.Second
+				}
+			}
+			_ = res.cache.Set(ctx, cacheKey, data, ttl)
 		}
 	}
 
@@ -797,4 +806,13 @@ func candidateMatchesDirectID(q adapters.Query, candidate canonical.TrackCandida
 		"pandora":     q.PandoraID,
 	}[provider]
 	return id != "" && candidate.Track.IDs[provider] == id
+}
+
+func (res *Resolver) SetProviderHealth(manager *providerhealth.Manager) { res.health = manager }
+func (res *Resolver) healthSignature() string {
+	if res.health == nil {
+		return ""
+	}
+	sum := sha256.Sum256([]byte(res.health.Signature()))
+	return hex.EncodeToString(sum[:8]) + ":"
 }

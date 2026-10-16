@@ -27,6 +27,7 @@ const (
 type Provider struct {
 	httpClient     *http.Client
 	catalogToken   string
+	userToken      string
 	storefront     string
 	catalogBaseURL string
 }
@@ -241,4 +242,10 @@ func (p *Provider) RateLimitKey() string {
 		return "applemusic_catalog"
 	}
 	return ProviderName
+}
+
+func NewWithSession(developerToken, userToken, storefront string) *Provider {
+	p := NewWithCatalog(developerToken, storefront)
+	p.userToken = userToken
+	return p
 }

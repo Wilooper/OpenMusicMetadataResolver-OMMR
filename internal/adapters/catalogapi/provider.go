@@ -105,6 +105,9 @@ func (p *Provider) Search(ctx context.Context, q adapters.Query) ([]canonical.Tr
 	if err := json.Unmarshal(data, &root); err != nil {
 		return nil, err
 	}
+	if errorEnvelope(root) {
+		return nil, errors.New("provider returned an API error")
+	}
 	items := findTrackItems(root)
 	out := make([]canonical.TrackCandidate, 0, len(items))
 	for _, item := range items {
@@ -137,6 +140,9 @@ func (p *Provider) requestCandidate(ctx context.Context, method, path string, bo
 	var root any
 	if err := json.Unmarshal(data, &root); err != nil {
 		return nil, err
+	}
+	if errorEnvelope(root) {
+		return nil, errors.New("provider returned an API error")
 	}
 	item := findSingleTrack(root)
 	if item == nil {
@@ -464,3 +470,8 @@ func mergeMaps(primary, fallback map[string]any) map[string]any {
 }
 
 func EscapedID(id string) string { return url.PathEscape(strings.TrimSpace(id)) }
+
+func errorEnvelope(root any) bool {
+	object, ok := root.(map[string]any)
+	return ok && (object["error"] != nil || object["errors"] != nil || object["status"] == "error")
+}
