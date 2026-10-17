@@ -44,3 +44,15 @@ func TestPolicyRejectsUnsupportedModesAndFields(t *testing.T) {
 		}
 	}
 }
+
+func TestConfidenceUsesSelectedISRCInsteadOfRejectedConsensus(t *testing.T) {
+	candidates := []canonical.TrackCandidate{
+		{Provider: "spotify", MatchScore: 0.95, Track: canonical.Track{Title: "Song", ISRC: "USAAA2500001"}},
+		{Provider: "applemusic", MatchScore: 0.95, Track: canonical.Track{Title: "Song", ISRC: "USAAA2500002"}},
+		{Provider: "deezer", MatchScore: 0.95, Track: canonical.Track{Title: "Song", ISRC: "USAAA2500002"}},
+	}
+	merged := NewWithPolicy(Policy{Mode: "consensus", Priorities: map[string][]string{"isrc": {"spotify"}}}).MergeCandidates(candidates)
+	if merged.ISRC != "USAAA2500001" || len(merged.FieldSources["isrc"]) != 1 || merged.Confidence.Level == canonical.ConfidenceVerified {
+		t.Fatalf("unselected ISRC created verified confidence: %+v", merged)
+	}
+}

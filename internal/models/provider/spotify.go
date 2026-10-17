@@ -66,6 +66,9 @@ type SpotifyImage struct {
 }
 
 type SpotifyWebAlbum struct {
+	ExternalIDs struct {
+		UPC string `json:"upc"`
+	} `json:"external_ids"`
 	ID                   string             `json:"id"`
 	Name                 string             `json:"name"`
 	AlbumType            string             `json:"album_type"`

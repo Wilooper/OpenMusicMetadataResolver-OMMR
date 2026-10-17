@@ -42,7 +42,7 @@ Copy `.env.example` to `.env`, fill only the credentials you have, run `chmod 60
 
 ## ✨ Key Features
 
-* **🌐 Zero-Key Architecture**: Resolves metadata via unauthenticated public endpoints and web embeds across Spotify (dual-mode), YouTube Music (InnerTube), Apple Music, Deezer, MusicBrainz, SoundCloud, and JioSaavn — 7 providers, zero keys required.
+* **🌐 Keyless-first resolution**: Public Apple and YouTube Music catalog search plus optional public lookup adapters; source access and supported query types vary. Spotify anonymous search can be rejected, and SoundCloud keyless mode supports permalinks. Authorized sources are optional upgrades.
 * **🔗 6-Stage Cross-Platform Identity Pipeline**: Translates input IDs into cross-platform identifiers (`spotify`, `youtube`, `applemusic`, `deezer`, `soundcloud`, `jiosaavn`, `musicbrainz`, `isrc`).
 * **🆔 Path-Independent Canonical Track IDs**: Generates deterministic, collision-resistant track identifiers (`ommr_track_<hash>`) from normalized metadata regardless of query entry point; identically named recording versions can still share a seed.
 * **📊 Multi-Source Metadata Merging**: Prioritizes higher-quality metadata fields across providers (e.g. MusicBrainz credits, Spotify genres, Apple Music cover art) with deduplicated source attribution.
@@ -356,3 +356,5 @@ Accepted provider alternatives and extra catalog fields are now retained in prod
 ### Startup sessions, health and API policy
 
 A private `ommr.yaml` now loads automatically; `--config` selects another file. Named files in an owner-only credential directory are discovered at boot. Supplied credentials must pass source-specific probes; public-capable sources fall back, and required-key sources stay unloaded when access is absent or fails. Runtime failures trigger a configurable circuit and controlled recovery. `POST /v1/query` uses configured operation/source/debug defaults, and `/v1/providers` shows redacted lifecycle status. See [PROVIDER_LIFECYCLE.md](docs/PROVIDER_LIFECYCLE.md) for formats, session limits and the full sample configuration.
+
+Accuracy improvements: structured collaborator records with owned artist IDs, stricter artist evidence for text queries, guarded accepted-record detail hydration, and debug field comparison. See [ACCURACY_IMPROVEMENTS.md](docs/ACCURACY_IMPROVEMENTS.md) for accuracy behavior and remaining access limits. See [the 12-song live matrix](docs/LIVE_SONG_MATRIX.md) and [credential checklist](docs/CREDENTIALS_CHECKLIST.md).

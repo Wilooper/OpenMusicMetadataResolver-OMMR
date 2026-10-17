@@ -155,3 +155,7 @@ The immutable internal `Track` stores accepted source records in `extensions.pro
 ## Provider lifecycle status
 
 `/v1/providers` is an operational schema independent of canonical metadata. It contains name/state/mode, startup credential outcome, failure streak, last evaluation and retry time. Credentials and account profile details are never included. API policy and safe status meanings are defined in [PROVIDER_LIFECYCLE.md](PROVIDER_LIFECYCLE.md).
+
+## Debug metadata comparison
+
+`track.extensions.metadata_comparison` is an optional debug-only map keyed by canonical field name. Each entry contains `selected`, `selected_sources`, `values` (provider to original reported value) and `different`. It compares populated evidence only; unknown explicit defaults do not vote. Representational/precision differences are retained rather than treated as automatic rejection. This extension is omitted by production DTOs. Canonical artists may now use an evidence-backed separate list while source-specific combined displays remain in provider data. Native person IDs are never copied from a compound display to each person.

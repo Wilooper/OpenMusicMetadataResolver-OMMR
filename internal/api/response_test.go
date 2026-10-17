@@ -241,3 +241,12 @@ func TestDebugBooleanParsing(t *testing.T) {
 		})
 	}
 }
+
+func TestMetadataComparisonRemainsDebugOnly(t *testing.T) {
+	track := &canonical.Track{Title: "Song", IDs: map[string]string{}, Extensions: map[string]json.RawMessage{"metadata_comparison": json.RawMessage(`{"duration_ms":{"different":true}}`)}}
+	public, _ := json.Marshal(trackResponse(track, false))
+	debug, _ := json.Marshal(trackResponse(track, true))
+	if strings.Contains(string(public), "metadata_comparison") || !strings.Contains(string(debug), "metadata_comparison") {
+		t.Fatal("comparison diagnostics projection failed")
+	}
+}

@@ -71,7 +71,7 @@ func (p *Provider) FetchByID(ctx context.Context, idType string, id string) (*ca
 	if err := json.Unmarshal(body, &trackResp); err != nil {
 		return nil, err
 	}
-	if trackResp.ID == 0 {
+	if trackResp.ID == 0 || strconv.FormatInt(trackResp.ID, 10) != id {
 		return nil, fmt.Errorf("deezer track %s not found", id)
 	}
 

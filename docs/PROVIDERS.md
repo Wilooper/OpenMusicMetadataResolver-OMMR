@@ -16,8 +16,8 @@ OMMR integrates 11 metadata provider adapters implementing the `adapters.Provide
 | **SoundCloud** | `soundcloud` | `soundcloud-oembed-v1` | Public oEmbed endpoint | **Zero** | Token Bucket (10 RPS) |
 | **JioSaavn** | `jiosaavn` | `jiosaavn-search-v1` | Public `api.php` search & getDetails endpoints | **Zero** | Token Bucket (5 RPS) |
 | **Qobuz** | `qobuz` | `qobuz-api-v1` | Track metadata and search endpoints | Issued application ID; optional bearer token | Token Bucket (5 RPS) |
-| **TIDAL** | `tidal` | `tidal-webapi-v2` | TIDAL Web API v2 track and search endpoints | Authorized OAuth token | Token Bucket (10 RPS) |
-| **Amazon Music** | `amazonmusic` | `amazonmusic-webapi-v2` | Amazon Music Web API v2 catalog track search and lookup | Approved API access, OAuth token, security profile ID | Token Bucket (5 RPS) |
+| **TIDAL** | `tidal` | `tidal-webapi-v3` | TIDAL Web API v2 track and search endpoints | Authorized OAuth token | Token Bucket (10 RPS) |
+| **Amazon Music** | `amazonmusic` | `amazonmusic-webapi-v3` | Amazon Music Web API v2 catalog track search and lookup | Approved API access, OAuth token, security profile ID | Token Bucket (5 RPS) |
 | **Pandora** | `pandora` | `pandora-graphql-v1` | Pandora GraphQL entity metadata lookup | Approved OAuth bearer token | Token Bucket (5 RPS) |
 
 ---
@@ -132,3 +132,7 @@ Spotify, Apple Music and YouTube Music can import private browser sessions/cooki
 ## Credential-free live regression
 
 See [LIVE_TEST_BOYFRIEND.md](LIVE_TEST_BOYFRIEND.md) for the 2026-10-16 retry, before/after metadata, observed access failures and cache timings. Apple, Deezer, MusicBrainz and JioSaavn reject non-JSON bodies before decoding; HTML access-error pages cannot become empty catalog successes.
+
+## Accuracy and detail update
+
+Accepted Deezer search hits now hydrate exact track details; Spotify hydrates the known album with ID/title checks. Apple public track counts populate `album.total_tracks`. Structured collaborators and same-provider artist-ID ownership are preserved. TIDAL requests JSON:API track resources with related artists/albums/artwork; Amazon requests quality and parental fields. Authenticated paths remain conditional on validated access and matching catalog entities. See [ACCURACY_IMPROVEMENTS.md](ACCURACY_IMPROVEMENTS.md) and [ENRICHMENT.md](ENRICHMENT.md) for behavior, tests and access limits.

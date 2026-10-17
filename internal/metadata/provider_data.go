@@ -151,6 +151,7 @@ func Attach(track *canonical.Track, candidates []canonical.TrackCandidate) {
 		track.Extensions["explicit_status"], _ = json.Marshal(status)
 	}
 	track.Extensions["provider_data"], _ = json.Marshal(records)
+	Compare(track, candidates)
 }
 
 func Explicit(c canonical.TrackCandidate) (bool, bool) {
@@ -161,6 +162,11 @@ func Explicit(c canonical.TrackCandidate) (bool, bool) {
 	if raw, ok := record["catalog"].(map[string]any); ok {
 		if attributes, ok := raw["attributes"].(map[string]any); ok {
 			raw = attributes
+		}
+		if parental, ok := raw["parentalSettings"].(map[string]any); ok {
+			if value, ok := parental["hasExplicitLanguage"].(bool); ok {
+				return value, true
+			}
 		}
 		for _, key := range []string{"explicit", "explicit_lyrics"} {
 			if value, ok := raw[key].(bool); ok {

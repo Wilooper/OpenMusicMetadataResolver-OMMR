@@ -129,3 +129,26 @@ func TestCacheNamespaceIncludesMergePolicy(t *testing.T) {
 		t.Fatal("changed merge policy reused old cache")
 	}
 }
+
+type slowSource struct{ blockingProvider }
+
+func (*slowSource) Name() string { return "applemusic" }
+func (*slowSource) Search(ctx context.Context, _ adapters.Query) ([]canonical.TrackCandidate, error) {
+	<-ctx.Done()
+	return nil, ctx.Err()
+}
+
+func TestSlowSourceDeadlineReturnsAvailableTrack(t *testing.T) {
+	provider := &blockingProvider{}
+	resolver := sharedResolver(t, provider)
+	resolver.registry.Register(&slowSource{})
+	ctx, cancel := context.WithTimeout(context.Background(), 500*time.Millisecond)
+	defer cancel()
+	result, err := resolver.Resolve(ctx, ResolveRequest{Query: adapters.Query{Title: "Song", Artist: "Singer"}})
+	if err != nil || result == nil || result.Track == nil || result.Track.IDs["deezer"] != "123" {
+		t.Fatalf("usable result lost at provider deadline: %+v %v", result, err)
+	}
+	if ctx.Err() != nil {
+		t.Fatal("response missed outer deadline")
+	}
+}

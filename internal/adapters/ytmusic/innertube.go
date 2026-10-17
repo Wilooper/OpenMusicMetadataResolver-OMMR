@@ -169,7 +169,7 @@ func (i *InnerTube) FetchPlayer(ctx context.Context, videoID string) (*provider.
 	if err := json.Unmarshal(body, &player); err != nil {
 		return nil, err
 	}
-	if player.VideoDetails.VideoID == "" && player.VideoDetails.Title == "" {
+	if player.VideoDetails.VideoID != videoID || player.VideoDetails.Title == "" {
 		return nil, fmt.Errorf("youtube player returned empty videoDetails")
 	}
 	return &player, nil

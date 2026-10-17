@@ -17,6 +17,9 @@ type adapter struct {
 
 func Wrap(source adapters.ProviderAdapter, m *Manager) adapters.ProviderAdapter {
 	wrapped := &adapter{source, m}
+	if richer, ok := source.(adapters.CandidateEnricher); ok {
+		return &detailAdapter{wrapped, richer}
+	}
 	if richer, ok := source.(adapters.MetadataEnricher); ok {
 		return &enrichAdapter{wrapped, richer}
 	}
@@ -50,6 +53,25 @@ func (a *adapter) RateLimitKey() string {
 type enrichAdapter struct {
 	*adapter
 	richer adapters.MetadataEnricher
+}
+
+type detailAdapter struct {
+	*adapter
+	richer adapters.CandidateEnricher
+}
+
+func (a *detailAdapter) EnrichCandidate(ctx context.Context, candidate canonical.TrackCandidate) (*canonical.TrackCandidate, error) {
+	lease, err := a.manager.Begin(a.Name())
+	if err != nil {
+		return nil, err
+	}
+	result, err := a.richer.EnrichCandidate(ctx, candidate)
+	if result == nil && err == nil {
+		a.manager.Skip(a.Name(), lease)
+	} else {
+		a.manager.Finish(ctx, a.Name(), lease, err)
+	}
+	return result, sanitize(err)
 }
 
 func (a *enrichAdapter) Enrich(ctx context.Context, track canonical.Track) (*canonical.Track, error) {

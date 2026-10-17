@@ -48,3 +48,7 @@ Implemented credential discovery, actual boot probes, public fallback, required-
 ## Credential-free live retry (2026-10-16)
 
 YouTube Music now searches catalog songs before general videos; Apple public requests honor storefront and no longer expire at five seconds. The Boyfriend regression resolves a strong Apple/YouTube Music match without credentials. Spotify anonymous access was rejected, while Deezer/MusicBrainz/JioSaavn returned HTTP 200 HTML access-error pages in this environment. These are reported as failures rather than claimed as working integrations. See [LIVE_TEST_BOYFRIEND.md](LIVE_TEST_BOYFRIEND.md).
+
+## Accuracy/detail follow-up
+
+Implemented accepted Deezer track and Spotify album hydration, structured artist reconciliation with owned IDs, stricter text-artist evidence, debug field comparison, TIDAL JSON:API relationship/ISO-duration support and expanded Amazon fields. Missing credentials and current access restrictions remain limits; Qobuz/Pandora/SoundCloud authenticated breadth still needs provider-specific work. See [ACCURACY_IMPROVEMENTS.md](ACCURACY_IMPROVEMENTS.md).

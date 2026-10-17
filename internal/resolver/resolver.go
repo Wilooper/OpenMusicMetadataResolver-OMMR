@@ -78,7 +78,7 @@ func New(r *adapters.Registry, c cache.Cache, l *ratelimit.ProviderLimiter, ttl 
 		ttl:                      ttl,
 		maxCandidatesPerProvider: 10,
 		logger:                   slog.Default(),
-		cacheNamespace:           "resolved:rich-v3:default:",
+		cacheNamespace:           "resolved:rich-v5:default:",
 	}
 }
 
@@ -167,8 +167,17 @@ func (res *Resolver) resolve(ctx context.Context, req ResolveRequest) (*ResolveR
 		return nil, fmt.Errorf("no provider adapters available")
 	}
 
+	// Reserve time to merge, cache and serialize usable results after slow sources expire.
+	lookupCtx := ctx
+	if deadline, ok := ctx.Deadline(); ok {
+		reserve := min(time.Until(deadline)/5, 500*time.Millisecond)
+		var cancel context.CancelFunc
+		lookupCtx, cancel = context.WithDeadline(ctx, deadline.Add(-reserve))
+		defer cancel()
+	}
+
 	// Stage 1: Direct Provider Lookup & Initial Parallel Fetch
-	g, gCtx := errgroup.WithContext(ctx)
+	g, gCtx := errgroup.WithContext(lookupCtx)
 	candidatesMu := sync.Mutex{}
 	candidates := make([]canonical.TrackCandidate, 0, len(activeAdapters))
 	sourcesStatus := make([]canonical.SourceStatus, len(activeAdapters))
@@ -327,7 +336,7 @@ func (res *Resolver) resolve(ctx context.Context, req ResolveRequest) (*ResolveR
 				ISRC:   seedTrack.ISRC,
 			}
 
-			secG, secCtx := errgroup.WithContext(ctx)
+			secG, secCtx := errgroup.WithContext(lookupCtx)
 			for i, adapter := range activeAdapters {
 				idx := i
 				ad := adapter
@@ -446,6 +455,9 @@ func (res *Resolver) resolve(ctx context.Context, req ResolveRequest) (*ResolveR
 		if strings.TrimSpace(evalQuery.Artist) == "" {
 			return true
 		}
+		if directProvider(req.Query) == "" && evalQuery.ISRC == "" && !hasArtistEvidence(evalQuery.Artist, c.Track.Artists) {
+			return false
+		}
 		if c.Track.MatchBreakdown.Artists == nil {
 			return true
 		}
@@ -457,6 +469,9 @@ func (res *Resolver) resolve(ctx context.Context, req ResolveRequest) (*ResolveR
 		}
 		if candidateMatchesDirectID(evalQuery, c) {
 			return true
+		}
+		if !compatibleVersion(evalQuery.Title, c.Track.Title) {
+			return false
 		}
 		if directProvider(req.Query) == "" {
 			return true
@@ -567,7 +582,7 @@ func (res *Resolver) resolve(ctx context.Context, req ResolveRequest) (*ResolveR
 	}
 
 	// Stage 6: Final Merge, Post-Enrichment Identity Stability & Canonical ID Generation
-	res.enrichAccepted(ctx, acceptedCandidates, sourcesStatus)
+	res.enrichAccepted(lookupCtx, acceptedCandidates, sourcesStatus)
 	mergedTrack := res.merger.MergeCandidates(acceptedCandidates)
 	if mergedTrack != nil {
 		mergedTrack.IdentityMatches = deduplicateIdentityMatches(identityMatches)
@@ -606,7 +621,7 @@ func (res *Resolver) resolve(ctx context.Context, req ResolveRequest) (*ResolveR
 	}
 
 	metadata.Attach(mergedTrack, acceptedCandidates)
-	enrichmentStatuses := res.enrichCatalogs(ctx, mergedTrack)
+	enrichmentStatuses := res.enrichCatalogs(lookupCtx, mergedTrack)
 	resp := &ResolveResponse{
 		EnrichmentStatus: enrichmentStatuses,
 		Track:            mergedTrack,
@@ -630,7 +645,12 @@ func (res *Resolver) resolve(ctx context.Context, req ResolveRequest) (*ResolveR
 		if data, err := json.Marshal(resp); err == nil {
 			ttl := res.ttl
 			for _, status := range sourcesStatus {
-				if !status.Success && ttl > 30*time.Second {
+				if (!status.Success || status.EnrichmentStatus == "unavailable" || status.EnrichmentStatus == "identity_mismatch") && ttl > 30*time.Second {
+					ttl = 30 * time.Second
+				}
+			}
+			for _, status := range enrichmentStatuses {
+				if status == "unavailable" && ttl > 30*time.Second {
 					ttl = 30 * time.Second
 				}
 			}

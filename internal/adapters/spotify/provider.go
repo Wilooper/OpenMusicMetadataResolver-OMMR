@@ -171,7 +171,7 @@ func (p *Provider) fetchByWebAPI(ctx context.Context, id string) (*canonical.Tra
 	if err := json.Unmarshal(body, &track); err != nil {
 		return nil, err
 	}
-	if track.ID == "" && track.Name == "" {
+	if track.ID != id || track.Name == "" {
 		return nil, fmt.Errorf("spotify track %s not found", id)
 	}
 
@@ -214,6 +214,9 @@ func (p *Provider) fetchByEmbed(ctx context.Context, id string) (*canonical.Trac
 	if err != nil {
 		return nil, err
 	}
+	if track == nil || track.Title == "" {
+		return nil, fmt.Errorf("Spotify embed returned no track metadata")
+	}
 
 	return &canonical.TrackCandidate{
 		Provider:    ProviderName,
@@ -253,6 +256,9 @@ func (p *Provider) fetchByOembed(ctx context.Context, id string) (*canonical.Tra
 		return nil, err
 	}
 
+	if strings.TrimSpace(oembed.Title) == "" {
+		return nil, fmt.Errorf("Spotify oEmbed returned no track title")
+	}
 	track := ParseOembed(id, oembed)
 	return &canonical.TrackCandidate{
 		Provider:    ProviderName,

@@ -102,12 +102,7 @@ func (m *Merger) applyPolicy(track *canonical.Track, candidates []canonical.Trac
 			key := strings.ToLower(strings.TrimSpace(string(encoded)))
 			// Artist identity and album title vote independently of provider-specific IDs.
 			if field == "artists" {
-				names := []string{}
-				for _, a := range candidate.Track.Artists {
-					names = append(names, strings.ToLower(strings.TrimSpace(a.Name)))
-				}
-				encoded, _ = json.Marshal(names)
-				key = string(encoded)
+				key = artistVoteKey(candidate.Track.Artists, candidates)
 			}
 			if field == "album" {
 				key = strings.ToLower(strings.TrimSpace(candidate.Track.Album.Title))
@@ -135,6 +130,16 @@ func (m *Merger) applyPolicy(track *canonical.Track, candidates []canonical.Trac
 		})
 		if len(choices) > 0 {
 			value.Field(i).Set(choices[0].value)
+			if field == "artists" {
+				if _, override := m.policy.Priorities[field]; !override && m.policy.Mode == "consensus" {
+					for _, choice := range choices {
+						if choice.key == choices[0].key && choice.value.Len() > len(track.Artists) {
+							track.Artists = choice.candidate.Track.Artists
+						}
+					}
+				}
+				track.Artists = mergeArtistIDs(track.Artists, candidates, choices[0].key)
+			}
 			if field == "album" {
 				album := track.Album
 				album.IDs = map[string]string{}

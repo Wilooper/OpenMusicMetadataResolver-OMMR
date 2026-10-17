@@ -394,6 +394,7 @@ func (m *Merger) MergeCandidates(candidates []canonical.TrackCandidate) *canonic
 
 	// Canonical ID & Completeness calculation
 	m.applyPolicy(res, candidates)
+	res.Confidence.Level = canonical.GetConfidenceLevel(topScore, len(res.FieldSources["isrc"]))
 	sort.Strings(res.Genres)
 	sort.Slice(res.Copyrights, func(i, j int) bool {
 		return res.Copyrights[i].Type+res.Copyrights[i].Text < res.Copyrights[j].Type+res.Copyrights[j].Text

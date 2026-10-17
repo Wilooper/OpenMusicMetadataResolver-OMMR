@@ -199,6 +199,7 @@ func (p *Provider) normalizeResult(item provider.AppleTrackResult) canonical.Tra
 
 	album := canonical.Album{
 		Title:       item.CollectionName,
+		TotalTracks: item.TrackCount,
 		ReleaseDate: parseDate(item.ReleaseDate),
 		Images:      images,
 		IDs:         map[string]string{"applemusic": strconv.FormatInt(item.CollectionID, 10)},

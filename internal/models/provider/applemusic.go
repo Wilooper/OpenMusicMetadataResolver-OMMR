@@ -34,4 +34,5 @@ type AppleTrackResult struct {
 	PreviewURL             string `json:"previewUrl,omitempty"`
 	TrackNumber            int    `json:"trackNumber,omitempty"`
 	DiscNumber             int    `json:"discNumber,omitempty"`
+	TrackCount             int    `json:"trackCount,omitempty"`
 }

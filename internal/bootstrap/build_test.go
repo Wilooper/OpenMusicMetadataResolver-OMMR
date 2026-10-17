@@ -22,7 +22,7 @@ func TestRequiredCatalogBootProbeRejectsHTTP200Errors(t *testing.T) {
 		if apiError {
 			io.WriteString(w, `{"status":"error","code":401}`)
 		} else {
-			io.WriteString(w, `{"tracks":{"items":[{"id":123,"title":"Probe Song"}]}}`)
+			io.WriteString(w, `{"tracks":{"items":[{"id":123,"title":"Probe Song","performer":{"id":1,"name":"Probe Artist"}}]}}`)
 		}
 	}))
 	defer server.Close()
