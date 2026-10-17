@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"io"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -30,7 +29,7 @@ var _ adapters.ProviderAdapter = (*Provider)(nil)
 
 func New() *Provider {
 	return &Provider{
-		httpClient: &http.Client{Timeout: 5 * time.Second},
+		httpClient: &http.Client{Timeout: 15 * time.Second},
 	}
 }
 
@@ -63,7 +62,7 @@ func (p *Provider) FetchByID(ctx context.Context, idType string, id string) (*ca
 		return nil, fmt.Errorf("deezer API returned status %d", resp.StatusCode)
 	}
 
-	body, err := io.ReadAll(resp.Body)
+	body, err := adapters.ReadJSONBody(resp)
 	if err != nil {
 		return nil, err
 	}
@@ -72,7 +71,7 @@ func (p *Provider) FetchByID(ctx context.Context, idType string, id string) (*ca
 	if err := json.Unmarshal(body, &trackResp); err != nil {
 		return nil, err
 	}
-	if trackResp.ID == 0 {
+	if trackResp.ID == 0 || strconv.FormatInt(trackResp.ID, 10) != id {
 		return nil, fmt.Errorf("deezer track %s not found", id)
 	}
 
@@ -113,7 +112,7 @@ func (p *Provider) Search(ctx context.Context, q adapters.Query) ([]canonical.Tr
 		return nil, fmt.Errorf("deezer search returned status %d", resp.StatusCode)
 	}
 
-	body, err := io.ReadAll(resp.Body)
+	body, err := adapters.ReadJSONBody(resp)
 	if err != nil {
 		return nil, err
 	}

@@ -16,12 +16,12 @@ func New() adapters.ProviderAdapter {
 }
 
 func NewWithConfig(baseURL, token, apiKey string) adapters.ProviderAdapter {
-	return catalogapi.New(catalogapi.Config{Name: ProviderName, Version: "amazonmusic-webapi-v2", BaseURL: baseURL, Token: token, APIKey: apiKey,
+	return catalogapi.New(catalogapi.Config{Name: ProviderName, Version: "amazonmusic-webapi-v3", BaseURL: baseURL, Token: token, APIKey: apiKey,
 		FetchPath: func(id string) (string, error) {
 			if token == "" || apiKey == "" {
 				return "", fmt.Errorf("Amazon Music requires approved API credentials (OMMR_AMAZON_MUSIC_TOKEN and OMMR_AMAZON_MUSIC_API_KEY)")
 			}
-			return "/v2/tracks/" + catalogapi.EscapedID(id) + "?fields[track]=id,title,url,duration,isrc,album,artists,releaseDate,label,images", nil
+			return "/v2/tracks/" + catalogapi.EscapedID(id) + "?fields[track]=id,title,url,duration,isrc,album,artists,releaseDate,label,images,audioQualities,mediaType,globalAsin,shortTitle,eligibility,parentalSettings,previewUrl", nil
 		},
 		Search: func(q adapters.Query) (string, string, []byte, error) {
 			if token == "" || apiKey == "" {
@@ -42,7 +42,7 @@ func NewWithConfig(baseURL, token, apiKey string) adapters.ProviderAdapter {
 				return "", "", nil, nil
 			}
 			body, err := json.Marshal(map[string]any{"searchFilters": filters, "sortBy": "relevance"})
-			return "POST", "/v2/search/tracks?first=5&fields[track]=id,title,url,duration,isrc,album,artists&fields[album]=title,releaseDate,images", body, err
+			return "POST", "/v2/search/tracks?first=5&fields[track]=id,title,url,duration,isrc,album,artists,releaseDate,label,images,audioQualities,mediaType,globalAsin,shortTitle,eligibility,parentalSettings,previewUrl&fields[album]=title,releaseDate,images", body, err
 		},
 		ExtraHeader: map[string]string{"x-marketplace": "US"},
 	})

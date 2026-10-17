@@ -26,3 +26,8 @@ ommr.yml
 *.local.yaml
 *.local.yml
 *.cookie
+
+# Private provider sessions
+/credentials/
+*.cookies
+*.session.json

@@ -39,7 +39,7 @@ func TestHandleExtractReportsPerSourceFieldsWithoutFillingMissingCredits(t *test
 	registry := adapters.NewRegistry()
 	registry.Register(extractionFixtureAdapter{name: "fixture", track: track})
 	handler := NewHandler(nil, registry, &config.Config{ProviderTimeout: time.Second})
-	req := httptest.NewRequest("GET", "/v1/extract?provider=fixture&id=abc", nil)
+	req := httptest.NewRequest("GET", "/v1/extract?provider=fixture&id=abc&debug=true", nil)
 	response := httptest.NewRecorder()
 	handler.HandleExtract(response, req)
 	if response.Code != 200 {
@@ -69,7 +69,7 @@ func TestExtractionLinksAreScopedToTheExtractedProvider(t *testing.T) {
 	registry.Register(extractionFixtureAdapter{name: "tidal", track: canonical.Track{Title: "Song", IDs: map[string]string{"tidal": "123", "spotify": "4cOdK2wGLETKBW3PvgPWqT"}}})
 	handler := NewHandler(nil, registry, &config.Config{ProviderTimeout: time.Second})
 	response := httptest.NewRecorder()
-	handler.HandleExtract(response, httptest.NewRequest("GET", "/v1/extract?provider=tidal&id=123", nil))
+	handler.HandleExtract(response, httptest.NewRequest("GET", "/v1/extract?provider=tidal&id=123&debug=true", nil))
 	var got extractionResponse
 	if err := json.Unmarshal(response.Body.Bytes(), &got); err != nil {
 		t.Fatal(err)

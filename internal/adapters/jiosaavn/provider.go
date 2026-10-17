@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"io"
 	"net/http"
 	"net/url"
 	"regexp"
@@ -74,7 +73,7 @@ func (p *Provider) FetchByID(ctx context.Context, idType string, id string) (*ca
 	if resp.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("jiosaavn getDetails status %d", resp.StatusCode)
 	}
-	body, err := io.ReadAll(resp.Body)
+	body, err := adapters.ReadJSONBody(resp)
 	if err != nil {
 		return nil, err
 	}
@@ -121,7 +120,7 @@ func (p *Provider) Search(ctx context.Context, q adapters.Query) ([]canonical.Tr
 	if resp.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("jiosaavn search status %d", resp.StatusCode)
 	}
-	body, err := io.ReadAll(resp.Body)
+	body, err := adapters.ReadJSONBody(resp)
 	if err != nil {
 		return nil, err
 	}

@@ -35,3 +35,7 @@ type ProviderAdapter interface {
 type MetadataEnricher interface {
 	Enrich(ctx context.Context, track canonical.Track) (*canonical.Track, error)
 }
+
+type CandidateEnricher interface {
+	EnrichCandidate(ctx context.Context, candidate canonical.TrackCandidate) (*canonical.TrackCandidate, error)
+}

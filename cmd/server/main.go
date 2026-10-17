@@ -2,7 +2,9 @@ package main
 
 import (
 	"context"
+	"flag"
 	"fmt"
+	"github.com/ommr/ommr/internal/bootstrap"
 	"log/slog"
 	"net/http"
 	"os"
@@ -10,30 +12,21 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/ommr/ommr/internal/adapters"
-	"github.com/ommr/ommr/internal/adapters/amazonmusic"
-	"github.com/ommr/ommr/internal/adapters/applemusic"
-	"github.com/ommr/ommr/internal/adapters/deezer"
-	"github.com/ommr/ommr/internal/adapters/jiosaavn"
-	"github.com/ommr/ommr/internal/adapters/musicbrainz"
-	"github.com/ommr/ommr/internal/adapters/pandora"
-	"github.com/ommr/ommr/internal/adapters/qobuz"
-	"github.com/ommr/ommr/internal/adapters/soundcloud"
-	"github.com/ommr/ommr/internal/adapters/spotify"
-	"github.com/ommr/ommr/internal/adapters/tidal"
-	"github.com/ommr/ommr/internal/adapters/ytmusic"
 	"github.com/ommr/ommr/internal/api"
 	"github.com/ommr/ommr/internal/cache"
 	"github.com/ommr/ommr/internal/cache/disk"
 	"github.com/ommr/ommr/internal/cache/redis"
 	"github.com/ommr/ommr/internal/config"
-	"github.com/ommr/ommr/internal/ratelimit"
-	"github.com/ommr/ommr/internal/resolver"
 )
 
 func main() {
 	logger := slog.New(slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{Level: slog.LevelInfo}))
 
+	configPath := flag.String("config", "", "private YAML configuration file")
+	flag.Parse()
+	if *configPath != "" {
+		_ = os.Setenv("OMMR_CONFIG_FILE", *configPath)
+	}
 	cfg, err := config.LoadConfig()
 	if err != nil {
 		logger.Error("failed to load configuration", slog.Any("error", err))
@@ -70,26 +63,16 @@ func main() {
 	}
 	defer cacheBackend.Close()
 
-	// Initialize Provider Registry & Adapters
-	registry := adapters.NewRegistry()
-	registry.Register(musicbrainz.New())
-	registry.Register(deezer.New())
-	registry.Register(applemusic.NewWithCatalog(cfg.AppleDeveloperToken, cfg.AppleStorefront))
-	registry.Register(ytmusic.NewWithCookie(cfg.YTMusicCookie))
-	registry.Register(spotify.New(spotify.Config{
-		ClientID:     cfg.SpotifyClientID,
-		ClientSecret: cfg.SpotifyClientSecret,
-	}))
-	registry.Register(soundcloud.New())
-	registry.Register(jiosaavn.New())
-	registry.Register(qobuz.New())
-	registry.Register(tidal.New())
-	registry.Register(amazonmusic.NewWithConfig(cfg.AmazonMusicBaseURL, cfg.AmazonMusicToken, cfg.AmazonMusicAPIKey))
-	registry.Register(pandora.New())
-
-	limiter := ratelimit.NewProviderLimiter()
-	res := resolver.New(registry, cacheBackend, limiter, cfg.CacheTTL)
-	handler := api.NewHandler(res, registry, cfg)
+	runtime, err := bootstrap.Build(context.Background(), cfg, cacheBackend)
+	if err != nil {
+		logger.Error("failed to initialize providers", slog.Any("error", err))
+		os.Exit(1)
+	}
+	for _, status := range runtime.Health.Snapshot() {
+		logger.Info("provider startup status", slog.String("provider", status.Name), slog.String("state", status.State), slog.String("mode", status.Mode), slog.String("credentials", status.Credentials), slog.String("reason", status.Reason))
+	}
+	handler := api.NewHandler(runtime.Resolver, runtime.Registry, cfg)
+	handler.SetProviderHealth(runtime.Health)
 
 	router := api.NewRouter(handler, logger, cfg.RateLimitRPS)
 
@@ -97,7 +80,7 @@ func main() {
 		Addr:         fmt.Sprintf(":%d", cfg.Port),
 		Handler:      router,
 		ReadTimeout:  10 * time.Second,
-		WriteTimeout: 15 * time.Second,
+		WriteTimeout: 30 * time.Second,
 		IdleTimeout:  60 * time.Second,
 	}
 

@@ -7,15 +7,15 @@ Thank you for your interest in contributing to Open Music Metadata Resolver (OMM
 ## Local Development Setup
 
 ### 1. Prerequisites
-* **Go**: 1.22 or higher
+* **Go**: 1.25 or higher (see `go.mod`)
 * **Git**: Latest version
 * **Docker & Docker Compose** (optional for Redis testing)
 
 ### 2. Clone & Build
 
 ```bash
-git clone https://github.com/ommr/ommr.git
-cd ommr
+git clone https://github.com/Wilooper/OpenMusicMetadataResolver-OMMR.git
+cd OpenMusicMetadataResolver-OMMR
 
 # Download Go dependencies
 go mod download
@@ -63,3 +63,7 @@ Follow the best practices outlined in `SKILL.md` files within those directories.
 
 ## License
 By contributing to OMMR, you agree that your contributions will be licensed under the project's [MIT License](../LICENSE).
+
+## Automated checks and enrichment
+
+The Go checks workflow builds, vets and race-tests pull requests. New identity adapters must follow the wiring/acceptance rules in `AGENTS.md`. Context-only sources should implement the catalog `Enricher` interface and must not manufacture recording IDs. Add deterministic request, identity-rejection, access-error and metadata-preservation fixtures. Never commit operator credentials; external access must remain optional. See [ENRICHMENT.md](ENRICHMENT.md).

@@ -35,7 +35,7 @@ func NewInnerTube(client *http.Client) *InnerTube {
 }
 
 func (i *InnerTube) setAuth(req *http.Request) {
-	if i.cookie == "" || req.URL.Scheme != "https" || req.URL.Hostname() != "www.youtube.com" {
+	if i.cookie == "" || req.URL.Scheme != "https" || (req.URL.Hostname() != "www.youtube.com" && req.URL.Hostname() != "music.youtube.com") {
 		return
 	}
 	if strings.ContainsAny(i.cookie, "\r\n") {
@@ -52,7 +52,7 @@ func (i *InnerTube) setAuth(req *http.Request) {
 	if sapisid == "" {
 		return
 	}
-	origin := "https://www.youtube.com"
+	origin := "https://" + req.URL.Hostname()
 	timestamp := fmt.Sprint(time.Now().Unix())
 	digest := sha1.Sum([]byte(timestamp + " " + sapisid + " " + origin))
 	req.Header.Set("Cookie", i.cookie)
@@ -169,7 +169,7 @@ func (i *InnerTube) FetchPlayer(ctx context.Context, videoID string) (*provider.
 	if err := json.Unmarshal(body, &player); err != nil {
 		return nil, err
 	}
-	if player.VideoDetails.VideoID == "" && player.VideoDetails.Title == "" {
+	if player.VideoDetails.VideoID != videoID || player.VideoDetails.Title == "" {
 		return nil, fmt.Errorf("youtube player returned empty videoDetails")
 	}
 	return &player, nil

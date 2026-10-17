@@ -89,3 +89,50 @@
 - **Context**: IDs alone do not tell callers how to open a matched song, and lookup permalinks/tokens may differ from native catalog IDs. Generic search links could falsely imply a recording match.
 - **Decision**: Add a pure platform-link formatter and `/v1/links`, sharing the resolver's strict acceptance pipeline. Keep the Track schema immutable and attach the catalog in `extensions.platform_links`; per-source extraction exposes only its own links. Merge only provider-owned ID namespaces and count only primary IDs as IdentityMatches. Label ID types, preserve native IDs alongside lookup identifiers, validate provider URLs against the exact recording and host, remove known tracking parameters, and omit unknown URLs. Report missing platforms and cross-search failures explicitly. Version resolved cache keys.
 - **Consequence**: Catalog coverage and authorized access determine which links can be returned. Format-valid ID-derived URLs are not live playback guarantees. Pandora and JioSaavn can return IDs without fabricated slug-based URLs.
+
+
+## ADR-013: Compact Production Responses with Opt-In Diagnostics
+- **Status**: Implemented
+- **Context**: Returning execution statuses, field provenance and identity scoring with every metadata response increases payload size and couples application consumers to resolver internals.
+- **Decision**: Parse an optional boolean `debug` query parameter on data endpoints. Default responses use explicit public DTOs; `debug=true` retains the detailed canonical output. Project data only after resolution, retaining a single complete cache entry for both modes. Keep useful catalog IDs/links and contextual attribution. Apply the flag to resolve, links, bulk, search and independent extraction. Reject invalid/ambiguous flags before provider work. Do not alter matching gates or introduce hosting policy settings in this change.
+- **Consequence**: Production payloads are smaller while debug cache hits retain diagnostics. Existing consumers of diagnostic fields and the extraction source envelope must opt into debug. Cache storage size and cache-miss provider work do not decrease. Debug remains caller-selectable until a later hosting configuration feature.
+
+
+## ADR-014: Preserve Source Metadata and Separate Recording Identity from Context
+- **Status**: Implemented
+- **Decision**: Keep accepted provider normalized alternatives and exact-entity public extras in `extensions.provider_data` (promoted in production). Remove credentials, tracking, player and unrelated search data. Default scalar merging to deterministic one-provider/one-vote consensus, with explicit configurable field trust. Retain an `explicit_status` tri-state without changing the legacy boolean. Album IDs are combined only for same-title accepted album records.
+- **Consequence**: Extra fields survive even when they lose canonical selection; context sources cannot assert new recording IDs. Production payloads can grow with useful data while diagnostics remain opt-in.
+
+## ADR-015: Bounded Catalog Enrichment and Shared Resolution Work
+- **Status**: Implemented
+- **Decision**: Add Cover Art Archive, MusicBrainz release, optional Last.fm and Discogs post-merge services; expose AcoustID fingerprint candidates separately. Enforce exact identity/scope checks, provider budgets, bounded bodies/timeouts, credential isolation and restricted artwork redirects. Cache catalog GET JSON and healthy empty resolutions. Share in-flight cache-enabled resolutions and clone results per caller. Include policy/capabilities in cache namespaces. Correct the iTunes budget and route search through rate limiting.
+- **Consequence**: Repeated upstream work is reduced within one process. Access permissions, source coverage, different editions, distributed budgeting and upstream pagination remain real constraints. No credentialed live equivalence is claimed without operator keys.
+
+
+## ADR-016: Private Session Import and Access-Gated Provider Bootstrap
+- **Status**: Implemented
+- **Decision**: Discover only documented owner-only credential files, support browser-session imports for Spotify/Apple/YouTube, and validate actual source access before selecting supplied modes. Try supported public fallbacks without equating them to authentication. Omit missing/failed required-key sources. Keep request probes bounded/uncached and lifecycle output secret-free.
+- **Consequence**: Credentialed source registration reflects tested access. Public modes are monitored during use. Spotify web challenges and Apple's bearer requirement remain external constraints; there is no browser login UI or live credential reload.
+
+## ADR-017: Provider Circuits and Startup API Policy
+- **Status**: Implemented
+- **Decision**: Suspend repeatedly failing sources, admit one cooldown recovery probe, and ignore stale-generation results. Exclude unavailable sources from selection and isolate cache partitions across health changes. Auto-load private YAML, allow explicit --config, apply API defaults/locks to all routes, and provide a JSON gateway plus redacted provider status.
+- **Consequence**: Clients can use configured behavior without repeated URL controls. Source objects remain resident while suspended; no dynamic code unloading occurs. Source policy and status are local to each process.
+
+
+## ADR-018: Prefer Music Catalog Search and Reject Non-JSON Access Pages
+- **Status**: Implemented
+- **Context**: The credential-free Boyfriend live test accepted a noisy video title while the public Apple request expired at five seconds. Other origins returned HTTP 200 HTML access-error pages.
+- **Decision**: Prefer signed-out YouTube Music song-filter results, parse artist/album navigation evidence and audio-track types, and retain same-entity catalog extras. Keep general video search as a fallback. Raise five-second Apple/Deezer/MusicBrainz HTTP safety caps to fifteen seconds while retaining the configured resolver deadline. Apply storefront to public Apple requests. Reject non-JSON/oversized original adapter responses with body-free diagnostics. Use Spotify's current token path and report anonymous rejection without circumventing access controls. Bump resolved-cache namespace to rich-v3.
+- **Consequence**: Keyless metadata quality improves where origins are accessible. HTTP 200 does not imply catalog success. Spotify text search can still require validated access; host/network restrictions remain visible. Identity gates are unchanged, and cached weak video results do not mask the new song search.
+
+
+## ADR-019: Evidence-Backed Artists and Guarded Detail Hydration
+- **Status**: Implemented
+- **Context**: Combined artist displays discarded structured collaborator IDs; search-only responses omitted detail fields. A live Daft Punk Get Lucky query accepted an unrelated Funk Punk recording through fuzzy name similarity. Authenticated catalog envelopes and duration formats also differed from the generic parser assumptions.
+- **Decision**: Require stronger normalized artist-name evidence on pure text inputs without weakening existing thresholds/direct-seed/ISRC rules. Score all structured contributors. Reconcile compound displays only against accepted structured lists; transfer native IDs only between exact individual names. Hydrate accepted Deezer tracks and Spotify albums concurrently with strict recording/edition checks, preserving source-only fields and original identity scores. Parse scoped JSON:API resources/includes and fractional/ISO durations without numeric ID loss; request Amazon extras. Expose comparisons in debug only. Cap failed enrichment caching at 30 seconds and use rich-v4 resolved keys.
+- **Consequence**: Wrong-artist covers are rejected, structured metadata is more useful, and temporary detail failures retain a retry path. Stronger artist evidence can reject unsupported aliases. Corrected artist representation can change metadata-derived canonical IDs. Fixture-tested authenticated paths still require real access before live equivalence can be claimed.
+
+## ADR-020: Preserve recording versions and deadline headroom (2026-10-17)
+
+Expanded keyless testing selected a labelled remix for an unqualified Tum Hi Ho query and exposed a deadline race in shared resolution. Acceptance now requires matching explicit version qualifier categories unless exact native-ID/ISRC evidence establishes identity; the existing numeric acceptance and artist thresholds remain unchanged. Upstream discovery/detail/catalog operations share a deadline ending up to 500 ms (20% on short budgets) before the response deadline, leaving room to merge and return available evidence. A slow source cannot consume the complete serialization budget. Tests cover both regressions. Resolved cache namespace advances to rich-v5 so old accepted variants are not reused.

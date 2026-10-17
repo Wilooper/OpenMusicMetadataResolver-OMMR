@@ -11,15 +11,40 @@ import (
 )
 
 type Config struct {
-	Port            int           `mapstructure:"port"`
-	CacheProvider   string        `mapstructure:"cache_provider"` // "disk" or "redis"
-	CacheDir        string        `mapstructure:"cache_dir"`
-	CacheTTL        time.Duration `mapstructure:"cache_ttl"`
-	RedisURL        string        `mapstructure:"redis_url"`
-	RateLimitRPS    float64       `mapstructure:"rate_limit_rps"`
-	ProviderTimeout time.Duration `mapstructure:"provider_timeout"`
-	BulkMaxItems    int           `mapstructure:"bulk_max_items"`
-	BulkWorkers     int           `mapstructure:"bulk_workers"`
+	API                APIConfig       `mapstructure:"api"`
+	Lifecycle          LifecycleConfig `mapstructure:"providers"`
+	SpotifySessionFile string
+	SpotifyCookie      string
+	SpotifyCookieFile  string
+	SpotifyAccessToken string
+	SpotifyTokenExpiry int64
+	AppleSessionFile   string
+	AppleCookie        string
+	AppleCookieFile    string
+	AppleUserToken     string
+	PandoraProbeID     string
+	YTMusicSessionFile string
+	QobuzAppID         string        `mapstructure:"qobuz_app_id"`
+	QobuzToken         string        `mapstructure:"qobuz_token"`
+	QobuzBaseURL       string        `mapstructure:"qobuz_base_url"`
+	TidalToken         string        `mapstructure:"tidal_token"`
+	TidalBaseURL       string        `mapstructure:"tidal_base_url"`
+	PandoraToken       string        `mapstructure:"pandora_token"`
+	PandoraBaseURL     string        `mapstructure:"pandora_base_url"`
+	LastFMKey          string        `mapstructure:"lastfm_api_key"`
+	DiscogsToken       string        `mapstructure:"discogs_token"`
+	AcoustIDKey        string        `mapstructure:"acoustid_api_key"`
+	MetadataPolicy     string        `mapstructure:"metadata_policy"`
+	EnableEnrichment   bool          `mapstructure:"enable_enrichment"`
+	Port               int           `mapstructure:"port"`
+	CacheProvider      string        `mapstructure:"cache_provider"` // "disk" or "redis"
+	CacheDir           string        `mapstructure:"cache_dir"`
+	CacheTTL           time.Duration `mapstructure:"cache_ttl"`
+	RedisURL           string        `mapstructure:"redis_url"`
+	RateLimitRPS       float64       `mapstructure:"rate_limit_rps"`
+	ProviderTimeout    time.Duration `mapstructure:"provider_timeout"`
+	BulkMaxItems       int           `mapstructure:"bulk_max_items"`
+	BulkWorkers        int           `mapstructure:"bulk_workers"`
 
 	// Spotify for Developers credentials. When both are set the Spotify
 	// adapter uses the official client-credentials OAuth flow; otherwise it
@@ -41,7 +66,13 @@ func LoadConfig() (*Config, error) {
 		return nil, err
 	}
 	v := viper.New()
-	if path := os.Getenv("OMMR_CONFIG_FILE"); path != "" {
+	path, explicitConfig := os.LookupEnv("OMMR_CONFIG_FILE")
+	if !explicitConfig {
+		if _, err := os.Stat("ommr.yaml"); err == nil {
+			path = "ommr.yaml"
+		}
+	}
+	if path != "" {
 		if err := privateFile(path); err != nil {
 			return nil, err
 		}
@@ -55,21 +86,41 @@ func LoadConfig() (*Config, error) {
 	v.AutomaticEnv()
 	v.AllowEmptyEnv(true)
 
+	runtimeDefaults(v)
 	v.SetDefault("port", 8080)
 	v.SetDefault("cache_provider", "disk")
 	v.SetDefault("cache_dir", "./cache_data")
 	v.SetDefault("cache_ttl", "24h")
 	v.SetDefault("redis_url", "redis://localhost:6379/0")
 	v.SetDefault("rate_limit_rps", 50.0)
-	v.SetDefault("provider_timeout", "3s")
+	v.SetDefault("provider_timeout", "10s")
+	v.SetDefault("enable_enrichment", true)
 	v.SetDefault("bulk_max_items", 100)
 	v.SetDefault("bulk_workers", 10)
 	v.SetDefault("apple_storefront", "us")
+	v.SetDefault("qobuz_base_url", "https://www.qobuz.com")
+	v.SetDefault("tidal_base_url", "https://openapi.tidal.com")
+	v.SetDefault("pandora_base_url", "https://ce.pandora.com/api/v1/graphql")
 	for key, value := range fileValues {
 		v.SetDefault(key, value)
 	}
 
+	if err := discover(v); err != nil {
+		return nil, err
+	}
 	var cfg Config
+	cfg.QobuzAppID = v.GetString("qobuz_app_id")
+	cfg.QobuzToken = v.GetString("qobuz_token")
+	cfg.QobuzBaseURL = v.GetString("qobuz_base_url")
+	cfg.TidalToken = v.GetString("tidal_token")
+	cfg.TidalBaseURL = v.GetString("tidal_base_url")
+	cfg.PandoraToken = v.GetString("pandora_token")
+	cfg.PandoraBaseURL = v.GetString("pandora_base_url")
+	cfg.LastFMKey = v.GetString("lastfm_api_key")
+	cfg.DiscogsToken = v.GetString("discogs_token")
+	cfg.AcoustIDKey = v.GetString("acoustid_api_key")
+	cfg.MetadataPolicy = v.GetString("metadata_policy")
+	cfg.EnableEnrichment = v.GetBool("enable_enrichment")
 	cfg.Port = v.GetInt("port")
 	cfg.CacheProvider = v.GetString("cache_provider")
 	cfg.CacheDir = v.GetString("cache_dir")
@@ -94,39 +145,12 @@ func LoadConfig() (*Config, error) {
 	if cfg.AmazonMusicBaseURL != "https://api.music.amazon.com" {
 		return nil, fmt.Errorf("Amazon Music V2 host must be https://api.music.amazon.com")
 	}
-	if cfg.YTMusicCookieFile != "" {
-		if cfg.YTMusicCookie != "" {
-			return nil, fmt.Errorf("set either OMMR_YTMUSIC_COOKIE or OMMR_YTMUSIC_COOKIE_FILE")
-		}
-		if err := privateFile(cfg.YTMusicCookieFile); err != nil {
-			return nil, err
-		}
-		data, err := os.ReadFile(cfg.YTMusicCookieFile)
-		if err != nil {
-			return nil, fmt.Errorf("read cookie file: %w", err)
-		}
-		cfg.YTMusicCookie = strings.TrimSpace(string(data))
-	}
-	if (cfg.SpotifyClientID == "") != (cfg.SpotifyClientSecret == "") {
-		return nil, fmt.Errorf("Spotify official mode requires both client ID and client secret")
-	}
+
 	if len(cfg.AppleStorefront) != 2 || strings.Trim(cfg.AppleStorefront, "abcdefghijklmnopqrstuvwxyz") != "" {
 		return nil, fmt.Errorf("Apple storefront must be a two-letter lowercase code")
 	}
-	if cfg.YTMusicCookie != "" {
-		if strings.ContainsAny(cfg.YTMusicCookie, "\r\n") {
-			return nil, fmt.Errorf("YouTube cookie must be a single Cookie header value")
-		}
-		valid := false
-		for _, part := range strings.Split(cfg.YTMusicCookie, ";") {
-			name, value, ok := strings.Cut(strings.TrimSpace(part), "=")
-			if ok && (name == "SAPISID" || name == "__Secure-3PAPISID") && value != "" {
-				valid = true
-			}
-		}
-		if !valid {
-			return nil, fmt.Errorf("YouTube cookie is missing SAPISID or __Secure-3PAPISID")
-		}
+	if err := loadRuntime(v, &cfg); err != nil {
+		return nil, err
 	}
 
 	return &cfg, nil

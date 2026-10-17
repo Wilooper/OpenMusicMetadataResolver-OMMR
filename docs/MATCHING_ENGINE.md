@@ -76,3 +76,17 @@ IdentityConfidence = CandidateMatchScore * ProviderTrustWeight[provider]
 ## Nullable `MatchBreakdown` (`unknown != mismatch`)
 
 Un-evaluated fields in `MatchBreakdown` serialize as `null` / omitted pointers (`*float64`). A `null` value indicates that the field was not available in the candidate, distinguishing missing data from active field mismatches.
+
+## Metadata conflict selection
+
+Acceptance thresholds and artist/direct-ID/ISRC gates are unchanged. **After acceptance**, one candidate per provider contributes a vote; metadata consensus does not admit rejected candidates or weaken identity checks. Explicit per-field trust overrides and all alternate provider values are described in [ENRICHMENT.md](ENRICHMENT.md). Deterministic source ordering removes arrival-order-dependent metadata selection.
+
+## Artist evidence for text queries
+
+Pure artist/title queries now require artist-name evidence in addition to the existing score gates: a complete normalized artist token sequence in the supplied artist record(s), or a very close spelling variant (Jaro-Winkler at least 0.94 and TokenSetRatio at least 0.85). A shared name word is insufficient: `Daft Punk` must not accept `Funk Punk` merely because the title is `Get Lucky`. Structured credited collaborators are considered by artist scoring instead of only the first artist. Direct-seed and exact-ISRC rules retain their existing constraints. The 0.40 rejection, 0.30 reporting and 0.45 artist-score constants are unchanged.
+
+These checks prefer missing data over unsupported artist aliases. Transliterated/alternate artist names without sufficient evidence can be rejected; a correct platform ID or known ISRC provides stronger input. They do not prove recording-version identity for every same-title/same-artist edition.
+
+Direct Spotify/Deezer/YouTube structured metadata must return the requested native recording ID. Spotify embed IDs/URIs are checked and empty embed responses fail safely rather than dereferencing missing metadata.
+
+Explicit bracketed or dash-separated recording-version qualifiers (remix, live, acoustic, instrumental, karaoke, sped-up, slowed, radio edit) must agree before a text-derived candidate is accepted. Direct native-ID and exact-ISRC matches retain their precedence. Unlabelled versions remain ambiguous. See [LIVE_SONG_MATRIX.md](LIVE_SONG_MATRIX.md).

@@ -77,11 +77,20 @@ func (m *Matcher) ScoreCandidate(cand canonical.TrackCandidate, target adapters.
 	//    unrelated artists sharing a common prefix are not over-scored)
 	targetArtist := query.CleanArtist(target.Artist)
 	if targetArtist != "" && len(cand.Track.Artists) > 0 {
-		candArtist := query.CleanArtist(cand.Track.Artists[0].Name)
-		jw := JaroWinkler(targetArtist, candArtist)
-		ts := TokenSetRatio(targetArtist, candArtist)
-		score := 0.6*jw + 0.4*ts
-		breakdown.Artists = floatPtr(score)
+		names := make([]string, 0, len(cand.Track.Artists)+1)
+		for _, artist := range cand.Track.Artists {
+			names = append(names, artist.Name)
+		}
+		names = append(names, strings.Join(names, " "))
+		best := 0.0
+		for _, name := range names {
+			candArtist := query.CleanArtist(name)
+			score := 0.6*JaroWinkler(targetArtist, candArtist) + 0.4*TokenSetRatio(targetArtist, candArtist)
+			if score > best {
+				best = score
+			}
+		}
+		breakdown.Artists = floatPtr(best)
 	} else if len(cand.Track.Artists) > 0 {
 		breakdown.Artists = floatPtr(0.8)
 	}

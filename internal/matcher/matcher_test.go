@@ -148,3 +148,11 @@ func TestMatcherTreatsPlatformIDsAsCaseSensitive(t *testing.T) {
 		t.Fatal("case-different platform IDs must not be treated as a direct match")
 	}
 }
+
+func TestArtistScoreIncludesStructuredCollaborators(t *testing.T) {
+	candidate := canonical.TrackCandidate{Track: canonical.Track{Title: "Get Lucky", Artists: []canonical.Artist{{Name: "Daft Punk"}, {Name: "Pharrell Williams"}, {Name: "Nile Rodgers"}}}}
+	_, breakdown := New().ScoreCandidate(candidate, adapters.Query{Title: "Get Lucky", Artist: "Pharrell Williams"})
+	if breakdown.Artists == nil || *breakdown.Artists != 1 {
+		t.Fatalf("credited collaborator ignored: %+v", breakdown)
+	}
+}

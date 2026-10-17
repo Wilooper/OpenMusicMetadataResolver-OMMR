@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"io"
 	"net/http"
 	"net/url"
 	"strings"
@@ -32,7 +31,7 @@ var _ adapters.ProviderAdapter = (*Provider)(nil)
 
 func New() *Provider {
 	return &Provider{
-		httpClient: &http.Client{Timeout: 5 * time.Second},
+		httpClient: &http.Client{Timeout: 15 * time.Second},
 	}
 }
 
@@ -73,7 +72,7 @@ func (p *Provider) FetchByID(ctx context.Context, idType string, id string) (*ca
 		return nil, fmt.Errorf("musicbrainz API returned status %d", resp.StatusCode)
 	}
 
-	body, err := io.ReadAll(resp.Body)
+	body, err := adapters.ReadJSONBody(resp)
 	if err != nil {
 		return nil, err
 	}
@@ -166,6 +165,10 @@ func (p *Provider) Enrich(ctx context.Context, track canonical.Track) (*canonica
 		}
 		candidate.Track.ISRC = recording.ISRCs[0]
 	}
+	if candidate.Track.Extensions == nil {
+		candidate.Track.Extensions = map[string]json.RawMessage{}
+	}
+	candidate.Track.Extensions["recording_details"] = append(json.RawMessage(nil), candidate.RawResponse...)
 	return &candidate.Track, nil
 }
 
@@ -199,7 +202,7 @@ func (p *Provider) Search(ctx context.Context, q adapters.Query) ([]canonical.Tr
 		return nil, fmt.Errorf("musicbrainz search returned status %d", resp.StatusCode)
 	}
 
-	body, err := io.ReadAll(resp.Body)
+	body, err := adapters.ReadJSONBody(resp)
 	if err != nil {
 		return nil, err
 	}

@@ -15,14 +15,18 @@ import (
 
 	"github.com/ommr/ommr/internal/adapters"
 	"github.com/ommr/ommr/internal/cache"
+	"github.com/ommr/ommr/internal/enrichment/catalog"
 	"github.com/ommr/ommr/internal/identity"
 	"github.com/ommr/ommr/internal/matcher"
 	"github.com/ommr/ommr/internal/merger"
+	"github.com/ommr/ommr/internal/metadata"
 	"github.com/ommr/ommr/internal/models/canonical"
 	"github.com/ommr/ommr/internal/platformlinks"
+	"github.com/ommr/ommr/internal/providerhealth"
 	"github.com/ommr/ommr/internal/ratelimit"
 	"github.com/ommr/ommr/pkg/query"
 	"golang.org/x/sync/errgroup"
+	"golang.org/x/sync/singleflight"
 )
 
 type ResolveRequest struct {
@@ -43,6 +47,7 @@ type ResolveResponse struct {
 	MetadataSources    []string                     `json:"metadata_sources"`
 	ProviderStatus     []canonical.SourceStatus     `json:"provider_status"`
 	ResolutionStrategy canonical.ResolutionStrategy `json:"resolution_strategy"`
+	EnrichmentStatus   map[string]string            `json:"enrichment_status,omitempty"`
 	ResolverStats      ResolverStats                `json:"resolver_stats"`
 }
 
@@ -56,6 +61,10 @@ type Resolver struct {
 	ttl                      time.Duration
 	maxCandidatesPerProvider int
 	logger                   *slog.Logger
+	health                   *providerhealth.Manager
+	flights                  singleflight.Group
+	cacheNamespace           string
+	enrichers                []catalog.Enricher
 }
 
 func New(r *adapters.Registry, c cache.Cache, l *ratelimit.ProviderLimiter, ttl time.Duration) *Resolver {
@@ -69,6 +78,7 @@ func New(r *adapters.Registry, c cache.Cache, l *ratelimit.ProviderLimiter, ttl 
 		ttl:                      ttl,
 		maxCandidatesPerProvider: 10,
 		logger:                   slog.Default(),
+		cacheNamespace:           "resolved:rich-v5:default:",
 	}
 }
 
@@ -76,16 +86,64 @@ func (res *Resolver) WaitProvider(ctx context.Context, provider string) error {
 	if res == nil || res.limiter == nil {
 		return nil
 	}
+	if adapter, ok := res.registry.Get(provider); ok {
+		if key, ok := adapter.(interface{ RateLimitKey() string }); ok {
+			provider = key.RateLimitKey()
+		}
+	}
 	return res.limiter.Wait(ctx, provider)
 }
 
 func (res *Resolver) Resolve(ctx context.Context, req ResolveRequest) (*ResolveResponse, error) {
+	req.Query.Title = query.CleanTitle(req.Query.Title)
+	req.Query.Artist = query.CleanArtist(req.Query.Artist)
+	if res.cache == nil {
+		return res.resolve(ctx, req)
+	}
+	key := res.cacheNamespace + res.healthSignature() + hashQuery(req.Query, req.Sources)
+	if req.BypassCache {
+		key += "/bypass"
+	}
+	outcome := res.flights.DoChan(key, func() (any, error) {
+		// One disconnected waiter must not cancel the shared provider request.
+		budget := 15 * time.Second
+		if deadline, ok := ctx.Deadline(); ok {
+			budget = time.Until(deadline)
+			if budget <= 0 {
+				return nil, context.DeadlineExceeded
+			}
+		}
+		work, cancel := context.WithTimeout(context.WithoutCancel(ctx), budget)
+		defer cancel()
+		response, err := res.resolve(work, req)
+		if err != nil {
+			return nil, err
+		}
+		return json.Marshal(response)
+	})
+	select {
+	case <-ctx.Done():
+		return nil, ctx.Err()
+	case result := <-outcome:
+		if result.Err != nil {
+			return nil, result.Err
+		}
+		var response ResolveResponse
+		if err := json.Unmarshal(result.Val.([]byte), &response); err != nil {
+			return nil, err
+		}
+		return &response, nil
+	}
+}
+
+func (res *Resolver) resolve(ctx context.Context, req ResolveRequest) (*ResolveResponse, error) {
 	// Clean text inputs
 	req.Query.Title = query.CleanTitle(req.Query.Title)
 	req.Query.Artist = query.CleanArtist(req.Query.Artist)
 
 	inputType := determineInputType(req.Query)
-	cacheKey := "resolved:links-v1:" + hashQuery(req.Query, req.Sources)
+	signature := res.healthSignature()
+	cacheKey := res.cacheNamespace + signature + hashQuery(req.Query, req.Sources)
 
 	// 1. Check cache unless bypass_cache is true
 	if !req.BypassCache && res.cache != nil {
@@ -109,8 +167,17 @@ func (res *Resolver) Resolve(ctx context.Context, req ResolveRequest) (*ResolveR
 		return nil, fmt.Errorf("no provider adapters available")
 	}
 
+	// Reserve time to merge, cache and serialize usable results after slow sources expire.
+	lookupCtx := ctx
+	if deadline, ok := ctx.Deadline(); ok {
+		reserve := min(time.Until(deadline)/5, 500*time.Millisecond)
+		var cancel context.CancelFunc
+		lookupCtx, cancel = context.WithDeadline(ctx, deadline.Add(-reserve))
+		defer cancel()
+	}
+
 	// Stage 1: Direct Provider Lookup & Initial Parallel Fetch
-	g, gCtx := errgroup.WithContext(ctx)
+	g, gCtx := errgroup.WithContext(lookupCtx)
 	candidatesMu := sync.Mutex{}
 	candidates := make([]canonical.TrackCandidate, 0, len(activeAdapters))
 	sourcesStatus := make([]canonical.SourceStatus, len(activeAdapters))
@@ -126,7 +193,11 @@ func (res *Resolver) Resolve(ctx context.Context, req ResolveRequest) (*ResolveR
 				Version: ad.Version(),
 			}
 
-			if err := res.limiter.Wait(gCtx, ad.Name()); err != nil {
+			if directProvider(req.Query) != "" && ad.Name() != directProvider(req.Query) && req.Query.Title == "" && req.Query.ISRC == "" {
+				sourcesStatus[idx] = status
+				return nil
+			}
+			if err := res.WaitProvider(gCtx, ad.Name()); err != nil {
 				status.Success = false
 				status.Error = err.Error()
 				status.RejectionReason = "provider_error"
@@ -265,7 +336,7 @@ func (res *Resolver) Resolve(ctx context.Context, req ResolveRequest) (*ResolveR
 				ISRC:   seedTrack.ISRC,
 			}
 
-			secG, secCtx := errgroup.WithContext(ctx)
+			secG, secCtx := errgroup.WithContext(lookupCtx)
 			for i, adapter := range activeAdapters {
 				idx := i
 				ad := adapter
@@ -273,7 +344,7 @@ func (res *Resolver) Resolve(ctx context.Context, req ResolveRequest) (*ResolveR
 					secG.Go(func() error {
 						start := time.Now()
 						defer func() { sourcesStatus[idx].LatencyMS += time.Since(start).Milliseconds() }()
-						if err := res.limiter.Wait(secCtx, ad.Name()); err != nil {
+						if err := res.WaitProvider(secCtx, ad.Name()); err != nil {
 							sourcesStatus[idx].Success = false
 							sourcesStatus[idx].Error = err.Error()
 							sourcesStatus[idx].RejectionReason = "provider_error"
@@ -313,7 +384,7 @@ func (res *Resolver) Resolve(ctx context.Context, req ResolveRequest) (*ResolveR
 
 	totalEvaluated := len(candidates)
 	if totalEvaluated == 0 {
-		return &ResolveResponse{
+		empty := &ResolveResponse{
 			Track:           nil,
 			MetadataSources: []string{},
 			ProviderStatus:  sourcesStatus,
@@ -328,7 +399,19 @@ func (res *Resolver) Resolve(ctx context.Context, req ResolveRequest) (*ResolveR
 				ProvidersContributed: 0,
 				CandidatesEvaluated:  0,
 			},
-		}, nil
+		}
+		healthy := true
+		for _, status := range sourcesStatus {
+			if !status.Success {
+				healthy = false
+			}
+		}
+		if healthy && res.cache != nil {
+			if data, err := json.Marshal(empty); err == nil {
+				_ = res.cache.Set(ctx, cacheKey, data, 30*time.Second)
+			}
+		}
+		return empty, nil
 	}
 
 	// Construct evaluation query for unified matcher pipeline
@@ -372,6 +455,9 @@ func (res *Resolver) Resolve(ctx context.Context, req ResolveRequest) (*ResolveR
 		if strings.TrimSpace(evalQuery.Artist) == "" {
 			return true
 		}
+		if directProvider(req.Query) == "" && evalQuery.ISRC == "" && !hasArtistEvidence(evalQuery.Artist, c.Track.Artists) {
+			return false
+		}
 		if c.Track.MatchBreakdown.Artists == nil {
 			return true
 		}
@@ -383,6 +469,9 @@ func (res *Resolver) Resolve(ctx context.Context, req ResolveRequest) (*ResolveR
 		}
 		if candidateMatchesDirectID(evalQuery, c) {
 			return true
+		}
+		if !compatibleVersion(evalQuery.Title, c.Track.Title) {
+			return false
 		}
 		if directProvider(req.Query) == "" {
 			return true
@@ -493,7 +582,7 @@ func (res *Resolver) Resolve(ctx context.Context, req ResolveRequest) (*ResolveR
 	}
 
 	// Stage 6: Final Merge, Post-Enrichment Identity Stability & Canonical ID Generation
-	res.enrichAccepted(ctx, acceptedCandidates, sourcesStatus)
+	res.enrichAccepted(lookupCtx, acceptedCandidates, sourcesStatus)
 	mergedTrack := res.merger.MergeCandidates(acceptedCandidates)
 	if mergedTrack != nil {
 		mergedTrack.IdentityMatches = deduplicateIdentityMatches(identityMatches)
@@ -531,10 +620,13 @@ func (res *Resolver) Resolve(ctx context.Context, req ResolveRequest) (*ResolveR
 		primarySource = metadataSources[0]
 	}
 
+	metadata.Attach(mergedTrack, acceptedCandidates)
+	enrichmentStatuses := res.enrichCatalogs(lookupCtx, mergedTrack)
 	resp := &ResolveResponse{
-		Track:           mergedTrack,
-		MetadataSources: metadataSources,
-		ProviderStatus:  sourcesStatus,
+		EnrichmentStatus: enrichmentStatuses,
+		Track:            mergedTrack,
+		MetadataSources:  metadataSources,
+		ProviderStatus:   sourcesStatus,
 		ResolutionStrategy: canonical.ResolutionStrategy{
 			InputType:     inputType,
 			PrimarySource: primarySource,
@@ -549,9 +641,20 @@ func (res *Resolver) Resolve(ctx context.Context, req ResolveRequest) (*ResolveR
 	}
 
 	// Write back to cache
-	if res.cache != nil && mergedTrack != nil {
+	if res.cache != nil && mergedTrack != nil && signature == res.healthSignature() {
 		if data, err := json.Marshal(resp); err == nil {
-			_ = res.cache.Set(ctx, cacheKey, data, res.ttl)
+			ttl := res.ttl
+			for _, status := range sourcesStatus {
+				if (!status.Success || status.EnrichmentStatus == "unavailable" || status.EnrichmentStatus == "identity_mismatch") && ttl > 30*time.Second {
+					ttl = 30 * time.Second
+				}
+			}
+			for _, status := range enrichmentStatuses {
+				if status == "unavailable" && ttl > 30*time.Second {
+					ttl = 30 * time.Second
+				}
+			}
+			_ = res.cache.Set(ctx, cacheKey, data, ttl)
 		}
 	}
 
@@ -723,4 +826,13 @@ func candidateMatchesDirectID(q adapters.Query, candidate canonical.TrackCandida
 		"pandora":     q.PandoraID,
 	}[provider]
 	return id != "" && candidate.Track.IDs[provider] == id
+}
+
+func (res *Resolver) SetProviderHealth(manager *providerhealth.Manager) { res.health = manager }
+func (res *Resolver) healthSignature() string {
+	if res.health == nil {
+		return ""
+	}
+	sum := sha256.Sum256([]byte(res.health.Signature()))
+	return hex.EncodeToString(sum[:8]) + ":"
 }

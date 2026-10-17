@@ -81,3 +81,7 @@ References: [Spotify](https://developer.spotify.com/documentation/web-api/refere
 [SoundCloud oEmbed](https://developers.soundcloud.com/docs/oembed),
 [TIDAL sharing](https://support.tidal.com/hc/en-us/articles/23553629074193-Sharing-music-links-across-streaming-platforms),
 [Qobuz track route](https://open.qobuz.com/track/197320134).
+
+## Production output
+
+By default, `/v1/links` and track `extensions.platform_links` return accepted IDs, ID types, lookup IDs and usable URLs. `unavailable_platforms`, `url_source`, per-link confidence/method, and provider execution statuses are returned only with `debug=true`. These are presentation differences; identity gates and accepted links are the same in both modes.

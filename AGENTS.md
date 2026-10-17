@@ -21,6 +21,10 @@ Verify all three (`build`, `vet`, `test`) pass before finishing any change.
 
 - `cmd/server/main.go` — server bootstrap; registers provider adapters into the registry.
 - `internal/adapters/` — one package per provider (`ProviderAdapter` interface in `adapters/adapter.go`). Search endpoints return up to `maxCandidatesPerProvider` candidates.
+- `internal/bootstrap/`, `internal/credentials/`, `internal/providerhealth/` — startup credential validation, private session import and runtime source circuits.
+- `internal/metadata/` — accepted provider records and safe entity extra fields.
+- `internal/enrichment/catalog/` — post-merge release/context/artwork services and fingerprint lookup.
+- `internal/merger/policy.go` — deterministic consensus and configurable field trust.
 - `internal/resolver/resolver.go` — 6-stage pipeline: direct lookup → cross-resolution → scoring → **strict candidate acceptance** → merge → identity/canonical ID.
 - `internal/matcher/matcher.go` — composite scoring (`0.6*JaroWinkler + 0.4*TokenSetRatio`); direct platform-ID match returns 1.0.
 - `internal/merger/merger.go` — field priority lists per metadata field; deduplicates `sources`.
@@ -31,7 +35,7 @@ Verify all three (`build`, `vet`, `test`) pass before finishing any change.
 
 ## Critical Rules
 
-1. **Zero-key first**: every provider must work without credentials. Key-based modes are optional upgrades only (e.g. Spotify dual-mode).
+1. **Zero-key first**: base resolution must remain usable without credentials. Credential-gated providers and enrichment are optional upgrades only (e.g. Spotify dual-mode).
 2. **Never return wrong IDs**: candidate acceptance is gated in `internal/resolver/resolver.go` — `rejectThreshold = 0.40`, `minReportableScore = 0.30`, and the **artist gate** (`minArtistScore = 0.45`) rejects title-only matches on a different artist. Do not weaken these gates.
 3. **Emit `IdentityMatch` only for accepted candidates**; do not force-merge sub-threshold candidates.
 4. **Provider wiring is multi-file**: adding an adapter requires (a) `cmd/server/main.go` registration, (b) a rate limit in `internal/ratelimit/provider_limiter.go`, (c) a trust weight + graph field in `internal/identity/graph.go`, (d) merger field priorities in `internal/merger/merger.go`, (e) provider model in `internal/models/provider/`, (f) tests, and (g) doc updates (`docs/PROVIDERS.md`).
@@ -42,3 +46,7 @@ Verify all three (`build`, `vet`, `test`) pass before finishing any change.
 ## Docs
 
 `README.md` and everything in `docs/` describe the current architecture — keep them in sync with code changes. `ARCHITECTURE_DECISIONS.md` records decisions append-only. `docs/CONTRIBUTING.md` documents the contribution workflow.
+
+## Credential lifecycle
+
+Never probe credentials through a public-fallback adapter method and call that successful authentication. Use protected source-specific checks, keep secrets/account data out of status/logs, refuse credential redirects and preserve owner-only file rules. Required sources remain unloaded without validated access. Ensure endpoint policy applies equally to the JSON gateway. Validate circuit transitions and cancellation without live operator secrets.
