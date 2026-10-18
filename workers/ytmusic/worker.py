@@ -47,7 +47,7 @@ def valid_id(kind, value):
     if not isinstance(value, str):
         return False
     kind = 'artist' if kind in ('artist_albums', 'artist_singles') else kind
-    patterns = {'song': r'[A-Za-z0-9_-]{11}', 'album': r'MPRE[A-Za-z0-9_-]{1,150}',
+    patterns = {'song': r'[A-Za-z0-9_-]{11}', 'credits': r'MPTC[A-Za-z0-9_-]{11}', 'album': r'MPRE[A-Za-z0-9_-]{1,150}',
                 'artist': r'UC[A-Za-z0-9_-]{20,30}', 'playlist': r'(?:OLAK5uy_|PL|RD)[A-Za-z0-9_-]{5,150}'}
     return bool(re.fullmatch(patterns.get(kind, r'(?!)'), value))
 
@@ -59,10 +59,12 @@ class Extractor:
     def execute(self, operation, entity_id, limit=20):
         limit = max(1, min(MAX_ITEMS, int(limit)))
         if operation == 'ping':
-            return {'protocol': 1, 'provider': 'ytmusic', 'mode': 'public', 'capabilities': ['song', 'album', 'artist', 'playlist', 'artist_albums', 'artist_singles']}
+            return {'protocol': 1, 'provider': 'ytmusic', 'mode': 'public', 'capabilities': ['song', 'credits', 'album', 'artist', 'playlist', 'artist_albums', 'artist_singles']}
         if not valid_id(operation, entity_id):
             raise ValueError('invalid_id')
         client = self.client
+        if operation == 'credits':
+            return clean({'id': entity_id, 'kind': operation, 'metadata': client.get_song_credits(entity_id)})
         if operation == 'song':
             result = {'id': entity_id, 'kind': 'song'}
             partial = False

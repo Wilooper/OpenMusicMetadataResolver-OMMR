@@ -18,7 +18,7 @@ The new fields also work in bulk and the JSON query gateway. Metadata trust conf
 
 ## Python where the library adds value
 
-The Go service owns HTTP handling, native adapters, matching, trust, rate limits, health and cache. The optional `ytmusicapi` worker adds song/player context, album tracks and alternate editions, artist descriptions, artwork, audience counts, related artists and release sections when upstream supplies them. It does not convert a biography into verified per-song credits or invent a release date. Context is retained in `provider_data.ytmusic.extra.youtube_catalog` for accepted songs; canonical recording fields/IDs remain guarded.
+The Go service owns HTTP handling, native adapters, matching, trust, rate limits, health and cache. The optional `ytmusicapi` worker adds song/player context, album tracks, public song credits and alternate editions, artist descriptions, artwork, audience counts, related artists and release sections when upstream supplies them. It does not convert a biography into verified per-song credits or invent a release date. Context is retained in `provider_data.ytmusic.extra.youtube_catalog` for accepted songs; canonical recording fields/IDs remain guarded.
 
 Each worker is a persistent Python process with one in-flight JSON-lines operation. There are 1–8 workers, a queue of `workers * 4` jobs, per-job deadlines, 4 MiB upstream/protocol response caps, coalescing for identical misses and Go-backed caching. Slow/malformed processes are killed and replaced. Valid upstream errors do not restart healthy workers. Cancellation of a waiting HTTP request does not corrupt the next worker response. Shutdown terminates workers. Queue saturation returns 503 through the catalog endpoint rather than spawning additional Python processes.
 
@@ -54,6 +54,7 @@ Paths should be absolute when starting from another working directory. Environme
 
 ```http
 GET /v1/catalog?provider=ytmusic&type=song&id=tIjUfo30r4M
+GET /v1/catalog?provider=ytmusic&type=credits&id=MPTCjO_BW28XPKk
 GET /v1/catalog?provider=ytmusic&type=album&id=MPREb_qTDpBqltt6c&limit=20
 GET /v1/catalog?provider=ytmusic&type=artist&id=UCSmK5WX5U4gdtebWjoL81og&limit=20
 GET /v1/catalog?provider=ytmusic&type=artist_albums&id=UCSmK5WX5U4gdtebWjoL81og&limit=50
@@ -74,3 +75,5 @@ Set `api.endpoints.catalog: false` to disable both access paths. Set `providers.
 ## Reference research
 
 [SpotiFLAC extension registry](https://github.com/spotiflacapp/SpotiFLAC-Extension) lists Bugs/Genie/Melon packages. Their public-page formats informed independent Go adapters; extension JavaScript is not executed or bundled. [ytmusicapi documentation](https://ytmusicapi.readthedocs.io/en/stable/reference/api/ytmusicapi.mixins.html) describes album/artist/watch browsing and continuation support. The optional dependency is pinned to 1.12.3. See [LIVE_RICH_CATALOGS.md](LIVE_RICH_CATALOGS.md) for observed successes and limitations.
+
+Public song credits use a source-provided `MPTC` browse ID plus 11-character recording identifier. Credit section names remain source-specific; Written by is not automatically composer or lyricist. See [Known Unknowns album verification](YOUTUBE_KNOWN_UNKNOWNS_VERIFICATION.md) for all 10 live tracks, video/audio differences and the stricter title acceptance regression.

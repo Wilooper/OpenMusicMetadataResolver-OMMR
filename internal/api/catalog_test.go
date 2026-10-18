@@ -16,6 +16,9 @@ func TestCatalogValidationAndEndpointPolicy(t *testing.T) {
 		status int
 	}{
 		{"/v1/catalog?provider=ytmusic&type=song&id=abcdefghijk", 503},
+		{"/v1/catalog?provider=ytmusic&type=credits&id=MPTCabcdefghijk", 503},
+		{"/v1/catalog?provider=ytmusic&type=credits&id=abcdefghijk", 400},
+		{"/v1/catalog?provider=ytmusic&type=credits&id=MPTChttps://evil.test", 400},
 		{"/v1/catalog?provider=ytmusic&type=song&id=https://evil.test", 400},
 		{"/v1/catalog?provider=ytmusic&type=artist&id=UCxxxxxxxxxxxxxxxxxxxxxx&limit=101", 400},
 		{"/v1/catalog?provider=unknown&type=song&id=abcdefghijk", 400},

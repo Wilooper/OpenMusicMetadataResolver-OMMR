@@ -17,6 +17,7 @@ var catalogIDs = map[string]*regexp.Regexp{
 	"artist_albums":  regexp.MustCompile(`^UC[A-Za-z0-9_-]{20,30}$`),
 	"artist_singles": regexp.MustCompile(`^UC[A-Za-z0-9_-]{20,30}$`),
 	"song":           regexp.MustCompile(`^[A-Za-z0-9_-]{11}$`),
+	"credits":        regexp.MustCompile(`^MPTC[A-Za-z0-9_-]{11}$`),
 	"album":          regexp.MustCompile(`^MPRE[A-Za-z0-9_-]{1,150}$`),
 	"artist":         regexp.MustCompile(`^UC[A-Za-z0-9_-]{20,30}$`),
 	"playlist":       regexp.MustCompile(`^(OLAK5uy_|PL|RD)[A-Za-z0-9_-]{5,150}$`),

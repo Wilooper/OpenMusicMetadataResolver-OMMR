@@ -78,7 +78,7 @@ func New(r *adapters.Registry, c cache.Cache, l *ratelimit.ProviderLimiter, ttl 
 		ttl:                      ttl,
 		maxCandidatesPerProvider: 10,
 		logger:                   slog.Default(),
-		cacheNamespace:           "resolved:rich-v11:default:",
+		cacheNamespace:           "resolved:rich-v12:default:",
 	}
 }
 
@@ -491,10 +491,15 @@ func (res *Resolver) resolve(ctx context.Context, req ResolveRequest) (*ResolveR
 		if !compatibleVersion(evalQuery.Title, c.Track.Title) {
 			return false
 		}
+		const minIdentityComponentScore = 0.72
+		// Artist and album agreement cannot identify a different song on the
+		// same release. Apply title evidence to text queries as well as IDs.
+		if strings.TrimSpace(evalQuery.Title) != "" && !hasTitleEvidence(evalQuery.Title, c) {
+			return false
+		}
 		if directProvider(req.Query) == "" {
 			return true
 		}
-		const minIdentityComponentScore = 0.72
 		return c.Track.MatchBreakdown.Title != nil && *c.Track.MatchBreakdown.Title >= minIdentityComponentScore &&
 			c.Track.MatchBreakdown.Artists != nil && *c.Track.MatchBreakdown.Artists >= minIdentityComponentScore
 	}

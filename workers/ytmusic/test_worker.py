@@ -1,4 +1,6 @@
 import unittest
+import json
+from pathlib import Path
 from worker import Extractor, clean, valid_id
 
 VIDEO='abcdefghijk'
@@ -9,6 +11,8 @@ class Fake:
         return {'tracks':[{'videoId':VIDEO,'album':{'id':'MPREexample'},'feedbackTokens':{'private':'secret'}},{'videoId':'wrongrecord','title':'Another song'}],'lyrics':'PRIVATE_POINTER'}
     def get_album(self, entity_id):
         return {'title':'Album','trackCount':5,'tracks':[{'title':str(i)} for i in range(5)],'new_extra':'keep'}
+    def get_song_credits(self, entity_id):
+        return {"written_by":{"data":["Writer"]},"produced_by":{"data":["Producer"]},"feedbackTokens":"private"}
     def get_artist(self, entity_id):
         return {'name':'Artist','description':'Bio','monthlyListeners':'123','songs':{'results':[{'title':'Song'}]*5}}
 
@@ -45,6 +49,21 @@ class Tests(unittest.TestCase):
         self.assertEqual(client.arguments,('BROWSE','PARAMS',2))
         self.assertEqual(len(result['results']),2)
         self.assertTrue(result['possibly_more'])
+    def test_captured_credits(self):
+        expected=json.loads((Path(__file__).parent / "testdata/coach-credits-captured.json").read_text())
+        class Captured(Fake):
+            def get_song_credits(self, entity_id): return expected
+        result=Extractor(Captured()).execute("credits","MPTCjO_BW28XPKk")
+        self.assertEqual(result["metadata"],expected)
+        self.assertEqual(result["metadata"]["written_by"]["data"],["Gur Sidhu"])
+
+    def test_credits_preserve_sections_without_guessing_roles(self):
+        result=Extractor(Fake()).execute("credits","MPTC"+VIDEO)
+        self.assertEqual(result["metadata"]["written_by"]["data"],["Writer"])
+        self.assertNotIn("feedbackTokens",result["metadata"])
+        self.assertFalse(valid_id("credits",VIDEO))
+        self.assertFalse(valid_id("credits","MPTChttps://evil.test"))
+
     def test_private_fields_and_identifier_rejection(self):
         self.assertEqual(clean({'authorization':'secret','feedbackTokens':'secret','safe':3}),{'safe':3})
         self.assertFalse(valid_id('song','https://evil.test'))

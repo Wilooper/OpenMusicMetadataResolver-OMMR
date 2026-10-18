@@ -268,3 +268,5 @@ See [RICH_CATALOGS.md](RICH_CATALOGS.md) for native Bugs/Genie/Melon song adapte
 ### JioSaavn public song-page input
 
 For source extraction, `provider=jiosaavn&url=<percent-encoded HTTPS song URL>` reads the exact official song page before falling back to `webapi.get&type=song`. The JSON gateway accepts `{"operation":"extract","provider":"jiosaavn","url":"https://www.jiosaavn.com/song/mera-mann/ERIkRAwJf38"}`. URL input cannot be combined with `id` or `id_type`; repeated URLs, other providers, foreign hosts, credentials, ports, query strings, fragments and non-song paths are rejected. Only the fixed official JioSaavn host is fetched. Existing endpoint/debug policy applies. See [supported structures and live limits](JIOSAAVN_PUBLIC_PAGES.md).
+
+YouTube catalog also supports `type=credits&id=MPTC<11-character identifier>` through GET `/v1/catalog` or POST `/v1/query` with `operation: catalog`. It returns bounded public credit sections as source context. See [catalog operations](RICH_CATALOGS.md).

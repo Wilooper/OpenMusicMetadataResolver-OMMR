@@ -1,0 +1,18 @@
+{
+  "track_count": 10,
+  "all_tracks_resolved": true,
+  "all_titles_artists_albums_durations_checked": true,
+  "get_post_album_equal": true,
+  "get_post_credits_equal": true,
+  "album_limit_preserves_total_and_reports_truncation": true,
+  "folk_mafia_wrong_apple_id_absent": true,
+  "hype_structured_featured_artist_preserved": true,
+  "youtube_music_video_substitutions": [
+    3,
+    10
+  ],
+  "verified_source_isrcs_recovered_for_all_ten_tracks": true,
+  "production_has_no_provider_status": true,
+  "warm_folk_mafia_wrong_id_absent": true,
+  "invalid_credit_id_http_status": 400
+}

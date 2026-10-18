@@ -1,0 +1,1 @@
+coach-credits-captured.json: captured through the real OMMR /v1/catalog?provider=ytmusic&type=credits&id=MPTCjO_BW28XPKk endpoint in Termux on 2026-10-18. Underlying public YouTube browse metadata, ytmusicapi 1.12.3. Source credit sections retained without mapping Written by to composer or lyricist; no media/account data.
