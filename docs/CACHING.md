@@ -20,7 +20,7 @@ Provider errors are not negative-cached. Catalog JSON with top-level `error`/`er
 
 ## Keys and isolation
 
-Resolved keys use `resolved:rich-v6:` plus a policy/enrichment-capability digest and a hash of the normalized query and unique sorted source set. Changing merge policy or enabled enrichment names invalidates the previous presentation. Earlier `links-v1` entries expire naturally.
+Resolved keys use `resolved:rich-v7:` plus a policy/enrichment-capability digest and a hash of the normalized query and unique sorted source set. Changing merge policy or enabled enrichment names invalidates the previous presentation. Earlier `links-v1` entries expire naturally.
 
 Raw catalog keys use `raw:catalog:` plus a SHA-256 digest of provider, endpoint and authorization value. Keys contain no plaintext API keys or tokens. Cached JSON contains the provider's response, never request headers. Operators should secure disk/Redis access as metadata responses can be large and include provider context.
 
@@ -38,4 +38,4 @@ Provider budgets are local to each process. Deployments with multiple replicas n
 
 Resolved-cache keys additionally include the provider-health state/mode signature, including recovery eligibility. A circuit transition prevents writes into the old partition. Provider-failure partial results use at most 30 seconds of resolved TTL. Startup probes use uncached source clients. Safe health status describes selection/operation, not credential contents. See [PROVIDER_LIFECYCLE.md](PROVIDER_LIFECYCLE.md).
 
-Accepted-provider detail failures, detail identity mismatches and unavailable post-merge catalog enrichments also cap positive resolved caching at 30 seconds. A temporarily sparse result does not freeze missing detail fields for the configured full TTL. No-op detail lookups do not reset provider health. Artist representation changes may change metadata-derived canonical IDs; rich-v6 prevents older combined-artist results from hiding corrected output.
+Accepted-provider detail failures, detail identity mismatches and unavailable post-merge catalog enrichments also cap positive resolved caching at 30 seconds. A temporarily sparse result does not freeze missing detail fields for the configured full TTL. No-op detail lookups do not reset provider health. Artist representation changes may change metadata-derived canonical IDs; rich-v7 prevents older combined-artist results from hiding corrected output.

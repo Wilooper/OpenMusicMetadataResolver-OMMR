@@ -360,3 +360,5 @@ A private `ommr.yaml` now loads automatically; `--config` selects another file. 
 Accuracy improvements: structured collaborator records with owned artist IDs, stricter artist evidence for text queries, guarded accepted-record detail hydration, and debug field comparison. See [ACCURACY_IMPROVEMENTS.md](docs/ACCURACY_IMPROVEMENTS.md) for accuracy behavior and remaining access limits. See [the 12-song live matrix](docs/LIVE_SONG_MATRIX.md) and [credential checklist](docs/CREDENTIALS_CHECKLIST.md).
 
 Rich catalog expansion: [Bugs/Genie/Melon and optional Python YouTube extraction](docs/RICH_CATALOGS.md) adds Korean song catalogs, credits, artist/album context and a bounded Go `/v1/catalog` endpoint. Public-source failures and live results are documented separately from authenticated access.
+
+HTML recovery: [decoder behavior, official-page fallbacks and live availability limits](docs/HTML_RECOVERY.md). The empty 195-byte “Site Unavailable” response contains no recoverable song data.

@@ -4,12 +4,14 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"golang.org/x/time/rate"
 	"net/http"
 	"net/url"
 	"strings"
 	"time"
 
 	"github.com/ommr/ommr/internal/adapters"
+	"github.com/ommr/ommr/internal/adapters/webdata"
 	"github.com/ommr/ommr/internal/enrichment/wikipedia"
 	"github.com/ommr/ommr/internal/models/canonical"
 	"github.com/ommr/ommr/internal/models/provider"
@@ -18,21 +20,25 @@ import (
 
 const (
 	ProviderName    = "musicbrainz"
-	ProviderVersion = "musicbrainz-v2"
+	ProviderVersion = "musicbrainz-v3-html"
 	BaseURL         = "https://musicbrainz.org/ws/2"
-	UserAgent       = "OMMR/1.0.0 (https://github.com/ommr/ommr)"
+	UserAgent       = "OMMR/1.0.0 (https://github.com/Wilooper/OpenMusicMetadataResolver-OMMR)"
 )
 
 type Provider struct {
 	httpClient *http.Client
+	web        *webdata.Fallback
 }
 
 var _ adapters.ProviderAdapter = (*Provider)(nil)
 
 func New() *Provider {
-	return &Provider{
-		httpClient: &http.Client{Timeout: 15 * time.Second},
-	}
+	limiter := rate.NewLimiter(1, 1)
+	transport := webdata.LimitedTransport{Base: http.DefaultTransport, Limiter: limiter}
+	client := &http.Client{Timeout: 15 * time.Second, Transport: transport}
+	fallback := webdata.NewFallback("musicbrainz.org")
+	fallback.SetTransport(transport)
+	return &Provider{web: fallback, httpClient: client}
 }
 
 func (p *Provider) Name() string {
@@ -72,7 +78,14 @@ func (p *Provider) FetchByID(ctx context.Context, idType string, id string) (*ca
 		return nil, fmt.Errorf("musicbrainz API returned status %d", resp.StatusCode)
 	}
 
-	body, err := adapters.ReadJSONBody(resp)
+	htmlMode := "track"
+	if idType == "isrc" {
+		htmlMode = "isrc"
+	}
+	body, err := webdata.Read(resp, webdata.Request{Provider: ProviderName, Mode: htmlMode, ID: id})
+	if idType != "isrc" && webdata.Recoverable(err) && p.web != nil {
+		body, err = p.web.Try(ctx, "https://musicbrainz.org/recording/"+url.PathEscape(id), webdata.Request{Provider: ProviderName, Mode: "track", ID: id})
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -202,7 +215,10 @@ func (p *Provider) Search(ctx context.Context, q adapters.Query) ([]canonical.Tr
 		return nil, fmt.Errorf("musicbrainz search returned status %d", resp.StatusCode)
 	}
 
-	body, err := adapters.ReadJSONBody(resp)
+	body, err := webdata.Read(resp, webdata.Request{Provider: ProviderName, Mode: "search"})
+	if q.ISRC == "" && webdata.Recoverable(err) && p.web != nil {
+		body, err = p.web.Try(ctx, "https://musicbrainz.org/search?"+url.Values{"query": {luceneQuery}, "type": {"recording"}, "method": {"indexed"}}.Encode(), webdata.Request{Provider: ProviderName, Mode: "search"})
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -358,4 +374,10 @@ func escapeLucene(input string) string {
 		res = strings.ReplaceAll(res, char, `\`+char)
 	}
 	return res
+}
+
+func (p *Provider) SetFallbackWait(wait func(context.Context) error) {
+	if p.web != nil {
+		p.web.SetWait(wait)
+	}
 }

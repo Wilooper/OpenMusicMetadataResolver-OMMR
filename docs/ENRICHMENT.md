@@ -99,3 +99,5 @@ TIDAL uses its track-search relationship endpoint and explicitly requested artis
 ## Rich public catalogs
 
 See [RICH_CATALOGS.md](RICH_CATALOGS.md) for native Bugs/Genie/Melon song adapters, `bugs_id`/`genie_id`/`melon_id`, accepted YouTube artist/album context in provider data, optional Python pooling and `/v1/catalog` (also `operation: catalog` through the JSON gateway). These Korean adapters require no credentials; the optional Python path currently uses public YouTube access.
+
+HTML recovery: [decoder behavior, official-page fallbacks and live availability limits](HTML_RECOVERY.md). The empty 195-byte “Site Unavailable” response contains no recoverable song data.

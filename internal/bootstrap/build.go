@@ -56,6 +56,12 @@ func Build(ctx context.Context, cfg *config.Config, backend cache.Cache) (*Runti
 	}
 	plans := []Plan{}
 	for _, source := range []adapters.ProviderAdapter{musicbrainz.New(), deezer.New(), soundcloud.New(), jiosaavn.New(), korean.New("bugs"), korean.New("genie"), korean.New("melon")} {
+		if fallback, ok := source.(interface {
+			SetFallbackWait(func(context.Context) error)
+		}); ok {
+			key := source.Name()
+			fallback.SetFallbackWait(func(ctx context.Context) error { return limiter.Wait(ctx, key) })
+		}
 		plans = append(plans, Plan{Name: source.Name(), Enabled: cfg.Lifecycle.ProviderEnabled(source.Name()), Public: source})
 	}
 	sp := Plan{Name: "spotify", Enabled: cfg.Lifecycle.ProviderEnabled("spotify"), Public: spotify.New(spotify.Config{}), Configured: cfg.SpotifyClientID != "" || cfg.SpotifyClientSecret != "" || cfg.SpotifyCookie != "" || cfg.SpotifyAccessToken != ""}

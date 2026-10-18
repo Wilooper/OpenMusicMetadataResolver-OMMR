@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"net/url"
 	"strings"
 
 	"github.com/ommr/ommr/internal/models/canonical"
@@ -67,6 +68,15 @@ func findRecord(value any, ids map[string]bool, depth int) map[string]any {
 	}
 	switch item := value.(type) {
 	case map[string]any:
+		// Public JioSaavn JSON-LD may expose only its verified share token, not a native lookup ID.
+		if raw, ok := item["perma_url"].(string); ok {
+			if u, err := url.Parse(raw); err == nil && u.Scheme == "https" && u.User == nil && u.Port() == "" && (u.Hostname() == "www.jiosaavn.com" || u.Hostname() == "jiosaavn.com") {
+				parts := strings.Split(strings.Trim(u.Path, "/"), "/")
+				if len(parts) == 3 && parts[0] == "song" && ids[parts[2]] {
+					return item
+				}
+			}
+		}
 		for _, key := range []string{"id", "trackId", "videoId"} {
 			if v, ok := item[key]; ok && ids[fmt.Sprint(v)] {
 				return item

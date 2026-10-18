@@ -78,7 +78,7 @@ func New(r *adapters.Registry, c cache.Cache, l *ratelimit.ProviderLimiter, ttl 
 		ttl:                      ttl,
 		maxCandidatesPerProvider: 10,
 		logger:                   slog.Default(),
-		cacheNamespace:           "resolved:rich-v6:default:",
+		cacheNamespace:           "resolved:rich-v7:default:",
 	}
 }
 

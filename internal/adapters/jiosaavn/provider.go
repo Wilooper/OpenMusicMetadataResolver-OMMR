@@ -11,25 +11,28 @@ import (
 	"time"
 
 	"github.com/ommr/ommr/internal/adapters"
+	"github.com/ommr/ommr/internal/adapters/webdata"
 	"github.com/ommr/ommr/internal/models/canonical"
 	"github.com/ommr/ommr/internal/models/provider"
 )
 
 const (
 	ProviderName    = "jiosaavn"
-	ProviderVersion = "jiosaavn-search-v1"
+	ProviderVersion = "jiosaavn-search-v2-html"
 )
 
 var SearchURL = "https://www.jiosaavn.com/api.php"
 
 type Provider struct {
 	httpClient *http.Client
+	web        *webdata.Fallback
 }
 
 var _ adapters.ProviderAdapter = (*Provider)(nil)
 
 func New() *Provider {
 	return &Provider{
+		web:        webdata.NewFallback("www.jiosaavn.com"),
 		httpClient: &http.Client{Timeout: 8 * time.Second},
 	}
 }
@@ -64,6 +67,7 @@ func (p *Provider) FetchByID(ctx context.Context, idType string, id string) (*ca
 	}
 	req.Header.Set("User-Agent", userAgent)
 
+	req.Header.Set("Accept", "application/json")
 	resp, err := p.httpClient.Do(req)
 	if err != nil {
 		return nil, err
@@ -73,7 +77,7 @@ func (p *Provider) FetchByID(ctx context.Context, idType string, id string) (*ca
 	if resp.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("jiosaavn getDetails status %d", resp.StatusCode)
 	}
-	body, err := adapters.ReadJSONBody(resp)
+	body, err := webdata.Read(resp, webdata.Request{Provider: ProviderName, Mode: "track", ID: id})
 	if err != nil {
 		return nil, err
 	}
@@ -84,7 +88,7 @@ func (p *Provider) FetchByID(ctx context.Context, idType string, id string) (*ca
 		return nil, err
 	}
 	detail, ok := m[id]
-	if !ok || detail.Song == "" {
+	if !ok || detail.Song == "" || (detail.ID != "" && detail.ID != id && jioSaavnID(detail) != id) {
 		return nil, fmt.Errorf("jiosaavn song %s not found", id)
 	}
 
@@ -111,6 +115,7 @@ func (p *Provider) Search(ctx context.Context, q adapters.Query) ([]canonical.Tr
 	}
 	req.Header.Set("User-Agent", userAgent)
 
+	req.Header.Set("Accept", "application/json")
 	resp, err := p.httpClient.Do(req)
 	if err != nil {
 		return nil, err
@@ -120,7 +125,10 @@ func (p *Provider) Search(ctx context.Context, q adapters.Query) ([]canonical.Tr
 	if resp.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("jiosaavn search status %d", resp.StatusCode)
 	}
-	body, err := adapters.ReadJSONBody(resp)
+	body, err := webdata.Read(resp, webdata.Request{Provider: ProviderName, Mode: "search"})
+	if q.ISRC == "" && webdata.Recoverable(err) && p.web != nil {
+		body, err = p.web.Try(ctx, "https://www.jiosaavn.com/search/song/"+url.PathEscape(strings.TrimSpace(q.Artist+" "+q.Title)), webdata.Request{Provider: ProviderName, Mode: "search"})
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -237,3 +245,9 @@ func upscaleImage(imgURL string, size int) string {
 }
 
 var userAgent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+
+func (p *Provider) SetFallbackWait(wait func(context.Context) error) {
+	if p.web != nil {
+		p.web.SetWait(wait)
+	}
+}

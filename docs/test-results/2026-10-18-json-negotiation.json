@@ -1,0 +1,26 @@
+[
+  {
+    "case": "jio-api",
+    "accept": "application/json",
+    "status": 200,
+    "bytes": 195,
+    "json": false,
+    "content_type": "text/html"
+  },
+  {
+    "case": "deezer-api",
+    "accept": "application/json",
+    "status": 200,
+    "bytes": 195,
+    "json": false,
+    "content_type": "text/html"
+  },
+  {
+    "case": "mb-api",
+    "accept": "application/json",
+    "status": 200,
+    "bytes": 195,
+    "json": false,
+    "content_type": "text/html"
+  }
+]
