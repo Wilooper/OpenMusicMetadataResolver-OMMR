@@ -14,7 +14,7 @@ OMMR integrates 11 metadata provider adapters implementing the `adapters.Provide
 | **Deezer** | `deezer` | `deezer-v1` | Public API (`api.deezer.com`) | **Zero** | Token Bucket (50 RPS) |
 | **MusicBrainz** | `musicbrainz` | `musicbrainz-v2` | MusicBrainz REST API v2 | **Zero** | Token Bucket (1 RPS) |
 | **SoundCloud** | `soundcloud` | `soundcloud-oembed-v1` | Public oEmbed endpoint | **Zero** | Token Bucket (10 RPS) |
-| **JioSaavn** | `jiosaavn` | `jiosaavn-search-v1` | Public `api.php` search & getDetails endpoints | **Zero** | Token Bucket (5 RPS) |
+| **JioSaavn** | `jiosaavn` | `jiosaavn-search-v3-catalog` | Public `api.php` search & getDetails endpoints | **Zero** | Token Bucket (5 RPS) |
 | **Qobuz** | `qobuz` | `qobuz-api-v1` | Track metadata and search endpoints | Issued application ID; optional bearer token | Token Bucket (5 RPS) |
 | **TIDAL** | `tidal` | `tidal-webapi-v3` | TIDAL Web API v2 track and search endpoints | Authorized OAuth token | Token Bucket (10 RPS) |
 | **Amazon Music** | `amazonmusic` | `amazonmusic-webapi-v3` | Amazon Music Web API v2 catalog track search and lookup | Approved API access, OAuth token, security profile ID | Token Bucket (5 RPS) |

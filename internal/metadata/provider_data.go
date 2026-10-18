@@ -100,7 +100,7 @@ func findRecord(value any, ids map[string]bool, depth int) map[string]any {
 
 func blocked(key string) bool {
 	normalized := strings.ToLower(strings.NewReplacer("_", "", "-", "").Replace(key))
-	for _, part := range []string{"token", "cookie", "authorization", "password", "secret", "signature", "streamingdata", "playback", "tracking", "responsecontext", "logging", "html", "cipher", "streamurl", "streamingurl", "downloadurl"} {
+	for _, part := range []string{"token", "cookie", "authorization", "password", "secret", "signature", "encryptedmediaurl", "streamingdata", "playback", "tracking", "responsecontext", "logging", "html", "cipher", "streamurl", "streamingurl", "downloadurl"} {
 		if strings.Contains(normalized, part) {
 			return true
 		}

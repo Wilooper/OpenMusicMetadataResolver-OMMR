@@ -179,7 +179,22 @@ func nativeRecord(m map[string]any, provider string) bool {
 		artist, _ := m["artist"].(map[string]any)
 		return scalar(m["id"]) != "" && str(m, "title") != "" && str(artist, "name") != ""
 	case "jiosaavn":
-		return str(m, "id") != "" && str(m, "song") != "" && (str(m, "primary_artists") != "" || str(m, "singers") != "")
+		if str(m, "id") == "" {
+			return false
+		}
+		if str(m, "song") != "" && (str(m, "primary_artists") != "" || str(m, "singers") != "") {
+			return true
+		}
+		info, _ := m["more_info"].(map[string]any)
+		artistMap, _ := info["artistMap"].(map[string]any)
+		primary, _ := artistMap["primary_artists"].([]any)
+		for _, value := range primary {
+			artist, _ := value.(map[string]any)
+			if str(m, "title") != "" && str(artist, "name") != "" {
+				return true
+			}
+		}
+		return false
 	case "musicbrainz":
 		credits, _ := m["artist-credit"].([]any)
 		return validMBID(str(m, "id")) && str(m, "title") != "" && len(credits) > 0

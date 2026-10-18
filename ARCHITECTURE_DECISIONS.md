@@ -144,3 +144,8 @@ Bugs, Genie and Melon use bounded native Go HTML/JSON-LD adapters with accepted-
 ## ADR-022: Recover catalog HTML without weakening identity (2026-10-18)
 
 JioSaavn, Deezer and MusicBrainz accept known native JSON envelopes embedded in HTML, provider-owned JSON-LD music records and scoped MusicBrainz search rows through a shared bounded Go decoder. Normal API JSON remains native; credential probes remain strict. API HTML failure can use a bounded official public-page fallback with shared source budgets and a failed-route cooldown. Data-free error pages remain failures rather than empty successes or invented metadata. Recovered records retain source extras and pass unchanged identity gates. Unknown native entity IDs are omitted. Resolved cache advances to rich-v7. Live access remained unavailable in this environment; supported parsing was verified using fixtures.
+
+
+## ADR 023: JioSaavn v4 protocol compatibility (2026-10-18)
+
+Implement the public request protocol used by Python JioSaavn clients directly in Go. Accept legacy flat details and v4 nested search records, retaining structured artists, credits and accepted catalog extras. A language/runtime switch cannot repair an identical empty upstream page. Keep connectivity diagnostics separate from claims of successful provider recovery; no proxy fallback is introduced. Resolved cache advances to rich-v8.

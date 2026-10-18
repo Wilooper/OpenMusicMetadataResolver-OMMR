@@ -18,7 +18,7 @@ import (
 
 const (
 	ProviderName    = "jiosaavn"
-	ProviderVersion = "jiosaavn-search-v2-html"
+	ProviderVersion = "jiosaavn-search-v3-catalog"
 )
 
 var SearchURL = "https://www.jiosaavn.com/api.php"
@@ -92,18 +92,23 @@ func (p *Provider) FetchByID(ctx context.Context, idType string, id string) (*ca
 		return nil, fmt.Errorf("jiosaavn song %s not found", id)
 	}
 
+	var raw map[string]json.RawMessage
+	_ = json.Unmarshal(body, &raw)
 	track := p.normalize(detail)
 	return &canonical.TrackCandidate{
 		Provider:    ProviderName,
 		Track:       track,
 		MatchScore:  1.0,
-		RawResponse: body,
+		RawResponse: raw[id],
 	}, nil
 }
 
 func (p *Provider) Search(ctx context.Context, q adapters.Query) ([]canonical.TrackCandidate, error) {
 	params := url.Values{}
 	params.Set("__call", "search.getResults")
+	params.Set("api_version", "4")
+	params.Set("p", "0")
+	params.Set("n", "20")
 	params.Set("q", strings.TrimSpace(q.Artist+" "+q.Title))
 	params.Set("_format", "json")
 	params.Set("_marker", "0")
@@ -140,6 +145,9 @@ func (p *Provider) Search(ctx context.Context, q adapters.Query) ([]canonical.Tr
 
 	cands := make([]canonical.TrackCandidate, 0, len(search.Results))
 	for _, r := range search.Results {
+		if strings.TrimSpace(r.Song) == "" || (r.ID == "" && jioSaavnID(r) == "") || (r.Type != "" && r.Type != "song") {
+			continue
+		}
 		cands = append(cands, canonical.TrackCandidate{
 			Provider:    ProviderName,
 			Track:       p.normalize(r),
@@ -151,7 +159,10 @@ func (p *Provider) Search(ctx context.Context, q adapters.Query) ([]canonical.Tr
 }
 
 func (p *Provider) normalize(r provider.JioSaavnSongResult) canonical.Track {
-	artists := splitNames(r.PrimaryArtists)
+	artists := catalogArtists(r.ArtistMap.Primary, "main")
+	if len(artists) == 0 {
+		artists = splitNames(r.PrimaryArtists)
+	}
 	if len(artists) == 0 {
 		artists = splitNames(r.Singers)
 	}
@@ -162,7 +173,9 @@ func (p *Provider) normalize(r provider.JioSaavnSongResult) canonical.Track {
 		artists = []canonical.Artist{{Name: "Unknown Artist", Role: "main"}}
 	}
 
-	if len(r.FeaturedArtists) > 0 {
+	if len(r.ArtistMap.Featured) > 0 {
+		artists = append(artists, catalogArtists(r.ArtistMap.Featured, "featured")...)
+	} else if len(r.FeaturedArtists) > 0 {
 		for _, fa := range splitNames(r.FeaturedArtists) {
 			artists = append(artists, canonical.Artist{Name: fa.Name, Role: "featured"})
 		}
@@ -195,13 +208,31 @@ func (p *Provider) normalize(r provider.JioSaavnSongResult) canonical.Track {
 		},
 		Images:         images,
 		Label:          r.Label,
-		Explicit:       string(r.ExplicitContent) == "1",
+		Explicit:       string(r.ExplicitContent) == "1" || string(r.ExplicitContent) == "true",
 		Language:       r.Language,
 		IDs:            ids,
 		Sources:        []string{ProviderName},
 		MatchBreakdown: canonical.MatchBreakdown{},
 	}
 
+	switch string(r.ExplicitContent) {
+	case "1", "true":
+		track.Extensions = map[string]json.RawMessage{"explicit_status": json.RawMessage(`"explicit"`)}
+	case "0", "false":
+		track.Extensions = map[string]json.RawMessage{"explicit_status": json.RawMessage(`"clean"`)}
+	}
+	if r.AlbumID != "" && r.AlbumID != "null" {
+		track.Album.IDs = map[string]string{ProviderName: string(r.AlbumID)}
+	}
+	if r.CopyrightText != "" {
+		track.Copyrights = []canonical.Copyright{{Text: r.CopyrightText}}
+	}
+	for _, artist := range r.ArtistMap.All {
+		role := strings.ToLower(strings.TrimSpace(artist.Role))
+		if artist.Name != "" && role != "" && role != "primary_artists" && role != "featured_artists" && role != "singer" {
+			track.Credits = append(track.Credits, canonical.Credit{Name: artist.Name, Roles: []string{role}})
+		}
+	}
 	if secs := r.DurationSeconds(); secs > 0 {
 		track.DurationMS = int64(secs) * 1000
 	}
@@ -250,4 +281,19 @@ func (p *Provider) SetFallbackWait(wait func(context.Context) error) {
 	if p.web != nil {
 		p.web.SetWait(wait)
 	}
+}
+
+func catalogArtists(values []provider.JioSaavnArtist, role string) []canonical.Artist {
+	var result []canonical.Artist
+	for _, value := range values {
+		if value.Name == "" {
+			continue
+		}
+		artist := canonical.Artist{Name: value.Name, Role: role}
+		if value.ID != "" && value.ID != "null" && value.ID != "0" {
+			artist.IDs = map[string]string{ProviderName: string(value.ID)}
+		}
+		result = append(result, artist)
+	}
+	return result
 }

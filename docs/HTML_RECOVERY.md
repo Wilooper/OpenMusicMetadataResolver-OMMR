@@ -44,3 +44,23 @@ Build, vet, full Go tests and race checks passed. Fixtures cover normal JSON, es
 These passing fixtures establish implemented parsing behavior, not a successful live recovery of the three currently unavailable services. Website formats can change; unsupported layouts fail safely. Pages requiring client-side execution or a challenge are not rendered. A page with no catalog content cannot be converted into real music data.
 
 Observations: [public probes](test-results/2026-10-18-html-probes.json), [updated-server live results](test-results/2026-10-18-html-live.json), [explicit JSON-header probes](test-results/2026-10-18-json-negotiation.json).
+
+## Follow-up: Python client request comparison
+
+Reviewed the public request protocols in [JioSaavnAPI](https://github.com/cyberboysumanjay/JioSaavnAPI/blob/master/endpoints.py) and [JiosaavnPy](https://github.com/ZingyTomato/JiosaavnPy/blob/main/jiosaavnpy/endpoints.py), including the latter's nested search fields. Reviewed revisions: `67ecd4d92186a72f65603d2947bd05a57e148f90` and `33aade475d0a8a0111b049c70c42a22de41bf708`, respectively. Both use the same official `www.jiosaavn.com/api.php` host. Python is not an independent source or alternate network route.
+
+Requests using Python `requests` with its default headers and the clients' exact autocomplete/v4 search endpoint templates both returned HTTP 200, `text/html`, 195 bytes, `Server: openresty/1.27.1.1`, SHA-256 `5b131ca14aa96311d3432b0062c7443d3b0e6346ec279bd376a75f0a76bcd5d7`. Legacy search, v4 search, the Python detail template, the website homepage, Deezer and MusicBrainz returned that same body in a separate comparison; Apple returned valid catalog JSON. This strengthens the inference of a shared access/intermediary response. It does **not** identify the responsible infrastructure, establish a global outage, or show that authentication is needed. We did not bypass network controls or introduce a public proxy.
+
+A separate adapter bug was fixed: API v4 uses `title` and `more_info` instead of only flat `song` fields. Search now requests v4 with bounded 20-result pagination and reads nested album IDs, duration, label, structured main/featured artists and their IDs, contributor roles, copyright and explicit flags. Legacy detail/HTML shapes still work. HTML-escaped names are decoded; structured names containing commas remain one artist. Missing IDs are not invented. Exact detail record extras now survive catalog attachment, and encrypted media URL fields are filtered from public metadata. Other accepted entity extras remain available through `provider_data`. Cache namespace advances to `rich-v8`.
+
+The protocol is implemented natively in Go, with no additional Python runtime or dependency for JioSaavn. The reviewed libraries did not expose a working alternate route in this environment. Tests establish compatibility and safe parsing, **not live JioSaavn recovery**.
+
+To reproduce connectivity on a deployment host without supplying credentials:
+
+```bash
+python3 scripts/probe_public_sources.py
+```
+
+The script checks fixed public URLs only, spaces requests to each host, bounds response reads, and emits status, safe headers, JSON validity and body hashes. Exception messages, response bodies, cookies and credentials are excluded. Compare its output from your host with [exact Python requests results](test-results/2026-10-18-python-requests.json) and [public route probes](test-results/2026-10-18-python-client-routes.json). A matching page means transport access must be resolved before a parser or Python library can supply catalog data.
+
+The updated Go server was retried with Karan Aujla’s Boyfriend using the three affected sources and an isolated Apple control: [live retry](test-results/2026-10-18-jio-v4-live.json). All affected sources still reported errors; Apple resolved Boyfriend. Build, vet, full tests and focused race checks passed after the compatibility changes.
