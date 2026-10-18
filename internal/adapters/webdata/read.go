@@ -156,6 +156,25 @@ func envelopes(v any, r Request, depth int, result *[]any) {
 		} else {
 			valid = nativeRecord(m, r.Provider) && recordID(m, r.Provider) == r.ID
 			if r.Provider == "jiosaavn" {
+				// webapi.get uses a songs array. Only the uniquely requested recording
+				// may become a detail envelope; related records cannot establish identity.
+				if songs, ok := m["songs"].([]any); ok {
+					matches := []map[string]any{}
+					for _, value := range songs {
+						song, ok := value.(map[string]any)
+						if ok && nativeRecord(song, r.Provider) && (recordID(song, r.Provider) == r.ID || sourceID(r.Provider, str(song, "perma_url"), "track") == r.ID) {
+							matches = append(matches, song)
+						}
+					}
+					if len(matches) == 1 {
+						*result = append(*result, map[string]any{r.ID: matches[0]})
+						return
+					}
+					if len(matches) > 1 {
+						*result = append(*result, m, m)
+						return
+					}
+				}
 				if child, ok := m[r.ID].(map[string]any); ok && nativeRecord(child, r.Provider) && recordID(child, r.Provider) == r.ID {
 					valid = true
 				}

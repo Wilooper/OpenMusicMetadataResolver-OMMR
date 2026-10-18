@@ -14,7 +14,7 @@ OMMR integrates 11 metadata provider adapters implementing the `adapters.Provide
 | **Deezer** | `deezer` | `deezer-v1` | Public API (`api.deezer.com`) | **Zero** | Token Bucket (50 RPS) |
 | **MusicBrainz** | `musicbrainz` | `musicbrainz-v2` | MusicBrainz REST API v2 | **Zero** | Token Bucket (1 RPS) |
 | **SoundCloud** | `soundcloud` | `soundcloud-oembed-v1` | Public oEmbed endpoint | **Zero** | Token Bucket (10 RPS) |
-| **JioSaavn** | `jiosaavn` | `jiosaavn-search-v3-catalog` | Public `api.php` search & getDetails endpoints | **Zero** | Token Bucket (5 RPS) |
+| **JioSaavn** | `jiosaavn` | `jiosaavn-search-v4-routes` | Public `api.php` search, native details & share-token lookup | **Zero** | Token Bucket (5 RPS) |
 | **Qobuz** | `qobuz` | `qobuz-api-v1` | Track metadata and search endpoints | Issued application ID; optional bearer token | Token Bucket (5 RPS) |
 | **TIDAL** | `tidal` | `tidal-webapi-v3` | TIDAL Web API v2 track and search endpoints | Authorized OAuth token | Token Bucket (10 RPS) |
 | **Amazon Music** | `amazonmusic` | `amazonmusic-webapi-v3` | Amazon Music Web API v2 catalog track search and lookup | Approved API access, OAuth token, security profile ID | Token Bucket (5 RPS) |
@@ -62,7 +62,7 @@ Dual-mode adapter (`spotify-web-v3`):
 - Accepts `soundcloud_id` queries; no key required. Text search is not supported in zero-key mode (SoundCloud's search API requires OAuth).
 
 ### 7. JioSaavn Adapter (`internal/adapters/jiosaavn/`)
-- Queries JioSaavn's public `api.php` endpoints: `search.getResults` and `song.getDetails`.
+- Queries JioSaavn's public `api.php` endpoints: `search.getResults`, `song.getDetails` for native IDs, and `webapi.get&type=song` for public share tokens. Details support keyed records and `songs` arrays. Accepted candidates hydrate with their native ID when available.
 - Returns song ID (from `perma_url`), album, label, language, play counts, duration, explicit flag, release date, and upscaled cover art.
 - The `JSONString` model type tolerates JioSaavn's inconsistent field typing (e.g. `"duration": 367` vs `"duration": "367"`).
 
@@ -131,7 +131,7 @@ Spotify, Apple Music and YouTube Music can import private browser sessions/cooki
 
 ## Credential-free live regression
 
-See [LIVE_TEST_BOYFRIEND.md](LIVE_TEST_BOYFRIEND.md) for the 2026-10-16 retry, before/after metadata, observed access failures and cache timings. Apple, Deezer, MusicBrainz and JioSaavn reject non-JSON bodies before decoding; HTML access-error pages cannot become empty catalog successes.
+See [LIVE_TEST_BOYFRIEND.md](LIVE_TEST_BOYFRIEND.md) for the 2026-10-16 retry, before/after metadata, observed access failures and cache timings. Apple requires JSON; Deezer, MusicBrainz and JioSaavn additionally decode recognized HTML catalog structures. Empty HTML access-error pages remain failures.
 
 ## Accuracy and detail update
 

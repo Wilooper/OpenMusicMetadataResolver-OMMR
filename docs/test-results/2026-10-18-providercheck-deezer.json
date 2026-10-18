@@ -1,0 +1,67 @@
+{
+  "provider": "deezer",
+  "version": "deezer-v2-html",
+  "query": {
+    "artist": "Karan Aujla",
+    "title": "Boyfriend"
+  },
+  "adapter_status": "error",
+  "adapter_error_kind": "unavailable_catalog_page",
+  "operation": "search",
+  "candidates": [],
+  "requests": [
+    {
+      "phase": "adapter.search",
+      "method": "GET",
+      "url": "https://api.deezer.com/search?limit=5\u0026q=artist%3A%22karan+aujla%22+track%3A%22boyfriend%22",
+      "status": 200,
+      "protocol": "HTTP/2.0",
+      "content_type": "text/html",
+      "server": "openresty/1.27.1.1",
+      "bytes": 195,
+      "sha256": "5b131ca14aa96311d3432b0062c7443d3b0e6346ec279bd376a75f0a76bcd5d7",
+      "kind": "site_unavailable_html",
+      "elapsed_ms": 5684
+    },
+    {
+      "phase": "adapter.search",
+      "method": "GET",
+      "url": "https://www.deezer.com/search/Karan%20Aujla%20Boyfriend/track",
+      "status": 200,
+      "protocol": "HTTP/2.0",
+      "content_type": "text/html",
+      "server": "openresty/1.27.1.1",
+      "bytes": 195,
+      "sha256": "5b131ca14aa96311d3432b0062c7443d3b0e6346ec279bd376a75f0a76bcd5d7",
+      "kind": "site_unavailable_html",
+      "elapsed_ms": 4579
+    },
+    {
+      "phase": "route.home",
+      "method": "GET",
+      "url": "https://www.deezer.com/",
+      "status": 200,
+      "protocol": "HTTP/2.0",
+      "content_type": "text/html",
+      "server": "openresty/1.27.1.1",
+      "bytes": 195,
+      "sha256": "5b131ca14aa96311d3432b0062c7443d3b0e6346ec279bd376a75f0a76bcd5d7",
+      "kind": "site_unavailable_html",
+      "elapsed_ms": 375
+    },
+    {
+      "phase": "route.plain_search",
+      "method": "GET",
+      "url": "https://api.deezer.com/search?limit=5\u0026q=Karan+Aujla+Boyfriend",
+      "status": 200,
+      "protocol": "HTTP/2.0",
+      "content_type": "text/html",
+      "server": "openresty/1.27.1.1",
+      "bytes": 195,
+      "sha256": "5b131ca14aa96311d3432b0062c7443d3b0e6346ec279bd376a75f0a76bcd5d7",
+      "kind": "site_unavailable_html",
+      "elapsed_ms": 890
+    }
+  ],
+  "observation": "homepage_and_api_unavailable_origin_unconfirmed"
+}

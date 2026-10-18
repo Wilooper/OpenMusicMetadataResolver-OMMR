@@ -149,3 +149,10 @@ JioSaavn, Deezer and MusicBrainz accept known native JSON envelopes embedded in 
 ## ADR 023: JioSaavn v4 protocol compatibility (2026-10-18)
 
 Implement the public request protocol used by Python JioSaavn clients directly in Go. Accept legacy flat details and v4 nested search records, retaining structured artists, credits and accepted catalog extras. A language/runtime switch cannot repair an identical empty upstream page. Keep connectivity diagnostics separate from claims of successful provider recovery; no proxy fallback is introduced. Resolved cache advances to rich-v8.
+
+
+## ADR 024: Isolated provider diagnostics and JioSaavn identifier routing (2026-10-18)
+
+Add a standalone Go providercheck command that observes real public adapters without bootstrap credentials, resolver acceptance or caches. Reports distinguish decoded candidates from HTTP success, record bounded/redacted HTTP evidence, and optionally compare fixed source-specific routes with a shared one-request-per-second service budget. The production server does not acquire a network-probe endpoint.
+
+JioSaavn native IDs use song.getDetails; public share tokens use webapi.get with type=song. Support keyed and songs-array detail envelopes, require one matching identity, and hydrate accepted records using explicitly typed IDs. GET extraction and the JSON gateway accept the same validated native/share selector. Keep search/identity thresholds unchanged and advance resolved caching to rich-v9. Neither a passing fixture nor a decoded search candidate proves cross-provider identity or restores blocked live access.

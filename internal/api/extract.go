@@ -59,6 +59,18 @@ func (h *Handler) HandleExtract(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	idType := providerName
+	if q.Has("id_type") {
+		if providerName != "jiosaavn" || providerID == "" || len(q["id_type"]) != 1 || (q.Get("id_type") != "native" && q.Get("id_type") != "share") {
+			http.Error(w, `{"error":"id_type requires a JioSaavn id and must be native or share"}`, http.StatusBadRequest)
+			return
+		}
+		idType = "jiosaavn_track_id"
+		if q.Get("id_type") == "share" {
+			idType = "jiosaavn_share"
+		}
+	}
+
 	var active []adapters.ProviderAdapter
 	if providerName != "" {
 		adapter, ok := h.registry.Get(providerName)
@@ -104,7 +116,7 @@ func (h *Handler) HandleExtract(w http.ResponseWriter, r *http.Request) {
 			var candidates []canonical.TrackCandidate
 			var err error
 			if providerID != "" {
-				candidate, fetchErr := adapter.FetchByID(ctx, providerName, providerID)
+				candidate, fetchErr := adapter.FetchByID(ctx, idType, providerID)
 				err = fetchErr
 				if candidate != nil {
 					candidates = []canonical.TrackCandidate{*candidate}

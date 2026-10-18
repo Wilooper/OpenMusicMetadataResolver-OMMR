@@ -362,3 +362,5 @@ Accuracy improvements: structured collaborator records with owned artist IDs, st
 Rich catalog expansion: [Bugs/Genie/Melon and optional Python YouTube extraction](docs/RICH_CATALOGS.md) adds Korean song catalogs, credits, artist/album context and a bounded Go `/v1/catalog` endpoint. Public-source failures and live results are documented separately from authenticated access.
 
 HTML recovery: [decoder behavior, official-page fallbacks and live availability limits](docs/HTML_RECOVERY.md). The empty 195-byte “Site Unavailable” response contains no recoverable song data.
+
+Provider troubleshooting: [isolated Go checks and browser observations](docs/PROVIDER_DIAGNOSTICS.md) record the real adapter requests independently of configuration and caches. JioSaavn native IDs and public song-link tokens use separate lookup methods.

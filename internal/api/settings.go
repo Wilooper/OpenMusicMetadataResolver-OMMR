@@ -140,7 +140,7 @@ func (h *Handler) HandleQuery(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	params := url.Values{}
-	allowed := map[string]bool{"spotify_id": true, "youtube_id": true, "deezer_id": true, "apple_id": true, "soundcloud_id": true, "qobuz_id": true, "tidal_id": true, "amazonmusic_id": true, "amazon_music_id": true, "pandora_id": true, "bugs_id": true, "genie_id": true, "melon_id": true, "isrc": true, "artist": true, "title": true, "album": true, "sources": true, "debug": true, "bypass_cache": true, "q": true, "page": true, "limit": true, "provider": true, "id": true, "type": true}
+	allowed := map[string]bool{"spotify_id": true, "youtube_id": true, "deezer_id": true, "apple_id": true, "soundcloud_id": true, "qobuz_id": true, "tidal_id": true, "amazonmusic_id": true, "amazon_music_id": true, "pandora_id": true, "bugs_id": true, "genie_id": true, "melon_id": true, "isrc": true, "artist": true, "title": true, "album": true, "sources": true, "debug": true, "bypass_cache": true, "q": true, "page": true, "limit": true, "provider": true, "id": true, "id_type": true, "type": true}
 	for key, raw := range payload {
 		if !allowed[key] {
 			fail("Unknown query field: " + key)

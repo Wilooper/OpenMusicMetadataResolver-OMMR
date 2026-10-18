@@ -48,11 +48,12 @@ Production tracks also include `explicit_status` (`explicit`, `clean`, `unknown`
 
 `GET /v1/extract`
 
-Pass `provider` and `id` to fetch a single provider's track, or pass `artist` and `title` to compare provider search results independently. For title/artist extraction, `sources` can limit the comma-separated provider list.
+Pass `provider` and `id` to fetch a single provider's track, or pass `artist` and `title` to compare provider search results independently. For title/artist extraction, `sources` can limit the comma-separated provider list. For JioSaavn exact lookups, optional `id_type=native` or `id_type=share` selects the identifier protocol explicitly. Without it, eight-character identifiers use native lookup and other identifiers use share lookup for compatibility. Explicit kinds are recommended when the caller knows the ID type; share tokens and native IDs are different identifiers. `id_type` is also accepted by `POST /v1/query` with `operation: extract`; invalid, repeated, or non-JioSaavn ID kinds are rejected.
 
 ```text
 /v1/extract?artist=Example%20artist&title=Example%20track&sources=deezer,tidal,qobuz
 /v1/extract?provider=deezer&id=123456
+/v1/extract?provider=jiosaavn&id=OQsEfQFVUXk&id_type=share
 ```
 
 With `debug=true`, each source result includes the normalized `track`, `year`, `thumbnail_url`, and `present_fields` / `missing_fields` arrays. Coverage fields include title, artists, album, year, artwork, duration, ISRC, credits, and lyricist. Missing optional fields are reported as missing; OMMR does not infer or synthesize credits. Provider failures are isolated to that source's `status` and `error`.

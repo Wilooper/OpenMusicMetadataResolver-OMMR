@@ -1,6 +1,7 @@
 package jiosaavn
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"fmt"
@@ -18,10 +19,11 @@ import (
 
 const (
 	ProviderName    = "jiosaavn"
-	ProviderVersion = "jiosaavn-search-v3-catalog"
+	ProviderVersion = "jiosaavn-search-v4-routes"
 )
 
 var SearchURL = "https://www.jiosaavn.com/api.php"
+var identifierPattern = regexp.MustCompile(`^[A-Za-z0-9_,+-]{1,128}$`)
 
 type Provider struct {
 	httpClient *http.Client
@@ -45,18 +47,28 @@ func (p *Provider) Version() string {
 	return ProviderVersion
 }
 
-// FetchByID resolves a JioSaavn song id (the short id returned by search,
-// e.g. "6uEI9gj0") via the song.getDetails API.
+// Native song IDs and public share tokens address different API methods.
 func (p *Provider) FetchByID(ctx context.Context, idType string, id string) (*canonical.TrackCandidate, error) {
-	if idType != "jiosaavn" && idType != "jiosaavn_id" {
+	if idType != "jiosaavn" && idType != "jiosaavn_id" && idType != "jiosaavn_track_id" && idType != "jiosaavn_share" {
 		return nil, fmt.Errorf("unsupported ID type %q for JioSaavn", idType)
 	}
 
-	// A JioSaavn "id" is an 8-char token such as "6uEI9gj0".
 	id = strings.TrimSpace(id)
+	if !identifierPattern.MatchString(id) {
+		return nil, fmt.Errorf("invalid JioSaavn identifier")
+	}
+	// Generic IDs retain compatibility with native eight-character IDs. Explicit
+	// kinds avoid ambiguity, especially when hydrating an accepted catalog record.
+	share := idType == "jiosaavn_share" || (idType != "jiosaavn_track_id" && len(id) != 8)
 	params := url.Values{}
 	params.Set("__call", "song.getDetails")
 	params.Set("pids", id)
+	if share {
+		params.Del("pids")
+		params.Set("__call", "webapi.get")
+		params.Set("token", id)
+		params.Set("type", "song")
+	}
 	params.Set("_format", "json")
 	params.Set("_marker", "0")
 	params.Set("ctx", "web6dot0")
@@ -75,31 +87,24 @@ func (p *Provider) FetchByID(ctx context.Context, idType string, id string) (*ca
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("jiosaavn getDetails status %d", resp.StatusCode)
+		return nil, fmt.Errorf("jiosaavn detail status %d", resp.StatusCode)
 	}
 	body, err := webdata.Read(resp, webdata.Request{Provider: ProviderName, Mode: "track", ID: id})
 	if err != nil {
 		return nil, err
 	}
 
-	// getDetails returns a map keyed by song id.
-	var m map[string]provider.JioSaavnSongResult
-	if err := json.Unmarshal(body, &m); err != nil {
+	detail, raw, err := selectDetail(body, id, share)
+	if err != nil {
 		return nil, err
 	}
-	detail, ok := m[id]
-	if !ok || detail.Song == "" || (detail.ID != "" && detail.ID != id && jioSaavnID(detail) != id) {
-		return nil, fmt.Errorf("jiosaavn song %s not found", id)
-	}
 
-	var raw map[string]json.RawMessage
-	_ = json.Unmarshal(body, &raw)
 	track := p.normalize(detail)
 	return &canonical.TrackCandidate{
 		Provider:    ProviderName,
 		Track:       track,
 		MatchScore:  1.0,
-		RawResponse: raw[id],
+		RawResponse: raw,
 	}, nil
 }
 
@@ -195,7 +200,7 @@ func (p *Provider) normalize(r provider.JioSaavnSongResult) canonical.Track {
 	if r.ID != "" {
 		ids["jiosaavn_track_id"] = r.ID
 	}
-	if r.PermaURL != "" {
+	if shareID(r.PermaURL) != "" {
 		ids["jiosaavn_url"] = r.PermaURL
 	}
 
@@ -248,14 +253,97 @@ func (p *Provider) normalize(r provider.JioSaavnSongResult) canonical.Track {
 // jioSaavnID returns the stable song token from the perma_url when present,
 // falling back to the short search id.
 func jioSaavnID(r provider.JioSaavnSongResult) string {
-	if r.PermaURL != "" {
-		parts := strings.Split(strings.TrimSuffix(r.PermaURL, "/"), "/")
-		last := parts[len(parts)-1]
-		if last != "" {
-			return last
-		}
+	if token := shareID(r.PermaURL); token != "" {
+		return token
 	}
 	return r.ID
+}
+
+func shareID(raw string) string {
+	u, err := url.Parse(raw)
+	if err != nil || u.Scheme != "https" || u.User != nil || u.Port() != "" || (u.Hostname() != "www.jiosaavn.com" && u.Hostname() != "jiosaavn.com") {
+		return ""
+	}
+	parts := strings.Split(strings.Trim(u.Path, "/"), "/")
+	if len(parts) != 3 || parts[0] != "song" || parts[1] == "" || parts[2] == "" {
+		return ""
+	}
+	return parts[2]
+}
+
+func selectDetail(body []byte, id string, share bool) (provider.JioSaavnSongResult, json.RawMessage, error) {
+	var envelope map[string]json.RawMessage
+	if err := json.Unmarshal(body, &envelope); err != nil {
+		return provider.JioSaavnSongResult{}, nil, err
+	}
+	entries := []json.RawMessage{}
+	if raw := envelope[id]; len(raw) > 0 {
+		entries = append(entries, raw)
+	}
+	// Both native detail variants and webapi.get can return a songs array.
+	if songs := envelope["songs"]; len(songs) > 0 {
+		var records []json.RawMessage
+		if err := json.Unmarshal(songs, &records); err != nil {
+			return provider.JioSaavnSongResult{}, nil, err
+		}
+		entries = append(entries, records...)
+	}
+	var selected provider.JioSaavnSongResult
+	var raw json.RawMessage
+	matches := 0
+	for _, entry := range entries {
+		var song provider.JioSaavnSongResult
+		if err := json.Unmarshal(entry, &song); err != nil {
+			return selected, nil, err
+		}
+		match := song.ID == id
+		if share {
+			match = shareID(song.PermaURL) == id
+		}
+		// Keyed legacy details identify a record by key when the native id is absent.
+		if !share && song.ID == "" && len(envelope[id]) > 0 && bytes.Equal(entry, envelope[id]) {
+			match = true
+		}
+		if match && strings.TrimSpace(song.Song) != "" && (song.Type == "" || song.Type == "song") {
+			selected, raw = song, entry
+			matches++
+		}
+	}
+	if matches != 1 {
+		return provider.JioSaavnSongResult{}, nil, fmt.Errorf("JioSaavn detail has no unique matching song")
+	}
+	return selected, raw, nil
+}
+
+func (p *Provider) EnrichCandidate(ctx context.Context, candidate canonical.TrackCandidate) (*canonical.TrackCandidate, error) {
+	if candidate.Provider != ProviderName {
+		return nil, fmt.Errorf("JioSaavn detail requires its own candidate")
+	}
+	kind, id := "jiosaavn_track_id", candidate.Track.IDs["jiosaavn_track_id"]
+	if id == "" {
+		kind, id = "jiosaavn_share", shareID(candidate.Track.IDs["jiosaavn_url"])
+	}
+	if id == "" {
+		return nil, nil
+	}
+	detail, err := p.FetchByID(ctx, kind, id)
+	if err != nil {
+		return nil, err
+	}
+	// Legacy detail names are comma-delimited and cannot replace a verified
+	// structured artist list whose names may themselves contain commas.
+	structured := func(artists []canonical.Artist) bool {
+		for _, artist := range artists {
+			if artist.IDs[ProviderName] != "" {
+				return true
+			}
+		}
+		return false
+	}
+	if structured(candidate.Track.Artists) && !structured(detail.Track.Artists) {
+		detail.Track.Artists = append([]canonical.Artist(nil), candidate.Track.Artists...)
+	}
+	return detail, nil
 }
 
 func splitNames(s string) []canonical.Artist {

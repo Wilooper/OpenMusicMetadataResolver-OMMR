@@ -1,0 +1,85 @@
+[
+  {
+    "provider": "jiosaavn",
+    "mode": "home",
+    "url": "https://www.jiosaavn.com/",
+    "title": "Site Unavailable",
+    "visible_text": [
+      "Site Unavailable",
+      "Unable to access this site."
+    ],
+    "evidence": "cloud browser accessibility observation"
+  },
+  {
+    "provider": "jiosaavn",
+    "mode": "api",
+    "url": "https://www.jiosaavn.com/api.php?__call=search.getResults&p=0&_format=json&_marker=0&api_version=4&ctx=web6dot0&n=20&q=Karan%20Aujla%20Boyfriend",
+    "title": "Site Unavailable",
+    "visible_text": [
+      "Site Unavailable",
+      "Unable to access this site."
+    ],
+    "evidence": "cloud browser accessibility observation"
+  },
+  {
+    "provider": "deezer",
+    "mode": "home",
+    "url": "https://www.deezer.com/",
+    "title": "Site Unavailable",
+    "visible_text": [
+      "Site Unavailable",
+      "Unable to access this site."
+    ],
+    "evidence": "cloud browser accessibility observation"
+  },
+  {
+    "provider": "deezer",
+    "mode": "api",
+    "url": "https://api.deezer.com/search?q=Daft%20Punk",
+    "title": "Site Unavailable",
+    "visible_text": [
+      "Site Unavailable",
+      "Unable to access this site."
+    ],
+    "evidence": "cloud browser accessibility observation"
+  },
+  {
+    "provider": "musicbrainz",
+    "mode": "home",
+    "url": "https://musicbrainz.org/",
+    "title": "Site Unavailable",
+    "visible_text": [
+      "Site Unavailable",
+      "Unable to access this site."
+    ],
+    "evidence": "cloud browser accessibility observation"
+  },
+  {
+    "provider": "musicbrainz",
+    "mode": "api",
+    "url": "https://musicbrainz.org/ws/2/recording/?query=recording%3AGet%20Lucky&fmt=json&limit=1",
+    "title": "Site Unavailable",
+    "visible_text": [
+      "Site Unavailable",
+      "Unable to access this site."
+    ],
+    "evidence": "cloud browser accessibility observation"
+  },
+  {
+    "provider": "jiosaavn",
+    "mode": "share_lookup",
+    "url": "https://www.jiosaavn.com/api.php?__call=webapi.get&_format=json&_marker=0&ctx=web6dot0&type=song&token=OQsEfQFVUXk",
+    "title": "Site Unavailable",
+    "visible_text": [
+      "Site Unavailable",
+      "Unable to access this site."
+    ],
+    "evidence": "cloud browser accessibility observation"
+  },
+  {
+    "provider": "apple_control",
+    "url": "https://itunes.apple.com/search?term=Karan%20Aujla%20Boyfriend&entity=song&limit=1",
+    "error": "net::ERR_BLOCKED_BY_CLIENT",
+    "evidence": "browser navigation error; no provider page observed"
+  }
+]

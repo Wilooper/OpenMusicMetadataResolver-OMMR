@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"net/http/httptest"
+	"strings"
 	"testing"
 	"time"
 
@@ -97,5 +98,39 @@ func TestExtractionSelectsLargestThumbnail(t *testing.T) {
 	got := describeExtractedTrack(canonical.Track{Images: []canonical.Image{{URL: "small", Type: "thumbnail", Width: 120, Height: 90}, {URL: "cover", Type: "cover", Width: 1000, Height: 1000}, {URL: "large", Type: "thumbnail", Width: 480, Height: 360}}})
 	if got.ThumbnailURL != "large" {
 		t.Fatalf("thumbnail = %s", got.ThumbnailURL)
+	}
+}
+
+type idKindFixture struct {
+	extractionFixtureAdapter
+	got *string
+}
+
+func (a idKindFixture) FetchByID(ctx context.Context, kind, id string) (*canonical.TrackCandidate, error) {
+	*a.got = kind
+	return a.extractionFixtureAdapter.FetchByID(ctx, kind, id)
+}
+func TestJioSaavnExplicitIDKindAcrossGETAndGateway(t *testing.T) {
+	for _, gateway := range []bool{false, true} {
+		got := ""
+		registry := adapters.NewRegistry()
+		registry.Register(idKindFixture{extractionFixtureAdapter: extractionFixtureAdapter{name: "jiosaavn", track: canonical.Track{Title: "Song"}}, got: &got})
+		handler := NewHandler(nil, registry, &config.Config{ProviderTimeout: time.Second})
+		response := httptest.NewRecorder()
+		if gateway {
+			handler.HandleQuery(response, httptest.NewRequest("POST", "/v1/query", strings.NewReader(`{"operation":"extract","provider":"jiosaavn","id":"PUBLIC42","id_type":"share"}`)))
+		} else {
+			handler.HandleExtract(response, httptest.NewRequest("GET", "/v1/extract?provider=jiosaavn&id=PUBLIC42&id_type=share", nil))
+		}
+		if response.Code != 200 || got != "jiosaavn_share" {
+			t.Fatalf("gateway=%v status=%d kind=%q body=%s", gateway, response.Code, got, response.Body.String())
+		}
+		for _, query := range []string{"provider=jiosaavn&id=abc&id_type=wrong", "provider=deezer&id=123&id_type=share", "provider=jiosaavn&id=abc&id_type=share&id_type=native", "artist=A&title=B&id_type=share"} {
+			response = httptest.NewRecorder()
+			handler.HandleExtract(response, httptest.NewRequest("GET", "/v1/extract?"+query, nil))
+			if response.Code != 400 {
+				t.Fatalf("invalid identifier kind accepted: %s", query)
+			}
+		}
 	}
 }
