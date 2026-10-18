@@ -1,0 +1,32 @@
+[
+  {
+    "command": "go build ./...",
+    "exit_code": 0,
+    "output": ""
+  },
+  {
+    "command": "go vet ./...",
+    "exit_code": 0,
+    "output": ""
+  },
+  {
+    "command": "go test -p 1 ./...",
+    "exit_code": 0,
+    "output": "?   \tgithub.com/ommr/ommr/cmd/providercheck\t[no test files]\n?   \tgithub.com/ommr/ommr/cmd/server\t[no test files]\nok  \tgithub.com/ommr/ommr/internal/adapters\t(cached)\n?   \tgithub.com/ommr/ommr/internal/adapters/amazonmusic\t[no test files]\nok  \tgithub.com/ommr/ommr/internal/adapters/applemusic\t(cached)\nok  \tgithub.com/ommr/ommr/internal/adapters/catalogapi\t(cached)\nok  \tgithub.com/ommr/ommr/internal/adapters/deezer\t(cached)\nok  \tgithub.com/ommr/ommr/internal/adapters/jiosaavn\t(cached)\nok  \tgithub.com/ommr/ommr/internal/adapters/korean\t(cached)\nok  \tgithub.com/ommr/ommr/internal/adapters/musicbrainz\t(cached)\n?   \tgithub.com/ommr/ommr/internal/adapters/pandora\t[no test files]\n?   \tgithub.com/ommr/ommr/internal/adapters/qobuz\t[no test files]\nok  \tgithub.com/ommr/ommr/internal/adapters/soundcloud\t(cached)\nok  \tgithub.com/ommr/ommr/internal/adapters/spotify\t(cached)\nok  \tgithub.com/ommr/ommr/internal/adapters/tidal\t(cached)\nok  \tgithub.com/ommr/ommr/internal/adapters/webdata\t(cached)\nok  \tgithub.com/ommr/ommr/internal/adapters/ytmusic\t(cached)\nok  \tgithub.com/ommr/ommr/internal/adapters/ytmusicrich\t(cached)\nok  \tgithub.com/ommr/ommr/internal/api\t(cached)\nok  \tgithub.com/ommr/ommr/internal/artists\t(cached)\nok  \tgithub.com/ommr/ommr/internal/bootstrap\t(cached)\n?   \tgithub.com/ommr/ommr/internal/cache\t[no test files]\nok  \tgithub.com/ommr/ommr/internal/cache/disk\t(cached)\n?   \tgithub.com/ommr/ommr/internal/cache/redis\t[no test files]\nok  \tgithub.com/ommr/ommr/internal/config\t(cached)\nok  \tgithub.com/ommr/ommr/internal/credentials\t(cached)\nok  \tgithub.com/ommr/ommr/internal/diagnostics\t(cached)\nok  \tgithub.com/ommr/ommr/internal/enrichment/catalog\t(cached)\nok  \tgithub.com/ommr/ommr/internal/enrichment/wikipedia\t(cached)\nok  \tgithub.com/ommr/ommr/internal/extractors\t(cached)\nok  \tgithub.com/ommr/ommr/internal/identity\t(cached)\nok  \tgithub.com/ommr/ommr/internal/idresolver\t(cached)\nok  \tgithub.com/ommr/ommr/internal/matcher\t(cached)\nok  \tgithub.com/ommr/ommr/internal/merger\t(cached)\nok  \tgithub.com/ommr/ommr/internal/metadata\t(cached)\n?   \tgithub.com/ommr/ommr/internal/metrics\t[no test files]\nok  \tgithub.com/ommr/ommr/internal/middleware\t(cached)\n?   \tgithub.com/ommr/ommr/internal/models/canonical\t[no test files]\n?   \tgithub.com/ommr/ommr/internal/models/provider\t[no test files]\nok  \tgithub.com/ommr/ommr/internal/platformlinks\t(cached)\nok  \tgithub.com/ommr/ommr/internal/providerhealth\t(cached)\nok  \tgithub.com/ommr/ommr/internal/ratelimit\t(cached)\nok  \tgithub.com/ommr/ommr/internal/resolver\t(cached)\nok  \tgithub.com/ommr/ommr/pkg/query\t(cached)\nok  \tgithub.com/ommr/ommr/tests\t1.941s\n"
+  },
+  {
+    "command": "go test ./...",
+    "exit_code": 0,
+    "output": "?   \tgithub.com/ommr/ommr/cmd/providercheck\t[no test files]\n?   \tgithub.com/ommr/ommr/cmd/server\t[no test files]\nok  \tgithub.com/ommr/ommr/internal/adapters\t(cached)\n?   \tgithub.com/ommr/ommr/internal/adapters/amazonmusic\t[no test files]\nok  \tgithub.com/ommr/ommr/internal/adapters/applemusic\t(cached)\nok  \tgithub.com/ommr/ommr/internal/adapters/catalogapi\t(cached)\nok  \tgithub.com/ommr/ommr/internal/adapters/deezer\t(cached)\nok  \tgithub.com/ommr/ommr/internal/adapters/jiosaavn\t(cached)\nok  \tgithub.com/ommr/ommr/internal/adapters/korean\t(cached)\nok  \tgithub.com/ommr/ommr/internal/adapters/musicbrainz\t(cached)\n?   \tgithub.com/ommr/ommr/internal/adapters/pandora\t[no test files]\n?   \tgithub.com/ommr/ommr/internal/adapters/qobuz\t[no test files]\nok  \tgithub.com/ommr/ommr/internal/adapters/soundcloud\t(cached)\nok  \tgithub.com/ommr/ommr/internal/adapters/spotify\t(cached)\nok  \tgithub.com/ommr/ommr/internal/adapters/tidal\t(cached)\nok  \tgithub.com/ommr/ommr/internal/adapters/webdata\t(cached)\nok  \tgithub.com/ommr/ommr/internal/adapters/ytmusic\t(cached)\nok  \tgithub.com/ommr/ommr/internal/adapters/ytmusicrich\t(cached)\nok  \tgithub.com/ommr/ommr/internal/api\t(cached)\nok  \tgithub.com/ommr/ommr/internal/artists\t(cached)\nok  \tgithub.com/ommr/ommr/internal/bootstrap\t(cached)\n?   \tgithub.com/ommr/ommr/internal/cache\t[no test files]\nok  \tgithub.com/ommr/ommr/internal/cache/disk\t(cached)\n?   \tgithub.com/ommr/ommr/internal/cache/redis\t[no test files]\nok  \tgithub.com/ommr/ommr/internal/config\t(cached)\nok  \tgithub.com/ommr/ommr/internal/credentials\t(cached)\nok  \tgithub.com/ommr/ommr/internal/diagnostics\t(cached)\nok  \tgithub.com/ommr/ommr/internal/enrichment/catalog\t(cached)\nok  \tgithub.com/ommr/ommr/internal/enrichment/wikipedia\t(cached)\nok  \tgithub.com/ommr/ommr/internal/extractors\t(cached)\nok  \tgithub.com/ommr/ommr/internal/identity\t(cached)\nok  \tgithub.com/ommr/ommr/internal/idresolver\t(cached)\nok  \tgithub.com/ommr/ommr/internal/matcher\t(cached)\nok  \tgithub.com/ommr/ommr/internal/merger\t(cached)\nok  \tgithub.com/ommr/ommr/internal/metadata\t(cached)\n?   \tgithub.com/ommr/ommr/internal/metrics\t[no test files]\nok  \tgithub.com/ommr/ommr/internal/middleware\t(cached)\n?   \tgithub.com/ommr/ommr/internal/models/canonical\t[no test files]\n?   \tgithub.com/ommr/ommr/internal/models/provider\t[no test files]\nok  \tgithub.com/ommr/ommr/internal/platformlinks\t(cached)\nok  \tgithub.com/ommr/ommr/internal/providerhealth\t(cached)\nok  \tgithub.com/ommr/ommr/internal/ratelimit\t(cached)\nok  \tgithub.com/ommr/ommr/internal/resolver\t(cached)\nok  \tgithub.com/ommr/ommr/pkg/query\t(cached)\nok  \tgithub.com/ommr/ommr/tests\t(cached)\n"
+  },
+  {
+    "command": ".venv/bin/python -m unittest discover -s workers/ytmusic",
+    "exit_code": 0,
+    "output": "........\n----------------------------------------------------------------------\nRan 8 tests in 0.005s\n\nOK\n"
+  },
+  {
+    "command": "go test -race ./internal/artists ./internal/api ./internal/bootstrap ./internal/extractors",
+    "exit_code": 2,
+    "output": "-race is not supported on android/arm64\n"
+  }
+]

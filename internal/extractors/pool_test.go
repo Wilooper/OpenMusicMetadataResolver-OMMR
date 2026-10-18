@@ -167,3 +167,23 @@ func TestPartialWorkerDataUsesShortCacheTTL(t *testing.T) {
 		t.Fatal("partial entity not marked")
 	}
 }
+
+func TestFreshCallBypassesCachedWorkerData(t *testing.T) {
+	p := fixturePool(t, time.Second)
+	first, err := p.Call(context.Background(), "song", "fresh", 20)
+	if err != nil {
+		t.Fatal(err)
+	}
+	cached, err := p.Call(context.Background(), "song", "fresh", 20)
+	if err != nil || string(first) != string(cached) {
+		t.Fatal("cache miss")
+	}
+	fresh, err := p.CallFresh(context.Background(), "song", "fresh", 20)
+	if err != nil || string(first) == string(fresh) {
+		t.Fatal("fresh call reused cached response")
+	}
+	after, err := p.Call(context.Background(), "song", "fresh", 20)
+	if err != nil || string(after) != string(fresh) {
+		t.Fatal("fresh response did not refresh cache")
+	}
+}

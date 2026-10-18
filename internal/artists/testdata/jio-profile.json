@@ -1,0 +1,457 @@
+{
+  "artistId": "2613966",
+  "name": "Gur Sidhu",
+  "subtitle": "Artist • 874944 Listeners",
+  "image": "https://c.saavncdn.com/artists/Gur_Sidhu_001_20230314123602_150x150.jpg",
+  "follower_count": "276256",
+  "isVerified": true,
+  "dominantLanguage": "punjabi",
+  "dominantType": "music director",
+  "topSongs": [
+    {
+      "id": "zMKc8TDs",
+      "title": "California Love",
+      "subtitle": "Cheema Y, Gur Sidhu - ANYWAY",
+      "header_desc": "",
+      "type": "song",
+      "perma_url": "https://www.jiosaavn.com/song/california-love/CiUgUkxkc0A",
+      "image": "https://c.saavncdn.com/647/ANYWAY-Punjabi-2023-20260507164257-150x150.jpg",
+      "language": "punjabi",
+      "year": "2023",
+      "play_count": "",
+      "explicit_content": "1",
+      "list_count": "0",
+      "list_type": "",
+      "list": "",
+      "more_info": {
+        "music": "Gur Sidhu",
+        "album_id": "41911181",
+        "album": "ANYWAY",
+        "label": "Brown Town Music",
+        "label_id": null,
+        "origin": "song",
+        "is_dolby_content": false,
+        "320kbps": "true",
+        "album_url": "https://www.jiosaavn.com/album/anyway/VstxAw8vrF0_",
+        "duration": "175",
+        "cache_state": "false",
+        "has_lyrics": "false",
+        "lyrics_snippet": "",
+        "has_trivia": "false",
+        "trivia": [],
+        "starred": "false",
+        "copyright_text": "℗ 2023 Brown Town Music",
+        "artistMap": {
+          "primary_artists": [
+            {
+              "id": "8758099",
+              "name": "Cheema Y",
+              "role": "primary_artists",
+              "image": "https://c.saavncdn.com/artists/Cheema_Y_001_20241006181534_150x150.jpg",
+              "type": "artist",
+              "perma_url": "https://www.jiosaavn.com/artist/cheema-y-songs/xh728PZKSeE_"
+            },
+            {
+              "id": "2613966",
+              "name": "Gur Sidhu",
+              "role": "primary_artists",
+              "image": "https://c.saavncdn.com/artists/Gur_Sidhu_001_20230314123602_150x150.jpg",
+              "type": "artist",
+              "perma_url": "https://www.jiosaavn.com/artist/gur-sidhu-songs/HWJH1XCGtSQ_"
+            }
+          ],
+          "featured_artists": [],
+          "artists": [
+            {
+              "id": "2613966",
+              "name": "Gur Sidhu",
+              "role": "music",
+              "image": "https://c.saavncdn.com/artists/Gur_Sidhu_001_20230314123602_150x150.jpg",
+              "type": "artist",
+              "perma_url": "https://www.jiosaavn.com/artist/gur-sidhu-songs/HWJH1XCGtSQ_"
+            },
+            {
+              "id": "8758099",
+              "name": "Cheema Y",
+              "role": "lyricist",
+              "image": "https://c.saavncdn.com/artists/Cheema_Y_001_20241006181534_150x150.jpg",
+              "type": "artist",
+              "perma_url": "https://www.jiosaavn.com/artist/cheema-y-songs/xh728PZKSeE_"
+            }
+          ]
+        },
+        "release_date": null,
+        "label_url": "/label/brown-town-music-albums/",
+        "vcode": "010912261998205",
+        "triller_available": false,
+        "request_jiotune_flag": false,
+        "webp": "true"
+      },
+      "button_tooltip_info": [],
+      "pro_hva_campaigns": []
+    },
+    {
+      "id": "WAhKWTzN",
+      "title": "The Beast",
+      "subtitle": "Cheema Y, Gur Sidhu - Dripster",
+      "header_desc": "",
+      "type": "song",
+      "perma_url": "https://www.jiosaavn.com/song/the-beast/JykDeiNkTX0",
+      "image": "https://c.saavncdn.com/150/Dripster-Punjabi-2023-20260507164247-150x150.jpg",
+      "language": "punjabi",
+      "year": "2023",
+      "play_count": "",
+      "explicit_content": "0",
+      "list_count": "0",
+      "list_type": "",
+      "list": "",
+      "more_info": {
+        "music": "Gur Sidhu",
+        "album_id": "50213358",
+        "album": "Dripster",
+        "label": "Brown Town Music",
+        "label_id": null,
+        "origin": "song",
+        "is_dolby_content": false,
+        "320kbps": "true",
+        "album_url": "https://www.jiosaavn.com/album/dripster/3M,X8rU9-44_",
+        "duration": "140",
+        "cache_state": "false",
+        "has_lyrics": "true",
+        "lyrics_snippet": "Munde Saare Tere Shehar De Vigaade Vi Aa Main",
+        "has_trivia": "false",
+        "trivia": [],
+        "starred": "false",
+        "copyright_text": "℗ 2023 Brown Town Music",
+        "artistMap": {
+          "primary_artists": [
+            {
+              "id": "8758099",
+              "name": "Cheema Y",
+              "role": "primary_artists",
+              "image": "https://c.saavncdn.com/artists/Cheema_Y_001_20241006181534_150x150.jpg",
+              "type": "artist",
+              "perma_url": "https://www.jiosaavn.com/artist/cheema-y-songs/xh728PZKSeE_"
+            },
+            {
+              "id": "2613966",
+              "name": "Gur Sidhu",
+              "role": "primary_artists",
+              "image": "https://c.saavncdn.com/artists/Gur_Sidhu_001_20230314123602_150x150.jpg",
+              "type": "artist",
+              "perma_url": "https://www.jiosaavn.com/artist/gur-sidhu-songs/HWJH1XCGtSQ_"
+            }
+          ],
+          "featured_artists": [],
+          "artists": [
+            {
+              "id": "2613966",
+              "name": "Gur Sidhu",
+              "role": "music",
+              "image": "https://c.saavncdn.com/artists/Gur_Sidhu_001_20230314123602_150x150.jpg",
+              "type": "artist",
+              "perma_url": "https://www.jiosaavn.com/artist/gur-sidhu-songs/HWJH1XCGtSQ_"
+            },
+            {
+              "id": "8758099",
+              "name": "Cheema Y",
+              "role": "lyricist",
+              "image": "https://c.saavncdn.com/artists/Cheema_Y_001_20241006181534_150x150.jpg",
+              "type": "artist",
+              "perma_url": "https://www.jiosaavn.com/artist/cheema-y-songs/xh728PZKSeE_"
+            }
+          ]
+        },
+        "release_date": null,
+        "label_url": "/label/brown-town-music-albums/",
+        "vcode": "010912262178119",
+        "triller_available": false,
+        "request_jiotune_flag": false,
+        "webp": "true",
+        "lyrics_id": ""
+      },
+      "button_tooltip_info": [],
+      "pro_hva_campaigns": []
+    },
+    {
+      "id": "CN4pbbYH",
+      "title": "Jackpot",
+      "subtitle": "Cheema Y, Gur Sidhu - Bermuda Triangle",
+      "header_desc": "",
+      "type": "song",
+      "perma_url": "https://www.jiosaavn.com/song/jackpot/MyZfQRZSbns",
+      "image": "https://c.saavncdn.com/512/Bermuda-Triangle-Punjabi-2026-20260513183834-150x150.jpg",
+      "language": "punjabi",
+      "year": "2026",
+      "play_count": "",
+      "explicit_content": "0",
+      "list_count": "0",
+      "list_type": "",
+      "list": "",
+      "more_info": {
+        "music": "Gur Sidhu",
+        "album_id": "75647113",
+        "album": "Bermuda Triangle",
+        "label": "Brown Town Music",
+        "label_id": null,
+        "origin": "song",
+        "is_dolby_content": false,
+        "320kbps": "true",
+        "album_url": "https://www.jiosaavn.com/album/bermuda-triangle/RORwlbauWbI_",
+        "duration": "176",
+        "cache_state": "false",
+        "has_lyrics": "false",
+        "lyrics_snippet": "",
+        "has_trivia": "false",
+        "trivia": [],
+        "starred": "false",
+        "copyright_text": "℗ 2026 Brown Town Music",
+        "artistMap": {
+          "primary_artists": [
+            {
+              "id": "8758099",
+              "name": "Cheema Y",
+              "role": "primary_artists",
+              "image": "https://c.saavncdn.com/artists/Cheema_Y_001_20241006181534_150x150.jpg",
+              "type": "artist",
+              "perma_url": "https://www.jiosaavn.com/artist/cheema-y-songs/xh728PZKSeE_"
+            },
+            {
+              "id": "2613966",
+              "name": "Gur Sidhu",
+              "role": "primary_artists",
+              "image": "https://c.saavncdn.com/artists/Gur_Sidhu_001_20230314123602_150x150.jpg",
+              "type": "artist",
+              "perma_url": "https://www.jiosaavn.com/artist/gur-sidhu-songs/HWJH1XCGtSQ_"
+            }
+          ],
+          "featured_artists": [],
+          "artists": [
+            {
+              "id": "2613966",
+              "name": "Gur Sidhu",
+              "role": "music",
+              "image": "https://c.saavncdn.com/artists/Gur_Sidhu_001_20230314123602_150x150.jpg",
+              "type": "artist",
+              "perma_url": "https://www.jiosaavn.com/artist/gur-sidhu-songs/HWJH1XCGtSQ_"
+            },
+            {
+              "id": "8758099",
+              "name": "Cheema Y",
+              "role": "lyricist",
+              "image": "https://c.saavncdn.com/artists/Cheema_Y_001_20241006181534_150x150.jpg",
+              "type": "artist",
+              "perma_url": "https://www.jiosaavn.com/artist/cheema-y-songs/xh728PZKSeE_"
+            }
+          ]
+        },
+        "release_date": null,
+        "label_url": "/label/brown-town-music-albums/",
+        "vcode": "010912263659411",
+        "triller_available": false,
+        "request_jiotune_flag": false,
+        "webp": "true"
+      },
+      "button_tooltip_info": [],
+      "pro_hva_campaigns": []
+    },
+    {
+      "id": "4omkj253",
+      "title": "8 Parche",
+      "subtitle": "Baani Sandhu, Gur Sidhu - 8 Parche",
+      "header_desc": "",
+      "type": "song",
+      "perma_url": "https://www.jiosaavn.com/song/8-parche/RAcGWh4CAgA",
+      "image": "https://c.saavncdn.com/746/8-Parche-Punjabi-2019-20240823101546-150x150.jpg",
+      "language": "punjabi",
+      "year": "2019",
+      "play_count": "",
+      "explicit_content": "0",
+      "list_count": "0",
+      "list_type": "",
+      "list": "",
+      "more_info": {
+        "music": "Gur Sidhu",
+        "album_id": "17199376",
+        "album": "8 Parche",
+        "label": "Ishtar Punjabi",
+        "label_id": null,
+        "origin": "song",
+        "is_dolby_content": false,
+        "320kbps": "true",
+        "album_url": "https://www.jiosaavn.com/album/8-parche/lT8edT,EGNE_",
+        "duration": "210",
+        "cache_state": "false",
+        "has_lyrics": "true",
+        "lyrics_snippet": "Hey wadde wadde velly paake ghumme jeban ch",
+        "has_trivia": "false",
+        "trivia": [],
+        "starred": "false",
+        "copyright_text": "℗ 2019 Ishtar Punjabi",
+        "artistMap": {
+          "primary_artists": [
+            {
+              "id": "4719150",
+              "name": "Baani Sandhu",
+              "role": "primary_artists",
+              "image": "https://c.saavncdn.com/artists/Baani_Sandhu_001_20240124122100_150x150.jpg",
+              "type": "artist",
+              "perma_url": "https://www.jiosaavn.com/artist/baani-sandhu-songs/G,YcpU-Tr5Y_"
+            },
+            {
+              "id": "2613966",
+              "name": "Gur Sidhu",
+              "role": "primary_artists",
+              "image": "https://c.saavncdn.com/artists/Gur_Sidhu_001_20230314123602_150x150.jpg",
+              "type": "artist",
+              "perma_url": "https://www.jiosaavn.com/artist/gur-sidhu-songs/HWJH1XCGtSQ_"
+            }
+          ],
+          "featured_artists": [],
+          "artists": [
+            {
+              "id": "2613966",
+              "name": "Gur Sidhu",
+              "role": "music",
+              "image": "https://c.saavncdn.com/artists/Gur_Sidhu_001_20230314123602_150x150.jpg",
+              "type": "artist",
+              "perma_url": "https://www.jiosaavn.com/artist/gur-sidhu-songs/HWJH1XCGtSQ_"
+            },
+            {
+              "id": "690474",
+              "name": "Jassi Lokha",
+              "role": "lyricist",
+              "image": "",
+              "type": "artist",
+              "perma_url": "https://www.jiosaavn.com/artist/jassi-lokha-songs/Atw6prfAMvM_"
+            },
+            {
+              "id": "2613966",
+              "name": "Gur Sidhu",
+              "role": "starring",
+              "image": "https://c.saavncdn.com/artists/Gur_Sidhu_001_20230314123602_150x150.jpg",
+              "type": "artist",
+              "perma_url": "https://www.jiosaavn.com/artist/gur-sidhu-songs/HWJH1XCGtSQ_"
+            },
+            {
+              "id": "25705541",
+              "name": "Gurneet Dosanjh",
+              "role": "starring",
+              "image": "",
+              "type": "artist",
+              "perma_url": "https://www.jiosaavn.com/artist/gurneet-dosanjh-songs/k9TXaubMvzc_"
+            }
+          ]
+        },
+        "release_date": null,
+        "label_url": "/label/ishtar-punjabi-albums/",
+        "vcode": "010912020992085",
+        "triller_available": false,
+        "request_jiotune_flag": false,
+        "webp": "true",
+        "lyrics_id": ""
+      },
+      "button_tooltip_info": [],
+      "pro_hva_campaigns": []
+    },
+    {
+      "id": "WgONNEDE",
+      "title": "CEO",
+      "subtitle": "Cheema Y, Gur Sidhu - Bermuda Triangle",
+      "header_desc": "",
+      "type": "song",
+      "perma_url": "https://www.jiosaavn.com/song/ceo/Jw8kfzp1c3Y",
+      "image": "https://c.saavncdn.com/512/Bermuda-Triangle-Punjabi-2026-20260513183834-150x150.jpg",
+      "language": "punjabi",
+      "year": "2026",
+      "play_count": "",
+      "explicit_content": "0",
+      "list_count": "0",
+      "list_type": "",
+      "list": "",
+      "more_info": {
+        "music": "Gur Sidhu",
+        "album_id": "75647113",
+        "album": "Bermuda Triangle",
+        "label": "Brown Town Music",
+        "label_id": null,
+        "origin": "song",
+        "is_dolby_content": false,
+        "320kbps": "true",
+        "album_url": "https://www.jiosaavn.com/album/bermuda-triangle/RORwlbauWbI_",
+        "duration": "132",
+        "cache_state": "false",
+        "has_lyrics": "false",
+        "lyrics_snippet": "",
+        "has_trivia": "false",
+        "trivia": [],
+        "starred": "false",
+        "copyright_text": "℗ 2026 Brown Town Music",
+        "artistMap": {
+          "primary_artists": [
+            {
+              "id": "8758099",
+              "name": "Cheema Y",
+              "role": "primary_artists",
+              "image": "https://c.saavncdn.com/artists/Cheema_Y_001_20241006181534_150x150.jpg",
+              "type": "artist",
+              "perma_url": "https://www.jiosaavn.com/artist/cheema-y-songs/xh728PZKSeE_"
+            },
+            {
+              "id": "2613966",
+              "name": "Gur Sidhu",
+              "role": "primary_artists",
+              "image": "https://c.saavncdn.com/artists/Gur_Sidhu_001_20230314123602_150x150.jpg",
+              "type": "artist",
+              "perma_url": "https://www.jiosaavn.com/artist/gur-sidhu-songs/HWJH1XCGtSQ_"
+            }
+          ],
+          "featured_artists": [],
+          "artists": [
+            {
+              "id": "2613966",
+              "name": "Gur Sidhu",
+              "role": "music",
+              "image": "https://c.saavncdn.com/artists/Gur_Sidhu_001_20230314123602_150x150.jpg",
+              "type": "artist",
+              "perma_url": "https://www.jiosaavn.com/artist/gur-sidhu-songs/HWJH1XCGtSQ_"
+            },
+            {
+              "id": "8758099",
+              "name": "Cheema Y",
+              "role": "lyricist",
+              "image": "https://c.saavncdn.com/artists/Cheema_Y_001_20241006181534_150x150.jpg",
+              "type": "artist",
+              "perma_url": "https://www.jiosaavn.com/artist/cheema-y-songs/xh728PZKSeE_"
+            }
+          ]
+        },
+        "release_date": null,
+        "label_url": "/label/brown-town-music-albums/",
+        "vcode": "010912263659439",
+        "triller_available": false,
+        "request_jiotune_flag": false,
+        "webp": "true"
+      },
+      "button_tooltip_info": [],
+      "pro_hva_campaigns": []
+    }
+  ],
+  "bio": "[]",
+  "dob": "11-07-1997",
+  "wiki": "https://en.wikipedia.org/wiki/Gur_Sidhu",
+  "urls": {
+    "albums": "https://www.jiosaavn.com/artist/gur-sidhu-albums/HWJH1XCGtSQ_",
+    "bio": "/artist/gur-sidhu-bio/HWJH1XCGtSQ_",
+    "comments": "https://www.jiosaavn.com/artist/gur-sidhu-comments/HWJH1XCGtSQ_",
+    "songs": "https://www.jiosaavn.com/artist/gur-sidhu-songs/HWJH1XCGtSQ_",
+    "overview": "https://www.jiosaavn.com/artist/gur-sidhu/HWJH1XCGtSQ_"
+  },
+  "availableLanguages": [
+    "punjabi",
+    "unknown",
+    "english",
+    "hindi"
+  ],
+  "fan_count": "874944"
+}

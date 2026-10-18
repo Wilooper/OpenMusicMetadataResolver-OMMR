@@ -33,6 +33,7 @@ Production tracks also include `explicit_status` (`explicit`, `clean`, `unknown`
 
 | Method | Route | Description |
 | --- | --- | --- |
+| `GET` | `/v1/artists` | Public source-owned artist profiles, audience metrics, biographies and catalog context |
 | `GET` | `/v1/resolve` | Resolves unified track metadata and cross-platform identities by ID or Query |
 | `GET` | `/v1/links` | Returns accepted recording IDs and links |
 | `GET` | `/v1/extract` | Returns independent normalized metadata and field coverage from one or more providers |
@@ -270,3 +271,7 @@ See [RICH_CATALOGS.md](RICH_CATALOGS.md) for native Bugs/Genie/Melon song adapte
 For source extraction, `provider=jiosaavn&url=<percent-encoded HTTPS song URL>` reads the exact official song page before falling back to `webapi.get&type=song`. The JSON gateway accepts `{"operation":"extract","provider":"jiosaavn","url":"https://www.jiosaavn.com/song/mera-mann/ERIkRAwJf38"}`. URL input cannot be combined with `id` or `id_type`; repeated URLs, other providers, foreign hosts, credentials, ports, query strings, fragments and non-song paths are rejected. Only the fixed official JioSaavn host is fetched. Existing endpoint/debug policy applies. See [supported structures and live limits](JIOSAAVN_PUBLIC_PAGES.md).
 
 YouTube catalog also supports `type=credits&id=MPTC<11-character identifier>` through GET `/v1/catalog` or POST `/v1/query` with `operation: catalog`. It returns bounded public credit sections as source context. See [catalog operations](RICH_CATALOGS.md).
+
+## Artist profiles
+
+`GET /v1/artists?artist=Gur%20Sidhu&limit=10` and `POST /v1/query` with `operation: artists` return independent public artist profiles. Optional `sources` filters supported providers; exact lookups use `provider` and a native artist `id`. Debug adds source status, cache and partial/error details. Bios, artist images, top/recent/catalog tracks and precise source-scoped audience/count semantics are described in [ARTIST_PROFILES.md](ARTIST_PROFILES.md). No song-list length is presented as a total track count, and no monthly/yearly plays are inferred from listeners or views.

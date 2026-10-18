@@ -30,6 +30,7 @@ api:
     bulk: true
     fingerprint: true
     catalog: true
+    artists: true
     query: true
     providers: true
     health: true

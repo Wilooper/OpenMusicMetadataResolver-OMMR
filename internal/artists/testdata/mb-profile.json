@@ -1,0 +1,152 @@
+{
+  "annotation": null,
+  "id": "60bb7169-b83b-4603-a319-7bcbd1130cc9",
+  "type-id": "b6e035f4-3ce9-331c-97df-83397230b0df",
+  "relations": [
+    {
+      "attribute-ids": {},
+      "attributes": [],
+      "source-credit": "",
+      "target-credit": "",
+      "attribute-values": {},
+      "type": "discogs",
+      "ended": false,
+      "end": null,
+      "begin": null,
+      "target-type": "url",
+      "url": {
+        "resource": "https://www.discogs.com/artist/9789067",
+        "id": "647036e5-ea80-4af2-a258-2a1bbd3ff707"
+      },
+      "type-id": "04a5b104-a4c2-4bac-99a1-7b837c37d9e4",
+      "direction": "forward"
+    },
+    {
+      "direction": "forward",
+      "url": {
+        "resource": "https://music.apple.com/gb/artist/862626825",
+        "id": "6dffb44d-75bd-4029-9823-7cd349ec2eaa"
+      },
+      "type-id": "769085a1-c2f7-4c24-a532-2375a77693bd",
+      "end": null,
+      "begin": null,
+      "target-type": "url",
+      "ended": false,
+      "type": "free streaming",
+      "attribute-values": {},
+      "target-credit": "",
+      "source-credit": "",
+      "attributes": [],
+      "attribute-ids": {}
+    },
+    {
+      "direction": "forward",
+      "begin": null,
+      "end": null,
+      "target-type": "url",
+      "url": {
+        "id": "d314cdf1-ed1a-4986-9a3c-4c7114f8c46f",
+        "resource": "https://open.spotify.com/artist/0QntOArZgiNHoemAzwJPu5"
+      },
+      "type-id": "769085a1-c2f7-4c24-a532-2375a77693bd",
+      "type": "free streaming",
+      "attribute-values": {},
+      "ended": false,
+      "source-credit": "",
+      "attribute-ids": {},
+      "attributes": [],
+      "target-credit": ""
+    },
+    {
+      "type-id": "769085a1-c2f7-4c24-a532-2375a77693bd",
+      "url": {
+        "resource": "https://www.deezer.com/artist/5810099",
+        "id": "7a0ff428-7fd5-4efa-aa10-173379fd31a0"
+      },
+      "target-type": "url",
+      "end": null,
+      "begin": null,
+      "direction": "forward",
+      "target-credit": "",
+      "source-credit": "",
+      "attribute-ids": {},
+      "attributes": [],
+      "ended": false,
+      "type": "free streaming",
+      "attribute-values": {}
+    },
+    {
+      "ended": false,
+      "attribute-values": {},
+      "type": "social network",
+      "target-credit": "",
+      "attribute-ids": {},
+      "attributes": [],
+      "source-credit": "",
+      "direction": "forward",
+      "url": {
+        "id": "074f6316-c5ea-40f2-9f50-e3986af3a774",
+        "resource": "https://www.facebook.com/gursidhuofficial"
+      },
+      "type-id": "99429741-f3f6-484b-84f8-23af51991770",
+      "end": null,
+      "begin": null,
+      "target-type": "url"
+    },
+    {
+      "target-credit": "",
+      "source-credit": "",
+      "attribute-ids": {},
+      "attributes": [],
+      "ended": false,
+      "type": "social network",
+      "attribute-values": {},
+      "url": {
+        "id": "1efc9238-aa81-45eb-88b7-0c9f76a5fc6a",
+        "resource": "https://www.instagram.com/gursidhuinsta/"
+      },
+      "type-id": "99429741-f3f6-484b-84f8-23af51991770",
+      "end": null,
+      "begin": null,
+      "target-type": "url",
+      "direction": "forward"
+    },
+    {
+      "target-type": "url",
+      "begin": null,
+      "end": null,
+      "type-id": "689870a4-a1e4-4912-b17f-7b2664215698",
+      "url": {
+        "id": "2f7f7343-ca96-491d-8d96-e338e36c1a0e",
+        "resource": "https://www.wikidata.org/wiki/Q97062913"
+      },
+      "direction": "forward",
+      "source-credit": "",
+      "attributes": [],
+      "attribute-ids": {},
+      "target-credit": "",
+      "type": "wikidata",
+      "attribute-values": {},
+      "ended": false
+    }
+  ],
+  "life-span": {
+    "end": null,
+    "begin": "1997-07-11",
+    "ended": false
+  },
+  "ipis": [],
+  "area": null,
+  "begin-area": null,
+  "gender": "Male",
+  "disambiguation": "",
+  "country": null,
+  "sort-name": "Sidhu, Gur",
+  "gender-id": "36d3d30a-839d-3eda-8cb3-29be4384e4a9",
+  "tags": [],
+  "name": "Gur Sidhu",
+  "type": "Person",
+  "isnis": [],
+  "end-area": null,
+  "aliases": []
+}

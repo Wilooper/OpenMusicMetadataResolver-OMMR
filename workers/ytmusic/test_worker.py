@@ -5,6 +5,8 @@ from worker import Extractor, clean, valid_id
 
 VIDEO='abcdefghijk'
 class Fake:
+    def search(self, query, filter, limit):
+        return [{"artist":"Artist","browseId":"UC"+"x"*22,"feedbackTokens":"private"}]*5
     def get_song(self, video_id):
         return {'videoDetails': {'videoId':video_id,'title':'Song','viewCount':'12'}, 'streamingData':{'url':'private'}}
     def get_watch_playlist(self, **kwargs):
@@ -49,6 +51,13 @@ class Tests(unittest.TestCase):
         self.assertEqual(client.arguments,('BROWSE','PARAMS',2))
         self.assertEqual(len(result['results']),2)
         self.assertTrue(result['possibly_more'])
+    def test_artist_search_is_bounded_and_public(self):
+        result=Extractor(Fake()).execute("artist_search","Artist",2)
+        self.assertEqual(len(result["results"]),2)
+        self.assertNotIn("feedbackTokens",str(result))
+        for query in ["https://evil.test","x"*201,"bad\nname",""]:
+            with self.assertRaises(ValueError):Extractor(Fake()).execute("artist_search",query)
+
     def test_captured_credits(self):
         expected=json.loads((Path(__file__).parent / "testdata/coach-credits-captured.json").read_text())
         class Captured(Fake):

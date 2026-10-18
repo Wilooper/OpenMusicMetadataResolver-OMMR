@@ -1,0 +1,365 @@
+[
+  {
+    "artist": "gur-sidhu",
+    "profiles": [
+      {
+        "provider": "deezer",
+        "id": "5810099",
+        "counts": {
+          "total_albums": 0
+        },
+        "metrics": [
+          {
+            "name": "fans",
+            "label": "Fans",
+            "value": 6093,
+            "display_value": "6093",
+            "period": "snapshot",
+            "scope": "artist",
+            "source_field": "nb_fan"
+          }
+        ],
+        "biography_available": false,
+        "images": 1
+      },
+      {
+        "provider": "jiosaavn",
+        "id": "2613966",
+        "counts": {},
+        "metrics": [
+          {
+            "name": "followers",
+            "label": "Followers",
+            "value": 276256,
+            "display_value": "276256",
+            "period": "snapshot",
+            "scope": "artist",
+            "source_field": "follower_count"
+          },
+          {
+            "name": "listeners",
+            "label": "Artist • 874944 Listeners",
+            "value": 874944,
+            "display_value": "874944",
+            "period": "unspecified",
+            "scope": "artist",
+            "source_field": "fan_count"
+          }
+        ],
+        "biography_available": false,
+        "images": 1
+      },
+      {
+        "provider": "musicbrainz",
+        "id": "60bb7169-b83b-4603-a319-7bcbd1130cc9",
+        "counts": {},
+        "metrics": [],
+        "biography_available": false,
+        "images": 0
+      }
+    ],
+    "candidates": [
+      {
+        "provider": "applemusic",
+        "id": "862626825",
+        "name": "Gur Sidhu",
+        "url": "https://music.apple.com/us/artist/gur-sidhu/862626825?uo=4"
+      },
+      {
+        "provider": "applemusic",
+        "id": "1794763192",
+        "name": "Gur Sidhu",
+        "url": "https://music.apple.com/us/artist/gur-sidhu/1794763192?uo=4"
+      },
+      {
+        "provider": "applemusic",
+        "id": "6789679205",
+        "name": "GUR SIDHU",
+        "url": "https://music.apple.com/us/artist/gur-sidhu/6789679205?uo=4"
+      },
+      {
+        "provider": "ytmusic",
+        "id": "UC5RFfy546sgeEdO03RBqKyg",
+        "name": "Gur Sidhu",
+        "url": "https://music.youtube.com/channel/UC5RFfy546sgeEdO03RBqKyg"
+      },
+      {
+        "provider": "ytmusic",
+        "id": "UCjh7B9fLqM_1iDXdborqF9w",
+        "name": "GUR SIDHU",
+        "url": "https://music.youtube.com/channel/UCjh7B9fLqM_1iDXdborqF9w"
+      }
+    ],
+    "source_status": [
+      {
+        "provider": "applemusic",
+        "status": "ambiguous",
+        "cached": true
+      },
+      {
+        "provider": "deezer",
+        "status": "ok",
+        "cached": true
+      },
+      {
+        "provider": "jiosaavn",
+        "status": "ok",
+        "cached": true
+      },
+      {
+        "provider": "musicbrainz",
+        "status": "ok",
+        "cached": true,
+        "partial": true
+      },
+      {
+        "provider": "ytmusic",
+        "status": "ambiguous",
+        "cached": true
+      }
+    ]
+  },
+  {
+    "artist": "daft-punk",
+    "profiles": [
+      {
+        "provider": "applemusic",
+        "id": "5468295",
+        "counts": {},
+        "metrics": [],
+        "biography_available": false,
+        "images": 0
+      },
+      {
+        "provider": "jiosaavn",
+        "id": "652969",
+        "counts": {},
+        "metrics": [
+          {
+            "name": "followers",
+            "label": "Followers",
+            "value": 7411,
+            "display_value": "7411",
+            "period": "snapshot",
+            "scope": "artist",
+            "source_field": "follower_count"
+          },
+          {
+            "name": "listeners",
+            "label": "Artist • 5443 Listeners",
+            "value": 5443,
+            "display_value": "5443",
+            "period": "unspecified",
+            "scope": "artist",
+            "source_field": "fan_count"
+          }
+        ],
+        "biography_available": false,
+        "images": 1
+      },
+      {
+        "provider": "musicbrainz",
+        "id": "056e4f3e-d505-4dad-8ec1-d04f521cbb56",
+        "counts": {
+          "total_recordings": 2021
+        },
+        "metrics": [],
+        "biography_available": false,
+        "images": 0
+      },
+      {
+        "provider": "ytmusic",
+        "id": "UCRr1xG_2WIDs18a6cIiCxeA",
+        "counts": {},
+        "metrics": [
+          {
+            "name": "subscribers",
+            "label": "Subscribers",
+            "display_value": "7.2M",
+            "period": "snapshot",
+            "scope": "artist_channel",
+            "source_field": "subscribers"
+          },
+          {
+            "name": "monthly_audience",
+            "label": "Monthly audience",
+            "display_value": "72.5M",
+            "period": "monthly",
+            "scope": "artist",
+            "source_field": "monthlyListeners"
+          },
+          {
+            "name": "views",
+            "label": "Views",
+            "value": 6030217324,
+            "display_value": "6,030,217,324 views",
+            "period": "unspecified",
+            "scope": "artist_channel",
+            "source_field": "views"
+          }
+        ],
+        "biography_available": true,
+        "images": 3
+      }
+    ],
+    "candidates": [
+      {
+        "provider": "deezer",
+        "id": "27",
+        "name": "Daft Punk",
+        "url": "https://www.deezer.com/artist/27"
+      },
+      {
+        "provider": "deezer",
+        "id": "412557421",
+        "name": "Daft Punk",
+        "url": "https://www.deezer.com/artist/412557421"
+      }
+    ],
+    "source_status": [
+      {
+        "provider": "applemusic",
+        "status": "ok",
+        "cached": true
+      },
+      {
+        "provider": "deezer",
+        "status": "ambiguous",
+        "cached": true
+      },
+      {
+        "provider": "jiosaavn",
+        "status": "ok",
+        "cached": true
+      },
+      {
+        "provider": "musicbrainz",
+        "status": "ok",
+        "cached": false
+      },
+      {
+        "provider": "ytmusic",
+        "status": "ok",
+        "cached": true
+      }
+    ]
+  },
+  {
+    "artist": "arijit-singh",
+    "profiles": [
+      {
+        "provider": "jiosaavn",
+        "id": "459320",
+        "counts": {},
+        "metrics": [
+          {
+            "name": "followers",
+            "label": "Followers",
+            "value": 108425462,
+            "display_value": "108425462",
+            "period": "snapshot",
+            "scope": "artist",
+            "source_field": "follower_count"
+          },
+          {
+            "name": "listeners",
+            "label": "Artist • 9473228 Listeners",
+            "value": 9473228,
+            "display_value": "9473228",
+            "period": "unspecified",
+            "scope": "artist",
+            "source_field": "fan_count"
+          }
+        ],
+        "biography_available": true,
+        "images": 1
+      },
+      {
+        "provider": "musicbrainz",
+        "id": "ed3f4831-e3e0-4dc0-9381-f5649e9df221",
+        "counts": {},
+        "metrics": [],
+        "biography_available": false,
+        "images": 0
+      }
+    ],
+    "candidates": [
+      {
+        "provider": "applemusic",
+        "id": "484568188",
+        "name": "Arijit Singh",
+        "url": "https://music.apple.com/us/artist/arijit-singh/484568188?uo=4"
+      },
+      {
+        "provider": "applemusic",
+        "id": "6812765602",
+        "name": "Arijit Singh",
+        "url": "https://music.apple.com/us/artist/arijit-singh/6812765602?uo=4"
+      },
+      {
+        "provider": "applemusic",
+        "id": "1838411885",
+        "name": "Arijit Singh",
+        "url": "https://music.apple.com/us/artist/arijit-singh/1838411885?uo=4"
+      },
+      {
+        "provider": "deezer",
+        "id": "3830821",
+        "name": "Arijit Singh",
+        "url": "https://www.deezer.com/artist/3830821"
+      },
+      {
+        "provider": "deezer",
+        "id": "253195192",
+        "name": "Arijit Singh",
+        "url": "https://www.deezer.com/artist/253195192"
+      },
+      {
+        "provider": "deezer",
+        "id": "253195202",
+        "name": "Arijit Singh",
+        "url": "https://www.deezer.com/artist/253195202"
+      },
+      {
+        "provider": "ytmusic",
+        "id": "UCDxKh1gFWeYsqePvgVzmPoQ",
+        "name": "Arijit Singh",
+        "url": "https://music.youtube.com/channel/UCDxKh1gFWeYsqePvgVzmPoQ"
+      },
+      {
+        "provider": "ytmusic",
+        "id": "UCnedwh54q9awHh92Ebmhcuw",
+        "name": "Arijit Singh",
+        "url": "https://music.youtube.com/channel/UCnedwh54q9awHh92Ebmhcuw"
+      }
+    ],
+    "source_status": [
+      {
+        "provider": "applemusic",
+        "status": "ambiguous",
+        "cached": true
+      },
+      {
+        "provider": "deezer",
+        "status": "ambiguous",
+        "cached": true
+      },
+      {
+        "provider": "jiosaavn",
+        "status": "ok",
+        "cached": true
+      },
+      {
+        "provider": "musicbrainz",
+        "status": "ok",
+        "cached": true,
+        "partial": true
+      },
+      {
+        "provider": "ytmusic",
+        "status": "ambiguous",
+        "cached": true
+      }
+    ]
+  }
+]

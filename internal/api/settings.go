@@ -35,7 +35,9 @@ func (h *Handler) withDefaults(operation string, next http.HandlerFunc) http.Han
 			q.Set("bypass_cache", strconv.FormatBool(h.cfg.API.BypassCache))
 		}
 		if !overrides || !q.Has("sources") {
-			if len(h.cfg.API.DefaultSources) > 0 {
+			if operation == "artists" {
+				q.Del("sources")
+			} else if len(h.cfg.API.DefaultSources) > 0 {
 				q.Set("sources", strings.Join(h.cfg.API.DefaultSources, ","))
 			} else {
 				q.Del("sources")
@@ -103,7 +105,7 @@ func (h *Handler) HandleQuery(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	delete(payload, "operation")
-	routes := map[string]http.HandlerFunc{"resolve": h.HandleResolve, "links": h.HandleLinks, "search": h.HandleSearch, "extract": h.HandleExtract, "bulk": h.HandleBulk, "fingerprint": h.HandleFingerprint, "catalog": h.HandleCatalog}
+	routes := map[string]http.HandlerFunc{"resolve": h.HandleResolve, "links": h.HandleLinks, "search": h.HandleSearch, "extract": h.HandleExtract, "bulk": h.HandleBulk, "fingerprint": h.HandleFingerprint, "catalog": h.HandleCatalog, "artists": h.HandleArtists}
 	handler, exists := routes[operation]
 	if !exists {
 		fail("Unsupported operation")

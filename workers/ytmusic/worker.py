@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Private JSON-lines metadata worker. Go owns deadlines, pooling and caching."""
 import json
+from datetime import datetime, timezone
 import re
 import sys
 import requests
@@ -59,7 +60,11 @@ class Extractor:
     def execute(self, operation, entity_id, limit=20):
         limit = max(1, min(MAX_ITEMS, int(limit)))
         if operation == 'ping':
-            return {'protocol': 1, 'provider': 'ytmusic', 'mode': 'public', 'capabilities': ['song', 'credits', 'album', 'artist', 'playlist', 'artist_albums', 'artist_singles']}
+            return {'protocol': 1, 'provider': 'ytmusic', 'mode': 'public', 'capabilities': ['song', 'credits', 'album', 'artist', 'artist_search', 'playlist', 'artist_albums', 'artist_singles']}
+        if operation == 'artist_search':
+            if not isinstance(entity_id, str) or not entity_id.strip() or len(entity_id) > 200 or '://' in entity_id or any(ord(c) < 32 for c in entity_id):
+                raise ValueError('invalid_id')
+            return clean({'kind': operation, 'results': self.client.search(entity_id, filter='artists', limit=limit)[:limit]})
         if not valid_id(operation, entity_id):
             raise ValueError('invalid_id')
         client = self.client
@@ -111,7 +116,7 @@ class Extractor:
             for section in result.values():
                 if isinstance(section, dict) and isinstance(section.get('results'), list):
                     section['results'] = section['results'][:limit]
-            return clean({'id': entity_id, 'kind': operation, 'metadata': result, 'limit': limit, 'scope': 'profile_and_top_releases'})
+            return clean({'id': entity_id, 'kind': operation, 'metadata': result, 'limit': limit, 'scope': 'profile_and_top_releases', 'observed_at': datetime.now(timezone.utc).isoformat()})
         if operation == 'playlist':
             result = client.get_playlist(entity_id, limit=limit)
             result['tracks'] = result.get('tracks', [])[:limit]

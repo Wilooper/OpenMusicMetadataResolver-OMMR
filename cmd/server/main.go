@@ -77,6 +77,7 @@ func main() {
 	handler := api.NewHandler(runtime.Resolver, runtime.Registry, cfg)
 	handler.SetProviderHealth(runtime.Health)
 	handler.SetExtractor(runtime.Extractor)
+	handler.SetArtists(runtime.Artists)
 
 	router := api.NewRouter(handler, logger, cfg.RateLimitRPS)
 

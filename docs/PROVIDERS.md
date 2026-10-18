@@ -146,3 +146,5 @@ HTML recovery: [decoder behavior, official-page fallbacks and live availability 
 JioSaavn public song URLs: `GET /v1/extract?provider=jiosaavn&url=<encoded HTTPS song URL>` reads the exact official page before the share-token API. Known native app state and JSON-LD supply metadata; empty error pages remain errors. See [public-page extraction](JIOSAAVN_PUBLIC_PAGES.md).
 
 Termux live verification: [confirmed public-page decoding and Deezer search/locale fixes, recording results, intermittent MusicBrainz failures and commands](TERMUX_PROVIDER_VERIFICATION.md).
+
+Public [artist profiles](ARTIST_PROFILES.md) use the existing Deezer, JioSaavn, Apple and MusicBrainz sources, with optional YouTube worker profiles. The artist service reuses source enable/circuit/rate budgets but does not merge artist identities into track candidates.

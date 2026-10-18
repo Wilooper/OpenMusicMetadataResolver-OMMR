@@ -106,14 +106,14 @@ func loadRuntime(v *viper.Viper, cfg *Config) error {
 		return fmt.Errorf("invalid provider enable flags")
 	}
 	for name := range cfg.API.Endpoints {
-		if !map[string]bool{"resolve": true, "links": true, "search": true, "extract": true, "bulk": true, "fingerprint": true, "catalog": true, "health": true, "providers": true, "query": true, "metrics": true}[name] {
+		if !map[string]bool{"resolve": true, "links": true, "search": true, "extract": true, "bulk": true, "fingerprint": true, "catalog": true, "artists": true, "health": true, "providers": true, "query": true, "metrics": true}[name] {
 			return fmt.Errorf("unknown API endpoint flag %q", name)
 		}
 	}
 	if cfg.API.DefaultOperation == "" {
 		cfg.API.DefaultOperation = "resolve"
 	}
-	operations := map[string]bool{"resolve": true, "links": true, "search": true, "extract": true, "bulk": true, "fingerprint": true, "catalog": true}
+	operations := map[string]bool{"resolve": true, "links": true, "search": true, "extract": true, "bulk": true, "fingerprint": true, "catalog": true, "artists": true}
 	if !operations[cfg.API.DefaultOperation] {
 		return fmt.Errorf("invalid API default operation")
 	}

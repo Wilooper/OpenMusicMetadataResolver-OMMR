@@ -370,3 +370,5 @@ JioSaavn [public song-page input](docs/JIOSAAVN_PUBLIC_PAGES.md) reads known pag
 [Termux provider verification](docs/TERMUX_PROVIDER_VERIFICATION.md) records real Android connectivity, captured JioSaavn page decoding, Deezer artist-safe text search and remaining MusicBrainz availability limits.
 
 [Known Unknowns album verification](docs/YOUTUBE_KNOWN_UNKNOWNS_VERIFICATION.md) includes all 10 songs, public YouTube credits, source metadata, and a fixed same-album/wrong-title identity leak.
+
+[Artist profiles](docs/ARTIST_PROFILES.md): `GET /v1/artists?artist=Gur%20Sidhu` returns public source-owned bios, artist images, top/recent tracks, audience metrics with time periods and explicitly reported catalog totals. Exact artist IDs and ambiguity choices are supported; no credentials are required for the native sources.

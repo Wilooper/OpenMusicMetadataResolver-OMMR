@@ -14,6 +14,7 @@ func NewRouter(h *Handler, logger *slog.Logger, rps float64) http.Handler {
 	mux := http.NewServeMux()
 
 	// REST API Endpoints
+	mux.HandleFunc("/v1/artists", h.withDefaults("artists", h.HandleArtists))
 	mux.HandleFunc("/v1/catalog", h.withDefaults("catalog", h.HandleCatalog))
 	mux.HandleFunc("/v1/resolve", h.withDefaults("resolve", h.HandleResolve))
 	mux.HandleFunc("/v1/links", h.withDefaults("links", h.HandleLinks))

@@ -1,0 +1,15 @@
+{
+  "id": 5810099,
+  "name": "Gur Sidhu",
+  "link": "https://www.deezer.com/artist/5810099",
+  "picture": "https://api.deezer.com/artist/5810099/image",
+  "picture_small": "https://cdn-images.dzcdn.net/images/artist/d07c94799cb9f2f64fc52b43d068dea0/56x56-000000-80-0-0.jpg",
+  "picture_medium": "https://cdn-images.dzcdn.net/images/artist/d07c94799cb9f2f64fc52b43d068dea0/250x250-000000-80-0-0.jpg",
+  "picture_big": "https://cdn-images.dzcdn.net/images/artist/d07c94799cb9f2f64fc52b43d068dea0/500x500-000000-80-0-0.jpg",
+  "picture_xl": "https://cdn-images.dzcdn.net/images/artist/d07c94799cb9f2f64fc52b43d068dea0/1000x1000-000000-80-0-0.jpg",
+  "nb_album": 137,
+  "nb_fan": 6093,
+  "radio": true,
+  "tracklist": "https://api.deezer.com/artist/5810099/top?limit=50",
+  "type": "artist"
+}

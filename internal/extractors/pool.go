@@ -111,6 +111,14 @@ func (p *Pool) start() (*worker, error) {
 	return &worker{cmd, input, bufio.NewReaderSize(output, 64<<10)}, nil
 }
 func (p *Pool) Call(ctx context.Context, operation, id string, limit int) (json.RawMessage, error) {
+	return p.call(ctx, operation, id, limit, false)
+}
+
+func (p *Pool) CallFresh(ctx context.Context, operation, id string, limit int) (json.RawMessage, error) {
+	return p.call(ctx, operation, id, limit, true)
+}
+
+func (p *Pool) call(ctx context.Context, operation, id string, limit int, bypass bool) (json.RawMessage, error) {
 	if err := ctx.Err(); err != nil {
 		return nil, err
 	}
@@ -123,12 +131,16 @@ func (p *Pool) Call(ctx context.Context, operation, id string, limit int) (json.
 	body, _ := json.Marshal(map[string]any{"operation": operation, "id": id, "limit": limit})
 	sum := sha256.Sum256(body)
 	key := "extractor:ytmusic-v1:" + hex.EncodeToString(sum[:])
-	if operation != "ping" && p.cache != nil {
+	if !bypass && operation != "ping" && p.cache != nil {
 		if b, ok, err := p.cache.Get(ctx, key); err == nil && ok && json.Valid(b) {
 			return append(json.RawMessage(nil), b...), nil
 		}
 	}
-	result := p.flights.DoChan(key, func() (any, error) {
+	flightKey := key
+	if bypass {
+		flightKey += ":fresh"
+	}
+	result := p.flights.DoChan(flightKey, func() (any, error) {
 		select {
 		case p.queue <- struct{}{}:
 			defer func() { <-p.queue }()
