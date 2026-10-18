@@ -44,6 +44,9 @@ func NewProviderLimiter() *ProviderLimiter {
 	pl.SetLimit("tidal", 10, 3)
 	pl.SetLimit("amazonmusic", 5, 2)
 	pl.SetLimit("pandora", 5, 2)
+	pl.SetLimit("bugs", 1, 1)
+	pl.SetLimit("genie", 1, 1)
+	pl.SetLimit("melon", 1, 1)
 
 	return pl
 }

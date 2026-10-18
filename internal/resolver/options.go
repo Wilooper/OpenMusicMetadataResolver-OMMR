@@ -27,7 +27,7 @@ func (res *Resolver) Configure(policy merger.Policy, enrichers ...catalog.Enrich
 		Enrichers []string
 	}{policy, names})
 	sum := sha256.Sum256(data)
-	res.cacheNamespace = "resolved:rich-v5:" + hex.EncodeToString(sum[:8]) + ":"
+	res.cacheNamespace = "resolved:rich-v6:" + hex.EncodeToString(sum[:8]) + ":"
 	res.enrichers = append([]catalog.Enricher(nil), enrichers...)
 }
 
@@ -91,4 +91,9 @@ func (res *Resolver) enrichCatalogs(ctx context.Context, track *canonical.Track)
 	track.Extensions["provider_data"], _ = json.Marshal(records)
 	track.Completeness = canonical.CalculateCompleteness(*track)
 	return statuses
+}
+
+func (res *Resolver) SetCacheVariant(variant string) {
+	sum := sha256.Sum256([]byte(variant))
+	res.cacheNamespace += hex.EncodeToString(sum[:8]) + ":"
 }

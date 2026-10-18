@@ -20,6 +20,7 @@ All filenames are relative to `credentials_dir` (default `./credentials`). Set t
 | Last.fm enrichment | API key | `lastfm.json`: `api_key` | Enricher unloaded |
 | Discogs enrichment | Personal access token | `discogs.json`: `token` | Enricher unloaded |
 | AcoustID fingerprint lookup | Application API key; lookup also needs a caller-supplied fingerprint and duration | `acoustid.json`: `api_key` | Fingerprint service unloaded |
+| Bugs, Genie, Melon | None; public song search/detail adapters | No credential file consumed | Public access; timeouts and alias limits still apply |
 | Deezer, JioSaavn, MusicBrainz, Cover Art Archive | None in this implementation | No credential file consumed for these public adapters | Public access, subject to network and service availability |
 | SoundCloud | None for implemented public permalink/oEmbed lookup | No OAuth configuration currently implemented | Permalink lookup available; artist/title search unsupported |
 
@@ -32,3 +33,5 @@ Example placeholders only:
 ```
 
 Save that shape as `credentials/spotify.json`; replace placeholders privately. Session import formats, precedence, protected startup probes, fallbacks and expiry limitations are documented in [PROVIDER_LIFECYCLE.md](PROVIDER_LIFECYCLE.md).
+
+Optional Python YouTube extraction currently uses public mode; no new credentials are required. See [RICH_CATALOGS.md](RICH_CATALOGS.md).

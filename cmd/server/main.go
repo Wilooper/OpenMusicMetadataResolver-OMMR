@@ -68,11 +68,15 @@ func main() {
 		logger.Error("failed to initialize providers", slog.Any("error", err))
 		os.Exit(1)
 	}
+	if runtime.Extractor != nil {
+		defer runtime.Extractor.Close()
+	}
 	for _, status := range runtime.Health.Snapshot() {
 		logger.Info("provider startup status", slog.String("provider", status.Name), slog.String("state", status.State), slog.String("mode", status.Mode), slog.String("credentials", status.Credentials), slog.String("reason", status.Reason))
 	}
 	handler := api.NewHandler(runtime.Resolver, runtime.Registry, cfg)
 	handler.SetProviderHealth(runtime.Health)
+	handler.SetExtractor(runtime.Extractor)
 
 	router := api.NewRouter(handler, logger, cfg.RateLimitRPS)
 

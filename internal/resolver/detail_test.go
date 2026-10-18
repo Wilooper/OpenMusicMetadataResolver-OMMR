@@ -124,3 +124,18 @@ func TestFailedDetailDoesNotFreezeSparseResultForFullCacheTTL(t *testing.T) {
 		t.Fatalf("sparse cache TTL: %v %v", cache.ttl, err)
 	}
 }
+
+func TestPartialDetailMetadataIsKeptAndRetriedSoon(t *testing.T) {
+	c := canonical.TrackCandidate{Provider: "deezer", Track: canonical.Track{Title: "Song", Artists: []canonical.Artist{{Name: "Singer"}}, IDs: map[string]string{"deezer": "123"}}}
+	rich := c
+	rich.Track.Extensions = map[string]json.RawMessage{"_enrichment_partial": json.RawMessage(`true`), "extra_metadata": json.RawMessage(`{"biography":"Context"}`)}
+	source := &detailFixture{original: c, rich: rich}
+	registry := adapters.NewRegistry()
+	registry.Register(source)
+	backend := &hydrationTTLCache{}
+	resolver := New(registry, backend, ratelimit.NewProviderLimiter(), time.Hour)
+	result, err := resolver.Resolve(context.Background(), ResolveRequest{Query: adapters.Query{Artist: "Singer", Title: "Song"}})
+	if err != nil || result.Track == nil || result.ProviderStatus[0].EnrichmentStatus != "partial" || backend.ttl != 30*time.Second {
+		t.Fatalf("partial result: %+v %v %v", result, err, backend.ttl)
+	}
+}

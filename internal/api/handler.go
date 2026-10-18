@@ -15,6 +15,7 @@ import (
 	"github.com/ommr/ommr/internal/adapters"
 	"github.com/ommr/ommr/internal/config"
 	"github.com/ommr/ommr/internal/enrichment/catalog"
+	"github.com/ommr/ommr/internal/extractors"
 	"github.com/ommr/ommr/internal/identity"
 	"github.com/ommr/ommr/internal/idresolver"
 	"github.com/ommr/ommr/internal/matcher"
@@ -26,6 +27,7 @@ import (
 )
 
 type Handler struct {
+	extractor   *extractors.Pool
 	health      *providerhealth.Manager
 	fingerprint *catalog.AcoustID
 	resolver    *resolver.Resolver
@@ -82,12 +84,16 @@ func (h *Handler) handleResolve(w http.ResponseWriter, r *http.Request, linksOnl
 		amazonMusicID = q.Get("amazon_music_id")
 	}
 	pandoraID := q.Get("pandora_id")
+	bugsID := q.Get("bugs_id")
+	genieID := q.Get("genie_id")
+	melonID := q.Get("melon_id")
+
 	isrc := q.Get("isrc")
 	artist := q.Get("artist")
 	title := q.Get("title")
 	album := q.Get("album")
 
-	if spotifyID == "" && youtubeID == "" && deezerID == "" && appleID == "" && soundcloudID == "" && qobuzID == "" && tidalID == "" && amazonMusicID == "" && pandoraID == "" && isrc == "" && (artist == "" || title == "") {
+	if spotifyID == "" && youtubeID == "" && deezerID == "" && appleID == "" && soundcloudID == "" && qobuzID == "" && tidalID == "" && amazonMusicID == "" && pandoraID == "" && bugsID == "" && genieID == "" && melonID == "" && isrc == "" && (artist == "" || title == "") {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusBadRequest)
 		_, _ = w.Write([]byte(`{"error":"Provide a supported provider ID, isrc, or both artist and title."}`))
@@ -112,10 +118,14 @@ func (h *Handler) handleResolve(w http.ResponseWriter, r *http.Request, linksOnl
 			TidalID:       tidalID,
 			AmazonMusicID: amazonMusicID,
 			PandoraID:     pandoraID,
-			ISRC:          isrc,
-			Artist:        artist,
-			Title:         title,
-			Album:         album,
+			BugsID:        bugsID,
+			GenieID:       genieID,
+			MelonID:       melonID,
+
+			ISRC:   isrc,
+			Artist: artist,
+			Title:  title,
+			Album:  album,
 		},
 		Sources:     sources,
 		BypassCache: bypassCache,

@@ -95,3 +95,7 @@ Default consensus recognizes a combined artist display only when an accepted str
 Debug responses add `track.extensions.metadata_comparison`: selected values, selected sources, provider alternatives and a `different` marker for fields reported by at least two accepted sources. Differences can be representational (a combined artist string) or precision differences (duration rounded to seconds), not necessarily false metadata. Production omits this diagnostic extension and retains useful provider data.
 
 TIDAL uses its track-search relationship endpoint and explicitly requested artist/album/artwork includes. The generic catalog reader resolves resources by type **and** ID, preserves large numeric IDs without floating-point conversion, parses fractional/ISO-8601 music durations, and excludes unrelated `included` entities. Amazon requests audio-quality, media-type, global ID, eligibility and parental-setting fields; supplied extras remain in the exact entity. Song parental ratings are independent from album ratings. These authenticated paths are fixture-tested; no operator credentials were available for live authenticated validation.
+
+## Rich public catalogs
+
+See [RICH_CATALOGS.md](RICH_CATALOGS.md) for native Bugs/Genie/Melon song adapters, `bugs_id`/`genie_id`/`melon_id`, accepted YouTube artist/album context in provider data, optional Python pooling and `/v1/catalog` (also `operation: catalog` through the JSON gateway). These Korean adapters require no credentials; the optional Python path currently uses public YouTube access.

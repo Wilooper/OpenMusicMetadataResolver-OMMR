@@ -10,7 +10,18 @@ import (
 	"github.com/spf13/viper"
 )
 
+type ExtractorConfig struct {
+	Enabled  bool          `mapstructure:"enabled"`
+	Python   string        `mapstructure:"python"`
+	Script   string        `mapstructure:"script"`
+	Workers  int           `mapstructure:"workers"`
+	Timeout  time.Duration `mapstructure:"timeout"`
+	TTL      time.Duration `mapstructure:"ttl"`
+	Profiles bool          `mapstructure:"profiles"`
+}
+
 type Config struct {
+	Extractor          ExtractorConfig `mapstructure:"extractor"`
 	API                APIConfig       `mapstructure:"api"`
 	Lifecycle          LifecycleConfig `mapstructure:"providers"`
 	SpotifySessionFile string

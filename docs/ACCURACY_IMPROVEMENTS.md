@@ -42,7 +42,7 @@ These are individual request measurements, not throughput benchmarks. Spotify an
 
 ## Compatibility and remaining limits
 
-Resolved cache namespace is `rich-v5`. Metadata-derived canonical IDs can change when an artist display becomes a corrected structured list. Existing IDs are not a durable provider-independent database key across normalization releases. Field priorities still control canonical selection; source alternatives remain available.
+Resolved cache namespace is `rich-v6`. Metadata-derived canonical IDs can change when an artist display becomes a corrected structured list. Existing IDs are not a durable provider-independent database key across normalization releases. Field priorities still control canonical selection; source alternatives remain available.
 
 Artist aliases and transliterations without strong evidence can be rejected. Same-title/same-artist recording versions remain ambiguous without stronger identifiers. Public access, regional catalog coverage and authorized app access still determine upstream metadata availability. TIDAL internal-only lyrics/credits are not enabled by this change. Qobuz/Pandora/SoundCloud authenticated coverage is not claimed complete. Extra source data is retained only when associated with the accepted entity.
 

@@ -31,3 +31,8 @@ ommr.yml
 /credentials/
 *.cookies
 *.session.json
+
+# Python metadata workers
+__pycache__/
+*.pyc
+.venv/

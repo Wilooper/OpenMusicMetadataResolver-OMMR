@@ -207,6 +207,18 @@ func directIDMatch(target adapters.Query, c canonical.TrackCandidate) bool {
 			if target.AmazonMusicID != "" && v == target.AmazonMusicID {
 				return true
 			}
+		case "bugs":
+			if target.BugsID != "" && v == target.BugsID {
+				return true
+			}
+		case "genie":
+			if target.GenieID != "" && v == target.GenieID {
+				return true
+			}
+		case "melon":
+			if target.MelonID != "" && v == target.MelonID {
+				return true
+			}
 		case "pandora":
 			if target.PandoraID != "" && v == target.PandoraID {
 				return true

@@ -159,3 +159,7 @@ The immutable internal `Track` stores accepted source records in `extensions.pro
 ## Debug metadata comparison
 
 `track.extensions.metadata_comparison` is an optional debug-only map keyed by canonical field name. Each entry contains `selected`, `selected_sources`, `values` (provider to original reported value) and `different`. It compares populated evidence only; unknown explicit defaults do not vote. Representational/precision differences are retained rather than treated as automatic rejection. This extension is omitted by production DTOs. Canonical artists may now use an evidence-backed separate list while source-specific combined displays remain in provider data. Native person IDs are never copied from a compound display to each person.
+
+## Rich public catalogs
+
+See [RICH_CATALOGS.md](RICH_CATALOGS.md) for native Bugs/Genie/Melon song adapters, `bugs_id`/`genie_id`/`melon_id`, accepted YouTube artist/album context in provider data, optional Python pooling and `/v1/catalog` (also `operation: catalog` through the JSON gateway). These Korean adapters require no credentials; the optional Python path currently uses public YouTube access.

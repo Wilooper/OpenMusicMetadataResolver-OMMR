@@ -11,11 +11,11 @@ import (
 
 // Priorities for metadata fields per provider
 var (
-	titlePriority   = []string{"spotify", "applemusic", "tidal", "qobuz", "amazonmusic", "pandora", "musicbrainz", "deezer", "soundcloud", "jiosaavn", "ytmusic"}
-	creditsPriority = []string{"musicbrainz", "applemusic", "spotify", "tidal", "qobuz", "amazonmusic", "pandora", "deezer", "soundcloud", "jiosaavn", "ytmusic"}
-	genresPriority  = []string{"spotify", "applemusic", "tidal", "qobuz", "amazonmusic", "pandora", "musicbrainz", "deezer", "soundcloud", "jiosaavn", "ytmusic"}
-	isrcPriority    = []string{"spotify", "musicbrainz", "applemusic", "tidal", "qobuz", "amazonmusic", "pandora", "deezer", "soundcloud", "jiosaavn", "ytmusic"}
-	labelPriority   = []string{"spotify", "applemusic", "tidal", "qobuz", "amazonmusic", "pandora", "deezer", "musicbrainz", "jiosaavn"}
+	titlePriority   = []string{"spotify", "applemusic", "tidal", "qobuz", "amazonmusic", "pandora", "bugs", "genie", "melon", "musicbrainz", "deezer", "soundcloud", "jiosaavn", "ytmusic"}
+	creditsPriority = []string{"musicbrainz", "applemusic", "spotify", "tidal", "qobuz", "amazonmusic", "pandora", "bugs", "genie", "melon", "deezer", "soundcloud", "jiosaavn", "ytmusic"}
+	genresPriority  = []string{"spotify", "applemusic", "tidal", "qobuz", "amazonmusic", "pandora", "bugs", "genie", "melon", "musicbrainz", "deezer", "soundcloud", "jiosaavn", "ytmusic"}
+	isrcPriority    = []string{"spotify", "musicbrainz", "applemusic", "tidal", "qobuz", "amazonmusic", "pandora", "bugs", "genie", "melon", "deezer", "soundcloud", "jiosaavn", "ytmusic"}
+	labelPriority   = []string{"spotify", "applemusic", "tidal", "qobuz", "amazonmusic", "pandora", "bugs", "genie", "melon", "deezer", "musicbrainz", "jiosaavn"}
 	previewPriority = []string{"spotify", "applemusic", "tidal", "qobuz", "amazonmusic", "deezer"}
 )
 

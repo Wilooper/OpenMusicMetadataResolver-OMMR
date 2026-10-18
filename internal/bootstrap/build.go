@@ -9,6 +9,7 @@ import (
 	"github.com/ommr/ommr/internal/adapters/applemusic"
 	"github.com/ommr/ommr/internal/adapters/deezer"
 	"github.com/ommr/ommr/internal/adapters/jiosaavn"
+	"github.com/ommr/ommr/internal/adapters/korean"
 	"github.com/ommr/ommr/internal/adapters/musicbrainz"
 	"github.com/ommr/ommr/internal/adapters/pandora"
 	"github.com/ommr/ommr/internal/adapters/qobuz"
@@ -16,9 +17,11 @@ import (
 	"github.com/ommr/ommr/internal/adapters/spotify"
 	"github.com/ommr/ommr/internal/adapters/tidal"
 	"github.com/ommr/ommr/internal/adapters/ytmusic"
+	"github.com/ommr/ommr/internal/adapters/ytmusicrich"
 	"github.com/ommr/ommr/internal/cache"
 	"github.com/ommr/ommr/internal/config"
 	"github.com/ommr/ommr/internal/enrichment/catalog"
+	"github.com/ommr/ommr/internal/extractors"
 	"github.com/ommr/ommr/internal/merger"
 	"github.com/ommr/ommr/internal/providerhealth"
 	"github.com/ommr/ommr/internal/ratelimit"
@@ -26,9 +29,10 @@ import (
 )
 
 type Runtime struct {
-	Registry *adapters.Registry
-	Resolver *resolver.Resolver
-	Health   *providerhealth.Manager
+	Registry  *adapters.Registry
+	Resolver  *resolver.Resolver
+	Health    *providerhealth.Manager
+	Extractor *extractors.Pool
 }
 
 func Build(ctx context.Context, cfg *config.Config, backend cache.Cache) (*Runtime, error) {
@@ -51,7 +55,7 @@ func Build(ctx context.Context, cfg *config.Config, backend cache.Cache) (*Runti
 		}}
 	}
 	plans := []Plan{}
-	for _, source := range []adapters.ProviderAdapter{musicbrainz.New(), deezer.New(), soundcloud.New(), jiosaavn.New()} {
+	for _, source := range []adapters.ProviderAdapter{musicbrainz.New(), deezer.New(), soundcloud.New(), jiosaavn.New(), korean.New("bugs"), korean.New("genie"), korean.New("melon")} {
 		plans = append(plans, Plan{Name: source.Name(), Enabled: cfg.Lifecycle.ProviderEnabled(source.Name()), Public: source})
 	}
 	sp := Plan{Name: "spotify", Enabled: cfg.Lifecycle.ProviderEnabled("spotify"), Public: spotify.New(spotify.Config{}), Configured: cfg.SpotifyClientID != "" || cfg.SpotifyClientSecret != "" || cfg.SpotifyCookie != "" || cfg.SpotifyAccessToken != ""}
@@ -78,6 +82,26 @@ func Build(ctx context.Context, cfg *config.Config, backend cache.Cache) (*Runti
 	if youtube.Configured {
 		source := ytmusic.NewWithCookie(cfg.YTMusicCookie)
 		youtube.Candidates = append(youtube.Candidates, candidate(source, "browser_session", source.CheckCredentials))
+	}
+	var pythonPool *extractors.Pool
+	built := false
+	defer func() {
+		if !built && pythonPool != nil {
+			pythonPool.Close()
+		}
+	}()
+	if cfg.Extractor.Enabled && cfg.Lifecycle.ProviderEnabled("ytmusic") {
+		var err error
+		pythonPool, err = extractors.New(extractors.Config{Python: cfg.Extractor.Python, Script: cfg.Extractor.Script, Workers: cfg.Extractor.Workers, Timeout: cfg.Extractor.Timeout, TTL: cfg.Extractor.TTL}, backend)
+		if err != nil {
+			manager.Set("ytmusic_python", "disabled", "public", "absent", "worker_unavailable")
+		} else {
+			manager.Set("ytmusic_python", "active", "public", "absent", "")
+			youtube.Public = &ytmusicrich.Provider{ProviderAdapter: youtube.Public, Pool: pythonPool, Health: manager, Profiles: cfg.Extractor.Profiles}
+			for i := range youtube.Candidates {
+				youtube.Candidates[i].Source = &ytmusicrich.Provider{ProviderAdapter: youtube.Candidates[i].Source, Pool: pythonPool, Health: manager, Profiles: cfg.Extractor.Profiles}
+			}
+		}
 	}
 	plans = append(plans, youtube)
 	for _, entry := range []struct {
@@ -197,6 +221,8 @@ func Build(ctx context.Context, cfg *config.Config, backend cache.Cache) (*Runti
 		}
 	}
 	res.Configure(policy, enrichers...)
+	res.SetCacheVariant(fmt.Sprintf("python:%t/profiles:%t", pythonPool != nil, cfg.Extractor.Profiles))
 	res.SetProviderHealth(manager)
-	return &Runtime{reg, res, manager}, nil
+	built = true
+	return &Runtime{reg, res, manager, pythonPool}, nil
 }

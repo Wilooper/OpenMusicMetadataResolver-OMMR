@@ -136,3 +136,7 @@ See [LIVE_TEST_BOYFRIEND.md](LIVE_TEST_BOYFRIEND.md) for the 2026-10-16 retry, b
 ## Accuracy and detail update
 
 Accepted Deezer search hits now hydrate exact track details; Spotify hydrates the known album with ID/title checks. Apple public track counts populate `album.total_tracks`. Structured collaborators and same-provider artist-ID ownership are preserved. TIDAL requests JSON:API track resources with related artists/albums/artwork; Amazon requests quality and parental fields. Authenticated paths remain conditional on validated access and matching catalog entities. See [ACCURACY_IMPROVEMENTS.md](ACCURACY_IMPROVEMENTS.md) and [ENRICHMENT.md](ENRICHMENT.md) for behavior, tests and access limits.
+
+## Rich public catalogs
+
+See [RICH_CATALOGS.md](RICH_CATALOGS.md) for native Bugs/Genie/Melon song adapters, `bugs_id`/`genie_id`/`melon_id`, accepted YouTube artist/album context in provider data, optional Python pooling and `/v1/catalog` (also `operation: catalog` through the JSON gateway). These Korean adapters require no credentials; the optional Python path currently uses public YouTube access.

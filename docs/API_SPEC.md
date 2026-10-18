@@ -258,3 +258,7 @@ See [ENRICHMENT.md](ENRICHMENT.md) for `provider_data`, field trust/consensus, e
 `POST /v1/query` accepts an optional `operation` plus the selected operation's input fields. A configured default removes the need to select operation/sources/debug per request. Startup YAML controls enabled endpoints, permitted overrides and debug access. `GET /v1/providers` returns redacted lifecycle status; no token/cookie/profile data is included. Required-credential sources are not registered until a startup probe succeeds, and runtime-suspended sources are skipped. See [PROVIDER_LIFECYCLE.md](PROVIDER_LIFECYCLE.md).
 
 When the configured/default source selection has no available identity adapters, resolve/links return HTTP 503. Unknown source names return 400. Existing endpoint routes remain available unless disabled in configuration.
+
+## Rich public catalogs
+
+See [RICH_CATALOGS.md](RICH_CATALOGS.md) for native Bugs/Genie/Melon song adapters, `bugs_id`/`genie_id`/`melon_id`, accepted YouTube artist/album context in provider data, optional Python pooling and `/v1/catalog` (also `operation: catalog` through the JSON gateway). These Korean adapters require no credentials; the optional Python path currently uses public YouTube access.

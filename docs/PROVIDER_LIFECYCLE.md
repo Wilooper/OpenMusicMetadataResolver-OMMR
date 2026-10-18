@@ -114,3 +114,7 @@ After `failure_threshold` consecutive operational errors, a source is `suspended
 The same circuit applies to registered catalog enrichment and fingerprint lookup. A source remains a small in-memory object while suspended; it is removed from the active request pool rather than dynamically unloading Go code. Provider-health transitions and recovery eligibility partition resolved-cache keys, and responses spanning a transition are not written into the old partition. Partial provider-failure responses use at most a 30-second resolved TTL.
 
 This service imports operator-owned sessions; it does not host a browser sign-in UI, store passwords, or reload credentials live. Runtime health is about operational metadata requests; the startup credential result is not continuous account-session verification.
+
+## Rich public catalogs
+
+See [RICH_CATALOGS.md](RICH_CATALOGS.md) for native Bugs/Genie/Melon song adapters, `bugs_id`/`genie_id`/`melon_id`, accepted YouTube artist/album context in provider data, optional Python pooling and `/v1/catalog` (also `operation: catalog` through the JSON gateway). These Korean adapters require no credentials; the optional Python path currently uses public YouTube access.

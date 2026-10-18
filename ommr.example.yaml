@@ -29,6 +29,7 @@ api:
     extract: true
     bulk: true
     fingerprint: true
+    catalog: true
     query: true
     providers: true
     health: true
@@ -49,6 +50,9 @@ providers:
     musicbrainz: true
     soundcloud: true
     jiosaavn: true
+    bugs: true
+    genie: true
+    melon: true
     qobuz: true
     tidal: true
     amazonmusic: true
@@ -65,3 +69,13 @@ providers:
 # spotify_session_file: /private/spotify.session.json
 # applemusic_session_file: /private/applemusic.session.json
 # ytmusic_session_file: /private/ytmusic.session.json
+
+# Optional Python metadata worker. The Go-only API remains usable without it.
+extractor:
+  enabled: false
+  python: python3 # Prefer an absolute virtualenv interpreter path.
+  script: workers/ytmusic/worker.py # Relative to server working directory; or absolute.
+  workers: 2 # 1–8 persistent processes; queue capacity = workers * 4.
+  timeout: 5s # Per background job, including queue wait; max 30s.
+  ttl: 6h
+  profiles: true # Enrich accepted YouTube IDs with known album/artist references.

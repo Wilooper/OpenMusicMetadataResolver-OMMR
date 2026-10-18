@@ -38,7 +38,7 @@ var (
 	token     = regexp.MustCompile(`^[A-Za-z0-9_-]+$`)
 )
 
-var providers = []string{"amazonmusic", "applemusic", "deezer", "jiosaavn", "musicbrainz", "pandora", "qobuz", "soundcloud", "spotify", "tidal", "ytmusic"}
+var providers = []string{"bugs", "genie", "melon", "amazonmusic", "applemusic", "deezer", "jiosaavn", "musicbrainz", "pandora", "qobuz", "soundcloud", "spotify", "tidal", "ytmusic"}
 
 // Build receives an accepted resolved track, or one provider's extracted track.
 // It never searches by title or infers an ID from an unrelated provider's URL.
@@ -98,6 +98,11 @@ func makeLink(provider, id string) (Link, bool) {
 		return link, false
 	}
 	switch provider {
+	case "bugs", "genie", "melon":
+		if !digits.MatchString(id) {
+			return link, false
+		}
+		link.URL = map[string]string{"bugs": "https://music.bugs.co.kr/track/", "genie": "https://www.genie.co.kr/detail/songInfo?xgnm=", "melon": "https://www.melon.com/song/detail.htm?songId="}[provider] + id
 	case "spotify":
 		if !spotifyID.MatchString(id) {
 			return link, false
@@ -181,6 +186,12 @@ func validURL(provider, id, raw string) bool {
 	parts := strings.Split(path, "/")
 	last := parts[len(parts)-1]
 	switch provider {
+	case "bugs":
+		return u.Host == "music.bugs.co.kr" && path == "track/"+id && u.RawQuery == ""
+	case "genie":
+		return u.Host == "www.genie.co.kr" && path == "detail/songInfo" && u.Query().Get("xgnm") == id && onlyQuery(u, "xgnm")
+	case "melon":
+		return u.Host == "www.melon.com" && path == "song/detail.htm" && u.Query().Get("songId") == id && onlyQuery(u, "songId")
 	case "spotify":
 		return u.Host == "open.spotify.com" && path == "track/"+id && u.RawQuery == ""
 	case "ytmusic":

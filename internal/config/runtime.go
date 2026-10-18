@@ -44,7 +44,7 @@ func (l LifecycleConfig) ProviderEnabled(name string) bool {
 }
 
 func runtimeDefaults(v *viper.Viper) {
-	defaults := map[string]any{"credentials_dir": "./credentials", "api.default_operation": "resolve", "api.search_limit": 10, "api.allow_overrides": true, "api.allow_debug": true, "providers.failure_threshold": 3, "providers.cooldown": "1m", "providers.probe_timeout": "8s", "providers.startup_timeout": "45s", "providers.probe_workers": 4}
+	defaults := map[string]any{"extractor.enabled": false, "extractor.python": "python3", "extractor.script": "workers/ytmusic/worker.py", "extractor.workers": 2, "extractor.timeout": "5s", "extractor.ttl": "6h", "extractor.profiles": true, "credentials_dir": "./credentials", "api.default_operation": "resolve", "api.search_limit": 10, "api.allow_overrides": true, "api.allow_debug": true, "providers.failure_threshold": 3, "providers.cooldown": "1m", "providers.probe_timeout": "8s", "providers.startup_timeout": "45s", "providers.probe_workers": 4}
 	for key, value := range defaults {
 		v.SetDefault(key, value)
 	}
@@ -74,6 +74,11 @@ func discover(v *viper.Viper) error {
 	return nil
 }
 func loadRuntime(v *viper.Viper, cfg *Config) error {
+	cfg.Extractor = ExtractorConfig{Enabled: v.GetBool("extractor.enabled"), Python: v.GetString("extractor.python"), Script: v.GetString("extractor.script"), Workers: v.GetInt("extractor.workers"), Timeout: v.GetDuration("extractor.timeout"), TTL: v.GetDuration("extractor.ttl"), Profiles: v.GetBool("extractor.profiles")}
+	if cfg.Extractor.Enabled && (cfg.Extractor.Workers < 1 || cfg.Extractor.Workers > 8 || cfg.Extractor.Timeout <= 0 || cfg.Extractor.Timeout > 30*time.Second || cfg.Extractor.TTL <= 0) {
+		return fmt.Errorf("invalid extractor limits")
+	}
+
 	if err := v.UnmarshalKey("api", &cfg.API); err != nil {
 		return fmt.Errorf("invalid API configuration")
 	}
@@ -101,14 +106,14 @@ func loadRuntime(v *viper.Viper, cfg *Config) error {
 		return fmt.Errorf("invalid provider enable flags")
 	}
 	for name := range cfg.API.Endpoints {
-		if !map[string]bool{"resolve": true, "links": true, "search": true, "extract": true, "bulk": true, "fingerprint": true, "health": true, "providers": true, "query": true, "metrics": true}[name] {
+		if !map[string]bool{"resolve": true, "links": true, "search": true, "extract": true, "bulk": true, "fingerprint": true, "catalog": true, "health": true, "providers": true, "query": true, "metrics": true}[name] {
 			return fmt.Errorf("unknown API endpoint flag %q", name)
 		}
 	}
 	if cfg.API.DefaultOperation == "" {
 		cfg.API.DefaultOperation = "resolve"
 	}
-	operations := map[string]bool{"resolve": true, "links": true, "search": true, "extract": true, "bulk": true, "fingerprint": true}
+	operations := map[string]bool{"resolve": true, "links": true, "search": true, "extract": true, "bulk": true, "fingerprint": true, "catalog": true}
 	if !operations[cfg.API.DefaultOperation] {
 		return fmt.Errorf("invalid API default operation")
 	}

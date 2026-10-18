@@ -78,7 +78,7 @@ func New(r *adapters.Registry, c cache.Cache, l *ratelimit.ProviderLimiter, ttl 
 		ttl:                      ttl,
 		maxCandidatesPerProvider: 10,
 		logger:                   slog.Default(),
-		cacheNamespace:           "resolved:rich-v5:default:",
+		cacheNamespace:           "resolved:rich-v6:default:",
 	}
 }
 
@@ -247,6 +247,24 @@ func (res *Resolver) resolve(ctx context.Context, req ResolveRequest) (*ResolveR
 				}
 			} else if req.Query.AmazonMusicID != "" && ad.Name() == "amazonmusic" {
 				cand, err := ad.FetchByID(gCtx, "amazonmusic", req.Query.AmazonMusicID)
+				fetchErr = err
+				if cand != nil {
+					fetched = append(fetched, *cand)
+				}
+			} else if req.Query.BugsID != "" && ad.Name() == "bugs" {
+				cand, err := ad.FetchByID(gCtx, "bugs", req.Query.BugsID)
+				fetchErr = err
+				if cand != nil {
+					fetched = append(fetched, *cand)
+				}
+			} else if req.Query.GenieID != "" && ad.Name() == "genie" {
+				cand, err := ad.FetchByID(gCtx, "genie", req.Query.GenieID)
+				fetchErr = err
+				if cand != nil {
+					fetched = append(fetched, *cand)
+				}
+			} else if req.Query.MelonID != "" && ad.Name() == "melon" {
+				cand, err := ad.FetchByID(gCtx, "melon", req.Query.MelonID)
 				fetchErr = err
 				if cand != nil {
 					fetched = append(fetched, *cand)
@@ -645,7 +663,7 @@ func (res *Resolver) resolve(ctx context.Context, req ResolveRequest) (*ResolveR
 		if data, err := json.Marshal(resp); err == nil {
 			ttl := res.ttl
 			for _, status := range sourcesStatus {
-				if (!status.Success || status.EnrichmentStatus == "unavailable" || status.EnrichmentStatus == "identity_mismatch") && ttl > 30*time.Second {
+				if (!status.Success || status.EnrichmentStatus == "partial" || status.EnrichmentStatus == "unavailable" || status.EnrichmentStatus == "identity_mismatch") && ttl > 30*time.Second {
 					ttl = 30 * time.Second
 				}
 			}
@@ -702,6 +720,15 @@ func determineInputType(q adapters.Query) string {
 	if q.PandoraID != "" {
 		return "pandora_id"
 	}
+	if q.BugsID != "" {
+		return "bugs_id"
+	}
+	if q.GenieID != "" {
+		return "genie_id"
+	}
+	if q.MelonID != "" {
+		return "melon_id"
+	}
 	if q.ISRC != "" {
 		return "isrc"
 	}
@@ -756,6 +783,12 @@ func directProvider(q adapters.Query) string {
 		return "tidal"
 	case q.AmazonMusicID != "":
 		return "amazonmusic"
+	case q.BugsID != "":
+		return "bugs"
+	case q.GenieID != "":
+		return "genie"
+	case q.MelonID != "":
+		return "melon"
 	case q.PandoraID != "":
 		return "pandora"
 	default:
@@ -784,6 +817,12 @@ func trustedSeedCandidates(q adapters.Query, candidates []canonical.TrackCandida
 			id = q.TidalID
 		case "amazonmusic":
 			id = q.AmazonMusicID
+		case "bugs":
+			id = q.BugsID
+		case "genie":
+			id = q.GenieID
+		case "melon":
+			id = q.MelonID
 		case "pandora":
 			id = q.PandoraID
 		}
@@ -824,6 +863,9 @@ func candidateMatchesDirectID(q adapters.Query, candidate canonical.TrackCandida
 		"tidal":       q.TidalID,
 		"amazonmusic": q.AmazonMusicID,
 		"pandora":     q.PandoraID,
+		"bugs":        q.BugsID,
+		"genie":       q.GenieID,
+		"melon":       q.MelonID,
 	}[provider]
 	return id != "" && candidate.Track.IDs[provider] == id
 }

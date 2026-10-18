@@ -57,8 +57,12 @@ func (res *Resolver) enrichAccepted(ctx context.Context, accepted []canonical.Tr
 								}
 							}
 							rich.Track.IDs = ids
-							*candidate = *rich
 							status = "ok"
+							if string(rich.Track.Extensions["_enrichment_partial"]) == "true" {
+								status = "partial"
+							}
+							delete(rich.Track.Extensions, "_enrichment_partial")
+							*candidate = *rich
 						} else {
 							status = "identity_mismatch"
 						}

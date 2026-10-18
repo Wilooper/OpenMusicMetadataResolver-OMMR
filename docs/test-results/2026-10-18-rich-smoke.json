@@ -1,0 +1,227 @@
+[
+  {
+    "case": "bugs",
+    "status": 200,
+    "seconds": 6.137,
+    "keys": [
+      "query",
+      "sources"
+    ],
+    "source_status": [
+      [
+        "bugs",
+        "ok",
+        null
+      ]
+    ],
+    "track_title": "Dynamite",
+    "ids": {
+      "bugs": "31999479",
+      "bugs_url": "https://music.bugs.co.kr/track/31999479"
+    },
+    "error": null
+  },
+  {
+    "case": "genie",
+    "status": 200,
+    "seconds": 8.003,
+    "keys": [
+      "query",
+      "sources"
+    ],
+    "source_status": [
+      [
+        "genie",
+        "error",
+        "catalog network request failed"
+      ]
+    ],
+    "track_title": null,
+    "ids": null,
+    "error": null
+  },
+  {
+    "case": "melon",
+    "status": 200,
+    "seconds": 8.002,
+    "keys": [
+      "query",
+      "sources"
+    ],
+    "source_status": [
+      [
+        "melon",
+        "error",
+        "catalog network request failed"
+      ]
+    ],
+    "track_title": null,
+    "ids": null,
+    "error": null
+  },
+  {
+    "case": "yt-artist",
+    "status": 502,
+    "seconds": 3.109,
+    "keys": [
+      "error"
+    ],
+    "source_status": [],
+    "track_title": null,
+    "ids": null,
+    "error": "catalog metadata unavailable"
+  },
+  {
+    "case": "yt-song",
+    "status": 200,
+    "seconds": 5.754,
+    "keys": [
+      "data",
+      "id",
+      "provider",
+      "type"
+    ],
+    "source_status": [],
+    "track_title": null,
+    "ids": null,
+    "error": null
+  },
+  {
+    "case": "yt-album",
+    "status": 502,
+    "seconds": 3.009,
+    "keys": [
+      "error"
+    ],
+    "source_status": [],
+    "track_title": null,
+    "ids": null,
+    "error": "catalog metadata unavailable"
+  },
+  {
+    "case": "resolve-bts",
+    "status": 200,
+    "seconds": 5.115,
+    "keys": [
+      "track",
+      "metadata_sources",
+      "provider_status",
+      "resolution_strategy",
+      "enrichment_status",
+      "resolver_stats"
+    ],
+    "source_status": [],
+    "track_title": "Dynamite",
+    "ids": {
+      "bugs": "31999479",
+      "bugs_url": "https://music.bugs.co.kr/track/31999479",
+      "genie": "90705547",
+      "genie_url": "https://www.genie.co.kr/detail/songInfo?xgnm=90705547",
+      "melon": "32872978",
+      "melon_url": "https://www.melon.com/song/detail.htm?songId=32872978"
+    },
+    "error": null
+  },
+  {
+    "case": "yt-artist-recheck",
+    "status": 200,
+    "seconds": 0.387,
+    "keys": [
+      "data",
+      "id",
+      "provider",
+      "type"
+    ],
+    "source_status": [],
+    "track_title": null,
+    "ids": null,
+    "error": null
+  },
+  {
+    "case": "resolve-boyfriend",
+    "status": 200,
+    "seconds": 11.006,
+    "keys": [
+      "track",
+      "metadata_sources",
+      "provider_status",
+      "resolution_strategy",
+      "enrichment_status",
+      "resolver_stats"
+    ],
+    "source_status": [],
+    "track_title": "Boyfriend",
+    "ids": {
+      "applemusic": "1829591986",
+      "applemusic_url": "https://music.apple.com/us/album/boyfriend/1829591921?i=1829591986",
+      "ytmusic": "tIjUfo30r4M"
+    },
+    "error": null
+  },
+  {
+    "case": "bugs-warm",
+    "status": 200,
+    "seconds": 1.41,
+    "keys": [
+      "query",
+      "sources"
+    ],
+    "source_status": [
+      [
+        "bugs",
+        "ok",
+        null
+      ]
+    ],
+    "track_title": "Dynamite",
+    "ids": {
+      "bugs": "31999479",
+      "bugs_url": "https://music.bugs.co.kr/track/31999479"
+    },
+    "error": null
+  },
+  {
+    "case": "genie-warm",
+    "status": 200,
+    "seconds": 1.509,
+    "keys": [
+      "query",
+      "sources"
+    ],
+    "source_status": [
+      [
+        "genie",
+        "ok",
+        null
+      ]
+    ],
+    "track_title": "Dynamite",
+    "ids": {
+      "genie": "90705547",
+      "genie_url": "https://www.genie.co.kr/detail/songInfo?xgnm=90705547"
+    },
+    "error": null
+  },
+  {
+    "case": "melon-warm",
+    "status": 200,
+    "seconds": 1.914,
+    "keys": [
+      "query",
+      "sources"
+    ],
+    "source_status": [
+      [
+        "melon",
+        "ok",
+        null
+      ]
+    ],
+    "track_title": "Dynamite",
+    "ids": {
+      "melon": "32872978",
+      "melon_url": "https://www.melon.com/song/detail.htm?songId=32872978"
+    },
+    "error": null
+  }
+]
