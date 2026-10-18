@@ -1,0 +1,831 @@
+[
+  {
+    "song": "Mera Mann",
+    "requested_artist": "Juss",
+    "provider": "jiosaavn",
+    "report": "mera-jiosaavn-resolve.json",
+    "accepted_by_resolver": true,
+    "verified_recording": true,
+    "outcome": "verified",
+    "provider_status": [
+      {
+        "name": "jiosaavn",
+        "success": true,
+        "matched": true,
+        "contributed": true,
+        "cached": false,
+        "latency_ms": 1283,
+        "version": "jiosaavn-search-v6-pages",
+        "enrichment_status": "ok"
+      }
+    ],
+    "metadata": {
+      "title": "Mera Mann : Juss & MixSingh",
+      "artists": [
+        {
+          "name": "Juss",
+          "role": "main",
+          "ids": {
+            "jiosaavn": "20019190"
+          }
+        },
+        {
+          "name": "Mixsingh",
+          "role": "main",
+          "ids": {
+            "jiosaavn": "683612"
+          }
+        }
+      ],
+      "album": {
+        "title": "Mera Mann",
+        "images": [
+          {
+            "url": "https://c.saavncdn.com/594/Mera-Mann-Punjabi-2024-20241113231503-500x500.jpg",
+            "width": 500,
+            "height": 500,
+            "type": "cover"
+          }
+        ],
+        "ids": {
+          "jiosaavn": "59560882"
+        }
+      },
+      "duration_ms": 163000,
+      "release_date": "2024-11-14",
+      "label": "Speed Records",
+      "language": "punjabi",
+      "isrc": null,
+      "ids": {
+        "jiosaavn": "ERIkRAwJf38",
+        "jiosaavn_track_id": "azOux9HL",
+        "jiosaavn_url": "https://www.jiosaavn.com/song/mera-mann-juss-mixsingh/ERIkRAwJf38"
+      },
+      "credits": [
+        {
+          "name": "Mixsingh",
+          "roles": [
+            "music"
+          ]
+        },
+        {
+          "name": "Juss",
+          "roles": [
+            "music",
+            "lyricist"
+          ]
+        }
+      ],
+      "copyrights": [
+        {
+          "text": "© 2024 Speed Records (under exclusive assignment to Times Music)"
+        }
+      ]
+    },
+    "missing_canonical_fields": [
+      "isrc",
+      "iswc",
+      "genres",
+      "barcode"
+    ]
+  },
+  {
+    "song": "Mera Mann",
+    "requested_artist": "Juss",
+    "provider": "deezer",
+    "report": "mera-deezer-resolve.json",
+    "accepted_by_resolver": true,
+    "verified_recording": true,
+    "outcome": "verified",
+    "provider_status": [
+      {
+        "name": "deezer",
+        "success": true,
+        "matched": true,
+        "contributed": true,
+        "cached": false,
+        "latency_ms": 1508,
+        "version": "deezer-v3-search",
+        "enrichment_status": "ok"
+      }
+    ],
+    "metadata": {
+      "title": "Mera Mann",
+      "artists": [
+        {
+          "name": "Juss",
+          "role": "main",
+          "ids": {
+            "deezer": "8148876"
+          }
+        },
+        {
+          "name": "Mixsingh",
+          "role": "Main",
+          "ids": {
+            "deezer": "6831435"
+          }
+        }
+      ],
+      "album": {
+        "title": "Mera Mann",
+        "release_date": "2024-11-14",
+        "images": [
+          {
+            "url": "https://cdn-images.dzcdn.net/images/cover/7544493725c16ac0096d582f04e12af6/1000x1000-000000-80-0-0.jpg",
+            "width": 1000,
+            "height": 1000,
+            "type": "cover"
+          },
+          {
+            "url": "https://cdn-images.dzcdn.net/images/cover/7544493725c16ac0096d582f04e12af6/500x500-000000-80-0-0.jpg",
+            "width": 500,
+            "height": 500,
+            "type": "cover"
+          },
+          {
+            "url": "https://cdn-images.dzcdn.net/images/cover/7544493725c16ac0096d582f04e12af6/250x250-000000-80-0-0.jpg",
+            "width": 250,
+            "height": 250,
+            "type": "cover"
+          }
+        ],
+        "ids": {
+          "deezer": "669230421"
+        }
+      },
+      "duration_ms": 163000,
+      "release_date": "2024-11-14",
+      "label": null,
+      "language": null,
+      "isrc": "INM432400484",
+      "ids": {
+        "deezer": "3088162071"
+      },
+      "credits": [],
+      "copyrights": null
+    },
+    "missing_canonical_fields": [
+      "iswc",
+      "genres",
+      "language",
+      "label",
+      "credits",
+      "copyrights",
+      "barcode"
+    ]
+  },
+  {
+    "song": "Mera Mann",
+    "requested_artist": "Juss",
+    "provider": "musicbrainz",
+    "report": "mera-musicbrainz-after-cooldown.json",
+    "accepted_by_resolver": false,
+    "verified_recording": false,
+    "outcome": "rejected_or_unavailable",
+    "provider_status": [
+      {
+        "name": "musicbrainz",
+        "success": true,
+        "matched": false,
+        "contributed": false,
+        "cached": false,
+        "latency_ms": 2127,
+        "rejection_reason": "identity_mismatch",
+        "candidate_score": 0.86,
+        "version": "musicbrainz-v3-html"
+      }
+    ]
+  },
+  {
+    "song": "Boyfriend",
+    "requested_artist": "Karan Aujla",
+    "provider": "jiosaavn",
+    "report": "boyfriend-jiosaavn-resolve.json",
+    "accepted_by_resolver": false,
+    "verified_recording": false,
+    "outcome": "rejected_or_unavailable",
+    "provider_status": [
+      {
+        "name": "jiosaavn",
+        "success": true,
+        "matched": false,
+        "contributed": false,
+        "cached": false,
+        "latency_ms": 445,
+        "rejection_reason": "below_threshold",
+        "candidate_score": 0.54,
+        "version": "jiosaavn-search-v6-pages"
+      }
+    ]
+  },
+  {
+    "song": "Boyfriend",
+    "requested_artist": "Karan Aujla",
+    "provider": "deezer",
+    "report": "boyfriend-deezer-resolve.json",
+    "accepted_by_resolver": true,
+    "verified_recording": true,
+    "outcome": "verified",
+    "provider_status": [
+      {
+        "name": "deezer",
+        "success": true,
+        "matched": true,
+        "contributed": true,
+        "cached": false,
+        "latency_ms": 1367,
+        "version": "deezer-v3-search",
+        "enrichment_status": "ok"
+      }
+    ],
+    "metadata": {
+      "title": "Boyfriend",
+      "artists": [
+        {
+          "name": "Karan Aujla",
+          "role": "main",
+          "ids": {
+            "deezer": "6555107"
+          }
+        },
+        {
+          "name": "Ikky",
+          "role": "Main",
+          "ids": {
+            "deezer": "6113648"
+          }
+        }
+      ],
+      "album": {
+        "title": "P-POP CULTURE",
+        "release_date": "2025-08-22",
+        "images": [
+          {
+            "url": "https://cdn-images.dzcdn.net/images/cover/941afd0f584a3d207fc5dc1279e9d51f/1000x1000-000000-80-0-0.jpg",
+            "width": 1000,
+            "height": 1000,
+            "type": "cover"
+          },
+          {
+            "url": "https://cdn-images.dzcdn.net/images/cover/941afd0f584a3d207fc5dc1279e9d51f/500x500-000000-80-0-0.jpg",
+            "width": 500,
+            "height": 500,
+            "type": "cover"
+          },
+          {
+            "url": "https://cdn-images.dzcdn.net/images/cover/941afd0f584a3d207fc5dc1279e9d51f/250x250-000000-80-0-0.jpg",
+            "width": 250,
+            "height": 250,
+            "type": "cover"
+          }
+        ],
+        "ids": {
+          "deezer": "800495831"
+        }
+      },
+      "duration_ms": 160000,
+      "release_date": "2025-08-22",
+      "label": null,
+      "language": null,
+      "isrc": "CAW112500965",
+      "ids": {
+        "deezer": "3495188951"
+      },
+      "credits": [],
+      "copyrights": null
+    },
+    "missing_canonical_fields": [
+      "iswc",
+      "genres",
+      "language",
+      "label",
+      "credits",
+      "copyrights",
+      "barcode"
+    ]
+  },
+  {
+    "song": "Boyfriend",
+    "requested_artist": "Karan Aujla",
+    "provider": "musicbrainz",
+    "report": "boyfriend-musicbrainz-after-cooldown.json",
+    "accepted_by_resolver": true,
+    "verified_recording": true,
+    "outcome": "verified",
+    "provider_status": [
+      {
+        "name": "musicbrainz",
+        "success": true,
+        "matched": true,
+        "contributed": true,
+        "cached": false,
+        "latency_ms": 1483,
+        "version": "musicbrainz-v3-html",
+        "enrichment_status": "ok"
+      }
+    ],
+    "metadata": {
+      "title": "Boyfriend",
+      "artists": [
+        {
+          "name": "Karan Aujla",
+          "role": "main",
+          "ids": {
+            "musicbrainz": "4a779683-5404-4b90-a0d7-242495158265"
+          }
+        }
+      ],
+      "album": {
+        "title": "P‐POP CULTURE",
+        "release_date": "2025-08-22",
+        "ids": {
+          "musicbrainz": "7efc78cb-a89a-49fe-aaaa-96e2bbdaa3d2"
+        }
+      },
+      "duration_ms": 160796,
+      "release_date": "2025-08-22",
+      "label": null,
+      "language": "pan",
+      "isrc": "CAW112500965",
+      "ids": {
+        "musicbrainz": "c485675e-9c06-479b-b2dc-35a565d08558"
+      },
+      "credits": [
+        {
+          "name": "Karan Aujla",
+          "roles": [
+            "Artist",
+            "Lyricist"
+          ]
+        },
+        {
+          "name": "Ikky",
+          "roles": [
+            "Composer"
+          ]
+        }
+      ],
+      "copyrights": null
+    },
+    "missing_canonical_fields": [
+      "iswc",
+      "genres",
+      "label",
+      "copyrights",
+      "barcode"
+    ]
+  },
+  {
+    "song": "Get Lucky",
+    "requested_artist": "Daft Punk",
+    "provider": "jiosaavn",
+    "report": "get-lucky-jiosaavn-resolve.json",
+    "accepted_by_resolver": false,
+    "verified_recording": false,
+    "outcome": "rejected_or_unavailable",
+    "provider_status": [
+      {
+        "name": "jiosaavn",
+        "success": true,
+        "matched": false,
+        "contributed": false,
+        "cached": false,
+        "latency_ms": 517,
+        "rejection_reason": "below_threshold",
+        "candidate_score": 0.45,
+        "version": "jiosaavn-search-v6-pages"
+      }
+    ]
+  },
+  {
+    "song": "Get Lucky",
+    "requested_artist": "Daft Punk",
+    "provider": "deezer",
+    "report": "get-lucky-deezer-resolve.json",
+    "accepted_by_resolver": true,
+    "verified_recording": true,
+    "outcome": "verified",
+    "provider_status": [
+      {
+        "name": "deezer",
+        "success": true,
+        "matched": true,
+        "contributed": true,
+        "cached": false,
+        "latency_ms": 1459,
+        "version": "deezer-v3-search",
+        "enrichment_status": "ok"
+      }
+    ],
+    "metadata": {
+      "title": "Get Lucky (feat. Pharrell Williams and Nile Rodgers)",
+      "artists": [
+        {
+          "name": "Daft Punk",
+          "role": "main",
+          "ids": {
+            "deezer": "27"
+          }
+        },
+        {
+          "name": "Pharrell Williams",
+          "role": "Main",
+          "ids": {
+            "deezer": "103"
+          }
+        },
+        {
+          "name": "Nile Rodgers",
+          "role": "Main",
+          "ids": {
+            "deezer": "7207"
+          }
+        }
+      ],
+      "album": {
+        "title": "Random Access Memories",
+        "release_date": "2013-05-17",
+        "images": [
+          {
+            "url": "https://cdn-images.dzcdn.net/images/cover/311bba0fc112d15f72c8b5a65f0456c1/1000x1000-000000-80-0-0.jpg",
+            "width": 1000,
+            "height": 1000,
+            "type": "cover"
+          },
+          {
+            "url": "https://cdn-images.dzcdn.net/images/cover/311bba0fc112d15f72c8b5a65f0456c1/500x500-000000-80-0-0.jpg",
+            "width": 500,
+            "height": 500,
+            "type": "cover"
+          },
+          {
+            "url": "https://cdn-images.dzcdn.net/images/cover/311bba0fc112d15f72c8b5a65f0456c1/250x250-000000-80-0-0.jpg",
+            "width": 250,
+            "height": 250,
+            "type": "cover"
+          }
+        ],
+        "ids": {
+          "deezer": "6575789"
+        }
+      },
+      "duration_ms": 367000,
+      "release_date": "2013-05-20",
+      "label": null,
+      "language": null,
+      "isrc": "USQX91300108",
+      "ids": {
+        "deezer": "67238735"
+      },
+      "credits": [],
+      "copyrights": null
+    },
+    "missing_canonical_fields": [
+      "iswc",
+      "genres",
+      "language",
+      "label",
+      "credits",
+      "copyrights",
+      "barcode"
+    ]
+  },
+  {
+    "song": "Get Lucky",
+    "requested_artist": "Daft Punk",
+    "provider": "musicbrainz",
+    "report": "get-lucky-musicbrainz-isrc.json",
+    "accepted_by_resolver": true,
+    "verified_recording": true,
+    "outcome": "verified",
+    "provider_status": [
+      {
+        "name": "musicbrainz",
+        "success": true,
+        "matched": true,
+        "contributed": true,
+        "cached": false,
+        "latency_ms": 3124,
+        "version": "musicbrainz-v3-html",
+        "enrichment_status": "identity_mismatch"
+      }
+    ],
+    "plain_search": {
+      "accepted_by_resolver": true,
+      "verified_recording": false,
+      "reason": "edition not verified; duration and ISRC absent",
+      "ids": {
+        "musicbrainz": "97c21330-5552-41db-ba0d-249f4c833267"
+      }
+    },
+    "metadata": {
+      "title": "Get Lucky",
+      "artists": [
+        {
+          "name": "Daft Punk",
+          "role": "main",
+          "ids": {
+            "musicbrainz": "056e4f3e-d505-4dad-8ec1-d04f521cbb56"
+          }
+        },
+        {
+          "name": "Pharrell Williams",
+          "role": "main",
+          "ids": {
+            "musicbrainz": "149f91ef-1287-46da-9a8e-87fee02f1471"
+          }
+        },
+        {
+          "name": "Nile Rodgers",
+          "role": "main",
+          "ids": {
+            "musicbrainz": "c6d571dd-c0ae-4ac8-9500-780b1b9b25e5"
+          }
+        }
+      ],
+      "album": {
+        "title": "Piece By Piece (Music From The Motion Picture)",
+        "release_date": "2025-01-10",
+        "ids": {
+          "musicbrainz": "9e195955-2c96-40ae-8618-1a07245badde"
+        }
+      },
+      "duration_ms": 369000,
+      "release_date": "2025-01-10",
+      "label": null,
+      "language": null,
+      "isrc": "USQX91300108",
+      "ids": {
+        "musicbrainz": "833f00e1-781f-4edd-90e4-e52712618862"
+      },
+      "credits": [
+        {
+          "name": "Daft Punk",
+          "roles": [
+            "Artist"
+          ]
+        },
+        {
+          "name": "Pharrell Williams",
+          "roles": [
+            "Artist"
+          ]
+        },
+        {
+          "name": "Nile Rodgers",
+          "roles": [
+            "Artist"
+          ]
+        }
+      ],
+      "copyrights": null
+    },
+    "missing_canonical_fields": [
+      "iswc",
+      "language",
+      "label",
+      "copyrights",
+      "barcode"
+    ]
+  },
+  {
+    "song": "Tum Hi Ho",
+    "requested_artist": "Arijit Singh",
+    "provider": "jiosaavn",
+    "report": "tum-hi-ho-jiosaavn-resolve.json",
+    "accepted_by_resolver": true,
+    "verified_recording": true,
+    "outcome": "verified",
+    "provider_status": [
+      {
+        "name": "jiosaavn",
+        "success": true,
+        "matched": true,
+        "contributed": true,
+        "cached": false,
+        "latency_ms": 955,
+        "version": "jiosaavn-search-v6-pages",
+        "enrichment_status": "ok"
+      }
+    ],
+    "metadata": {
+      "title": "Tum Hi Ho",
+      "artists": [
+        {
+          "name": "Mithoon",
+          "role": "main",
+          "ids": {
+            "jiosaavn": "702592"
+          }
+        },
+        {
+          "name": "Arijit Singh",
+          "role": "main",
+          "ids": {
+            "jiosaavn": "459320"
+          }
+        }
+      ],
+      "album": {
+        "title": "Aashiqui 2",
+        "images": [
+          {
+            "url": "https://c.saavncdn.com/430/Aashiqui-2-Hindi-2013-500x500.jpg",
+            "width": 500,
+            "height": 500,
+            "type": "cover"
+          }
+        ],
+        "ids": {
+          "jiosaavn": "1139549"
+        }
+      },
+      "duration_ms": 262000,
+      "release_date": "2013-04-04",
+      "label": "T-Series",
+      "language": "hindi",
+      "isrc": null,
+      "ids": {
+        "jiosaavn": "EToxUyFpcwQ",
+        "jiosaavn_track_id": "aRZbUYD7",
+        "jiosaavn_url": "https://www.jiosaavn.com/song/tum-hi-ho/EToxUyFpcwQ"
+      },
+      "credits": [
+        {
+          "name": "Mithoon",
+          "roles": [
+            "music",
+            "lyricist"
+          ]
+        },
+        {
+          "name": "Aditya Roy Kapur",
+          "roles": [
+            "starring"
+          ]
+        },
+        {
+          "name": "Shraddha Kapoor",
+          "roles": [
+            "starring"
+          ]
+        }
+      ],
+      "copyrights": [
+        {
+          "text": "© 2010 Super Cassettes Industries Private Limited"
+        }
+      ]
+    },
+    "missing_canonical_fields": [
+      "isrc",
+      "iswc",
+      "genres",
+      "barcode"
+    ]
+  },
+  {
+    "song": "Tum Hi Ho",
+    "requested_artist": "Arijit Singh",
+    "provider": "deezer",
+    "report": "tum-hi-ho-deezer-resolve.json",
+    "accepted_by_resolver": true,
+    "verified_recording": true,
+    "outcome": "verified",
+    "provider_status": [
+      {
+        "name": "deezer",
+        "success": true,
+        "matched": true,
+        "contributed": true,
+        "cached": false,
+        "latency_ms": 1198,
+        "version": "deezer-v3-search",
+        "enrichment_status": "ok"
+      }
+    ],
+    "metadata": {
+      "title": "Tum Hi Ho",
+      "artists": [
+        {
+          "name": "Arijit Singh",
+          "role": "main",
+          "ids": {
+            "deezer": "3830821"
+          }
+        }
+      ],
+      "album": {
+        "title": "Aashiqui 2",
+        "release_date": "2013-04-06",
+        "images": [
+          {
+            "url": "https://cdn-images.dzcdn.net/images/cover/ad8ebbaa26ac316a96849f12eeb5f63d/1000x1000-000000-80-0-0.jpg",
+            "width": 1000,
+            "height": 1000,
+            "type": "cover"
+          },
+          {
+            "url": "https://cdn-images.dzcdn.net/images/cover/ad8ebbaa26ac316a96849f12eeb5f63d/500x500-000000-80-0-0.jpg",
+            "width": 500,
+            "height": 500,
+            "type": "cover"
+          },
+          {
+            "url": "https://cdn-images.dzcdn.net/images/cover/ad8ebbaa26ac316a96849f12eeb5f63d/250x250-000000-80-0-0.jpg",
+            "width": 250,
+            "height": 250,
+            "type": "cover"
+          }
+        ],
+        "ids": {
+          "deezer": "699630961"
+        }
+      },
+      "duration_ms": 261000,
+      "release_date": "2013-04-06",
+      "label": null,
+      "language": null,
+      "isrc": "INS181303031",
+      "ids": {
+        "deezer": "3191972361"
+      },
+      "credits": [],
+      "copyrights": null
+    },
+    "missing_canonical_fields": [
+      "iswc",
+      "genres",
+      "language",
+      "label",
+      "credits",
+      "copyrights",
+      "barcode"
+    ]
+  },
+  {
+    "song": "Tum Hi Ho",
+    "requested_artist": "Arijit Singh",
+    "provider": "musicbrainz",
+    "report": "tum-hi-ho-musicbrainz-after-cooldown.json",
+    "accepted_by_resolver": true,
+    "verified_recording": true,
+    "outcome": "verified",
+    "provider_status": [
+      {
+        "name": "musicbrainz",
+        "success": true,
+        "matched": true,
+        "contributed": true,
+        "cached": false,
+        "latency_ms": 1684,
+        "version": "musicbrainz-v3-html",
+        "enrichment_status": "identity_mismatch"
+      }
+    ],
+    "metadata": {
+      "title": "Tum Hi Ho",
+      "artists": [
+        {
+          "name": "Arijit Singh",
+          "role": "main",
+          "ids": {
+            "musicbrainz": "ed3f4831-e3e0-4dc0-9381-f5649e9df221"
+          }
+        }
+      ],
+      "album": {
+        "title": "World Music Day",
+        "release_date": "2025-06-20",
+        "ids": {
+          "musicbrainz": "e6e4fba1-ad29-4df2-87c7-042268c87f39"
+        }
+      },
+      "duration_ms": 262000,
+      "release_date": "2025-06-20",
+      "label": null,
+      "language": null,
+      "isrc": "INS181303031",
+      "ids": {
+        "musicbrainz": "3e5bc764-dfa4-454d-a2a9-0ee84ae35db2"
+      },
+      "credits": [
+        {
+          "name": "Arijit Singh",
+          "roles": [
+            "Artist"
+          ]
+        }
+      ],
+      "copyrights": null
+    },
+    "missing_canonical_fields": [
+      "iswc",
+      "language",
+      "label",
+      "copyrights",
+      "barcode"
+    ]
+  }
+]

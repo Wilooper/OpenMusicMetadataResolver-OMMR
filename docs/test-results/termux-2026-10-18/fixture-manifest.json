@@ -1,0 +1,26 @@
+[
+  {
+    "capture": "deezer-plain",
+    "requested_url": "https://api.deezer.com/search?limit=5&q=Karan%20Aujla%20Boyfriend",
+    "request_headers": {},
+    "original_body_bytes": 2128,
+    "original_sha256": "e29177f97f56be40f8c96a8ebc065e44058497212b5f4bdd1827bef3e60fe723",
+    "fixture_changes": [
+      "JSON pretty printed",
+      "preview fields omitted"
+    ]
+  },
+  {
+    "capture": "en-header",
+    "requested_url": "https://api.deezer.com/search?q=Daft+Punk+Get+Lucky&limit=5",
+    "request_headers": {
+      "Accept-Language": "en"
+    },
+    "original_body_bytes": 10944,
+    "original_sha256": "767365ca8ab3a0226c14548ebde86d5043f5927c10de1250a73b09ecca8ba2e1",
+    "fixture_changes": [
+      "JSON pretty printed",
+      "preview fields omitted"
+    ]
+  }
+]

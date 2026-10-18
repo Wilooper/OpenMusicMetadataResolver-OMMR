@@ -1,0 +1,1 @@
+{"query":{"artist":"Daft Punk","title":"Get Lucky"},"sources":[{"provider":"musicbrainz","version":"musicbrainz-v3-html","status":"error","error":"musicbrainz search returned status 503"}]}

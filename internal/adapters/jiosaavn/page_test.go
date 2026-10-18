@@ -2,8 +2,11 @@ package jiosaavn
 
 import (
 	"context"
+	"encoding/json"
+	"github.com/ommr/ommr/internal/adapters/webdata"
 	"io"
 	"net/http"
+	"os"
 	"strings"
 	"testing"
 )
@@ -68,5 +71,54 @@ func TestSongURLRejectsOtherTargets(t *testing.T) {
 		if _, _, err := ParseSongURL(raw); err == nil {
 			t.Errorf("accepted unsafe target %s", raw)
 		}
+	}
+}
+
+func TestCapturedDisplayPage(t *testing.T) {
+	body, err := os.ReadFile("testdata/mera-page-captured.html")
+	if err != nil {
+		t.Fatal(err)
+	}
+	p := New()
+	calls := 0
+	p.web.SetTransport(pageRoundTrip(func(r *http.Request) (*http.Response, error) {
+		calls++
+		return &http.Response{StatusCode: 200, Header: http.Header{}, Body: io.NopCloser(strings.NewReader(string(body)))}, nil
+	}))
+	candidate, err := p.FetchByID(context.Background(), "jiosaavn_url", "https://www.jiosaavn.com/song/mera-mann/ERIkRAwJf38")
+	if err != nil {
+		t.Fatal(err)
+	}
+	track := candidate.Track
+	if calls != 1 || track.Title != "Mera Mann : Juss & MixSingh" || track.DurationMS != 163000 || track.ReleaseDate != "2024" || track.Language != "punjabi" || track.Album.Title != "Mera Mann" {
+		t.Fatalf("unexpected captured metadata: %+v calls=%d", track, calls)
+	}
+	if track.IDs["jiosaavn_track_id"] != "azOux9HL" || track.IDs["jiosaavn"] != "ERIkRAwJf38" || len(track.Artists) != 2 || track.Artists[0].Name != "Juss" || track.Artists[0].IDs["jiosaavn"] != "20019190" || track.Artists[1].Name != "Mixsingh" {
+		t.Fatalf("identity: %+v", track)
+	}
+	if track.ISRC != "" || len(track.Genres) > 0 || len(track.Extensions["explicit_status"]) > 0 {
+		t.Fatal("invented unknown fields")
+	}
+	if len(track.Copyrights) != 1 || !strings.Contains(track.Copyrights[0].Text, "Speed Records") || len(track.Credits) != 3 {
+		t.Fatalf("credits/copyright: %+v", track)
+	}
+	if !strings.Contains(string(candidate.RawResponse), "structured_metadata") || strings.Contains(string(candidate.RawResponse), "encrypted_media_url") {
+		t.Fatal("unsafe or missing extra data")
+	}
+	for _, test := range []struct{ name, old, new string }{
+		{"wrong share", "ERIkRAwJf38", "different"},
+		{"unmarked artists", `"role":"primary_artists"`, `"role":"unmarked"`},
+		{"recommendation only", `"song":{"status"`, `"recommendations":{"status"`},
+	} {
+		t.Run(test.name, func(t *testing.T) {
+			modified := strings.ReplaceAll(string(body), test.old, test.new)
+			if _, err := webdata.DecodeHTML([]byte(modified), webdata.Request{Provider: "jiosaavn", Mode: "track", ID: "ERIkRAwJf38"}); err == nil {
+				t.Fatal("accepted unrelated or unverified state")
+			}
+		})
+	}
+	var raw map[string]any
+	if err := json.Unmarshal(candidate.RawResponse, &raw); err != nil {
+		t.Fatal(err)
 	}
 }

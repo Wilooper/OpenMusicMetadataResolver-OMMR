@@ -1,5 +1,7 @@
 # JioSaavn public song pages — 2026-10-18
 
+**Later Termux verification:** the exact page is reachable on Android. Captured serialized display state is now decoded without executing JavaScript; see [live findings and results](TERMUX_PROVIDER_VERIFICATION.md). The remote-access observations below are historical and do not describe the Termux network. Current resolved cache namespace is `rich-v11`.
+
 The user supplied `https://www.jiosaavn.com/song/mera-mann/ERIkRAwJf38` and its visible About text. The excerpt describes “Mera Mann : Juss & MixSingh”, artists Juss and Mixsingh, album Mera Mann, year 2024, Punjabi, duration 2:43 (163000 ms), and © 2024 Speed Records (under exclusive assignment to Times Music). These are public metadata observations supplied by the user, not a live response retrieved here. A normalized transcription is saved [separately](test-results/2026-10-18-mera-user-excerpt.json); it is not inserted into runtime results or used as a song-specific hardcoded fallback.
 
 The excerpt does not establish ISRC, a native song ID, genre, explicit status, an exact release date or contributor roles. Its empty “Songs By Same Artists” / “Top Songs By Same Actors” sections are related content, not attributes of this recording. A playback subscription requirement does not imply that the public metadata requires that subscription. No playback endpoint is called by this implementation; the excerpt alone does not establish whether the site's underlying API changed.

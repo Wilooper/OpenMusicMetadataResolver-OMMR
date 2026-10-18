@@ -1,0 +1,45 @@
+{
+  "data": [
+    {
+      "id": 3495188951,
+      "readable": true,
+      "title": "Boyfriend",
+      "title_short": "Boyfriend",
+      "title_version": "",
+      "isrc": "CAW112500965",
+      "link": "https://www.deezer.com/track/3495188951",
+      "duration": 160,
+      "rank": 368141,
+      "explicit_lyrics": false,
+      "explicit_content_lyrics": 0,
+      "explicit_content_cover": 2,
+      "md5_image": "941afd0f584a3d207fc5dc1279e9d51f",
+      "artist": {
+        "id": 6555107,
+        "name": "Karan Aujla",
+        "link": "https://www.deezer.com/artist/6555107",
+        "picture": "https://api.deezer.com/artist/6555107/image",
+        "picture_small": "https://cdn-images.dzcdn.net/images/artist/a91a1d5ea91e85e4f0966569b50e8d6a/56x56-000000-80-0-0.jpg",
+        "picture_medium": "https://cdn-images.dzcdn.net/images/artist/a91a1d5ea91e85e4f0966569b50e8d6a/250x250-000000-80-0-0.jpg",
+        "picture_big": "https://cdn-images.dzcdn.net/images/artist/a91a1d5ea91e85e4f0966569b50e8d6a/500x500-000000-80-0-0.jpg",
+        "picture_xl": "https://cdn-images.dzcdn.net/images/artist/a91a1d5ea91e85e4f0966569b50e8d6a/1000x1000-000000-80-0-0.jpg",
+        "tracklist": "https://api.deezer.com/artist/6555107/top?limit=50",
+        "type": "artist"
+      },
+      "album": {
+        "id": 800495831,
+        "title": "P-POP CULTURE",
+        "cover": "https://api.deezer.com/album/800495831/image",
+        "cover_small": "https://cdn-images.dzcdn.net/images/cover/941afd0f584a3d207fc5dc1279e9d51f/56x56-000000-80-0-0.jpg",
+        "cover_medium": "https://cdn-images.dzcdn.net/images/cover/941afd0f584a3d207fc5dc1279e9d51f/250x250-000000-80-0-0.jpg",
+        "cover_big": "https://cdn-images.dzcdn.net/images/cover/941afd0f584a3d207fc5dc1279e9d51f/500x500-000000-80-0-0.jpg",
+        "cover_xl": "https://cdn-images.dzcdn.net/images/cover/941afd0f584a3d207fc5dc1279e9d51f/1000x1000-000000-80-0-0.jpg",
+        "md5_image": "941afd0f584a3d207fc5dc1279e9d51f",
+        "tracklist": "https://api.deezer.com/album/800495831/tracks",
+        "type": "album"
+      },
+      "type": "track"
+    }
+  ],
+  "total": 1
+}

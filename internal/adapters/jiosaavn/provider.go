@@ -19,7 +19,7 @@ import (
 
 const (
 	ProviderName    = "jiosaavn"
-	ProviderVersion = "jiosaavn-search-v5-pages"
+	ProviderVersion = "jiosaavn-search-v6-pages"
 )
 
 var SearchURL = "https://www.jiosaavn.com/api.php"

@@ -80,6 +80,12 @@ func DecodeHTML(body []byte, request Request) ([]byte, error) {
 			if !strings.HasPrefix(rest, "=") {
 				continue
 			}
+			if request.Provider == "jiosaavn" && request.Mode == "track" && marker == "window.__INITIAL_DATA__" {
+				if record := jiosaavnPage(strings.TrimSpace(rest[1:]), request.ID); record != nil {
+					values = append(values, map[string]any{request.ID: record})
+					break
+				}
+			}
 			if v, ok := decode(strings.TrimSpace(rest[1:])); ok {
 				values = append(values, v)
 			}
@@ -175,7 +181,7 @@ func envelopes(v any, r Request, depth int, result *[]any) {
 						return
 					}
 				}
-				if child, ok := m[r.ID].(map[string]any); ok && nativeRecord(child, r.Provider) && recordID(child, r.Provider) == r.ID {
+				if child, ok := m[r.ID].(map[string]any); ok && nativeRecord(child, r.Provider) && (recordID(child, r.Provider) == r.ID || sourceID(r.Provider, str(child, "perma_url"), "track") == r.ID) {
 					valid = true
 				}
 			}

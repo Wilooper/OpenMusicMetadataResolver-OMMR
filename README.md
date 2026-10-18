@@ -366,3 +366,5 @@ HTML recovery: [decoder behavior, official-page fallbacks and live availability 
 Provider troubleshooting: [isolated Go checks and browser observations](docs/PROVIDER_DIAGNOSTICS.md) record the real adapter requests independently of configuration and caches. JioSaavn native IDs and public song-link tokens use separate lookup methods.
 
 JioSaavn [public song-page input](docs/JIOSAAVN_PUBLIC_PAGES.md) reads known page metadata before using the share-token API, through GET extraction or the JSON gateway.
+
+[Termux provider verification](docs/TERMUX_PROVIDER_VERIFICATION.md) records real Android connectivity, captured JioSaavn page decoding, Deezer artist-safe text search and remaining MusicBrainz availability limits.

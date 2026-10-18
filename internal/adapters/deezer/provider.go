@@ -19,7 +19,7 @@ import (
 
 const (
 	ProviderName    = "deezer"
-	ProviderVersion = "deezer-v2-html"
+	ProviderVersion = "deezer-v3-search"
 	BaseURL         = "https://api.deezer.com"
 )
 
@@ -57,6 +57,7 @@ func (p *Provider) FetchByID(ctx context.Context, idType string, id string) (*ca
 	}
 
 	req.Header.Set("Accept", "application/json")
+	req.Header.Set("Accept-Language", "en")
 	req.Header.Set("User-Agent", "OMMR/1.0 (https://github.com/Wilooper/OpenMusicMetadataResolver-OMMR)")
 	resp, err := p.httpClient.Do(req)
 	if err != nil {
@@ -98,7 +99,9 @@ func (p *Provider) Search(ctx context.Context, q adapters.Query) ([]canonical.Tr
 	if q.ISRC != "" {
 		searchQ = fmt.Sprintf("isrc:\"%s\"", q.ISRC)
 	} else if q.Artist != "" && q.Title != "" {
-		searchQ = fmt.Sprintf("artist:\"%s\" track:\"%s\"", query.CleanArtist(q.Artist), query.CleanTitle(q.Title))
+		// Live catalog search omits valid recordings with combined field filters.
+		// Retrieve bounded text candidates; the resolver still verifies identity.
+		searchQ = strings.TrimSpace(q.Artist + " " + q.Title)
 	} else if q.Title != "" {
 		searchQ = query.CleanTitle(q.Title)
 	} else {
@@ -112,6 +115,7 @@ func (p *Provider) Search(ctx context.Context, q adapters.Query) ([]canonical.Tr
 	}
 
 	req.Header.Set("Accept", "application/json")
+	req.Header.Set("Accept-Language", "en")
 	req.Header.Set("User-Agent", "OMMR/1.0 (https://github.com/Wilooper/OpenMusicMetadataResolver-OMMR)")
 	resp, err := p.httpClient.Do(req)
 	if err != nil {
@@ -138,6 +142,11 @@ func (p *Provider) Search(ctx context.Context, q adapters.Query) ([]canonical.Tr
 
 	candidates := make([]canonical.TrackCandidate, 0, len(searchResp.Data))
 	for _, item := range searchResp.Data {
+		// Text search includes tribute artists whose names can pass fuzzy scoring.
+		// Require a reported artist name rather than promoting a near-name cover.
+		if q.ISRC == "" && q.Artist != "" && !searchArtist(item, q.Artist) {
+			continue
+		}
 		cand := canonical.TrackCandidate{
 			Provider:    ProviderName,
 			Track:       p.normalizeTrack(item),
@@ -148,6 +157,19 @@ func (p *Provider) Search(ctx context.Context, q adapters.Query) ([]canonical.Tr
 	}
 
 	return candidates, nil
+}
+
+func searchArtist(item provider.DeezerTrackResponse, name string) bool {
+	name = query.CleanArtist(name)
+	if name != "" && query.CleanArtist(item.Artist.Name) == name {
+		return true
+	}
+	for _, artist := range item.Contributors {
+		if name != "" && query.CleanArtist(artist.Name) == name {
+			return true
+		}
+	}
+	return false
 }
 
 func (p *Provider) normalizeTrack(dt provider.DeezerTrackResponse) canonical.Track {
