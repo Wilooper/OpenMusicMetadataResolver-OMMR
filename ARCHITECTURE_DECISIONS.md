@@ -156,3 +156,8 @@ Implement the public request protocol used by Python JioSaavn clients directly i
 Add a standalone Go providercheck command that observes real public adapters without bootstrap credentials, resolver acceptance or caches. Reports distinguish decoded candidates from HTTP success, record bounded/redacted HTTP evidence, and optionally compare fixed source-specific routes with a shared one-request-per-second service budget. The production server does not acquire a network-probe endpoint.
 
 JioSaavn native IDs use song.getDetails; public share tokens use webapi.get with type=song. Support keyed and songs-array detail envelopes, require one matching identity, and hydrate accepted records using explicitly typed IDs. GET extraction and the JSON gateway accept the same validated native/share selector. Keep search/identity thresholds unchanged and advance resolved caching to rich-v9. Neither a passing fixture nor a decoded search candidate proves cross-provider identity or restores blocked live access.
+
+
+## ADR 025: Validated JioSaavn page input (2026-10-18)
+
+Expose public song URLs through existing source extraction and the JSON gateway. Validate and normalize the official HTTPS song target before fetching. Read the exact page using the bounded, rate-limited HTML decoder; use exact share-token API lookup when recognized page metadata is unavailable. Preserve provider-owned identity and extra catalog fields, including structured artist names and JSON-LD copyright notice. Playback, account state and credentials are outside this path. Constructed structured-data fixtures establish supported behavior; the supplied page remained inaccessible in this runtime. Resolved caching advances to rich-v10.

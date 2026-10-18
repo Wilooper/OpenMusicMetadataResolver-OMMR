@@ -184,6 +184,15 @@ func convert(m map[string]any, provider string) map[string]any {
 		if value := str(m, "inLanguage"); value != "" {
 			result["language"] = value
 		}
+		// Keep structured names intact: an artist's name can contain a comma.
+		primary := []any{}
+		for _, artist := range artists {
+			primary = append(primary, map[string]any{"name": str(artist, "name")})
+		}
+		result["artistMap"] = map[string]any{"primary_artists": primary}
+		if value := str(m, "copyrightNotice"); value != "" {
+			result["copyright_text"] = value
+		}
 		return result
 	case "musicbrainz":
 		credits := []any{}

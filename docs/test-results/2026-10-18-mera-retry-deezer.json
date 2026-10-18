@@ -1,0 +1,35 @@
+{
+  "provider": "deezer",
+  "version": "deezer-v2-html",
+  "query": {
+    "artist": "Juss",
+    "title": "Mera Mann"
+  },
+  "adapter_status": "error",
+  "adapter_error_kind": "request_or_catalog_error",
+  "operation": "search",
+  "candidates": [],
+  "requests": [
+    {
+      "phase": "adapter.search",
+      "method": "GET",
+      "url": "https://api.deezer.com/search?limit=5\u0026q=artist%3A%22juss%22+track%3A%22mera+mann%22",
+      "status": 200,
+      "protocol": "HTTP/2.0",
+      "content_type": "text/html",
+      "server": "openresty/1.27.1.1",
+      "bytes": 195,
+      "sha256": "5b131ca14aa96311d3432b0062c7443d3b0e6346ec279bd376a75f0a76bcd5d7",
+      "kind": "site_unavailable_html",
+      "elapsed_ms": 6879
+    },
+    {
+      "phase": "adapter.search",
+      "method": "GET",
+      "url": "https://www.deezer.com/search/Juss%20Mera%20Mann/track",
+      "kind": "deadline_or_cancelled",
+      "elapsed_ms": 5004
+    }
+  ],
+  "observation": "insufficient_evidence"
+}

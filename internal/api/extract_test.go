@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"net/http/httptest"
+	"net/url"
 	"strings"
 	"testing"
 	"time"
@@ -103,11 +104,15 @@ func TestExtractionSelectsLargestThumbnail(t *testing.T) {
 
 type idKindFixture struct {
 	extractionFixtureAdapter
-	got *string
+	got   *string
+	gotID *string
 }
 
 func (a idKindFixture) FetchByID(ctx context.Context, kind, id string) (*canonical.TrackCandidate, error) {
 	*a.got = kind
+	if a.gotID != nil {
+		*a.gotID = id
+	}
 	return a.extractionFixtureAdapter.FetchByID(ctx, kind, id)
 }
 func TestJioSaavnExplicitIDKindAcrossGETAndGateway(t *testing.T) {
@@ -130,6 +135,32 @@ func TestJioSaavnExplicitIDKindAcrossGETAndGateway(t *testing.T) {
 			handler.HandleExtract(response, httptest.NewRequest("GET", "/v1/extract?"+query, nil))
 			if response.Code != 400 {
 				t.Fatalf("invalid identifier kind accepted: %s", query)
+			}
+		}
+	}
+}
+
+func TestJioSaavnPageURLAcrossGETAndGateway(t *testing.T) {
+	page := "https://www.jiosaavn.com/song/mera-mann/ERIkRAwJf38"
+	for _, gateway := range []bool{false, true} {
+		kind, id := "", ""
+		registry := adapters.NewRegistry()
+		registry.Register(idKindFixture{extractionFixtureAdapter: extractionFixtureAdapter{name: "jiosaavn", track: canonical.Track{Title: "Mera Mann"}}, got: &kind, gotID: &id})
+		handler := NewHandler(nil, registry, &config.Config{ProviderTimeout: time.Second})
+		response := httptest.NewRecorder()
+		if gateway {
+			handler.HandleQuery(response, httptest.NewRequest("POST", "/v1/query", strings.NewReader(`{"operation":"extract","provider":"jiosaavn","url":"`+page+`"}`)))
+		} else {
+			handler.HandleExtract(response, httptest.NewRequest("GET", "/v1/extract?provider=jiosaavn&url="+url.QueryEscape(page), nil))
+		}
+		if response.Code != 200 || kind != "jiosaavn_url" || id != page {
+			t.Fatalf("gateway=%v kind=%s id=%s status=%d body=%s", gateway, kind, id, response.Code, response.Body.String())
+		}
+		for _, query := range []string{"provider=jiosaavn&url=https%3A%2F%2Fforeign.example%2Fsong%2Fs%2Fid", "provider=deezer&url=" + url.QueryEscape(page), "provider=jiosaavn&id=abc&url=" + url.QueryEscape(page), "provider=jiosaavn&id_type=share&url=" + url.QueryEscape(page), "provider=jiosaavn&url=" + url.QueryEscape(page) + "&url=" + url.QueryEscape(page)} {
+			response = httptest.NewRecorder()
+			handler.HandleExtract(response, httptest.NewRequest("GET", "/v1/extract?"+query, nil))
+			if response.Code != 400 {
+				t.Fatalf("invalid page request accepted: %s", query)
 			}
 		}
 	}

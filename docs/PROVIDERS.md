@@ -14,7 +14,7 @@ OMMR integrates 11 metadata provider adapters implementing the `adapters.Provide
 | **Deezer** | `deezer` | `deezer-v1` | Public API (`api.deezer.com`) | **Zero** | Token Bucket (50 RPS) |
 | **MusicBrainz** | `musicbrainz` | `musicbrainz-v2` | MusicBrainz REST API v2 | **Zero** | Token Bucket (1 RPS) |
 | **SoundCloud** | `soundcloud` | `soundcloud-oembed-v1` | Public oEmbed endpoint | **Zero** | Token Bucket (10 RPS) |
-| **JioSaavn** | `jiosaavn` | `jiosaavn-search-v4-routes` | Public `api.php` search, native details & share-token lookup | **Zero** | Token Bucket (5 RPS) |
+| **JioSaavn** | `jiosaavn` | `jiosaavn-search-v5-pages` | Public `api.php` search, native details & share-token lookup | **Zero** | Token Bucket (5 RPS) |
 | **Qobuz** | `qobuz` | `qobuz-api-v1` | Track metadata and search endpoints | Issued application ID; optional bearer token | Token Bucket (5 RPS) |
 | **TIDAL** | `tidal` | `tidal-webapi-v3` | TIDAL Web API v2 track and search endpoints | Authorized OAuth token | Token Bucket (10 RPS) |
 | **Amazon Music** | `amazonmusic` | `amazonmusic-webapi-v3` | Amazon Music Web API v2 catalog track search and lookup | Approved API access, OAuth token, security profile ID | Token Bucket (5 RPS) |
@@ -142,3 +142,5 @@ Accepted Deezer search hits now hydrate exact track details; Spotify hydrates th
 See [RICH_CATALOGS.md](RICH_CATALOGS.md) for native Bugs/Genie/Melon song adapters, `bugs_id`/`genie_id`/`melon_id`, accepted YouTube artist/album context in provider data, optional Python pooling and `/v1/catalog` (also `operation: catalog` through the JSON gateway). These Korean adapters require no credentials; the optional Python path currently uses public YouTube access.
 
 HTML recovery: [decoder behavior, official-page fallbacks and live availability limits](HTML_RECOVERY.md). The empty 195-byte “Site Unavailable” response contains no recoverable song data.
+
+JioSaavn public song URLs: `GET /v1/extract?provider=jiosaavn&url=<encoded HTTPS song URL>` reads the exact official page before the share-token API. Known native app state and JSON-LD supply metadata; empty error pages remain errors. See [public-page extraction](JIOSAAVN_PUBLIC_PAGES.md).

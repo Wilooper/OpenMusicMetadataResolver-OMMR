@@ -263,3 +263,8 @@ When the configured/default source selection has no available identity adapters,
 ## Rich public catalogs
 
 See [RICH_CATALOGS.md](RICH_CATALOGS.md) for native Bugs/Genie/Melon song adapters, `bugs_id`/`genie_id`/`melon_id`, accepted YouTube artist/album context in provider data, optional Python pooling and `/v1/catalog` (also `operation: catalog` through the JSON gateway). These Korean adapters require no credentials; the optional Python path currently uses public YouTube access.
+
+
+### JioSaavn public song-page input
+
+For source extraction, `provider=jiosaavn&url=<percent-encoded HTTPS song URL>` reads the exact official song page before falling back to `webapi.get&type=song`. The JSON gateway accepts `{"operation":"extract","provider":"jiosaavn","url":"https://www.jiosaavn.com/song/mera-mann/ERIkRAwJf38"}`. URL input cannot be combined with `id` or `id_type`; repeated URLs, other providers, foreign hosts, credentials, ports, query strings, fragments and non-song paths are rejected. Only the fixed official JioSaavn host is fetched. Existing endpoint/debug policy applies. See [supported structures and live limits](JIOSAAVN_PUBLIC_PAGES.md).

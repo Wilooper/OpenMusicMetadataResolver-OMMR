@@ -23,7 +23,7 @@ func main() {
 	artist := flag.String("artist", "Karan Aujla", "search artist")
 	title := flag.String("title", "Boyfriend", "search title")
 	id := flag.String("id", "", "optional exact catalog ID instead of search")
-	idType := flag.String("id-type", "", "optional ID kind; JioSaavn: jiosaavn_track_id or jiosaavn_share")
+	idType := flag.String("id-type", "", "optional ID kind; JioSaavn: jiosaavn_track_id, jiosaavn_share or jiosaavn_url")
 	routes := flag.Bool("routes", false, "also compare fixed public homepage/search protocol routes")
 	flag.Parse()
 	if *provider != "jiosaavn" && *provider != "deezer" && *provider != "musicbrainz" {

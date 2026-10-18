@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"github.com/ommr/ommr/internal/adapters"
+	"github.com/ommr/ommr/internal/adapters/jiosaavn"
 	"github.com/ommr/ommr/internal/metadata"
 	"github.com/ommr/ommr/internal/models/canonical"
 	"github.com/ommr/ommr/internal/platformlinks"
@@ -52,10 +53,11 @@ func (h *Handler) HandleExtract(w http.ResponseWriter, r *http.Request) {
 	}
 	q := r.URL.Query()
 	providerID := strings.TrimSpace(q.Get("id"))
+	providerURL := strings.TrimSpace(q.Get("url"))
 	providerName := strings.ToLower(strings.TrimSpace(q.Get("provider")))
 	artist, title := strings.TrimSpace(q.Get("artist")), strings.TrimSpace(q.Get("title"))
-	if (providerID != "" && providerName == "") || (providerID == "" && (artist == "" || title == "")) {
-		http.Error(w, `{"error":"Provide provider and id, or both artist and title"}`, http.StatusBadRequest)
+	if (providerID != "" && providerName == "") || (providerID == "" && providerURL == "" && (artist == "" || title == "")) {
+		http.Error(w, `{"error":"Provide provider and id/url, or both artist and title"}`, http.StatusBadRequest)
 		return
 	}
 
@@ -69,6 +71,19 @@ func (h *Handler) HandleExtract(w http.ResponseWriter, r *http.Request) {
 		if q.Get("id_type") == "share" {
 			idType = "jiosaavn_share"
 		}
+	}
+
+	if q.Has("url") {
+		if providerName != "jiosaavn" || providerURL == "" || providerID != "" || q.Has("id_type") || len(q["url"]) != 1 {
+			http.Error(w, `{"error":"url requires provider=jiosaavn and cannot be combined with id or id_type"}`, http.StatusBadRequest)
+			return
+		}
+		page, _, err := jiosaavn.ParseSongURL(providerURL)
+		if err != nil {
+			http.Error(w, `{"error":"invalid public JioSaavn song URL"}`, http.StatusBadRequest)
+			return
+		}
+		providerID, idType = page, "jiosaavn_url"
 	}
 
 	var active []adapters.ProviderAdapter

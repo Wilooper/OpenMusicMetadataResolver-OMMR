@@ -19,7 +19,7 @@ import (
 
 const (
 	ProviderName    = "jiosaavn"
-	ProviderVersion = "jiosaavn-search-v4-routes"
+	ProviderVersion = "jiosaavn-search-v5-pages"
 )
 
 var SearchURL = "https://www.jiosaavn.com/api.php"
@@ -49,6 +49,9 @@ func (p *Provider) Version() string {
 
 // Native song IDs and public share tokens address different API methods.
 func (p *Provider) FetchByID(ctx context.Context, idType string, id string) (*canonical.TrackCandidate, error) {
+	if idType == "jiosaavn_url" {
+		return p.fetchPage(ctx, id)
+	}
 	if idType != "jiosaavn" && idType != "jiosaavn_id" && idType != "jiosaavn_track_id" && idType != "jiosaavn_share" {
 		return nil, fmt.Errorf("unsupported ID type %q for JioSaavn", idType)
 	}

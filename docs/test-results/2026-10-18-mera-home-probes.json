@@ -1,0 +1,32 @@
+[
+  {
+    "name": "jiosaavn_song",
+    "url": "https://www.jiosaavn.com/song/mera-mann/ERIkRAwJf38",
+    "status": 200,
+    "content_type": "text/html",
+    "server": "openresty/1.27.1.1",
+    "bytes": 195,
+    "sha256": "5b131ca14aa96311d3432b0062c7443d3b0e6346ec279bd376a75f0a76bcd5d7",
+    "site_unavailable": true
+  },
+  {
+    "name": "deezer_home",
+    "url": "https://www.deezer.com/",
+    "status": 200,
+    "content_type": "text/html",
+    "server": "openresty/1.27.1.1",
+    "bytes": 195,
+    "sha256": "5b131ca14aa96311d3432b0062c7443d3b0e6346ec279bd376a75f0a76bcd5d7",
+    "site_unavailable": true
+  },
+  {
+    "name": "musicbrainz_home",
+    "url": "https://musicbrainz.org/",
+    "status": 200,
+    "content_type": "text/html",
+    "server": "openresty/1.27.1.1",
+    "bytes": 195,
+    "sha256": "5b131ca14aa96311d3432b0062c7443d3b0e6346ec279bd376a75f0a76bcd5d7",
+    "site_unavailable": true
+  }
+]

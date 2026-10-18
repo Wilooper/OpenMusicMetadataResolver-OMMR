@@ -364,3 +364,5 @@ Rich catalog expansion: [Bugs/Genie/Melon and optional Python YouTube extraction
 HTML recovery: [decoder behavior, official-page fallbacks and live availability limits](docs/HTML_RECOVERY.md). The empty 195-byte “Site Unavailable” response contains no recoverable song data.
 
 Provider troubleshooting: [isolated Go checks and browser observations](docs/PROVIDER_DIAGNOSTICS.md) record the real adapter requests independently of configuration and caches. JioSaavn native IDs and public song-link tokens use separate lookup methods.
+
+JioSaavn [public song-page input](docs/JIOSAAVN_PUBLIC_PAGES.md) reads known page metadata before using the share-token API, through GET extraction or the JSON gateway.

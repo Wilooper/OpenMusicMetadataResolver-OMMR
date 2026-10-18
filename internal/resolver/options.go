@@ -27,7 +27,7 @@ func (res *Resolver) Configure(policy merger.Policy, enrichers ...catalog.Enrich
 		Enrichers []string
 	}{policy, names})
 	sum := sha256.Sum256(data)
-	res.cacheNamespace = "resolved:rich-v9:" + hex.EncodeToString(sum[:8]) + ":"
+	res.cacheNamespace = "resolved:rich-v10:" + hex.EncodeToString(sum[:8]) + ":"
 	res.enrichers = append([]catalog.Enricher(nil), enrichers...)
 }
 

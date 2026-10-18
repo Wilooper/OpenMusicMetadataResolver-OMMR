@@ -1,0 +1,25 @@
+{
+  "evidence": "User-supplied excerpt, not a live fetched provider response or verified HTML capture",
+  "url": "https://www.jiosaavn.com/song/mera-mann/ERIkRAwJf38",
+  "metadata": {
+    "title": "Mera Mann : Juss & MixSingh",
+    "artists": [
+      "Juss",
+      "Mixsingh"
+    ],
+    "album": "Mera Mann",
+    "release_year": 2024,
+    "duration_ms": 163000,
+    "language": "Punjabi",
+    "copyright_notice": "© 2024 Speed Records (under exclusive assignment to Times Music)"
+  },
+  "public_share_identifier": "ERIkRAwJf38",
+  "not_established": [
+    "native_song_id",
+    "ISRC",
+    "genre",
+    "exact_release_date",
+    "explicit_status",
+    "composer_or_lyricist_roles"
+  ]
+}
