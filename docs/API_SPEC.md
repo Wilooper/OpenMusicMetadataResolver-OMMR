@@ -275,3 +275,10 @@ YouTube catalog also supports `type=credits&id=MPTC<11-character identifier>` th
 ## Artist profiles
 
 `GET /v1/artists?artist=Gur%20Sidhu&limit=10` and `POST /v1/query` with `operation: artists` return independent public artist profiles. Optional `sources` filters supported providers; exact lookups use `provider` and a native artist `id`. Debug adds source status, cache and partial/error details. Bios, artist images, top/recent/catalog tracks and precise source-scoped audience/count semantics are described in [ARTIST_PROFILES.md](ARTIST_PROFILES.md). No song-list length is presented as a total track count, and no monthly/yearly plays are inferred from listeners or views.
+
+
+## Share links and capability discovery
+
+Resolve/links and bulk accept `url` as an alternative to typed IDs or ISRC, including the JSON gateway. Supported direct track links cover Spotify, YouTube/YouTube Music, Apple Music, Deezer, JioSaavn, SoundCloud, MusicBrainz recordings, TIDAL and Qobuz. New typed resolver fields are `jiosaavn_id`, `jiosaavn_url` and `musicbrainz_id`. Malformed/ambiguous/non-track/foreign links fail before provider access; invalid bulk items remain independent. Normalized links reuse typed-input cache identity. Existing source-specific extraction URL semantics remain unchanged.
+
+`GET /v1/capabilities` and `{"operation":"capabilities"}` return schema-versioned endpoint, input, provider readiness and limit metadata without upstream requests or secrets. `api.endpoints.capabilities` controls both paths; `capabilities` can be configured as the default JSON operation. See [the full input formats, response semantics and examples](SHARE_LINKS_AND_CAPABILITIES.md).

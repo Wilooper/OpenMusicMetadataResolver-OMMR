@@ -31,6 +31,7 @@ api:
     fingerprint: true
     catalog: true
     artists: true
+    capabilities: true
     query: true
     providers: true
     health: true

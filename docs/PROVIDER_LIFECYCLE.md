@@ -118,3 +118,5 @@ This service imports operator-owned sessions; it does not host a browser sign-in
 ## Rich public catalogs
 
 See [RICH_CATALOGS.md](RICH_CATALOGS.md) for native Bugs/Genie/Melon song adapters, `bugs_id`/`genie_id`/`melon_id`, accepted YouTube artist/album context in provider data, optional Python pooling and `/v1/catalog` (also `operation: catalog` through the JSON gateway). These Korean adapters require no credentials; the optional Python path currently uses public YouTube access.
+
+Capability discovery: `/v1/capabilities` summarizes registered track sources, independent artist service readiness, endpoint enablement, input support and worker dependencies. It never probes credentials or upstream hosts; local readiness is not proof of live source access. See [discovery semantics](SHARE_LINKS_AND_CAPABILITIES.md).

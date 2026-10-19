@@ -105,7 +105,7 @@ func (h *Handler) HandleQuery(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	delete(payload, "operation")
-	routes := map[string]http.HandlerFunc{"resolve": h.HandleResolve, "links": h.HandleLinks, "search": h.HandleSearch, "extract": h.HandleExtract, "bulk": h.HandleBulk, "fingerprint": h.HandleFingerprint, "catalog": h.HandleCatalog, "artists": h.HandleArtists}
+	routes := map[string]http.HandlerFunc{"resolve": h.HandleResolve, "links": h.HandleLinks, "search": h.HandleSearch, "extract": h.HandleExtract, "bulk": h.HandleBulk, "fingerprint": h.HandleFingerprint, "catalog": h.HandleCatalog, "artists": h.HandleArtists, "capabilities": h.HandleCapabilities}
 	handler, exists := routes[operation]
 	if !exists {
 		fail("Unsupported operation")
@@ -142,7 +142,7 @@ func (h *Handler) HandleQuery(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	params := url.Values{}
-	allowed := map[string]bool{"spotify_id": true, "youtube_id": true, "deezer_id": true, "apple_id": true, "soundcloud_id": true, "qobuz_id": true, "tidal_id": true, "amazonmusic_id": true, "amazon_music_id": true, "pandora_id": true, "bugs_id": true, "genie_id": true, "melon_id": true, "isrc": true, "artist": true, "title": true, "album": true, "sources": true, "debug": true, "bypass_cache": true, "q": true, "page": true, "limit": true, "provider": true, "id": true, "id_type": true, "url": true, "type": true}
+	allowed := map[string]bool{"spotify_id": true, "jiosaavn_id": true, "jiosaavn_url": true, "musicbrainz_id": true, "youtube_id": true, "deezer_id": true, "apple_id": true, "soundcloud_id": true, "qobuz_id": true, "tidal_id": true, "amazonmusic_id": true, "amazon_music_id": true, "pandora_id": true, "bugs_id": true, "genie_id": true, "melon_id": true, "isrc": true, "artist": true, "title": true, "album": true, "sources": true, "debug": true, "bypass_cache": true, "q": true, "page": true, "limit": true, "provider": true, "id": true, "id_type": true, "url": true, "type": true}
 	for key, raw := range payload {
 		if !allowed[key] {
 			fail("Unknown query field: " + key)

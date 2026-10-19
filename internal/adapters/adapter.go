@@ -8,9 +8,13 @@ import (
 
 // Query represents a resolution query sent to provider adapters.
 type Query struct {
-	BugsID  string `json:"bugs_id,omitempty"`
-	GenieID string `json:"genie_id,omitempty"`
-	MelonID string `json:"melon_id,omitempty"`
+	URL           string `json:"url,omitempty"`
+	JioSaavnID    string `json:"jiosaavn_id,omitempty"`
+	JioSaavnURL   string `json:"jiosaavn_url,omitempty"`
+	MusicBrainzID string `json:"musicbrainz_id,omitempty"`
+	BugsID        string `json:"bugs_id,omitempty"`
+	GenieID       string `json:"genie_id,omitempty"`
+	MelonID       string `json:"melon_id,omitempty"`
 
 	SpotifyID     string `json:"spotify_id,omitempty"`
 	YouTubeID     string `json:"youtube_id,omitempty"`

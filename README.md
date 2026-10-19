@@ -372,3 +372,6 @@ JioSaavn [public song-page input](docs/JIOSAAVN_PUBLIC_PAGES.md) reads known pag
 [Known Unknowns album verification](docs/YOUTUBE_KNOWN_UNKNOWNS_VERIFICATION.md) includes all 10 songs, public YouTube credits, source metadata, and a fixed same-album/wrong-title identity leak.
 
 [Artist profiles](docs/ARTIST_PROFILES.md): `GET /v1/artists?artist=Gur%20Sidhu` returns public source-owned bios, artist images, top/recent tracks, audience metrics with time periods and explicitly reported catalog totals. Exact artist IDs and ambiguity choices are supported; no credentials are required for the native sources.
+
+
+Share a track link directly with `/v1/resolve?url=...` or the JSON/bulk APIs. [Share links and discovery](docs/SHARE_LINKS_AND_CAPABILITIES.md) covers nine supported services, JioSaavn/MusicBrainz direct seeds and `/v1/capabilities`. The [2026-10-19 status review](docs/STATUS_2026-10-19.md) summarizes the latest Termux results and remaining limitations.

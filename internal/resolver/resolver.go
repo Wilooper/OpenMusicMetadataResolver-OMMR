@@ -17,6 +17,7 @@ import (
 	"github.com/ommr/ommr/internal/cache"
 	"github.com/ommr/ommr/internal/enrichment/catalog"
 	"github.com/ommr/ommr/internal/identity"
+	"github.com/ommr/ommr/internal/idresolver"
 	"github.com/ommr/ommr/internal/matcher"
 	"github.com/ommr/ommr/internal/merger"
 	"github.com/ommr/ommr/internal/metadata"
@@ -95,6 +96,11 @@ func (res *Resolver) WaitProvider(ctx context.Context, provider string) error {
 }
 
 func (res *Resolver) Resolve(ctx context.Context, req ResolveRequest) (*ResolveResponse, error) {
+	var err error
+	req.Query, err = idresolver.NormalizeQuery(req.Query)
+	if err != nil {
+		return nil, err
+	}
 	req.Query.Title = query.CleanTitle(req.Query.Title)
 	req.Query.Artist = query.CleanArtist(req.Query.Artist)
 	if res.cache == nil {
@@ -209,74 +215,8 @@ func (res *Resolver) resolve(ctx context.Context, req ResolveRequest) (*ResolveR
 			var fetched []canonical.TrackCandidate
 			var fetchErr error
 
-			if req.Query.SpotifyID != "" && ad.Name() == "spotify" {
-				cand, err := ad.FetchByID(gCtx, "spotify", req.Query.SpotifyID)
-				fetchErr = err
-				if cand != nil {
-					fetched = append(fetched, *cand)
-				}
-			} else if req.Query.DeezerID != "" && ad.Name() == "deezer" {
-				cand, err := ad.FetchByID(gCtx, "deezer", req.Query.DeezerID)
-				fetchErr = err
-				if cand != nil {
-					fetched = append(fetched, *cand)
-				}
-			} else if req.Query.AppleID != "" && ad.Name() == "applemusic" {
-				cand, err := ad.FetchByID(gCtx, "applemusic", req.Query.AppleID)
-				fetchErr = err
-				if cand != nil {
-					fetched = append(fetched, *cand)
-				}
-			} else if req.Query.SoundCloudID != "" && ad.Name() == "soundcloud" {
-				cand, err := ad.FetchByID(gCtx, "soundcloud", req.Query.SoundCloudID)
-				fetchErr = err
-				if cand != nil {
-					fetched = append(fetched, *cand)
-				}
-			} else if req.Query.QobuzID != "" && ad.Name() == "qobuz" {
-				cand, err := ad.FetchByID(gCtx, "qobuz", req.Query.QobuzID)
-				fetchErr = err
-				if cand != nil {
-					fetched = append(fetched, *cand)
-				}
-			} else if req.Query.TidalID != "" && ad.Name() == "tidal" {
-				cand, err := ad.FetchByID(gCtx, "tidal", req.Query.TidalID)
-				fetchErr = err
-				if cand != nil {
-					fetched = append(fetched, *cand)
-				}
-			} else if req.Query.AmazonMusicID != "" && ad.Name() == "amazonmusic" {
-				cand, err := ad.FetchByID(gCtx, "amazonmusic", req.Query.AmazonMusicID)
-				fetchErr = err
-				if cand != nil {
-					fetched = append(fetched, *cand)
-				}
-			} else if req.Query.BugsID != "" && ad.Name() == "bugs" {
-				cand, err := ad.FetchByID(gCtx, "bugs", req.Query.BugsID)
-				fetchErr = err
-				if cand != nil {
-					fetched = append(fetched, *cand)
-				}
-			} else if req.Query.GenieID != "" && ad.Name() == "genie" {
-				cand, err := ad.FetchByID(gCtx, "genie", req.Query.GenieID)
-				fetchErr = err
-				if cand != nil {
-					fetched = append(fetched, *cand)
-				}
-			} else if req.Query.MelonID != "" && ad.Name() == "melon" {
-				cand, err := ad.FetchByID(gCtx, "melon", req.Query.MelonID)
-				fetchErr = err
-				if cand != nil {
-					fetched = append(fetched, *cand)
-				}
-			} else if req.Query.PandoraID != "" && ad.Name() == "pandora" {
-				cand, err := ad.FetchByID(gCtx, "pandora", req.Query.PandoraID)
-				fetchErr = err
-				if cand != nil {
-					fetched = append(fetched, *cand)
-				}
-			} else if req.Query.YouTubeID != "" && ad.Name() == "ytmusic" {
-				cand, err := ad.FetchByID(gCtx, "youtube", req.Query.YouTubeID)
+			if direct := req.Query.DirectInput(); direct.Provider != "" && ad.Name() == direct.Provider {
+				cand, err := ad.FetchByID(gCtx, direct.Kind, direct.ID)
 				fetchErr = err
 				if cand != nil {
 					fetched = append(fetched, *cand)
@@ -698,41 +638,8 @@ func deduplicateIdentityMatches(matches []canonical.IdentityMatch) []canonical.I
 }
 
 func determineInputType(q adapters.Query) string {
-	if q.SpotifyID != "" {
-		return "spotify_id"
-	}
-	if q.YouTubeID != "" {
-		return "youtube_id"
-	}
-	if q.DeezerID != "" {
-		return "deezer_id"
-	}
-	if q.AppleID != "" {
-		return "apple_id"
-	}
-	if q.SoundCloudID != "" {
-		return "soundcloud_id"
-	}
-	if q.QobuzID != "" {
-		return "qobuz_id"
-	}
-	if q.TidalID != "" {
-		return "tidal_id"
-	}
-	if q.AmazonMusicID != "" {
-		return "amazonmusic_id"
-	}
-	if q.PandoraID != "" {
-		return "pandora_id"
-	}
-	if q.BugsID != "" {
-		return "bugs_id"
-	}
-	if q.GenieID != "" {
-		return "genie_id"
-	}
-	if q.MelonID != "" {
-		return "melon_id"
+	if direct := q.DirectInput(); direct.Provider != "" {
+		return direct.Field
 	}
 	if q.ISRC != "" {
 		return "isrc"
@@ -770,70 +677,15 @@ func hashQuery(q adapters.Query, sources []string) string {
 	return hex.EncodeToString(h[:])
 }
 
-func directProvider(q adapters.Query) string {
-	switch {
-	case q.SpotifyID != "":
-		return "spotify"
-	case q.YouTubeID != "":
-		return "ytmusic"
-	case q.DeezerID != "":
-		return "deezer"
-	case q.AppleID != "":
-		return "applemusic"
-	case q.SoundCloudID != "":
-		return "soundcloud"
-	case q.QobuzID != "":
-		return "qobuz"
-	case q.TidalID != "":
-		return "tidal"
-	case q.AmazonMusicID != "":
-		return "amazonmusic"
-	case q.BugsID != "":
-		return "bugs"
-	case q.GenieID != "":
-		return "genie"
-	case q.MelonID != "":
-		return "melon"
-	case q.PandoraID != "":
-		return "pandora"
-	default:
-		return ""
-	}
-}
+func directProvider(q adapters.Query) string { return q.DirectInput().Provider }
 
 func trustedSeedCandidates(q adapters.Query, candidates []canonical.TrackCandidate) []canonical.TrackCandidate {
 	provider := directProvider(q)
 	if provider != "" {
-		id := ""
-		switch provider {
-		case "spotify":
-			id = q.SpotifyID
-		case "ytmusic":
-			id = q.YouTubeID
-		case "deezer":
-			id = q.DeezerID
-		case "applemusic":
-			id = q.AppleID
-		case "soundcloud":
-			id = q.SoundCloudID
-		case "qobuz":
-			id = q.QobuzID
-		case "tidal":
-			id = q.TidalID
-		case "amazonmusic":
-			id = q.AmazonMusicID
-		case "bugs":
-			id = q.BugsID
-		case "genie":
-			id = q.GenieID
-		case "melon":
-			id = q.MelonID
-		case "pandora":
-			id = q.PandoraID
-		}
+
 		trusted := make([]canonical.TrackCandidate, 0, 1)
 		for _, candidate := range candidates {
-			if !strings.EqualFold(candidate.Provider, provider) || candidate.Track.IDs[provider] != id {
+			if !adapters.DirectIDMatch(q, candidate) {
 				continue
 			}
 			trusted = append(trusted, candidate)
@@ -854,25 +706,7 @@ func trustedSeedCandidates(q adapters.Query, candidates []canonical.TrackCandida
 }
 
 func candidateMatchesDirectID(q adapters.Query, candidate canonical.TrackCandidate) bool {
-	provider := directProvider(q)
-	if provider == "" || !strings.EqualFold(candidate.Provider, provider) {
-		return false
-	}
-	id := map[string]string{
-		"spotify":     q.SpotifyID,
-		"ytmusic":     q.YouTubeID,
-		"deezer":      q.DeezerID,
-		"applemusic":  q.AppleID,
-		"soundcloud":  q.SoundCloudID,
-		"qobuz":       q.QobuzID,
-		"tidal":       q.TidalID,
-		"amazonmusic": q.AmazonMusicID,
-		"pandora":     q.PandoraID,
-		"bugs":        q.BugsID,
-		"genie":       q.GenieID,
-		"melon":       q.MelonID,
-	}[provider]
-	return id != "" && candidate.Track.IDs[provider] == id
+	return adapters.DirectIDMatch(q, candidate)
 }
 
 func (res *Resolver) SetProviderHealth(manager *providerhealth.Manager) { res.health = manager }

@@ -124,3 +124,15 @@ func TestConfigurationDiscoversSessionsAndControlsAPI(t *testing.T) {
 		t.Fatal("explicit blank environment did not disable imported bearer")
 	}
 }
+
+func TestCapabilitiesEndpointAndDefaultOperation(t *testing.T) {
+	path := filepath.Join(t.TempDir(), "config.yaml")
+	if err := os.WriteFile(path, []byte("api:\n  default_operation: capabilities\n  endpoints:\n    capabilities: false\n"), 0600); err != nil {
+		t.Fatal(err)
+	}
+	t.Setenv("OMMR_CONFIG_FILE", path)
+	cfg, err := LoadConfig()
+	if err != nil || cfg.API.DefaultOperation != "capabilities" || cfg.API.Enabled("capabilities") {
+		t.Fatalf("capability configuration: %+v %v", cfg, err)
+	}
+}
