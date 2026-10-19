@@ -19,11 +19,13 @@ All data endpoints (`resolve`, `links`, `bulk`, `search`, `extract`) default to 
 | `/bulk` | Item index, success/error, public track; batch totals | Full canonical track and per-item provider statuses (`sources`) |
 | `/links` | Track identity and accepted platform IDs/URLs | Also provider statuses, unavailable platforms, link match methods/confidence and URL provenance |
 | `/search` | Title, artists, album, images, canonical ID, available platforms; pagination | Also matching scores, confidence, identity diagnostics, source count |
+| `/albums` | Exact album metadata, source-owned extra fields, ordered tracks and explicit completion | Also source execution/cache status |
+| `/artists` | Independent artist profiles, metrics and catalog context | Also per-source execution status |
 | `/extract` | `{ "results": [ ...public tracks ] }` (independent records, never merged) | Existing per-source `query`/`sources` response, execution status/error, version and field coverage |
 
 Production tracks retain music metadata, credits, artwork, accepted provider IDs, artist/album IDs, identity status, and compact `extensions.platform_links`. They omit matching scores/breakdowns, confidence calculations, completeness, identity reasons/methods, field provenance, contributing sources and internal relation graphs. Provider metadata is exposed in `track.provider_data`; only the public extensions `platform_links` and `wikipedia` remain under `extensions`; Wikipedia context keeps its attribution. Platform names in IDs/links represent usable catalog identifiers, not fetch diagnostics. Optional empty metadata arrays are omitted. No country code is added to the unified root; source-reported territory/country information is retained within provider data.
 
-Production tracks also include `explicit_status` (`explicit`, `clean`, `unknown`). The internal canonical schema and shared disk/Redis cache remain complete. The presentation flag is not part of the resolver request/cache key: switching modes reuses the same cached resolution without changing its diagnostics or repeating provider work. It reduces transmitted bytes; it does not reduce stored cache-entry bytes or upstream work on a cache miss. Debug is an output mode, not an authorization boundary. A hosting-level switch to disable it is deferred.
+Production tracks also include `explicit_status` (`explicit`, `clean`, `unknown`). The internal canonical schema and shared disk/Redis cache remain complete. The presentation flag is not part of the resolver request/cache key: switching modes reuses the same cached resolution without changing its diagnostics or repeating provider work. It reduces transmitted bytes; it does not reduce stored cache-entry bytes or upstream work on a cache miss. Debug is an output mode, not an authorization boundary. Hosts can disable it with `api.allow_debug: false`; see [runtime policy](PROVIDER_LIFECYCLE.md).
 
 **Migration:** clients relying on the previous diagnostic fields or extraction source envelopes must add `debug=true`. Detailed response examples below show debug mode unless otherwise noted. Default extraction returns an empty results array if all providers fail or find nothing; use debug mode to distinguish those outcomes.
 
@@ -33,6 +35,11 @@ Production tracks also include `explicit_status` (`explicit`, `clean`, `unknown`
 
 | Method | Route | Description |
 | --- | --- | --- |
+| `GET` | `/v1/albums` | Exact native album/release metadata and complete or explicitly partial track lists |
+| `GET` | `/v1/capabilities` | Configuration-aware endpoint/provider capability discovery |
+| `POST` | `/v1/query` | JSON gateway with an explicit or configured operation |
+| `GET` | `/v1/catalog` | Optional YouTube artist/album/playlist/song catalog worker |
+| `GET` | `/v1/providers` | Provider lifecycle and circuit status |
 | `GET` | `/v1/artists` | Public source-owned artist profiles, audience metrics, biographies and catalog context |
 | `GET` | `/v1/resolve` | Resolves unified track metadata and cross-platform identities by ID or Query |
 | `GET` | `/v1/links` | Returns accepted recording IDs and links |
@@ -282,3 +289,7 @@ YouTube catalog also supports `type=credits&id=MPTC<11-character identifier>` th
 Resolve/links and bulk accept `url` as an alternative to typed IDs or ISRC, including the JSON gateway. Supported direct track links cover Spotify, YouTube/YouTube Music, Apple Music, Deezer, JioSaavn, SoundCloud, MusicBrainz recordings, TIDAL and Qobuz. New typed resolver fields are `jiosaavn_id`, `jiosaavn_url` and `musicbrainz_id`. Malformed/ambiguous/non-track/foreign links fail before provider access; invalid bulk items remain independent. Normalized links reuse typed-input cache identity. Existing source-specific extraction URL semantics remain unchanged.
 
 `GET /v1/capabilities` and `{"operation":"capabilities"}` return schema-versioned endpoint, input, provider readiness and limit metadata without upstream requests or secrets. `api.endpoints.capabilities` controls both paths; `capabilities` can be configured as the default JSON operation. See [the full input formats, response semantics and examples](SHARE_LINKS_AND_CAPABILITIES.md).
+
+## Native album catalog
+
+`GET /v1/albums?provider=applemusic&id=1829591921` and `POST /v1/query` with `operation: albums` return exact source-owned albums. Supported providers: `applemusic`, `deezer`, `jiosaavn`, `musicbrainz` (release UUID). `limit` is 1–1000, default 1000. Every response reports `album.track_list.returned`, a source-reported `total` when known, and `complete`; incomplete lists carry a reason. `debug=true` adds execution/cache status. See [native album fields, pagination and runtime policy](NATIVE_ALBUMS.md).

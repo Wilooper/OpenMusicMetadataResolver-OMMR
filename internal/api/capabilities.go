@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"sort"
 
+	"github.com/ommr/ommr/internal/albums"
 	"github.com/ommr/ommr/internal/artists"
 )
 
@@ -52,7 +53,7 @@ func (h *Handler) HandleCapabilities(w http.ResponseWriter, r *http.Request) {
 	}
 	sort.Strings(sorted)
 	profiles := []providerCapability{}
-	trackAvailable, artistAvailable := false, false
+	trackAvailable, artistAvailable, albumAvailable := false, false, false
 	youtubeAvailable := h.extractor != nil && h.cfg.Lifecycle.ProviderEnabled("ytmusic")
 	if h.health != nil {
 		youtubeAvailable = youtubeAvailable && h.health.Available("ytmusic_python")
@@ -101,6 +102,19 @@ func (h *Handler) HandleCapabilities(w http.ResponseWriter, r *http.Request) {
 				entry.Operations = append(entry.Operations, "artists")
 			}
 		}
+		albumReady := entry.Enabled && h.albums != nil && albums.Supported(name)
+		if albumReady && h.albums.Available != nil {
+			albumReady = h.albums.Available(name)
+		}
+		if albumReady && h.albums.Health != nil {
+			albumReady = h.albums.Health.Available(name)
+		}
+		if albumReady {
+			albumAvailable = true
+			if h.cfg.API.Enabled("albums") {
+				entry.Operations = append(entry.Operations, "albums")
+			}
+		}
 		if name == "ytmusic" && youtubeAvailable && h.cfg.API.Enabled("catalog") {
 			entry.Operations = append(entry.Operations, "catalog")
 		}
@@ -108,7 +122,7 @@ func (h *Handler) HandleCapabilities(w http.ResponseWriter, r *http.Request) {
 		profiles = append(profiles, entry)
 	}
 	endpoints := map[string]endpointCapability{}
-	for _, op := range []string{"resolve", "links", "extract", "bulk", "search", "artists", "catalog", "fingerprint", "health", "providers", "query", "capabilities"} {
+	for _, op := range []string{"resolve", "links", "extract", "bulk", "search", "artists", "albums", "catalog", "fingerprint", "health", "providers", "query", "capabilities"} {
 		ready := true
 		switch op {
 		case "resolve", "links", "extract", "bulk", "search":
@@ -118,6 +132,8 @@ func (h *Handler) HandleCapabilities(w http.ResponseWriter, r *http.Request) {
 			}
 		case "artists":
 			ready = artistAvailable
+		case "albums":
+			ready = albumAvailable
 		case "catalog":
 			ready = youtubeAvailable
 		case "fingerprint":
@@ -142,6 +158,6 @@ func (h *Handler) HandleCapabilities(w http.ResponseWriter, r *http.Request) {
 		"capabilities_version": 1,
 		"api":                  map[string]any{"default_operation": defaultOp, "allow_debug": h.cfg.API.DebugAllowed(), "allow_overrides": h.cfg.API.OverridesAllowed(), "endpoints": endpoints},
 		"providers":            profiles,
-		"limits":               map[string]any{"bulk_max_items": h.cfg.BulkMaxItems, "bulk_workers": bulkWorkers, "search_max_limit": 50, "artist_max_limit": 50, "catalog_max_limit": 100, "request_timeout_ms": h.cfg.ProviderTimeout.Milliseconds()},
+		"limits":               map[string]any{"bulk_max_items": h.cfg.BulkMaxItems, "bulk_workers": bulkWorkers, "search_max_limit": 50, "artist_max_limit": 50, "album_max_tracks": albums.MaxTracks, "catalog_max_limit": 100, "request_timeout_ms": h.cfg.ProviderTimeout.Milliseconds()},
 	})
 }

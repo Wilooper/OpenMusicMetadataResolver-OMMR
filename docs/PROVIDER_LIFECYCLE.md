@@ -120,3 +120,7 @@ This service imports operator-owned sessions; it does not host a browser sign-in
 See [RICH_CATALOGS.md](RICH_CATALOGS.md) for native Bugs/Genie/Melon song adapters, `bugs_id`/`genie_id`/`melon_id`, accepted YouTube artist/album context in provider data, optional Python pooling and `/v1/catalog` (also `operation: catalog` through the JSON gateway). These Korean adapters require no credentials; the optional Python path currently uses public YouTube access.
 
 Capability discovery: `/v1/capabilities` summarizes registered track sources, independent artist service readiness, endpoint enablement, input support and worker dependencies. It never probes credentials or upstream hosts; local readiness is not proof of live source access. See [discovery semantics](SHARE_LINKS_AND_CAPABILITIES.md).
+
+## Native album catalogs
+
+`api.endpoints.albums` controls REST and JSON album requests; `api.default_operation: albums` selects the JSON default. Exact album lookups share source enable flags, request rate limits and health circuits. Their `albums:v1` cache is independent of track resolution and includes native ID, limit and storefront. See [native album metadata and track lists](NATIVE_ALBUMS.md).

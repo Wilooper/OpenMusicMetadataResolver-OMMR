@@ -31,6 +31,7 @@ api:
     fingerprint: true
     catalog: true
     artists: true
+    albums: true
     capabilities: true
     query: true
     providers: true

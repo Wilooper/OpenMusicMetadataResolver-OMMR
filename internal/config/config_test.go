@@ -136,3 +136,15 @@ func TestCapabilitiesEndpointAndDefaultOperation(t *testing.T) {
 		t.Fatalf("capability configuration: %+v %v", cfg, err)
 	}
 }
+
+func TestNativeAlbumsConfiguration(t *testing.T) {
+	path := filepath.Join(t.TempDir(), "albums.yaml")
+	if err := os.WriteFile(path, []byte("api:\n  default_operation: albums\n  endpoints:\n    albums: false\n"), 0600); err != nil {
+		t.Fatal(err)
+	}
+	t.Setenv("OMMR_CONFIG_FILE", path)
+	cfg, err := LoadConfig()
+	if err != nil || cfg.API.DefaultOperation != "albums" || cfg.API.Enabled("albums") {
+		t.Fatalf("album config ignored: %+v %v", cfg, err)
+	}
+}

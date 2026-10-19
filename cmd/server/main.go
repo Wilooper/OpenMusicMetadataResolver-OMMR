@@ -78,6 +78,7 @@ func main() {
 	handler.SetProviderHealth(runtime.Health)
 	handler.SetExtractor(runtime.Extractor)
 	handler.SetArtists(runtime.Artists)
+	handler.SetAlbums(runtime.Albums)
 
 	router := api.NewRouter(handler, logger, cfg.RateLimitRPS)
 

@@ -196,3 +196,9 @@ func Explicit(c canonical.TrackCandidate) (bool, bool) {
 	}
 	return false, false
 }
+
+// Catalog sanitizes an entity record, including unrecognized catalog metadata.
+// Callers must select an entity first, rather than pass account/player envelopes.
+func Catalog(record map[string]any) map[string]any {
+	return clean(record, 0).(map[string]any)
+}

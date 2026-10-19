@@ -18,6 +18,7 @@ import (
 	"github.com/ommr/ommr/internal/adapters/tidal"
 	"github.com/ommr/ommr/internal/adapters/ytmusic"
 	"github.com/ommr/ommr/internal/adapters/ytmusicrich"
+	"github.com/ommr/ommr/internal/albums"
 	"github.com/ommr/ommr/internal/artists"
 	"github.com/ommr/ommr/internal/cache"
 	"github.com/ommr/ommr/internal/config"
@@ -30,6 +31,7 @@ import (
 )
 
 type Runtime struct {
+	Albums    *albums.Service
 	Artists   *artists.Service
 	Registry  *adapters.Registry
 	Resolver  *resolver.Resolver
@@ -242,5 +244,9 @@ func Build(ctx context.Context, cfg *config.Config, backend cache.Cache) (*Runti
 		_, registered := reg.Get(provider)
 		return registered && cfg.Lifecycle.ProviderEnabled(provider) && manager.Available(provider)
 	}
-	return &Runtime{Registry: reg, Resolver: res, Health: manager, Extractor: pythonPool, Artists: artistService}, nil
+	albumService := albums.New(limiter.Wait, backend)
+	albumService.Health = manager
+	albumService.Storefront = cfg.AppleStorefront
+	albumService.Available = artistService.Available
+	return &Runtime{Registry: reg, Resolver: res, Health: manager, Extractor: pythonPool, Artists: artistService, Albums: albumService}, nil
 }

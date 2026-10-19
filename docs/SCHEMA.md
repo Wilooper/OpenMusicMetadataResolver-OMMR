@@ -165,3 +165,7 @@ The immutable internal `Track` stores accepted source records in `extensions.pro
 See [RICH_CATALOGS.md](RICH_CATALOGS.md) for native Bugs/Genie/Melon song adapters, `bugs_id`/`genie_id`/`melon_id`, accepted YouTube artist/album context in provider data, optional Python pooling and `/v1/catalog` (also `operation: catalog` through the JSON gateway). These Korean adapters require no credentials; the optional Python path currently uses public YouTube access.
 
 Artist profiles use an independent source-owned schema rather than the canonical Track schema. See [artist profile fields and metric periods](ARTIST_PROFILES.md#fields); `internal/artists/models.go` defines the wire types. Metrics expose exact values only when reported and preserve display text/time scope.
+
+## Independent native albums
+
+`/v1/albums` uses a separate album/release response model; canonical `Track` and `Album` remain unchanged. Album tracks preserve native entry IDs, optional recording IDs, disc/track positions and sanitized catalog extras. Completion and provider-declared totals are explicit. See [NATIVE_ALBUMS.md](NATIVE_ALBUMS.md).

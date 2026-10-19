@@ -22,6 +22,10 @@ Music metadata across streaming services is heavily fragmented:
 ### The OMMR Solution
 OMMR accepts a platform identifier or artist and title and returns a canonical record with field provenance and identity confidence. Public paths require no keys; richer official catalog modes and some partner APIs require credentials and may have account restrictions. See [metadata fields and provider evidence](docs/METADATA_CATALOG.md).
 
+### Native album catalogs
+
+Fetch album metadata and ordered track lists with `/v1/albums?provider=applemusic&id=1829591921`. Native Go support covers Apple Music, Deezer, JioSaavn and MusicBrainz releases. Responses report whether the list is complete and preserve source totals, disc positions and extra catalog fields. See [native albums](docs/NATIVE_ALBUMS.md) for limits, JSON queries and live verification.
+
 ### Private configuration
 
 Cross-platform identifiers and song URLs are available at

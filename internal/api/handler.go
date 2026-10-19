@@ -14,6 +14,7 @@ import (
 	"time"
 
 	"github.com/ommr/ommr/internal/adapters"
+	"github.com/ommr/ommr/internal/albums"
 	"github.com/ommr/ommr/internal/artists"
 	"github.com/ommr/ommr/internal/config"
 	"github.com/ommr/ommr/internal/enrichment/catalog"
@@ -29,6 +30,7 @@ import (
 )
 
 type Handler struct {
+	albums      *albums.Service
 	artists     *artists.Service
 	extractor   *extractors.Pool
 	health      *providerhealth.Manager
