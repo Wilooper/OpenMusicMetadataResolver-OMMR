@@ -34,6 +34,7 @@ type publicTrack struct {
 	Album          canonical.Album            `json:"album"`
 	DurationMS     int64                      `json:"duration_ms"`
 	ReleaseDate    string                     `json:"release_date"`
+	MusicGraph     json.RawMessage            `json:"music_graph,omitempty"`
 	ProviderData   map[string]json.RawMessage `json:"provider_data,omitempty"`
 	ExplicitStatus string                     `json:"explicit_status"`
 	Explicit       bool                       `json:"explicit"`
@@ -72,7 +73,7 @@ func trackResponse(track *canonical.Track, debug bool) any {
 	explicitStatus := "unknown"
 	_ = json.Unmarshal(track.Extensions["explicit_status"], &explicitStatus)
 	return publicTrack{
-		ProviderData: providerData, ExplicitStatus: explicitStatus,
+		MusicGraph: track.Extensions["music_graph"], ProviderData: providerData, ExplicitStatus: explicitStatus,
 		CanonicalID: track.CanonicalID, IdentityStatus: track.IdentityStatus,
 		Title: track.Title, Artists: track.Artists, Album: track.Album,
 		DurationMS: track.DurationMS, ReleaseDate: track.ReleaseDate, Explicit: track.Explicit,

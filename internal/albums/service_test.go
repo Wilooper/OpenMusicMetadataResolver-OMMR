@@ -216,3 +216,30 @@ func TestInputTransportAndBudgetBoundaries(t *testing.T) {
 		t.Fatal("redirect followed")
 	}
 }
+
+func TestAlbumGraphDoesNotLeakUnreturnedTracksOrFlattenReleaseCredits(t *testing.T) {
+	const id = "59211ea4-ffd2-4ad9-9a4e-941d3148024a"
+	s := stub(`{"id":"` + id + `","title":"Album","relations":[{"type":"artwork","direction":"backward","artist":{"id":"designer","name":"Designer"}},{"type":"remaster","direction":"forward","release":{"id":"old","title":"Old"}}],"media":[{"position":1,"track-count":2,"tracks":[{"id":"entry-a","title":"One","position":1,"number":"1","recording":{"id":"recording-a","title":"One","relations":[{"type":"producer","direction":"backward","artist":{"id":"producer","name":"Producer"}}]}},{"id":"entry-b","title":"Two","position":2,"number":"2","recording":{"id":"recording-b","title":"Two"}}]}]}`)
+	r, e := s.Resolve(context.Background(), Query{Provider: "musicbrainz", ID: id, Limit: 1})
+	if e != nil || r.Album.MusicGraph == nil {
+		t.Fatal(e)
+	}
+	g := r.Album.MusicGraph
+	for _, n := range g.Nodes {
+		if n.NativeID == "recording-b" || n.NativeID == "entry-b" {
+			t.Fatal("graph bypassed track limit")
+		}
+	}
+	seen := false
+	for _, edge := range g.Edges {
+		if edge.Role == "artwork" {
+			seen = true
+			if edge.To != g.Root {
+				t.Fatal("release credit attached to recording")
+			}
+		}
+	}
+	if !seen {
+		t.Fatal("release credit missing")
+	}
+}

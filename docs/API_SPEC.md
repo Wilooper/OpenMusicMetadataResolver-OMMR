@@ -293,3 +293,7 @@ Resolve/links and bulk accept `url` as an alternative to typed IDs or ISRC, incl
 ## Native album catalog
 
 `GET /v1/albums?provider=applemusic&id=1829591921` and `POST /v1/query` with `operation: albums` return exact source-owned albums. Supported providers: `applemusic`, `deezer`, `jiosaavn`, `musicbrainz` (release UUID). `limit` is 1–1000, default 1000. Every response reports `album.track_list.returned`, a source-reported `total` when known, and `complete`; incomplete lists carry a reason. `debug=true` adds execution/cache status. See [native album fields, pagination and runtime policy](NATIVE_ALBUMS.md).
+
+## Recording relationships and structured credits
+
+Track and native album responses include a source-owned `music_graph`: recordings, exact release editions, release groups, compositions and contributors, with directed relationships and scoped credits. Debug tracks keep the graph under `extensions.music_graph`; production tracks expose it directly. Related versions do not become accepted recording IDs. See [graph schema, scope and source coverage](MUSIC_GRAPH.md).

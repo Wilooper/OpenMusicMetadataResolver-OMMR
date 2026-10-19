@@ -169,3 +169,7 @@ Artist profiles use an independent source-owned schema rather than the canonical
 ## Independent native albums
 
 `/v1/albums` uses a separate album/release response model; canonical `Track` and `Album` remain unchanged. Album tracks preserve native entry IDs, optional recording IDs, disc/track positions and sanitized catalog extras. Completion and provider-declared totals are explicit. See [NATIVE_ALBUMS.md](NATIVE_ALBUMS.md).
+
+## Recording relationships and structured credits
+
+Track and native album responses include a source-owned `music_graph`: recordings, exact release editions, release groups, compositions and contributors, with directed relationships and scoped credits. Debug tracks keep the graph under `extensions.music_graph`; production tracks expose it directly. Related versions do not become accepted recording IDs. See [graph schema, scope and source coverage](MUSIC_GRAPH.md).

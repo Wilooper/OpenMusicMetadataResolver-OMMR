@@ -149,6 +149,7 @@ func (h *Handler) HandleExtract(w http.ResponseWriter, r *http.Request) {
 				for _, candidate := range candidates {
 					candidate.Track.IDs = platformlinks.ProviderIDs(adapter.Name(), candidate.Track.IDs)
 					metadata.Attach(&candidate.Track, []canonical.TrackCandidate{candidate})
+					metadata.AttachGraph(&candidate.Track, []canonical.TrackCandidate{candidate})
 					source.Results = append(source.Results, describeExtractedTrack(candidate.Track))
 				}
 			}

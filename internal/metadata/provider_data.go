@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	"github.com/ommr/ommr/internal/models/canonical"
+	"github.com/ommr/ommr/internal/musicgraph"
 )
 
 // Provider data contains only accepted catalog records, never a complete search/player response.
@@ -201,4 +202,35 @@ func Explicit(c canonical.TrackCandidate) (bool, bool) {
 // Callers must select an entity first, rather than pass account/player envelopes.
 func Catalog(record map[string]any) map[string]any {
 	return clean(record, 0).(map[string]any)
+}
+
+// AttachGraph only receives accepted source records and identity-checked enrichment.
+func AttachGraph(track *canonical.Track, candidates []canonical.TrackCandidate) {
+	if track == nil {
+		return
+	}
+	records := make([]musicgraph.Record, 0, len(candidates))
+	for _, candidate := range candidates {
+		record := Record(candidate)
+		catalog, _ := record["catalog"].(map[string]any)
+		if candidate.Provider == "musicbrainz" {
+			var detail map[string]any
+			if json.Unmarshal(candidate.Track.Extensions["recording_details"], &detail) == nil && detail["id"] == candidate.Track.IDs["musicbrainz"] {
+				catalog = Catalog(detail)
+			}
+		}
+		records = append(records, musicgraph.Record{Provider: candidate.Provider, Track: candidate.Track, Catalog: catalog})
+	}
+	var data map[string]any
+	_ = json.Unmarshal(track.Extensions["provider_data"], &data)
+	enrichment, _ := data["musicbrainz_release"].(map[string]any)
+	release, _ := enrichment["release"].(map[string]any)
+	graph := musicgraph.TrackGraph(*track, records, release)
+	if graph.Root == "" {
+		return
+	}
+	if track.Extensions == nil {
+		track.Extensions = map[string]json.RawMessage{}
+	}
+	track.Extensions["music_graph"], _ = json.Marshal(graph)
 }

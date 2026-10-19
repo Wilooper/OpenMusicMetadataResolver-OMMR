@@ -20,7 +20,7 @@ import (
 
 const (
 	ProviderName    = "musicbrainz"
-	ProviderVersion = "musicbrainz-v3-html"
+	ProviderVersion = "musicbrainz-v4-relationships"
 	BaseURL         = "https://musicbrainz.org/ws/2"
 	UserAgent       = "OMMR/1.0.0 (https://github.com/Wilooper/OpenMusicMetadataResolver-OMMR)"
 )
@@ -58,7 +58,7 @@ func (p *Provider) FetchByID(ctx context.Context, idType string, id string) (*ca
 	if idType == "isrc" {
 		reqURL = fmt.Sprintf("%s/isrc/%s?inc=artists+releases+isrcs+tags&fmt=json", BaseURL, url.PathEscape(id))
 	} else {
-		reqURL = fmt.Sprintf("%s/recording/%s?inc=artists+releases+isrcs+tags+artist-rels+work-rels+work-level-rels+url-rels&fmt=json", BaseURL, url.PathEscape(id))
+		reqURL = fmt.Sprintf("%s/recording/%s?inc=artists+releases+isrcs+tags+artist-rels+recording-rels+release-rels+release-groups+work-rels+work-level-rels+url-rels&fmt=json", BaseURL, url.PathEscape(id))
 	}
 
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, reqURL, nil)

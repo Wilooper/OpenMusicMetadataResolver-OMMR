@@ -79,7 +79,7 @@ func New(r *adapters.Registry, c cache.Cache, l *ratelimit.ProviderLimiter, ttl 
 		ttl:                      ttl,
 		maxCandidatesPerProvider: 10,
 		logger:                   slog.Default(),
-		cacheNamespace:           "resolved:rich-v12:default:",
+		cacheNamespace:           "resolved:rich-v13:default:",
 	}
 }
 
@@ -585,6 +585,7 @@ func (res *Resolver) resolve(ctx context.Context, req ResolveRequest) (*ResolveR
 
 	metadata.Attach(mergedTrack, acceptedCandidates)
 	enrichmentStatuses := res.enrichCatalogs(lookupCtx, mergedTrack)
+	metadata.AttachGraph(mergedTrack, acceptedCandidates)
 	resp := &ResolveResponse{
 		EnrichmentStatus: enrichmentStatuses,
 		Track:            mergedTrack,

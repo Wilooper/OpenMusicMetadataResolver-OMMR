@@ -1,6 +1,9 @@
 package albums
 
-import "time"
+import (
+	"github.com/ommr/ommr/internal/musicgraph"
+	"time"
+)
 
 const MaxTracks = 1000
 
@@ -42,22 +45,23 @@ type TrackList struct {
 	Reason   string `json:"reason,omitempty"`
 }
 type Album struct {
-	Provider     string         `json:"provider"`
-	ID           string         `json:"id"`
-	Title        string         `json:"title"`
-	URL          string         `json:"url,omitempty"`
-	Artists      []Artist       `json:"artists,omitempty"`
-	ReleaseDate  string         `json:"release_date,omitempty"`
-	Label        string         `json:"label,omitempty"`
-	UPC          string         `json:"upc,omitempty"`
-	Copyright    string         `json:"copyright,omitempty"`
-	Language     string         `json:"language,omitempty"`
-	Images       []string       `json:"images,omitempty"`
-	Discs        []Disc         `json:"discs,omitempty"`
-	Tracks       []Track        `json:"tracks"`
-	TrackList    TrackList      `json:"track_list"`
-	ProviderData map[string]any `json:"provider_data,omitempty"`
-	ObservedAt   time.Time      `json:"observed_at"`
+	MusicGraph   *musicgraph.Graph `json:"music_graph,omitempty"`
+	Provider     string            `json:"provider"`
+	ID           string            `json:"id"`
+	Title        string            `json:"title"`
+	URL          string            `json:"url,omitempty"`
+	Artists      []Artist          `json:"artists,omitempty"`
+	ReleaseDate  string            `json:"release_date,omitempty"`
+	Label        string            `json:"label,omitempty"`
+	UPC          string            `json:"upc,omitempty"`
+	Copyright    string            `json:"copyright,omitempty"`
+	Language     string            `json:"language,omitempty"`
+	Images       []string          `json:"images,omitempty"`
+	Discs        []Disc            `json:"discs,omitempty"`
+	Tracks       []Track           `json:"tracks"`
+	TrackList    TrackList         `json:"track_list"`
+	ProviderData map[string]any    `json:"provider_data,omitempty"`
+	ObservedAt   time.Time         `json:"observed_at"`
 }
 type Diagnostics struct {
 	Status string `json:"status"`

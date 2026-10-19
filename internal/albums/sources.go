@@ -330,7 +330,7 @@ func brainzArtists(v any) []Artist {
 	return out
 }
 func (s *Service) brainz(ctx context.Context, q Query) (*Album, error) {
-	params := url.Values{"fmt": {"json"}, "inc": {"recordings+artist-credits+labels+release-groups+genres+isrcs+url-rels"}}
+	params := url.Values{"fmt": {"json"}, "inc": {"recordings+artist-credits+labels+release-groups+genres+isrcs+release-rels+artist-rels+recording-rels+recording-level-rels+work-rels+work-level-rels+url-rels"}}
 	m, err := s.get(ctx, q.Provider, "https://musicbrainz.org/ws/2/release/"+q.ID+"?"+params.Encode())
 	if err != nil {
 		return nil, err

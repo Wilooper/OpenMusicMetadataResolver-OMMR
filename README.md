@@ -379,3 +379,7 @@ JioSaavn [public song-page input](docs/JIOSAAVN_PUBLIC_PAGES.md) reads known pag
 
 
 Share a track link directly with `/v1/resolve?url=...` or the JSON/bulk APIs. [Share links and discovery](docs/SHARE_LINKS_AND_CAPABILITIES.md) covers nine supported services, JioSaavn/MusicBrainz direct seeds and `/v1/capabilities`. The [2026-10-19 status review](docs/STATUS_2026-10-19.md) summarizes the latest Termux results and remaining limitations.
+
+## Recording relationships and structured credits
+
+Track and native album responses include a source-owned `music_graph`: recordings, exact release editions, release groups, compositions and contributors, with directed relationships and scoped credits. Debug tracks keep the graph under `extensions.music_graph`; production tracks expose it directly. Related versions do not become accepted recording IDs. See [graph schema, scope and source coverage](docs/MUSIC_GRAPH.md).

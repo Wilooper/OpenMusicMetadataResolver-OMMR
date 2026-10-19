@@ -62,7 +62,9 @@ func TestAlbumsGETGatewayLimitsAndPolicy(t *testing.T) {
 	disabled := false
 	h.cfg.API.AllowDebug = &disabled
 	w := call("GET", "/v1/albums?provider=applemusic&id=123&debug=true", "")
-	if w.Code != 200 || strings.Contains(w.Body.String(), `"source"`) {
+	var public map[string]any
+	_ = json.Unmarshal(w.Body.Bytes(), &public)
+	if w.Code != 200 || public["source"] != nil {
 		t.Fatal("disabled debug ignored")
 	}
 	h.cfg.API.Endpoints = map[string]bool{"albums": false}

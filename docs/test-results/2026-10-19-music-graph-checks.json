@@ -1,0 +1,28 @@
+{
+  "checks": [
+    {
+      "command": "go build ./...",
+      "exit_code": 0,
+      "seconds": 1.466,
+      "output": ""
+    },
+    {
+      "command": "go vet ./...",
+      "exit_code": 0,
+      "seconds": 0.321,
+      "output": ""
+    },
+    {
+      "command": "go test ./...",
+      "exit_code": 0,
+      "seconds": 7.363,
+      "output": "?   \tgithub.com/ommr/ommr/cmd/providercheck\t[no test files]\n?   \tgithub.com/ommr/ommr/cmd/server\t[no test files]\nok  \tgithub.com/ommr/ommr/internal/adapters\t0.064s\n?   \tgithub.com/ommr/ommr/internal/adapters/amazonmusic\t[no test files]\nok  \tgithub.com/ommr/ommr/internal/adapters/applemusic\t0.015s\nok  \tgithub.com/ommr/ommr/internal/adapters/catalogapi\t0.013s\nok  \tgithub.com/ommr/ommr/internal/adapters/deezer\t(cached)\nok  \tgithub.com/ommr/ommr/internal/adapters/jiosaavn\t0.036s\nok  \tgithub.com/ommr/ommr/internal/adapters/korean\t(cached)\nok  \tgithub.com/ommr/ommr/internal/adapters/musicbrainz\t(cached)\n?   \tgithub.com/ommr/ommr/internal/adapters/pandora\t[no test files]\n?   \tgithub.com/ommr/ommr/internal/adapters/qobuz\t[no test files]\nok  \tgithub.com/ommr/ommr/internal/adapters/soundcloud\t(cached)\nok  \tgithub.com/ommr/ommr/internal/adapters/spotify\t(cached)\nok  \tgithub.com/ommr/ommr/internal/adapters/tidal\t0.008s\nok  \tgithub.com/ommr/ommr/internal/adapters/webdata\t(cached)\nok  \tgithub.com/ommr/ommr/internal/adapters/ytmusic\t(cached)\nok  \tgithub.com/ommr/ommr/internal/adapters/ytmusicrich\t(cached)\nok  \tgithub.com/ommr/ommr/internal/albums\t0.055s\nok  \tgithub.com/ommr/ommr/internal/api\t0.058s\nok  \tgithub.com/ommr/ommr/internal/artists\t(cached)\nok  \tgithub.com/ommr/ommr/internal/bootstrap\t0.012s\n?   \tgithub.com/ommr/ommr/internal/cache\t[no test files]\nok  \tgithub.com/ommr/ommr/internal/cache/disk\t(cached)\n?   \tgithub.com/ommr/ommr/internal/cache/redis\t[no test files]\nok  \tgithub.com/ommr/ommr/internal/config\t(cached)\nok  \tgithub.com/ommr/ommr/internal/credentials\t(cached)\nok  \tgithub.com/ommr/ommr/internal/diagnostics\t(cached)\nok  \tgithub.com/ommr/ommr/internal/enrichment/catalog\t0.013s\nok  \tgithub.com/ommr/ommr/internal/enrichment/wikipedia\t(cached)\nok  \tgithub.com/ommr/ommr/internal/extractors\t(cached)\nok  \tgithub.com/ommr/ommr/internal/identity\t(cached)\nok  \tgithub.com/ommr/ommr/internal/idresolver\t(cached)\nok  \tgithub.com/ommr/ommr/internal/matcher\t(cached)\nok  \tgithub.com/ommr/ommr/internal/merger\t(cached)\nok  \tgithub.com/ommr/ommr/internal/metadata\t0.004s\n?   \tgithub.com/ommr/ommr/internal/metrics\t[no test files]\nok  \tgithub.com/ommr/ommr/internal/middleware\t(cached)\n?   \tgithub.com/ommr/ommr/internal/models/canonical\t[no test files]\n?   \tgithub.com/ommr/ommr/internal/models/provider\t[no test files]\nok  \tgithub.com/ommr/ommr/internal/musicgraph\t(cached)\nok  \tgithub.com/ommr/ommr/internal/platformlinks\t(cached)\nok  \tgithub.com/ommr/ommr/internal/providerhealth\t(cached)\nok  \tgithub.com/ommr/ommr/internal/ratelimit\t(cached)\nok  \tgithub.com/ommr/ommr/internal/resolver\t5.445s\nok  \tgithub.com/ommr/ommr/pkg/query\t(cached)\nok  \tgithub.com/ommr/ommr/tests\t5.026s\n"
+    },
+    {
+      "command": "go test -race ./internal/musicgraph ./internal/metadata ./internal/albums ./internal/api ./internal/resolver ./internal/enrichment/catalog",
+      "exit_code": 0,
+      "seconds": 8.527,
+      "output": "ok  \tgithub.com/ommr/ommr/internal/musicgraph\t1.171s\nok  \tgithub.com/ommr/ommr/internal/metadata\t1.024s\nok  \tgithub.com/ommr/ommr/internal/albums\t1.104s\nok  \tgithub.com/ommr/ommr/internal/api\t1.190s\nok  \tgithub.com/ommr/ommr/internal/resolver\t6.548s\nok  \tgithub.com/ommr/ommr/internal/enrichment/catalog\t1.031s\n"
+    }
+  ]
+}
