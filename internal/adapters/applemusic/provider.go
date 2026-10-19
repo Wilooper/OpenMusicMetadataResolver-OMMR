@@ -19,7 +19,7 @@ import (
 
 const (
 	ProviderName    = "applemusic"
-	ProviderVersion = "applemusic-v1"
+	ProviderVersion = "applemusic-v2-album-counts"
 	BaseURL         = "https://itunes.apple.com"
 )
 
@@ -197,9 +197,10 @@ func (p *Provider) normalizeResult(item provider.AppleTrackResult) canonical.Tra
 		images = append(images, canonical.Image{URL: item.ArtworkUrl100, Width: 100, Height: 100, Type: "cover"})
 	}
 
+	// A song row's trackCount can exclude other discs or bonus media.
+	// Only the collection endpoint establishes an album-wide total.
 	album := canonical.Album{
 		Title:       item.CollectionName,
-		TotalTracks: item.TrackCount,
 		ReleaseDate: parseDate(item.ReleaseDate),
 		Images:      images,
 		IDs:         map[string]string{"applemusic": strconv.FormatInt(item.CollectionID, 10)},

@@ -68,7 +68,7 @@ MusicBrainz exact recording hydration requests recording relationships, work rel
 
 Other accepted sources contribute their normalized artists/credits and native release membership. Structured JioSaavn artist maps and Deezer contributor IDs/roles add source-specific identity where available. The graph builder itself performs no network requests. It does not crawl related entities, enumerate every recording of a composition, or promise complete credits. Missing source data remains missing; `truncated: false` means the builder did not hit its own bounds, not that the provider's catalog is exhaustive.
 
-Nodes and edges are deterministically ordered and duplicate identical edges are removed. Graphs are bounded to 4096 nodes, 8192 edges and four nested MusicBrainz expansions. Existing response-body and request limits still apply. Resolved cache advances to `rich-v14`; native album cache advances to `albums:v3`, preventing older cache entries from hiding the new metadata.
+Nodes and edges are deterministically ordered and duplicate identical edges are removed. Graphs are bounded to 4096 nodes, 8192 edges and four nested MusicBrainz expansions. Existing response-body and request limits still apply. Resolved cache advances to `rich-v15`; native album cache advances to `albums:v3`, preventing older cache entries from hiding the new metadata.
 
 ## Verification
 

@@ -297,3 +297,7 @@ Resolve/links and bulk accept `url` as an alternative to typed IDs or ISRC, incl
 ## Recording relationships and structured credits
 
 Track and native album responses include a source-owned `music_graph`: recordings, exact release editions, release groups, compositions and contributors, with directed relationships and scoped credits. Debug tracks keep the graph under `extensions.music_graph`; production tracks expose it directly. Related versions do not become accepted recording IDs. See [graph schema, scope and source coverage](MUSIC_GRAPH.md).
+
+## Recording timing and album-count semantics
+
+Material duration contradictions can reject text-query outliers when a strict majority of distinct timed providers agrees, or contradictory cross-source candidates when a direct-ID recording supplies timing. The check is repeated after accepted detail hydration; exact requested ISRC identity remains unchanged. Unrequested Reimagined versions are rejected. Apple song-row `trackCount` is retained as source data and is no longer mislabeled as canonical album-wide total; use `/v1/albums` for declared collection totals/completion. See [varied entity verification](ENTITY_MATRIX_2026-10-19.md).

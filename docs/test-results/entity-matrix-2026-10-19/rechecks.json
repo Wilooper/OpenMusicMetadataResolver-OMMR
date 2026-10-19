@@ -1,0 +1,255 @@
+[
+  {
+    "category": "punjabi_count_recheck",
+    "query_artist": "Karan Aujla",
+    "query_title": "Boyfriend",
+    "song_http": 200,
+    "song_seconds": 10.114,
+    "song_resolved": true,
+    "title": "Boyfriend",
+    "artists": [
+      "Karan Aujla",
+      "Ikky"
+    ],
+    "ids": {
+      "applemusic": "1829591986",
+      "applemusic_url": "https://music.apple.com/us/album/boyfriend/1829591921?i=1829591986",
+      "bugs": "126998566",
+      "bugs_url": "https://music.bugs.co.kr/track/126998566",
+      "genie": "111431603",
+      "genie_url": "https://www.genie.co.kr/detail/songInfo?xgnm=111431603",
+      "melon": "39664161",
+      "melon_url": "https://www.melon.com/song/detail.htm?songId=39664161",
+      "ytmusic": "tIjUfo30r4M"
+    },
+    "duration_ms": 161000,
+    "genres": [
+      "POP",
+      "POP / 팝",
+      "Pop"
+    ],
+    "explicit": false,
+    "credits_count": 0,
+    "song_graph_valid": true,
+    "album": {
+      "http": 200,
+      "seconds": 0.018,
+      "id": "1829591921",
+      "title": "P-POP CULTURE",
+      "track_list": {
+        "returned": 11,
+        "total": 11,
+        "complete": true
+      },
+      "discs": 2,
+      "contains_source_track": true,
+      "graph_valid": true,
+      "song_reported_album_total": null,
+      "album_total": 11,
+      "reported_totals_consistent": true,
+      "source_disc_count": 2
+    },
+    "artist": {
+      "http": 200,
+      "seconds": 3.005,
+      "id": "914892130",
+      "name": "Karan Aujla",
+      "identity_method": "exact_id",
+      "images": 0,
+      "recent_tracks": 5,
+      "biography": false,
+      "counts": {},
+      "metrics": [],
+      "sources": [
+        {
+          "provider": "applemusic",
+          "status": "ok",
+          "cached": false
+        }
+      ]
+    }
+  },
+  {
+    "category": "instrumental_recheck",
+    "query_artist": "Ludovico Einaudi",
+    "query_title": "Experience",
+    "song_http": 200,
+    "song_seconds": 3.338,
+    "song_resolved": true,
+    "title": "Experience",
+    "artists": [
+      "Ludovico Einaudi, Daniel Hope & I Virtuosi Italiani"
+    ],
+    "ids": {
+      "applemusic": "1559739399",
+      "applemusic_url": "https://music.apple.com/us/album/experience/1559739125?i=1559739399",
+      "genie": "81785038",
+      "genie_url": "https://www.genie.co.kr/detail/songInfo?xgnm=81785038"
+    },
+    "duration_ms": 316947,
+    "genres": [
+      "Classical",
+      "클래식 / 크로스오버"
+    ],
+    "explicit": false,
+    "credits_count": 0,
+    "song_graph_valid": true,
+    "album": {
+      "http": 200,
+      "seconds": 2.666,
+      "id": "1559739125",
+      "title": "Cinema",
+      "track_list": {
+        "returned": 28,
+        "total": 28,
+        "complete": true
+      },
+      "discs": 1,
+      "contains_source_track": true,
+      "graph_valid": true,
+      "song_reported_album_total": null,
+      "album_total": 28,
+      "reported_totals_consistent": true,
+      "source_disc_count": 1
+    },
+    "artist": {
+      "http": 200,
+      "seconds": 2.987,
+      "id": "7420827",
+      "name": "Ludovico Einaudi",
+      "identity_method": "exact_id",
+      "images": 0,
+      "recent_tracks": 5,
+      "biography": false,
+      "counts": {},
+      "metrics": [],
+      "sources": [
+        {
+          "provider": "applemusic",
+          "status": "ok",
+          "cached": false
+        }
+      ]
+    }
+  },
+  {
+    "category": "classical_recheck",
+    "query_artist": "Glenn Gould",
+    "query_title": "Goldberg Variations, BWV 988: Aria",
+    "song_http": 200,
+    "song_seconds": 3.564,
+    "song_resolved": true,
+    "title": "Goldberg Variations, BWV 988: Aria",
+    "artists": [
+      "Glenn Gould"
+    ],
+    "ids": {
+      "applemusic": "594521563",
+      "applemusic_url": "https://music.apple.com/us/album/goldberg-variations-bwv-988-1955-recording-aria/594521223?i=594521563",
+      "bugs": "4994978",
+      "bugs_url": "https://music.bugs.co.kr/track/4994978",
+      "genie": "87449111",
+      "genie_url": "https://www.genie.co.kr/detail/songInfo?xgnm=87449111",
+      "melon": "33473380",
+      "melon_url": "https://www.melon.com/song/detail.htm?songId=33473380"
+    },
+    "duration_ms": 112939,
+    "genres": [
+      "Classical",
+      "클래식 / 관현악",
+      "클래식, 교향/관현악"
+    ],
+    "explicit": false,
+    "credits_count": 0,
+    "song_graph_valid": true,
+    "album": {
+      "http": 200,
+      "seconds": 2.461,
+      "id": "594521223",
+      "title": "Bach: Goldberg Variations, BWV 988 (The 1955 & 1981 Recordings)",
+      "track_list": {
+        "returned": 64,
+        "total": 65,
+        "complete": false,
+        "reason": "incomplete_response"
+      },
+      "discs": 1,
+      "contains_source_track": true,
+      "graph_valid": true,
+      "song_reported_album_total": null,
+      "album_total": 65,
+      "reported_totals_consistent": true,
+      "source_disc_count": 1
+    },
+    "artist": {
+      "http": 200,
+      "seconds": 2.968,
+      "id": "804479",
+      "name": "Glenn Gould",
+      "identity_method": "exact_id",
+      "images": 0,
+      "recent_tracks": 5,
+      "biography": false,
+      "counts": {},
+      "metrics": [],
+      "sources": [
+        {
+          "provider": "applemusic",
+          "status": "ok",
+          "cached": false
+        }
+      ]
+    }
+  },
+  {
+    "category": "remix_artist_recheck",
+    "query_artist": "Lana Del Rey",
+    "query_title": "Summertime Sadness (Cedric Gervais Remix)",
+    "song_http": 200,
+    "song_seconds": 4.059,
+    "song_resolved": true,
+    "title": "Summertime Sadness (Cedric Gervais Remix)",
+    "artists": [
+      "Lana Del Rey"
+    ],
+    "ids": {
+      "bugs": "2913211",
+      "bugs_url": "https://music.bugs.co.kr/track/2913211",
+      "genie": "81821447",
+      "genie_url": "https://www.genie.co.kr/detail/songInfo?xgnm=81821447",
+      "melon": "4051554",
+      "melon_url": "https://www.melon.com/song/detail.htm?songId=4051554"
+    },
+    "duration_ms": 412000,
+    "genres": [
+      "POP / 팝",
+      "일렉트로니카"
+    ],
+    "explicit": false,
+    "credits_count": 0,
+    "song_graph_valid": true,
+    "album": {
+      "status": "no_native_id"
+    },
+    "artist": {
+      "http": 200,
+      "seconds": 5.096,
+      "id": "464296584",
+      "name": "Lana Del Rey",
+      "identity_method": "unique_exact_name",
+      "independent_name_lookup": true,
+      "images": 0,
+      "recent_tracks": 5,
+      "biography": false,
+      "counts": {},
+      "metrics": [],
+      "sources": [
+        {
+          "provider": "applemusic",
+          "status": "ok",
+          "cached": false
+        }
+      ]
+    }
+  }
+]

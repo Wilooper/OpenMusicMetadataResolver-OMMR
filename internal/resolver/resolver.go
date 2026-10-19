@@ -79,7 +79,7 @@ func New(r *adapters.Registry, c cache.Cache, l *ratelimit.ProviderLimiter, ttl 
 		ttl:                      ttl,
 		maxCandidatesPerProvider: 10,
 		logger:                   slog.Default(),
-		cacheNamespace:           "resolved:rich-v14:default:",
+		cacheNamespace:           "resolved:rich-v15:default:",
 	}
 }
 
@@ -506,6 +506,17 @@ func (res *Resolver) resolve(ctx context.Context, req ResolveRequest) (*ResolveR
 		}
 	}
 
+	if evalQuery.ISRC == "" {
+		provisional := make([]canonical.TrackCandidate, 0, len(acceptedByProvider))
+		for _, index := range acceptedByProvider {
+			provisional = append(provisional, scored[index])
+		}
+		for provider := range durationRejections(provisional, req.Query) {
+			delete(acceptedByProvider, provider)
+			identityRejectedByProvider[provider] = true
+		}
+	}
+
 	for i, c := range scored {
 		if selectedIndex, ok := acceptedByProvider[strings.ToLower(c.Provider)]; ok && selectedIndex == i {
 			acceptedCandidates = append(acceptedCandidates, c)
@@ -546,6 +557,28 @@ func (res *Resolver) resolve(ctx context.Context, req ResolveRequest) (*ResolveR
 
 	// Stage 6: Final Merge, Post-Enrichment Identity Stability & Canonical ID Generation
 	res.enrichAccepted(lookupCtx, acceptedCandidates, sourcesStatus)
+	// Search rows can omit timing that only exact detail hydration reveals.
+	if evalQuery.ISRC == "" {
+		rejected := durationRejections(acceptedCandidates, req.Query)
+		if len(rejected) > 0 {
+			retained := make([]canonical.TrackCandidate, 0, len(acceptedCandidates))
+			identityMatches = nil
+			for _, candidate := range acceptedCandidates {
+				if !rejected[strings.ToLower(candidate.Provider)] {
+					retained = append(retained, candidate)
+					emitIdentityMatches(candidate)
+				}
+			}
+			acceptedCandidates = retained
+			for index := range sourcesStatus {
+				if rejected[strings.ToLower(sourcesStatus[index].Name)] {
+					sourcesStatus[index].Matched = false
+					sourcesStatus[index].Contributed = false
+					sourcesStatus[index].RejectionReason = "identity_mismatch"
+				}
+			}
+		}
+	}
 	mergedTrack := res.merger.MergeCandidates(acceptedCandidates)
 	if mergedTrack != nil {
 		mergedTrack.IdentityMatches = deduplicateIdentityMatches(identityMatches)

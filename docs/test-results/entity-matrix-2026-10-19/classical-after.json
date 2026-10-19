@@ -1,0 +1,933 @@
+{
+  "track": {
+    "canonical_id": "ommr_track_99752574cd9d3e64",
+    "identity_status": "strong",
+    "identity_reasons": [
+      "exact_title_artist_match"
+    ],
+    "title": "Goldberg Variations, BWV 988: Aria",
+    "artists": [
+      {
+        "name": "Glenn Gould",
+        "role": "main",
+        "ids": {
+          "applemusic": "804479",
+          "genie": "14948237",
+          "melon": "4428"
+        }
+      }
+    ],
+    "album": {
+      "title": "Bach: Goldberg Variations, BWV 988 (The 1955 & 1981 Recordings)",
+      "release_date": "2000-08-13",
+      "images": [
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/a9/52/4d/a9524d7e-631b-ece3-cf70-cf37023e8251/886443710016.jpg/600x600bb.jpg",
+          "width": 600,
+          "height": 600,
+          "type": "cover"
+        },
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/a9/52/4d/a9524d7e-631b-ece3-cf70-cf37023e8251/886443710016.jpg/100x100bb.jpg",
+          "width": 100,
+          "height": 100,
+          "type": "cover"
+        }
+      ],
+      "ids": {
+        "applemusic": "594521223"
+      }
+    },
+    "duration_ms": 112939,
+    "release_date": "2000-08-13",
+    "explicit": false,
+    "genres": [
+      "Classical",
+      "클래식 / 관현악",
+      "클래식, 교향/관현악"
+    ],
+    "credits": [],
+    "images": [
+      {
+        "url": "http://image.genie.co.kr/Y/IMAGE/IMG_ALBUM/080/989/038/80989038_1568725841055_1_600x600.JPG"
+      },
+      {
+        "url": "https://cdnimg.melon.co.kr/cm2/album/images/106/06/318/10606318_20210512145313.jpg"
+      },
+      {
+        "url": "https://image.bugsm.co.kr/album/images/1200/6722/672292.jpg"
+      },
+      {
+        "url": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/a9/52/4d/a9524d7e-631b-ece3-cf70-cf37023e8251/886443710016.jpg/100x100bb.jpg",
+        "width": 100,
+        "height": 100,
+        "type": "cover"
+      },
+      {
+        "url": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/a9/52/4d/a9524d7e-631b-ece3-cf70-cf37023e8251/886443710016.jpg/600x600bb.jpg",
+        "width": 600,
+        "height": 600,
+        "type": "cover"
+      }
+    ],
+    "preview_url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/eb/af/19/ebaf1951-bd44-9526-f240-b73ff37168e9/mzaf_11387021779103602260.plus.aac.p.m4a",
+    "track_number": 1,
+    "disc_number": 1,
+    "ids": {
+      "applemusic": "594521563",
+      "applemusic_url": "https://music.apple.com/us/album/goldberg-variations-bwv-988-1955-recording-aria/594521223?i=594521563",
+      "bugs": "4994978",
+      "bugs_url": "https://music.bugs.co.kr/track/4994978",
+      "genie": "87449111",
+      "genie_url": "https://www.genie.co.kr/detail/songInfo?xgnm=87449111",
+      "melon": "33473380",
+      "melon_url": "https://www.melon.com/song/detail.htm?songId=33473380"
+    },
+    "identity_matches": [
+      {
+        "provider": "melon",
+        "id": "33473380",
+        "confidence": 0.82,
+        "method": "exact_title_artist"
+      },
+      {
+        "provider": "genie",
+        "id": "87449111",
+        "confidence": 0.77,
+        "method": "title_artist_duration"
+      },
+      {
+        "provider": "bugs",
+        "id": "4994978",
+        "confidence": 0.71,
+        "method": "title_artist_duration"
+      },
+      {
+        "provider": "applemusic",
+        "id": "594521563",
+        "confidence": 0.82,
+        "method": "title_artist_duration"
+      }
+    ],
+    "sources": [
+      "applemusic",
+      "bugs",
+      "genie",
+      "melon"
+    ],
+    "field_sources": {
+      "album": [
+        "applemusic"
+      ],
+      "artists": [
+        "applemusic",
+        "genie",
+        "melon"
+      ],
+      "disc_number": [
+        "applemusic"
+      ],
+      "duration": [
+        "applemusic"
+      ],
+      "duration_ms": [
+        "applemusic"
+      ],
+      "explicit": [
+        "applemusic"
+      ],
+      "genres": [
+        "applemusic",
+        "genie",
+        "melon"
+      ],
+      "images": [
+        "applemusic",
+        "bugs",
+        "genie",
+        "melon"
+      ],
+      "preview_url": [
+        "applemusic"
+      ],
+      "release_date": [
+        "applemusic"
+      ],
+      "title": [
+        "bugs",
+        "melon"
+      ],
+      "track_number": [
+        "applemusic"
+      ]
+    },
+    "match_score": 0.96,
+    "match_breakdown": {
+      "title": 1,
+      "artists": 1
+    },
+    "confidence": {
+      "level": "exact",
+      "score": 0.96
+    },
+    "completeness": 0.6800000000000002,
+    "relations": {},
+    "extensions": {
+      "explicit_status": "clean",
+      "metadata_comparison": {
+        "album": {
+          "selected": "Bach: Goldberg Variations, BWV 988 (The 1955 & 1981 Recordings)",
+          "selected_sources": [
+            "applemusic"
+          ],
+          "values": {
+            "applemusic": "Bach: Goldberg Variations, BWV 988 (The 1955 & 1981 Recordings)",
+            "bugs": "Bach: The Goldberg Variations, BWV 988 ((1955 Gould Remaster))",
+            "genie": "Bach : The Goldberg Variations, BWV 988 ((1955 Gould Remaster))",
+            "melon": "Dinner Classical Music"
+          },
+          "different": true
+        },
+        "artists": {
+          "selected": [
+            "Glenn Gould"
+          ],
+          "selected_sources": [
+            "applemusic",
+            "genie",
+            "melon"
+          ],
+          "values": {
+            "applemusic": [
+              "Glenn Gould"
+            ],
+            "bugs": [
+              "Glenn Gould(글렌 굴드)"
+            ],
+            "genie": [
+              "Glenn Gould"
+            ],
+            "melon": [
+              "Glenn Gould"
+            ]
+          },
+          "different": true
+        },
+        "duration_ms": {
+          "selected": 112939,
+          "selected_sources": [
+            "applemusic"
+          ],
+          "values": {
+            "applemusic": 112939,
+            "bugs": 112000,
+            "genie": 113000
+          },
+          "different": true
+        },
+        "release_date": {
+          "selected": "2000-08-13",
+          "selected_sources": [
+            "applemusic"
+          ],
+          "values": {
+            "applemusic": "2000-08-13",
+            "bugs": "2015-09-11",
+            "melon": "2021-05-14"
+          },
+          "different": true
+        },
+        "title": {
+          "selected": "Goldberg Variations, BWV 988: Aria",
+          "selected_sources": [
+            "bugs",
+            "melon"
+          ],
+          "values": {
+            "applemusic": "Goldberg Variations, BWV 988 (1955 Recording): Aria",
+            "bugs": "Goldberg Variations, BWV 988: Aria",
+            "genie": "Goldberg Variations, BWV 988 : Aria",
+            "melon": "Goldberg Variations, BWV 988: Aria"
+          },
+          "different": true
+        }
+      },
+      "music_graph": {
+        "version": 1,
+        "root": "ommr:recording:ommr_track_99752574cd9d3e64",
+        "nodes": [
+          {
+            "id": "applemusic:artist:804479",
+            "type": "artist",
+            "provider": "applemusic",
+            "native_id": "804479",
+            "name": "Glenn Gould"
+          },
+          {
+            "id": "applemusic:recording:594521563",
+            "type": "recording",
+            "provider": "applemusic",
+            "native_id": "594521563",
+            "name": "Goldberg Variations, BWV 988 (1955 Recording): Aria"
+          },
+          {
+            "id": "applemusic:release:594521223",
+            "type": "release",
+            "provider": "applemusic",
+            "native_id": "594521223",
+            "name": "Bach: Goldberg Variations, BWV 988 (The 1955 & 1981 Recordings)"
+          },
+          {
+            "id": "bugs:artist:4399",
+            "type": "artist",
+            "provider": "bugs",
+            "native_id": "4399",
+            "name": "Glenn Gould(글렌 굴드)"
+          },
+          {
+            "id": "bugs:recording:4994978",
+            "type": "recording",
+            "provider": "bugs",
+            "native_id": "4994978",
+            "name": "Goldberg Variations, BWV 988: Aria"
+          },
+          {
+            "id": "bugs:release:672292",
+            "type": "release",
+            "provider": "bugs",
+            "native_id": "672292",
+            "name": "Bach: The Goldberg Variations, BWV 988 ((1955 Gould Remaster))"
+          },
+          {
+            "id": "genie:artist:14948237",
+            "type": "artist",
+            "provider": "genie",
+            "native_id": "14948237",
+            "name": "Glenn Gould"
+          },
+          {
+            "id": "genie:recording:87449111",
+            "type": "recording",
+            "provider": "genie",
+            "native_id": "87449111",
+            "name": "Goldberg Variations, BWV 988 : Aria"
+          },
+          {
+            "id": "genie:release:80989038",
+            "type": "release",
+            "provider": "genie",
+            "native_id": "80989038",
+            "name": "Bach : The Goldberg Variations, BWV 988 ((1955 Gould Remaster))"
+          },
+          {
+            "id": "melon:artist:4428",
+            "type": "artist",
+            "provider": "melon",
+            "native_id": "4428",
+            "name": "Glenn Gould"
+          },
+          {
+            "id": "melon:recording:33473380",
+            "type": "recording",
+            "provider": "melon",
+            "native_id": "33473380",
+            "name": "Goldberg Variations, BWV 988: Aria"
+          },
+          {
+            "id": "melon:release:10606318",
+            "type": "release",
+            "provider": "melon",
+            "native_id": "10606318",
+            "name": "Dinner Classical Music"
+          },
+          {
+            "id": "ommr:recording:ommr_track_99752574cd9d3e64",
+            "type": "recording",
+            "provider": "ommr",
+            "native_id": "ommr_track_99752574cd9d3e64",
+            "name": "Goldberg Variations, BWV 988: Aria"
+          }
+        ],
+        "edges": [
+          {
+            "from": "applemusic:artist:804479",
+            "to": "applemusic:recording:594521563",
+            "type": "credit",
+            "source": "applemusic",
+            "role": "primary_artist",
+            "source_role": "main",
+            "credited_as": "Glenn Gould"
+          },
+          {
+            "from": "applemusic:recording:594521563",
+            "to": "applemusic:release:594521223",
+            "type": "appears_on",
+            "source": "applemusic"
+          },
+          {
+            "from": "bugs:artist:4399",
+            "to": "bugs:recording:4994978",
+            "type": "credit",
+            "source": "bugs",
+            "role": "primary_artist",
+            "source_role": "main",
+            "credited_as": "Glenn Gould(글렌 굴드)"
+          },
+          {
+            "from": "bugs:recording:4994978",
+            "to": "bugs:release:672292",
+            "type": "appears_on",
+            "source": "bugs"
+          },
+          {
+            "from": "genie:artist:14948237",
+            "to": "genie:recording:87449111",
+            "type": "credit",
+            "source": "genie",
+            "role": "primary_artist",
+            "source_role": "main",
+            "credited_as": "Glenn Gould"
+          },
+          {
+            "from": "genie:recording:87449111",
+            "to": "genie:release:80989038",
+            "type": "appears_on",
+            "source": "genie"
+          },
+          {
+            "from": "melon:artist:4428",
+            "to": "melon:recording:33473380",
+            "type": "credit",
+            "source": "melon",
+            "role": "primary_artist",
+            "source_role": "main",
+            "credited_as": "Glenn Gould"
+          },
+          {
+            "from": "melon:recording:33473380",
+            "to": "melon:release:10606318",
+            "type": "appears_on",
+            "source": "melon"
+          },
+          {
+            "from": "ommr:recording:ommr_track_99752574cd9d3e64",
+            "to": "applemusic:recording:594521563",
+            "type": "matched_catalog_entity",
+            "source": "applemusic"
+          },
+          {
+            "from": "ommr:recording:ommr_track_99752574cd9d3e64",
+            "to": "bugs:recording:4994978",
+            "type": "matched_catalog_entity",
+            "source": "bugs"
+          },
+          {
+            "from": "ommr:recording:ommr_track_99752574cd9d3e64",
+            "to": "genie:recording:87449111",
+            "type": "matched_catalog_entity",
+            "source": "genie"
+          },
+          {
+            "from": "ommr:recording:ommr_track_99752574cd9d3e64",
+            "to": "melon:recording:33473380",
+            "type": "matched_catalog_entity",
+            "source": "melon"
+          }
+        ],
+        "truncated": false
+      },
+      "platform_links": {
+        "ommr_id": "ommr_track_99752574cd9d3e64",
+        "platforms": {
+          "applemusic": {
+            "id": "594521563",
+            "id_type": "track_id",
+            "url": "https://music.apple.com/us/album/goldberg-variations-bwv-988-1955-recording-aria/594521223?i=594521563",
+            "url_source": "provider",
+            "confidence": 0.82,
+            "match_method": "title_artist_duration"
+          },
+          "bugs": {
+            "id": "4994978",
+            "id_type": "track_id",
+            "url": "https://music.bugs.co.kr/track/4994978",
+            "url_source": "provider",
+            "confidence": 0.71,
+            "match_method": "title_artist_duration"
+          },
+          "genie": {
+            "id": "87449111",
+            "id_type": "track_id",
+            "url": "https://www.genie.co.kr/detail/songInfo?xgnm=87449111",
+            "url_source": "provider",
+            "confidence": 0.77,
+            "match_method": "title_artist_duration"
+          },
+          "melon": {
+            "id": "33473380",
+            "id_type": "track_id",
+            "url": "https://www.melon.com/song/detail.htm?songId=33473380",
+            "url_source": "provider",
+            "confidence": 0.82,
+            "match_method": "exact_title_artist"
+          }
+        },
+        "unavailable_platforms": [
+          "amazonmusic",
+          "deezer",
+          "jiosaavn",
+          "musicbrainz",
+          "pandora",
+          "qobuz",
+          "soundcloud",
+          "spotify",
+          "tidal",
+          "youtube",
+          "ytmusic"
+        ]
+      },
+      "provider_data": {
+        "applemusic": {
+          "catalog": {
+            "artistId": 804479,
+            "artistName": "Glenn Gould",
+            "artistViewUrl": "https://music.apple.com/us/artist/glenn-gould/804479?uo=4",
+            "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/a9/52/4d/a9524d7e-631b-ece3-cf70-cf37023e8251/886443710016.jpg/100x100bb.jpg",
+            "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/a9/52/4d/a9524d7e-631b-ece3-cf70-cf37023e8251/886443710016.jpg/30x30bb.jpg",
+            "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/a9/52/4d/a9524d7e-631b-ece3-cf70-cf37023e8251/886443710016.jpg/60x60bb.jpg",
+            "collectionCensoredName": "Bach: Goldberg Variations, BWV 988 (The 1955 & 1981 Recordings)",
+            "collectionExplicitness": "notExplicit",
+            "collectionId": 594521223,
+            "collectionName": "Bach: Goldberg Variations, BWV 988 (The 1955 & 1981 Recordings)",
+            "collectionPrice": 14.99,
+            "collectionViewUrl": "https://music.apple.com/us/album/goldberg-variations-bwv-988-1955-recording-aria/594521223?i=594521563&uo=4",
+            "country": "USA",
+            "currency": "USD",
+            "discCount": 1,
+            "discNumber": 1,
+            "isStreamable": true,
+            "kind": "song",
+            "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/eb/af/19/ebaf1951-bd44-9526-f240-b73ff37168e9/mzaf_11387021779103602260.plus.aac.p.m4a",
+            "primaryGenreName": "Classical",
+            "releaseDate": "2000-08-13T07:00:00Z",
+            "trackCensoredName": "Goldberg Variations, BWV 988 (1955 Recording): Aria",
+            "trackCount": 64,
+            "trackExplicitness": "notExplicit",
+            "trackId": 594521563,
+            "trackName": "Goldberg Variations, BWV 988 (1955 Recording): Aria",
+            "trackNumber": 1,
+            "trackPrice": 1.29,
+            "trackTimeMillis": 112939,
+            "trackViewUrl": "https://music.apple.com/us/album/goldberg-variations-bwv-988-1955-recording-aria/594521223?i=594521563&uo=4",
+            "wrapperType": "track"
+          },
+          "metadata": {
+            "album": {
+              "ids": {
+                "applemusic": "594521223"
+              },
+              "images": [
+                {
+                  "height": 600,
+                  "type": "cover",
+                  "url": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/a9/52/4d/a9524d7e-631b-ece3-cf70-cf37023e8251/886443710016.jpg/600x600bb.jpg",
+                  "width": 600
+                },
+                {
+                  "height": 100,
+                  "type": "cover",
+                  "url": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/a9/52/4d/a9524d7e-631b-ece3-cf70-cf37023e8251/886443710016.jpg/100x100bb.jpg",
+                  "width": 100
+                }
+              ],
+              "release_date": "2000-08-13",
+              "title": "Bach: Goldberg Variations, BWV 988 (The 1955 & 1981 Recordings)"
+            },
+            "artists": [
+              {
+                "ids": {
+                  "applemusic": "804479"
+                },
+                "name": "Glenn Gould",
+                "role": "main"
+              }
+            ],
+            "credits": null,
+            "disc_number": 1,
+            "duration_ms": 112939,
+            "explicit": false,
+            "genres": [
+              "Classical"
+            ],
+            "ids": {
+              "applemusic": "594521563",
+              "applemusic_url": "https://music.apple.com/us/album/goldberg-variations-bwv-988-1955-recording-aria/594521223?i=594521563"
+            },
+            "images": [
+              {
+                "height": 600,
+                "type": "cover",
+                "url": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/a9/52/4d/a9524d7e-631b-ece3-cf70-cf37023e8251/886443710016.jpg/600x600bb.jpg",
+                "width": 600
+              },
+              {
+                "height": 100,
+                "type": "cover",
+                "url": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/a9/52/4d/a9524d7e-631b-ece3-cf70-cf37023e8251/886443710016.jpg/100x100bb.jpg",
+                "width": 100
+              }
+            ],
+            "preview_url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/eb/af/19/ebaf1951-bd44-9526-f240-b73ff37168e9/mzaf_11387021779103602260.plus.aac.p.m4a",
+            "release_date": "2000-08-13",
+            "title": "Goldberg Variations, BWV 988 (1955 Recording): Aria",
+            "track_number": 1
+          }
+        },
+        "bugs": {
+          "catalog": {
+            "album": "Bach: The Goldberg Variations, BWV 988 ((1955 Gould Remaster))",
+            "album_id": "672292",
+            "artists": [
+              {
+                "id": "4399",
+                "name": "Glenn Gould(글렌 굴드)"
+              }
+            ],
+            "duration_ms": 112000,
+            "fields": {
+              "고음질": "FLAC 16bit, 24bit 24bit FLAC 음원 스펙트로그램 보기 하이 레졸루션 하이 레졸루션(Hi-Resolution) 하이 레졸루션 로고는 고해상도 오디오 혹은 서비스에 JAS가 부여하는 공식 인증입니다. 벅스는 국내 디지털 음원 서비스 최초로, 유일하게 하이 레졸루션 인증을 받았습니다. JAS의 규격에 따라 24bit/44.1kHz 이상의 음원을 1곡 이상 포함한 앨범 혹은 해당 곡에 로고가 표시됩니다. 인증 내용에 대해 더 알아볼래요",
+              "아티스트": "Glenn Gould(글렌 굴드)",
+              "앨범": "Bach: The Goldberg Variations, BWV 988 ((1955 Gould Remaster))",
+              "재생 시간": "01:52",
+              "참여 정보": "작곡 Johann Sebastian Bach(바흐) etc. Glenn Gould(글렌 굴드)"
+            },
+            "id": "4994978",
+            "image": "https://image.bugsm.co.kr/album/images/1200/6722/672292.jpg",
+            "release_date": "2015-09-11",
+            "structured": {
+              "@context": "https://schema.org",
+              "@type": "MusicRecording",
+              "byArtist": {
+                "@type": "MusicGroup",
+                "name": "Glenn Gould(글렌 굴드)"
+              },
+              "datePublished": "2015-09-11",
+              "duration": "PT1M52S",
+              "image": "https://image.bugsm.co.kr/album/images/1200/6722/672292.jpg",
+              "inAlbum": {
+                "@type": "MusicAlbum",
+                "name": "Bach: The Goldberg Variations, BWV 988 ((1955 Gould Remaster))",
+                "url": "https://music.bugs.co.kr/album/672292"
+              },
+              "name": "Goldberg Variations, BWV 988: Aria",
+              "sameAs": "https://music.bugs.co.kr/track/4994978",
+              "url": [
+                "https://music.bugs.co.kr/track/4994978",
+                "android-app://com.neowiz.android.bugs/bugs3/app/tracks/4994978?miniplay=Y"
+              ]
+            },
+            "title": "Goldberg Variations, BWV 988: Aria"
+          },
+          "extra": {
+            "korean_detail": true
+          },
+          "metadata": {
+            "album": {
+              "ids": {
+                "bugs": "672292"
+              },
+              "title": "Bach: The Goldberg Variations, BWV 988 ((1955 Gould Remaster))"
+            },
+            "artists": [
+              {
+                "ids": {
+                  "bugs": "4399"
+                },
+                "name": "Glenn Gould(글렌 굴드)",
+                "role": "main"
+              }
+            ],
+            "credits": null,
+            "duration_ms": 112000,
+            "explicit": false,
+            "genres": null,
+            "ids": {
+              "bugs": "4994978",
+              "bugs_url": "https://music.bugs.co.kr/track/4994978"
+            },
+            "images": [
+              {
+                "url": "https://image.bugsm.co.kr/album/images/1200/6722/672292.jpg"
+              }
+            ],
+            "release_date": "2015-09-11",
+            "title": "Goldberg Variations, BWV 988: Aria"
+          }
+        },
+        "genie": {
+          "catalog": {
+            "album": "Bach : The Goldberg Variations, BWV 988 ((1955 Gould Remaster))",
+            "album_id": "80989038",
+            "artists": [
+              {
+                "id": "14948237",
+                "name": "Glenn Gould"
+              }
+            ],
+            "duration_ms": 113000,
+            "fields": {
+              "아티스트": "Glenn Gould",
+              "앨범": "Bach : The Goldberg Variations, BWV 988 ((1955 Gould Remaster))",
+              "장르": "클래식 / 관현악",
+              "재생시간": "01:53"
+            },
+            "id": "87449111",
+            "image": "http://image.genie.co.kr/Y/IMAGE/IMG_ALBUM/080/989/038/80989038_1568725841055_1_600x600.JPG",
+            "title": "Goldberg Variations, BWV 988 : Aria"
+          },
+          "extra": {
+            "korean_detail": true
+          },
+          "metadata": {
+            "album": {
+              "ids": {
+                "genie": "80989038"
+              },
+              "title": "Bach : The Goldberg Variations, BWV 988 ((1955 Gould Remaster))"
+            },
+            "artists": [
+              {
+                "ids": {
+                  "genie": "14948237"
+                },
+                "name": "Glenn Gould",
+                "role": "main"
+              }
+            ],
+            "credits": null,
+            "duration_ms": 113000,
+            "explicit": false,
+            "genres": [
+              "클래식 / 관현악"
+            ],
+            "ids": {
+              "genie": "87449111",
+              "genie_url": "https://www.genie.co.kr/detail/songInfo?xgnm=87449111"
+            },
+            "images": [
+              {
+                "url": "http://image.genie.co.kr/Y/IMAGE/IMG_ALBUM/080/989/038/80989038_1568725841055_1_600x600.JPG"
+              }
+            ],
+            "release_date": "",
+            "title": "Goldberg Variations, BWV 988 : Aria"
+          }
+        },
+        "melon": {
+          "catalog": {
+            "album": "Dinner Classical Music",
+            "album_id": "10606318",
+            "artists": [
+              {
+                "id": "4428",
+                "name": "Glenn Gould"
+              }
+            ],
+            "fields": {
+              "FLAC": "Flac 16bit",
+              "공유": "",
+              "댓글": "0개",
+              "발매일": "2021.05.14",
+              "앨범": "Dinner Classical Music",
+              "장르": "클래식, 교향/관현악"
+            },
+            "id": "33473380",
+            "image": "https://cdnimg.melon.co.kr/cm2/album/images/106/06/318/10606318_20210512145313.jpg",
+            "structured": {
+              "@context": "http://schema.org",
+              "@id": "http://www.melon.com/album/detail.htm?albumId=33473380&ref=google",
+              "@type": "MusicRecording",
+              "description": "Goldberg Variations, BWV 988: Aria",
+              "image": "https://cdnimg.melon.co.kr/cm2/album/images/106/06/318/10606318_20210512145313.jpg",
+              "inAlbum": {
+                "@id": "http://www.melon.com/album/detail.htm?albumId=10606318",
+                "@type": "MusicAlbum",
+                "name": "Dinner Classical Music"
+              },
+              "name": "Goldberg Variations, BWV 988: Aria",
+              "sameAs": "http://www.melon.com/song/detail.htm?songId=33473380",
+              "url": [
+                "http://www.melon.com/album/detail.htm?albumId=33473380&ref=google",
+                "android-app://com.iloen.melon/melonapp/details/song/33473380?autoplay=Y&ref=google&pvmenuid=1000000455&contstype=N10001&contsid=33473380"
+              ]
+            },
+            "title": "Goldberg Variations, BWV 988: Aria"
+          },
+          "extra": {
+            "korean_detail": true
+          },
+          "metadata": {
+            "album": {
+              "ids": {
+                "melon": "10606318"
+              },
+              "title": "Dinner Classical Music"
+            },
+            "artists": [
+              {
+                "ids": {
+                  "melon": "4428"
+                },
+                "name": "Glenn Gould",
+                "role": "main"
+              }
+            ],
+            "credits": null,
+            "duration_ms": 0,
+            "explicit": false,
+            "genres": [
+              "클래식, 교향/관현악"
+            ],
+            "ids": {
+              "melon": "33473380",
+              "melon_url": "https://www.melon.com/song/detail.htm?songId=33473380"
+            },
+            "images": [
+              {
+                "url": "https://cdnimg.melon.co.kr/cm2/album/images/106/06/318/10606318_20210512145313.jpg"
+              }
+            ],
+            "release_date": "2021-05-14",
+            "title": "Goldberg Variations, BWV 988: Aria"
+          }
+        }
+      }
+    }
+  },
+  "metadata_sources": [
+    "applemusic",
+    "bugs",
+    "genie",
+    "melon"
+  ],
+  "provider_status": [
+    {
+      "name": "applemusic",
+      "success": true,
+      "matched": true,
+      "contributed": true,
+      "cached": false,
+      "latency_ms": 2996,
+      "version": "applemusic-v2-album-counts"
+    },
+    {
+      "name": "bugs",
+      "success": true,
+      "matched": true,
+      "contributed": true,
+      "cached": false,
+      "latency_ms": 2579,
+      "version": "bugs-public-v1",
+      "enrichment_status": "ok"
+    },
+    {
+      "name": "deezer",
+      "success": false,
+      "matched": false,
+      "contributed": false,
+      "cached": false,
+      "latency_ms": 69,
+      "error": "provider returned an unavailable HTML page without catalog data",
+      "rejection_reason": "provider_error",
+      "version": "deezer-v3-search"
+    },
+    {
+      "name": "genie",
+      "success": true,
+      "matched": true,
+      "contributed": true,
+      "cached": false,
+      "latency_ms": 828,
+      "version": "genie-public-v1",
+      "enrichment_status": "ok"
+    },
+    {
+      "name": "jiosaavn",
+      "success": false,
+      "matched": false,
+      "contributed": false,
+      "cached": false,
+      "latency_ms": 76,
+      "error": "provider returned an unavailable HTML page without catalog data",
+      "rejection_reason": "provider_error",
+      "version": "jiosaavn-search-v6-pages"
+    },
+    {
+      "name": "melon",
+      "success": true,
+      "matched": true,
+      "contributed": true,
+      "cached": false,
+      "latency_ms": 933,
+      "version": "melon-public-v1",
+      "enrichment_status": "ok"
+    },
+    {
+      "name": "musicbrainz",
+      "success": false,
+      "matched": false,
+      "contributed": false,
+      "cached": false,
+      "latency_ms": 62,
+      "error": "provider returned an unavailable HTML page without catalog data",
+      "rejection_reason": "provider_error",
+      "version": "musicbrainz-v4-relationships"
+    },
+    {
+      "name": "soundcloud",
+      "success": true,
+      "matched": false,
+      "contributed": false,
+      "cached": false,
+      "latency_ms": 0,
+      "rejection_reason": "no_results",
+      "version": "soundcloud-oembed-v1"
+    },
+    {
+      "name": "spotify",
+      "success": false,
+      "matched": false,
+      "contributed": false,
+      "cached": false,
+      "latency_ms": 74,
+      "error": "spotify anonymous metadata access unavailable (HTTP 400); configure validated credentials or use a Spotify track ID for public embed lookup",
+      "rejection_reason": "provider_error",
+      "version": "spotify-web-v3"
+    },
+    {
+      "name": "ytmusic",
+      "success": true,
+      "matched": false,
+      "contributed": false,
+      "cached": false,
+      "latency_ms": 615,
+      "rejection_reason": "identity_mismatch",
+      "version": "ytmusic-innertube-v2"
+    }
+  ],
+  "resolution_strategy": {
+    "input_type": "artist_title",
+    "primary_source": "applemusic",
+    "cross_resolved": false
+  },
+  "enrichment_status": {
+    "coverartarchive": "no_data",
+    "musicbrainz_release": "no_data"
+  },
+  "resolver_stats": {
+    "providers_queried": 10,
+    "providers_matched": 4,
+    "providers_contributed": 4,
+    "candidates_evaluated": 43
+  }
+}

@@ -7,6 +7,7 @@ import (
 
 var versionQualifier = regexp.MustCompile(`(?i)(?:[\(\[]|\s[-–—]\s)([^\)\]]+)`)
 var versionMarkers = []*regexp.Regexp{
+	regexp.MustCompile(`(?i)\bre[ -]?imagin(?:ed|ing)\b`),
 	regexp.MustCompile(`(?i)\b(remix|remixed)\b`),
 	regexp.MustCompile(`(?i)\blive\b`),
 	regexp.MustCompile(`(?i)\bacoustic\b`),
