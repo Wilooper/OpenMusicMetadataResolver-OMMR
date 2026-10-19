@@ -1,0 +1,1170 @@
+{
+  "track": {
+    "canonical_id": "ommr_track_2a01a46d3adef36c",
+    "identity_status": "strong",
+    "identity_reasons": [
+      "exact_title_artist_match"
+    ],
+    "title": "Boyfriend",
+    "artists": [
+      {
+        "name": "Karan Aujla",
+        "role": "main",
+        "ids": {
+          "melon": "2900906",
+          "ytmusic": "UCSmK5WX5U4gdtebWjoL81og"
+        }
+      },
+      {
+        "name": "Ikky",
+        "role": "main",
+        "ids": {
+          "melon": "2942719",
+          "ytmusic": "UCVNJ6jgoWdvAQqxbtIYbl2Q"
+        }
+      }
+    ],
+    "album": {
+      "title": "P-POP CULTURE",
+      "release_date": "2025-08-22",
+      "total_tracks": 5,
+      "images": [
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/600x600bb.jpg",
+          "width": 600,
+          "height": 600,
+          "type": "cover"
+        },
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/100x100bb.jpg",
+          "width": 100,
+          "height": 100,
+          "type": "cover"
+        }
+      ],
+      "ids": {
+        "applemusic": "1829591921",
+        "bugs": "38585721",
+        "genie": "86627210",
+        "melon": "12061172",
+        "ytmusic": "MPREb_qTDpBqltt6c"
+      }
+    },
+    "duration_ms": 160796,
+    "release_date": "2025-08-22",
+    "explicit": false,
+    "genres": [
+      "Pop"
+    ],
+    "credits": [],
+    "images": [
+      {
+        "url": "https://image.bugsm.co.kr/album/images/50/385857/38585721.jpg?version=20250822133003"
+      },
+      {
+        "url": "https://image.genie.co.kr/Y/IMAGE/IMG_ALBUM/086/627/210/86627210_1755580628352_1_600x600.JPG/dims/resize/Q_80,0"
+      },
+      {
+        "url": "https://yt3.googleusercontent.com/BzOBERVwxHIkVDpePVN8mnT0MID3cySSHcZvY84FHusBL78dxkdpWBBk8o4O5e8BaenNlHKlI9fWb_Rccw=w60-h60-l90-rj",
+        "width": 60,
+        "height": 60,
+        "type": "cover"
+      },
+      {
+        "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/100x100bb.jpg",
+        "width": 100,
+        "height": 100,
+        "type": "cover"
+      },
+      {
+        "url": "https://yt3.googleusercontent.com/BzOBERVwxHIkVDpePVN8mnT0MID3cySSHcZvY84FHusBL78dxkdpWBBk8o4O5e8BaenNlHKlI9fWb_Rccw=w120-h120-l90-rj",
+        "width": 120,
+        "height": 120,
+        "type": "cover"
+      },
+      {
+        "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/600x600bb.jpg",
+        "width": 600,
+        "height": 600,
+        "type": "cover"
+      }
+    ],
+    "preview_url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/64/5b/2b/645b2b11-1249-3ff3-e3af-c02189159868/mzaf_17613725717610713218.plus.aac.p.m4a",
+    "track_number": 4,
+    "disc_number": 1,
+    "ids": {
+      "applemusic": "1829591986",
+      "applemusic_url": "https://music.apple.com/us/album/boyfriend/1829591921?i=1829591986",
+      "bugs": "126998566",
+      "bugs_url": "https://music.bugs.co.kr/track/126998566",
+      "genie": "111431603",
+      "genie_url": "https://www.genie.co.kr/detail/songInfo?xgnm=111431603",
+      "melon": "39664161",
+      "melon_url": "https://www.melon.com/song/detail.htm?songId=39664161",
+      "ytmusic": "tIjUfo30r4M"
+    },
+    "identity_matches": [
+      {
+        "provider": "applemusic",
+        "id": "1829591986",
+        "confidence": 0.85,
+        "method": "title_artist_duration"
+      },
+      {
+        "provider": "ytmusic",
+        "id": "tIjUfo30r4M",
+        "confidence": 0.77,
+        "method": "title_artist_duration"
+      },
+      {
+        "provider": "bugs",
+        "id": "126998566",
+        "confidence": 0.82,
+        "method": "exact_title_artist"
+      },
+      {
+        "provider": "genie",
+        "id": "111431603",
+        "confidence": 0.76,
+        "method": "exact_title_artist"
+      },
+      {
+        "provider": "melon",
+        "id": "39664161",
+        "confidence": 0.82,
+        "method": "exact_title_artist"
+      }
+    ],
+    "sources": [
+      "applemusic",
+      "bugs",
+      "genie",
+      "melon",
+      "ytmusic"
+    ],
+    "field_sources": {
+      "album": [
+        "applemusic",
+        "bugs",
+        "genie",
+        "melon",
+        "ytmusic"
+      ],
+      "artists": [
+        "applemusic",
+        "genie",
+        "melon",
+        "ytmusic"
+      ],
+      "disc_number": [
+        "applemusic"
+      ],
+      "duration": [
+        "applemusic"
+      ],
+      "duration_ms": [
+        "applemusic"
+      ],
+      "explicit": [
+        "applemusic"
+      ],
+      "genres": [
+        "applemusic"
+      ],
+      "images": [
+        "applemusic",
+        "bugs",
+        "genie",
+        "ytmusic"
+      ],
+      "preview_url": [
+        "applemusic"
+      ],
+      "release_date": [
+        "applemusic"
+      ],
+      "title": [
+        "applemusic",
+        "bugs",
+        "genie",
+        "melon",
+        "ytmusic"
+      ],
+      "track_number": [
+        "applemusic"
+      ]
+    },
+    "match_score": 0.96,
+    "match_breakdown": {
+      "title": 1,
+      "artists": 1
+    },
+    "confidence": {
+      "level": "exact",
+      "score": 0.96
+    },
+    "completeness": 0.6800000000000002,
+    "relations": {},
+    "extensions": {
+      "explicit_status": "clean",
+      "metadata_comparison": {
+        "album": {
+          "selected": "P-POP CULTURE",
+          "selected_sources": [
+            "applemusic",
+            "bugs",
+            "genie",
+            "melon",
+            "ytmusic"
+          ],
+          "values": {
+            "applemusic": "P-POP CULTURE",
+            "bugs": "P-POP CULTURE",
+            "genie": "P-POP CULTURE",
+            "melon": "P-POP CULTURE",
+            "ytmusic": "P-POP CULTURE"
+          },
+          "different": false
+        },
+        "artists": {
+          "selected": [
+            "Karan Aujla",
+            "Ikky"
+          ],
+          "selected_sources": [
+            "applemusic",
+            "genie",
+            "melon",
+            "ytmusic"
+          ],
+          "values": {
+            "applemusic": [
+              "Karan Aujla & Ikky"
+            ],
+            "bugs": [
+              "Karan Aujla"
+            ],
+            "genie": [
+              "Karan Aujla & Ikky"
+            ],
+            "melon": [
+              "Karan Aujla",
+              "Ikky"
+            ],
+            "ytmusic": [
+              "Karan Aujla",
+              "Ikky"
+            ]
+          },
+          "different": true
+        },
+        "duration_ms": {
+          "selected": 160796,
+          "selected_sources": [
+            "applemusic"
+          ],
+          "values": {
+            "applemusic": 160796,
+            "ytmusic": 161000
+          },
+          "different": true
+        },
+        "title": {
+          "selected": "Boyfriend",
+          "selected_sources": [
+            "applemusic",
+            "bugs",
+            "genie",
+            "melon",
+            "ytmusic"
+          ],
+          "values": {
+            "applemusic": "Boyfriend",
+            "bugs": "Boyfriend",
+            "genie": "Boyfriend",
+            "melon": "Boyfriend",
+            "ytmusic": "Boyfriend"
+          },
+          "different": false
+        }
+      },
+      "music_graph": {
+        "version": 1,
+        "root": "ommr:recording:ommr_track_2a01a46d3adef36c",
+        "nodes": [
+          {
+            "id": "applemusic:artist:914892130",
+            "type": "artist",
+            "provider": "applemusic",
+            "native_id": "914892130",
+            "name": "Karan Aujla & Ikky"
+          },
+          {
+            "id": "applemusic:recording:1829591986",
+            "type": "recording",
+            "provider": "applemusic",
+            "native_id": "1829591986",
+            "name": "Boyfriend"
+          },
+          {
+            "id": "applemusic:release:1829591921",
+            "type": "release",
+            "provider": "applemusic",
+            "native_id": "1829591921",
+            "name": "P-POP CULTURE"
+          },
+          {
+            "id": "bugs:artist:10787297",
+            "type": "artist",
+            "provider": "bugs",
+            "native_id": "10787297",
+            "name": "Karan Aujla"
+          },
+          {
+            "id": "bugs:recording:126998566",
+            "type": "recording",
+            "provider": "bugs",
+            "native_id": "126998566",
+            "name": "Boyfriend"
+          },
+          {
+            "id": "bugs:release:38585721",
+            "type": "release",
+            "provider": "bugs",
+            "native_id": "38585721",
+            "name": "P-POP CULTURE"
+          },
+          {
+            "id": "genie:artist:82085121",
+            "type": "artist",
+            "provider": "genie",
+            "native_id": "82085121",
+            "name": "Karan Aujla & Ikky"
+          },
+          {
+            "id": "genie:recording:111431603",
+            "type": "recording",
+            "provider": "genie",
+            "native_id": "111431603",
+            "name": "Boyfriend"
+          },
+          {
+            "id": "genie:release:86627210",
+            "type": "release",
+            "provider": "genie",
+            "native_id": "86627210",
+            "name": "P-POP CULTURE"
+          },
+          {
+            "id": "melon:artist:2900906",
+            "type": "artist",
+            "provider": "melon",
+            "native_id": "2900906",
+            "name": "Karan Aujla"
+          },
+          {
+            "id": "melon:artist:2942719",
+            "type": "artist",
+            "provider": "melon",
+            "native_id": "2942719",
+            "name": "Ikky"
+          },
+          {
+            "id": "melon:recording:39664161",
+            "type": "recording",
+            "provider": "melon",
+            "native_id": "39664161",
+            "name": "Boyfriend"
+          },
+          {
+            "id": "melon:release:12061172",
+            "type": "release",
+            "provider": "melon",
+            "native_id": "12061172",
+            "name": "P-POP CULTURE"
+          },
+          {
+            "id": "ommr:recording:ommr_track_2a01a46d3adef36c",
+            "type": "recording",
+            "provider": "ommr",
+            "native_id": "ommr_track_2a01a46d3adef36c",
+            "name": "Boyfriend"
+          },
+          {
+            "id": "ytmusic:artist:UCSmK5WX5U4gdtebWjoL81og",
+            "type": "artist",
+            "provider": "ytmusic",
+            "native_id": "UCSmK5WX5U4gdtebWjoL81og",
+            "name": "Karan Aujla"
+          },
+          {
+            "id": "ytmusic:artist:UCVNJ6jgoWdvAQqxbtIYbl2Q",
+            "type": "artist",
+            "provider": "ytmusic",
+            "native_id": "UCVNJ6jgoWdvAQqxbtIYbl2Q",
+            "name": "Ikky"
+          },
+          {
+            "id": "ytmusic:recording:tIjUfo30r4M",
+            "type": "recording",
+            "provider": "ytmusic",
+            "native_id": "tIjUfo30r4M",
+            "name": "Boyfriend"
+          },
+          {
+            "id": "ytmusic:release:MPREb_qTDpBqltt6c",
+            "type": "release",
+            "provider": "ytmusic",
+            "native_id": "MPREb_qTDpBqltt6c",
+            "name": "P-POP CULTURE"
+          }
+        ],
+        "edges": [
+          {
+            "from": "applemusic:artist:914892130",
+            "to": "applemusic:recording:1829591986",
+            "type": "credit",
+            "source": "applemusic",
+            "role": "primary_artist",
+            "source_role": "main",
+            "credited_as": "Karan Aujla & Ikky"
+          },
+          {
+            "from": "applemusic:recording:1829591986",
+            "to": "applemusic:release:1829591921",
+            "type": "appears_on",
+            "source": "applemusic"
+          },
+          {
+            "from": "bugs:artist:10787297",
+            "to": "bugs:recording:126998566",
+            "type": "credit",
+            "source": "bugs",
+            "role": "primary_artist",
+            "source_role": "main",
+            "credited_as": "Karan Aujla"
+          },
+          {
+            "from": "bugs:recording:126998566",
+            "to": "bugs:release:38585721",
+            "type": "appears_on",
+            "source": "bugs"
+          },
+          {
+            "from": "genie:artist:82085121",
+            "to": "genie:recording:111431603",
+            "type": "credit",
+            "source": "genie",
+            "role": "primary_artist",
+            "source_role": "main",
+            "credited_as": "Karan Aujla & Ikky"
+          },
+          {
+            "from": "genie:recording:111431603",
+            "to": "genie:release:86627210",
+            "type": "appears_on",
+            "source": "genie"
+          },
+          {
+            "from": "melon:artist:2900906",
+            "to": "melon:recording:39664161",
+            "type": "credit",
+            "source": "melon",
+            "role": "primary_artist",
+            "source_role": "main",
+            "credited_as": "Karan Aujla"
+          },
+          {
+            "from": "melon:artist:2942719",
+            "to": "melon:recording:39664161",
+            "type": "credit",
+            "source": "melon",
+            "role": "primary_artist",
+            "source_role": "main",
+            "credited_as": "Ikky"
+          },
+          {
+            "from": "melon:recording:39664161",
+            "to": "melon:release:12061172",
+            "type": "appears_on",
+            "source": "melon"
+          },
+          {
+            "from": "ommr:recording:ommr_track_2a01a46d3adef36c",
+            "to": "applemusic:recording:1829591986",
+            "type": "matched_catalog_entity",
+            "source": "applemusic"
+          },
+          {
+            "from": "ommr:recording:ommr_track_2a01a46d3adef36c",
+            "to": "bugs:recording:126998566",
+            "type": "matched_catalog_entity",
+            "source": "bugs"
+          },
+          {
+            "from": "ommr:recording:ommr_track_2a01a46d3adef36c",
+            "to": "genie:recording:111431603",
+            "type": "matched_catalog_entity",
+            "source": "genie"
+          },
+          {
+            "from": "ommr:recording:ommr_track_2a01a46d3adef36c",
+            "to": "melon:recording:39664161",
+            "type": "matched_catalog_entity",
+            "source": "melon"
+          },
+          {
+            "from": "ommr:recording:ommr_track_2a01a46d3adef36c",
+            "to": "ytmusic:recording:tIjUfo30r4M",
+            "type": "matched_catalog_entity",
+            "source": "ytmusic"
+          },
+          {
+            "from": "ytmusic:artist:UCSmK5WX5U4gdtebWjoL81og",
+            "to": "ytmusic:recording:tIjUfo30r4M",
+            "type": "credit",
+            "source": "ytmusic",
+            "role": "primary_artist",
+            "source_role": "main",
+            "credited_as": "Karan Aujla"
+          },
+          {
+            "from": "ytmusic:artist:UCVNJ6jgoWdvAQqxbtIYbl2Q",
+            "to": "ytmusic:recording:tIjUfo30r4M",
+            "type": "credit",
+            "source": "ytmusic",
+            "role": "primary_artist",
+            "source_role": "main",
+            "credited_as": "Ikky"
+          },
+          {
+            "from": "ytmusic:recording:tIjUfo30r4M",
+            "to": "ytmusic:release:MPREb_qTDpBqltt6c",
+            "type": "appears_on",
+            "source": "ytmusic"
+          }
+        ],
+        "truncated": false
+      },
+      "platform_links": {
+        "ommr_id": "ommr_track_2a01a46d3adef36c",
+        "platforms": {
+          "applemusic": {
+            "id": "1829591986",
+            "id_type": "track_id",
+            "url": "https://music.apple.com/us/album/boyfriend/1829591921?i=1829591986",
+            "url_source": "provider",
+            "confidence": 0.85,
+            "match_method": "title_artist_duration"
+          },
+          "bugs": {
+            "id": "126998566",
+            "id_type": "track_id",
+            "url": "https://music.bugs.co.kr/track/126998566",
+            "url_source": "provider",
+            "confidence": 0.82,
+            "match_method": "exact_title_artist"
+          },
+          "genie": {
+            "id": "111431603",
+            "id_type": "track_id",
+            "url": "https://www.genie.co.kr/detail/songInfo?xgnm=111431603",
+            "url_source": "provider",
+            "confidence": 0.76,
+            "match_method": "exact_title_artist"
+          },
+          "melon": {
+            "id": "39664161",
+            "id_type": "track_id",
+            "url": "https://www.melon.com/song/detail.htm?songId=39664161",
+            "url_source": "provider",
+            "confidence": 0.82,
+            "match_method": "exact_title_artist"
+          },
+          "youtube": {
+            "id": "tIjUfo30r4M",
+            "id_type": "video_id",
+            "url": "https://www.youtube.com/watch?v=tIjUfo30r4M",
+            "url_source": "id_template",
+            "confidence": 0.77,
+            "match_method": "title_artist_duration"
+          },
+          "ytmusic": {
+            "id": "tIjUfo30r4M",
+            "id_type": "video_id",
+            "url": "https://music.youtube.com/watch?v=tIjUfo30r4M",
+            "url_source": "id_template",
+            "confidence": 0.77,
+            "match_method": "title_artist_duration"
+          }
+        },
+        "unavailable_platforms": [
+          "amazonmusic",
+          "deezer",
+          "jiosaavn",
+          "musicbrainz",
+          "pandora",
+          "qobuz",
+          "soundcloud",
+          "spotify",
+          "tidal"
+        ]
+      },
+      "provider_data": {
+        "applemusic": {
+          "catalog": {
+            "artistId": 914892130,
+            "artistName": "Karan Aujla & Ikky",
+            "artistViewUrl": "https://music.apple.com/us/artist/karan-aujla/914892130?uo=4",
+            "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/100x100bb.jpg",
+            "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/30x30bb.jpg",
+            "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/60x60bb.jpg",
+            "collectionCensoredName": "P-POP CULTURE",
+            "collectionExplicitness": "explicit",
+            "collectionId": 1829591921,
+            "collectionName": "P-POP CULTURE",
+            "collectionPrice": 9.99,
+            "collectionViewUrl": "https://music.apple.com/us/album/boyfriend/1829591921?i=1829591986&uo=4",
+            "country": "USA",
+            "currency": "USD",
+            "discCount": 2,
+            "discNumber": 1,
+            "isStreamable": true,
+            "kind": "song",
+            "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/64/5b/2b/645b2b11-1249-3ff3-e3af-c02189159868/mzaf_17613725717610713218.plus.aac.p.m4a",
+            "primaryGenreName": "Pop",
+            "releaseDate": "2025-08-22T12:00:00Z",
+            "trackCensoredName": "Boyfriend",
+            "trackCount": 5,
+            "trackExplicitness": "notExplicit",
+            "trackId": 1829591986,
+            "trackName": "Boyfriend",
+            "trackNumber": 4,
+            "trackPrice": 1.29,
+            "trackTimeMillis": 160796,
+            "trackViewUrl": "https://music.apple.com/us/album/boyfriend/1829591921?i=1829591986&uo=4",
+            "wrapperType": "track"
+          },
+          "metadata": {
+            "album": {
+              "ids": {
+                "applemusic": "1829591921"
+              },
+              "images": [
+                {
+                  "height": 600,
+                  "type": "cover",
+                  "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/600x600bb.jpg",
+                  "width": 600
+                },
+                {
+                  "height": 100,
+                  "type": "cover",
+                  "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/100x100bb.jpg",
+                  "width": 100
+                }
+              ],
+              "release_date": "2025-08-22",
+              "title": "P-POP CULTURE",
+              "total_tracks": 5
+            },
+            "artists": [
+              {
+                "ids": {
+                  "applemusic": "914892130"
+                },
+                "name": "Karan Aujla & Ikky",
+                "role": "main"
+              }
+            ],
+            "credits": null,
+            "disc_number": 1,
+            "duration_ms": 160796,
+            "explicit": false,
+            "genres": [
+              "Pop"
+            ],
+            "ids": {
+              "applemusic": "1829591986",
+              "applemusic_url": "https://music.apple.com/us/album/boyfriend/1829591921?i=1829591986"
+            },
+            "images": [
+              {
+                "height": 600,
+                "type": "cover",
+                "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/600x600bb.jpg",
+                "width": 600
+              },
+              {
+                "height": 100,
+                "type": "cover",
+                "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/100x100bb.jpg",
+                "width": 100
+              }
+            ],
+            "preview_url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/64/5b/2b/645b2b11-1249-3ff3-e3af-c02189159868/mzaf_17613725717610713218.plus.aac.p.m4a",
+            "release_date": "2025-08-22",
+            "title": "Boyfriend",
+            "track_number": 4
+          }
+        },
+        "bugs": {
+          "catalog": {
+            "album": "P-POP CULTURE",
+            "album_id": "38585721",
+            "artists": [
+              {
+                "id": "10787297",
+                "name": "Karan Aujla"
+              }
+            ],
+            "id": "126998566",
+            "image": "https://image.bugsm.co.kr/album/images/50/385857/38585721.jpg?version=20250822133003",
+            "title": "Boyfriend"
+          },
+          "metadata": {
+            "album": {
+              "ids": {
+                "bugs": "38585721"
+              },
+              "title": "P-POP CULTURE"
+            },
+            "artists": [
+              {
+                "ids": {
+                  "bugs": "10787297"
+                },
+                "name": "Karan Aujla",
+                "role": "main"
+              }
+            ],
+            "credits": null,
+            "duration_ms": 0,
+            "explicit": false,
+            "genres": null,
+            "ids": {
+              "bugs": "126998566",
+              "bugs_url": "https://music.bugs.co.kr/track/126998566"
+            },
+            "images": [
+              {
+                "url": "https://image.bugsm.co.kr/album/images/50/385857/38585721.jpg?version=20250822133003"
+              }
+            ],
+            "release_date": "",
+            "title": "Boyfriend"
+          }
+        },
+        "genie": {
+          "catalog": {
+            "album": "P-POP CULTURE",
+            "album_id": "86627210",
+            "artists": [
+              {
+                "id": "82085121",
+                "name": "Karan Aujla & Ikky"
+              }
+            ],
+            "id": "111431603",
+            "image": "https://image.genie.co.kr/Y/IMAGE/IMG_ALBUM/086/627/210/86627210_1755580628352_1_600x600.JPG/dims/resize/Q_80,0",
+            "title": "Boyfriend"
+          },
+          "metadata": {
+            "album": {
+              "ids": {
+                "genie": "86627210"
+              },
+              "title": "P-POP CULTURE"
+            },
+            "artists": [
+              {
+                "ids": {
+                  "genie": "82085121"
+                },
+                "name": "Karan Aujla & Ikky",
+                "role": "main"
+              }
+            ],
+            "credits": null,
+            "duration_ms": 0,
+            "explicit": false,
+            "genres": null,
+            "ids": {
+              "genie": "111431603",
+              "genie_url": "https://www.genie.co.kr/detail/songInfo?xgnm=111431603"
+            },
+            "images": [
+              {
+                "url": "https://image.genie.co.kr/Y/IMAGE/IMG_ALBUM/086/627/210/86627210_1755580628352_1_600x600.JPG/dims/resize/Q_80,0"
+              }
+            ],
+            "release_date": "",
+            "title": "Boyfriend"
+          }
+        },
+        "melon": {
+          "catalog": {
+            "album": "P-POP CULTURE",
+            "album_id": "12061172",
+            "artists": [
+              {
+                "id": "2900906",
+                "name": "Karan Aujla"
+              },
+              {
+                "id": "2942719",
+                "name": "Ikky"
+              }
+            ],
+            "id": "39664161",
+            "title": "Boyfriend"
+          },
+          "metadata": {
+            "album": {
+              "ids": {
+                "melon": "12061172"
+              },
+              "title": "P-POP CULTURE"
+            },
+            "artists": [
+              {
+                "ids": {
+                  "melon": "2900906"
+                },
+                "name": "Karan Aujla",
+                "role": "main"
+              },
+              {
+                "ids": {
+                  "melon": "2942719"
+                },
+                "name": "Ikky",
+                "role": "main"
+              }
+            ],
+            "credits": null,
+            "duration_ms": 0,
+            "explicit": false,
+            "genres": null,
+            "ids": {
+              "melon": "39664161",
+              "melon_url": "https://www.melon.com/song/detail.htm?songId=39664161"
+            },
+            "images": null,
+            "release_date": "",
+            "title": "Boyfriend"
+          }
+        },
+        "ytmusic": {
+          "catalog": {
+            "flexColumnDisplayStyle": "MUSIC_RESPONSIVE_LIST_ITEM_FLEX_COLUMN_DISPLAY_STYLE_TWO_LINE_STACK",
+            "flexColumns": [
+              {
+                "musicResponsiveListItemFlexColumnRenderer": {
+                  "displayPriority": "MUSIC_RESPONSIVE_LIST_ITEM_COLUMN_DISPLAY_PRIORITY_HIGH",
+                  "text": {
+                    "runs": [
+                      {
+                        "navigationEndpoint": {
+                          "watchEndpoint": {
+                            "videoId": "tIjUfo30r4M",
+                            "watchEndpointMusicSupportedConfigs": {
+                              "watchEndpointMusicConfig": {
+                                "musicVideoType": "MUSIC_VIDEO_TYPE_ATV"
+                              }
+                            }
+                          }
+                        },
+                        "text": "Boyfriend"
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "musicResponsiveListItemFlexColumnRenderer": {
+                  "displayPriority": "MUSIC_RESPONSIVE_LIST_ITEM_COLUMN_DISPLAY_PRIORITY_HIGH",
+                  "text": {
+                    "accessibility": {
+                      "accessibilityData": {
+                        "label": "Karan Aujla & Ikky • P-POP CULTURE • 2 minutes, 41 seconds"
+                      }
+                    },
+                    "runs": [
+                      {
+                        "navigationEndpoint": {
+                          "browseEndpoint": {
+                            "browseEndpointContextSupportedConfigs": {
+                              "browseEndpointContextMusicConfig": {
+                                "pageType": "MUSIC_PAGE_TYPE_ARTIST"
+                              }
+                            },
+                            "browseId": "UCSmK5WX5U4gdtebWjoL81og"
+                          }
+                        },
+                        "text": "Karan Aujla"
+                      },
+                      {
+                        "text": " & "
+                      },
+                      {
+                        "navigationEndpoint": {
+                          "browseEndpoint": {
+                            "browseEndpointContextSupportedConfigs": {
+                              "browseEndpointContextMusicConfig": {
+                                "pageType": "MUSIC_PAGE_TYPE_ARTIST"
+                              }
+                            },
+                            "browseId": "UCVNJ6jgoWdvAQqxbtIYbl2Q"
+                          }
+                        },
+                        "text": "Ikky"
+                      },
+                      {
+                        "text": " • "
+                      },
+                      {
+                        "navigationEndpoint": {
+                          "browseEndpoint": {
+                            "browseEndpointContextSupportedConfigs": {
+                              "browseEndpointContextMusicConfig": {
+                                "pageType": "MUSIC_PAGE_TYPE_ALBUM"
+                              }
+                            },
+                            "browseId": "MPREb_qTDpBqltt6c"
+                          }
+                        },
+                        "text": "P-POP CULTURE"
+                      },
+                      {
+                        "text": " • "
+                      },
+                      {
+                        "text": "2:41"
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "musicResponsiveListItemFlexColumnRenderer": {
+                  "displayPriority": "MUSIC_RESPONSIVE_LIST_ITEM_COLUMN_DISPLAY_PRIORITY_HIGH",
+                  "text": {
+                    "accessibility": {
+                      "accessibilityData": {
+                        "label": "439 million plays"
+                      }
+                    },
+                    "runs": [
+                      {
+                        "text": "439M plays"
+                      }
+                    ]
+                  }
+                }
+              }
+            ],
+            "itemHeight": "MUSIC_RESPONSIVE_LIST_ITEM_HEIGHT_TALL",
+            "playlistItemData": {
+              "videoId": "tIjUfo30r4M"
+            },
+            "thumbnail": {
+              "musicThumbnailRenderer": {
+                "thumbnail": {
+                  "thumbnails": [
+                    {
+                      "height": 60,
+                      "url": "https://yt3.googleusercontent.com/BzOBERVwxHIkVDpePVN8mnT0MID3cySSHcZvY84FHusBL78dxkdpWBBk8o4O5e8BaenNlHKlI9fWb_Rccw=w60-h60-l90-rj",
+                      "width": 60
+                    },
+                    {
+                      "height": 120,
+                      "url": "https://yt3.googleusercontent.com/BzOBERVwxHIkVDpePVN8mnT0MID3cySSHcZvY84FHusBL78dxkdpWBBk8o4O5e8BaenNlHKlI9fWb_Rccw=w120-h120-l90-rj",
+                      "width": 120
+                    }
+                  ]
+                },
+                "thumbnailCrop": "MUSIC_THUMBNAIL_CROP_UNSPECIFIED",
+                "thumbnailScale": "MUSIC_THUMBNAIL_SCALE_ASPECT_FIT"
+              }
+            },
+            "videoId": "tIjUfo30r4M"
+          },
+          "metadata": {
+            "album": {
+              "ids": {
+                "ytmusic": "MPREb_qTDpBqltt6c"
+              },
+              "title": "P-POP CULTURE"
+            },
+            "artists": [
+              {
+                "ids": {
+                  "ytmusic": "UCSmK5WX5U4gdtebWjoL81og"
+                },
+                "name": "Karan Aujla",
+                "role": "main"
+              },
+              {
+                "ids": {
+                  "ytmusic": "UCVNJ6jgoWdvAQqxbtIYbl2Q"
+                },
+                "name": "Ikky",
+                "role": "main"
+              }
+            ],
+            "credits": null,
+            "duration_ms": 161000,
+            "explicit": false,
+            "genres": null,
+            "ids": {
+              "ytmusic": "tIjUfo30r4M"
+            },
+            "images": [
+              {
+                "height": 60,
+                "type": "cover",
+                "url": "https://yt3.googleusercontent.com/BzOBERVwxHIkVDpePVN8mnT0MID3cySSHcZvY84FHusBL78dxkdpWBBk8o4O5e8BaenNlHKlI9fWb_Rccw=w60-h60-l90-rj",
+                "width": 60
+              },
+              {
+                "height": 120,
+                "type": "cover",
+                "url": "https://yt3.googleusercontent.com/BzOBERVwxHIkVDpePVN8mnT0MID3cySSHcZvY84FHusBL78dxkdpWBBk8o4O5e8BaenNlHKlI9fWb_Rccw=w120-h120-l90-rj",
+                "width": 120
+              }
+            ],
+            "release_date": "",
+            "title": "Boyfriend"
+          }
+        }
+      }
+    }
+  },
+  "metadata_sources": [
+    "applemusic",
+    "bugs",
+    "genie",
+    "melon",
+    "ytmusic"
+  ],
+  "provider_status": [
+    {
+      "name": "applemusic",
+      "success": true,
+      "matched": true,
+      "contributed": true,
+      "cached": false,
+      "latency_ms": 4564,
+      "version": "applemusic-v1"
+    },
+    {
+      "name": "bugs",
+      "success": true,
+      "matched": true,
+      "contributed": true,
+      "cached": false,
+      "latency_ms": 5891,
+      "version": "bugs-public-v1",
+      "enrichment_status": "unavailable"
+    },
+    {
+      "name": "deezer",
+      "success": false,
+      "matched": false,
+      "contributed": false,
+      "cached": false,
+      "latency_ms": 9499,
+      "error": "public catalog request failed",
+      "rejection_reason": "provider_error",
+      "version": "deezer-v3-search"
+    },
+    {
+      "name": "genie",
+      "success": true,
+      "matched": true,
+      "contributed": true,
+      "cached": false,
+      "latency_ms": 6232,
+      "version": "genie-public-v1",
+      "enrichment_status": "unavailable"
+    },
+    {
+      "name": "jiosaavn",
+      "success": false,
+      "matched": false,
+      "contributed": false,
+      "cached": false,
+      "latency_ms": 5199,
+      "error": "provider returned an unavailable HTML page without catalog data",
+      "rejection_reason": "provider_error",
+      "version": "jiosaavn-search-v6-pages"
+    },
+    {
+      "name": "melon",
+      "success": true,
+      "matched": true,
+      "contributed": true,
+      "cached": false,
+      "latency_ms": 6833,
+      "version": "melon-public-v1",
+      "enrichment_status": "unavailable"
+    },
+    {
+      "name": "musicbrainz",
+      "success": false,
+      "matched": false,
+      "contributed": false,
+      "cached": false,
+      "latency_ms": 4839,
+      "error": "provider returned an unavailable HTML page without catalog data",
+      "rejection_reason": "provider_error",
+      "version": "musicbrainz-v4-relationships"
+    },
+    {
+      "name": "soundcloud",
+      "success": true,
+      "matched": false,
+      "contributed": false,
+      "cached": false,
+      "latency_ms": 0,
+      "rejection_reason": "no_results",
+      "version": "soundcloud-oembed-v1"
+    },
+    {
+      "name": "spotify",
+      "success": false,
+      "matched": false,
+      "contributed": false,
+      "cached": false,
+      "latency_ms": 6023,
+      "error": "spotify anonymous metadata access unavailable (HTTP 400); configure validated credentials or use a Spotify track ID for public embed lookup",
+      "rejection_reason": "provider_error",
+      "version": "spotify-web-v3"
+    },
+    {
+      "name": "ytmusic",
+      "success": true,
+      "matched": true,
+      "contributed": true,
+      "cached": false,
+      "latency_ms": 4598,
+      "version": "ytmusic-innertube-v2"
+    }
+  ],
+  "resolution_strategy": {
+    "input_type": "artist_title",
+    "primary_source": "applemusic",
+    "cross_resolved": false
+  },
+  "enrichment_status": {
+    "coverartarchive": "no_data",
+    "musicbrainz_release": "no_data"
+  },
+  "resolver_stats": {
+    "providers_queried": 10,
+    "providers_matched": 5,
+    "providers_contributed": 5,
+    "candidates_evaluated": 16
+  }
+}

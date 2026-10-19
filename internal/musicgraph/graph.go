@@ -4,6 +4,7 @@ import (
 	"crypto/sha256"
 	"encoding/json"
 	"fmt"
+	"html"
 	"sort"
 	"strings"
 
@@ -284,7 +285,8 @@ func (b *Builder) CatalogCredits(provider, target string, m map[string]any) {
 				if r == "" && key != "artists" {
 					r = key
 				}
-				b.Credit(provider, target, text(a["id"]), text(a["name"]), r, text(a["name"]), "", nil)
+				name := html.UnescapeString(text(a["name"]))
+				b.Credit(provider, target, text(a["id"]), name, r, name, "", nil)
 			}
 		}
 	}

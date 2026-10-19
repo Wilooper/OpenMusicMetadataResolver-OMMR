@@ -149,3 +149,37 @@ func TestForeignStructuredCreditsCannotBorrowAcceptedIdentity(t *testing.T) {
 		}
 	}
 }
+
+func TestStructuredContributorIdentityAndCreditFallback(t *testing.T) {
+	candidate := canonical.Track{Title: "Song", IDs: map[string]string{"jiosaavn": "song1234"}, Credits: []canonical.Credit{{Name: "Composer & Player", Roles: []string{"Composer"}}}}
+	catalog := record(t, `{"id":"song1234","more_info":{"artistMap":{"artists":[{"id":"42","name":"Composer &amp; Player","role":"music"}],"primary_artists":[{"id":"7","name":"Singer"}]}}}`)
+	g := TrackGraph(canonical.Track{CanonicalID: "song", Title: "Song"}, []Record{{Provider: "jiosaavn", Track: candidate, Catalog: catalog}}, nil)
+	found := false
+	for _, node := range g.Nodes {
+		if node.Type == "artist" && node.NativeID == "42" {
+			found = true
+			if node.Name != "Composer & Player" {
+				t.Fatalf("provider HTML entity escaped in contributor name: %q", node.Name)
+			}
+		}
+		if node.Local && node.Name == "Composer & Player" {
+			t.Fatal("structured contributor duplicated by name-only fallback")
+		}
+	}
+	if !found || find(g, "credit", "jiosaavn:artist:42", "jiosaavn:recording:song1234") == nil {
+		t.Fatal("structured composer identity lost")
+	}
+}
+
+func TestReleaseEnrichmentGraphRequiresRecordingMembership(t *testing.T) {
+	track := canonical.Track{CanonicalID: "song", IDs: map[string]string{"musicbrainz": "recording"}, Album: canonical.Album{IDs: map[string]string{"musicbrainz": "release"}}}
+	records := []Record{{Provider: "musicbrainz", Track: track}}
+	for _, member := range []string{"recording", "foreign"} {
+		release := record(t, `{"id":"release","title":"Edition","relations":[{"type":"artwork","direction":"backward","artist":{"id":"designer","name":"Designer"}}],"media":[{"tracks":[{"recording":{"id":"`+member+`"}}]}]}`)
+		g := TrackGraph(track, records, release)
+		found := find(g, "credit", "musicbrainz:artist:designer", "musicbrainz:release:release") != nil
+		if found != (member == "recording") {
+			t.Fatal("release enrichment graph ignored exact recording membership")
+		}
+	}
+}

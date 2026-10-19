@@ -1,0 +1,80 @@
+{
+  "provider": "musicbrainz",
+  "version": "musicbrainz-v4-relationships",
+  "query": {
+    "artist": "Karan Aujla",
+    "title": "Boyfriend"
+  },
+  "adapter_status": "error",
+  "adapter_error_kind": "unavailable_catalog_page",
+  "operation": "search",
+  "candidates": [],
+  "requests": [
+    {
+      "phase": "adapter.search",
+      "method": "GET",
+      "url": "https://musicbrainz.org/ws/2/recording/?fmt=json&limit=5&query=artist%3A%22karan+aujla%22+AND+recording%3A%22boyfriend%22",
+      "status": 200,
+      "protocol": "HTTP/2.0",
+      "content_type": "text/html",
+      "server": "envoy",
+      "bytes": 195,
+      "sha256": "5b131ca14aa96311d3432b0062c7443d3b0e6346ec279bd376a75f0a76bcd5d7",
+      "kind": "site_unavailable_html",
+      "elapsed_ms": 4636
+    },
+    {
+      "phase": "adapter.search",
+      "method": "GET",
+      "url": "https://musicbrainz.org/search?method=indexed&query=artist%3A%22karan+aujla%22+AND+recording%3A%22boyfriend%22&type=recording",
+      "status": 200,
+      "protocol": "HTTP/2.0",
+      "content_type": "text/html",
+      "server": "envoy",
+      "bytes": 195,
+      "sha256": "5b131ca14aa96311d3432b0062c7443d3b0e6346ec279bd376a75f0a76bcd5d7",
+      "kind": "site_unavailable_html",
+      "elapsed_ms": 70
+    },
+    {
+      "phase": "route.home",
+      "method": "GET",
+      "url": "https://musicbrainz.org/",
+      "status": 200,
+      "protocol": "HTTP/2.0",
+      "content_type": "text/html",
+      "server": "envoy",
+      "bytes": 195,
+      "sha256": "5b131ca14aa96311d3432b0062c7443d3b0e6346ec279bd376a75f0a76bcd5d7",
+      "kind": "site_unavailable_html",
+      "elapsed_ms": 1001
+    },
+    {
+      "phase": "route.plain_search_json",
+      "method": "GET",
+      "url": "https://musicbrainz.org/ws/2/recording?fmt=json&limit=5&query=Karan+Aujla+Boyfriend",
+      "status": 200,
+      "protocol": "HTTP/2.0",
+      "content_type": "text/html",
+      "server": "envoy",
+      "bytes": 195,
+      "sha256": "5b131ca14aa96311d3432b0062c7443d3b0e6346ec279bd376a75f0a76bcd5d7",
+      "kind": "site_unavailable_html",
+      "elapsed_ms": 998
+    },
+    {
+      "phase": "route.plain_search_xml",
+      "method": "GET",
+      "url": "https://musicbrainz.org/ws/2/recording?fmt=xml&limit=5&query=Karan+Aujla+Boyfriend",
+      "status": 200,
+      "protocol": "HTTP/2.0",
+      "content_type": "text/html",
+      "server": "envoy",
+      "bytes": 195,
+      "sha256": "5b131ca14aa96311d3432b0062c7443d3b0e6346ec279bd376a75f0a76bcd5d7",
+      "kind": "site_unavailable_html",
+      "elapsed_ms": 1001
+    }
+  ],
+  "observation": "homepage_and_api_unavailable_origin_unconfirmed"
+}

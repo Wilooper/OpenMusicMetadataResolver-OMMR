@@ -66,7 +66,7 @@ func (s *Service) Resolve(ctx context.Context, q Query) (Result, error) {
 	if s.Health != nil {
 		signature = s.Health.Signature()
 	}
-	key := fmt.Sprintf("albums:v2:%x", sha256.Sum256([]byte(fmt.Sprintf("%s/%s/%d/%s/%s", q.Provider, q.ID, q.Limit, s.Storefront, signature))))
+	key := fmt.Sprintf("albums:v3:%x", sha256.Sum256([]byte(fmt.Sprintf("%s/%s/%d/%s/%s", q.Provider, q.ID, q.Limit, s.Storefront, signature))))
 	if !q.BypassCache && s.Cache != nil {
 		if data, found, err := s.Cache.Get(ctx, key); err == nil && found && json.Unmarshal(data, &result) == nil && result.Album != nil && result.Source != nil {
 			result.Source.Cached = true

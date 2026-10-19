@@ -383,3 +383,5 @@ Share a track link directly with `/v1/resolve?url=...` or the JSON/bulk APIs. [S
 ## Recording relationships and structured credits
 
 Track and native album responses include a source-owned `music_graph`: recordings, exact release editions, release groups, compositions and contributors, with directed relationships and scoped credits. Debug tracks keep the graph under `extensions.music_graph`; production tracks expose it directly. Related versions do not become accepted recording IDs. See [graph schema, scope and source coverage](docs/MUSIC_GRAPH.md).
+
+[Full verification (2026-10-19)](docs/FULL_VERIFICATION_2026-10-19.md): fresh Go race/coverage and Python tests, 58 running API checks, a 12-song live matrix, provider limitations, Android ARM64 cross-build and reproducible Termux-friendly commands.

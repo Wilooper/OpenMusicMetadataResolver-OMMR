@@ -43,7 +43,7 @@ The resolver, matcher and seed filter share a single direct-input definition. Ex
 
 ## Cache behavior
 
-Tracking variants normalize to the same typed query before cache lookup and coalescing. For example, a Deezer track URL and its `deezer_id` use the same cache identity when other query/source fields agree. Debug/production sharing and bypass semantics remain unchanged. A Spotify URI and its URL normalize to the same track ID. Native versus page-first JioSaavn inputs can produce different source detail and therefore remain separate query variants; alternate JioSaavn slugs are not claimed to share a cache entry. Resolved caching now uses `rich-v13` so older entries cannot hide the added [recording and credit graph](MUSIC_GRAPH.md). Link normalization and matching gates remain unchanged.
+Tracking variants normalize to the same typed query before cache lookup and coalescing. For example, a Deezer track URL and its `deezer_id` use the same cache identity when other query/source fields agree. Debug/production sharing and bypass semantics remain unchanged. A Spotify URI and its URL normalize to the same track ID. Native versus page-first JioSaavn inputs can produce different source detail and therefore remain separate query variants; alternate JioSaavn slugs are not claimed to share a cache entry. Resolved caching now uses `rich-v14` so older entries cannot hide the added [recording and credit graph](MUSIC_GRAPH.md). Link normalization and matching gates remain unchanged.
 
 ## Capability discovery
 
