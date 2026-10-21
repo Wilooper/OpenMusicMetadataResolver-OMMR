@@ -173,3 +173,5 @@ Artist profiles use an independent source-owned schema rather than the canonical
 ## Recording relationships and structured credits
 
 Track and native album responses include a source-owned `music_graph`: recordings, exact release editions, release groups, compositions and contributors, with directed relationships and scoped credits. Debug tracks keep the graph under `extensions.music_graph`; production tracks expose it directly. Related versions do not become accepted recording IDs. See [graph schema, scope and source coverage](MUSIC_GRAPH.md).
+
+Apple native albums additionally expose optional `discs[].track_list` coverage, using the same returned/total/complete/reason fields as collection coverage. Disc completeness describes returned source-declared song slots; it does not replace the collection total. Unknown totals remain absent. See [disc coverage and live examples](NATIVE_ALBUMS.md#apple-disc-coverage-2026-10-21).

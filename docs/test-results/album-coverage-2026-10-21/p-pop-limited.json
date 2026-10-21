@@ -1,0 +1,252 @@
+{
+  "album": {
+    "music_graph": {
+      "version": 1,
+      "root": "applemusic:release:1829591921",
+      "nodes": [
+        {
+          "id": "applemusic:artist:914892130",
+          "type": "artist",
+          "provider": "applemusic",
+          "native_id": "914892130",
+          "name": "Karan Aujla & Ikky"
+        },
+        {
+          "id": "applemusic:release:1829591921",
+          "type": "release",
+          "provider": "applemusic",
+          "native_id": "1829591921",
+          "name": "P-POP CULTURE"
+        },
+        {
+          "id": "applemusic:track_entry:1829591921/1/1/1829591922",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1829591921/1/1/1829591922",
+          "name": "I Really Do..."
+        },
+        {
+          "id": "applemusic:track_entry:1829591921/1/2/1829591983",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1829591921/1/2/1829591983",
+          "name": "For A Reason"
+        }
+      ],
+      "edges": [
+        {
+          "from": "applemusic:artist:914892130",
+          "to": "applemusic:release:1829591921",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "Karan Aujla & Ikky"
+        },
+        {
+          "from": "applemusic:artist:914892130",
+          "to": "applemusic:track_entry:1829591921/1/1/1829591922",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "Karan Aujla & Ikky"
+        },
+        {
+          "from": "applemusic:artist:914892130",
+          "to": "applemusic:track_entry:1829591921/1/2/1829591983",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "Karan Aujla & Ikky"
+        },
+        {
+          "from": "applemusic:track_entry:1829591921/1/1/1829591922",
+          "to": "applemusic:release:1829591921",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 1,
+          "disc_number": 1,
+          "track_number": "1"
+        },
+        {
+          "from": "applemusic:track_entry:1829591921/1/2/1829591983",
+          "to": "applemusic:release:1829591921",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 2,
+          "disc_number": 1,
+          "track_number": "2"
+        }
+      ],
+      "truncated": false
+    },
+    "provider": "applemusic",
+    "id": "1829591921",
+    "title": "P-POP CULTURE",
+    "url": "https://music.apple.com/us/album/p-pop-culture/1829591921?uo=4",
+    "artists": [
+      {
+        "id": "914892130",
+        "name": "Karan Aujla & Ikky"
+      }
+    ],
+    "release_date": "2025-08-22T07:00:00Z",
+    "copyright": "℗ 2025 Karan Aujla Music Inc., under exclusive license to Warner Music Canada Co. / Warner Music India",
+    "images": [
+      "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/100x100bb.jpg"
+    ],
+    "discs": [
+      {
+        "track_list": {
+          "returned": 2,
+          "total": 5,
+          "complete": false,
+          "reason": "limit"
+        },
+        "number": 1,
+        "total_tracks": 5
+      },
+      {
+        "track_list": {
+          "returned": 0,
+          "total": 6,
+          "complete": false,
+          "reason": "limit"
+        },
+        "number": 2,
+        "total_tracks": 6
+      }
+    ],
+    "tracks": [
+      {
+        "id": "1829591922",
+        "title": "I Really Do...",
+        "position": 1,
+        "disc_number": 1,
+        "track_number": "1",
+        "duration_ms": 193842,
+        "artists": [
+          {
+            "id": "914892130",
+            "name": "Karan Aujla & Ikky"
+          }
+        ],
+        "provider_data": {
+          "artistId": 914892130,
+          "artistName": "Karan Aujla & Ikky",
+          "artistViewUrl": "https://music.apple.com/us/artist/karan-aujla/914892130?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/60x60bb.jpg",
+          "collectionCensoredName": "P-POP CULTURE",
+          "collectionExplicitness": "explicit",
+          "collectionId": 1829591921,
+          "collectionName": "P-POP CULTURE",
+          "collectionPrice": 9.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/i-really-do/1829591921?i=1829591922&uo=4",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 2,
+          "discNumber": 1,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/d0/7d/37/d07d3767-640b-8ef5-bb09-3158add717d2/mzaf_5291182584280425882.plus.aac.p.m4a",
+          "primaryGenreName": "Pop",
+          "releaseDate": "2025-08-22T12:00:00Z",
+          "trackCensoredName": "I Really Do...",
+          "trackCount": 5,
+          "trackExplicitness": "notExplicit",
+          "trackId": 1829591922,
+          "trackName": "I Really Do...",
+          "trackNumber": 1,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 193842,
+          "trackViewUrl": "https://music.apple.com/us/album/i-really-do/1829591921?i=1829591922&uo=4",
+          "wrapperType": "track"
+        }
+      },
+      {
+        "id": "1829591983",
+        "title": "For A Reason",
+        "position": 2,
+        "disc_number": 1,
+        "track_number": "2",
+        "duration_ms": 180000,
+        "artists": [
+          {
+            "id": "914892130",
+            "name": "Karan Aujla & Ikky"
+          }
+        ],
+        "provider_data": {
+          "artistId": 914892130,
+          "artistName": "Karan Aujla & Ikky",
+          "artistViewUrl": "https://music.apple.com/us/artist/karan-aujla/914892130?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/60x60bb.jpg",
+          "collectionCensoredName": "P-POP CULTURE",
+          "collectionExplicitness": "explicit",
+          "collectionId": 1829591921,
+          "collectionName": "P-POP CULTURE",
+          "collectionPrice": 9.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/for-a-reason/1829591921?i=1829591983&uo=4",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 2,
+          "discNumber": 1,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/88/c6/5b/88c65b26-c766-69d3-2603-4857e66903d4/mzaf_7154011662261729475.plus.aac.p.m4a",
+          "primaryGenreName": "Pop",
+          "releaseDate": "2025-08-22T12:00:00Z",
+          "trackCensoredName": "For A Reason",
+          "trackCount": 5,
+          "trackExplicitness": "notExplicit",
+          "trackId": 1829591983,
+          "trackName": "For A Reason",
+          "trackNumber": 2,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 180000,
+          "trackViewUrl": "https://music.apple.com/us/album/for-a-reason/1829591921?i=1829591983&uo=4",
+          "wrapperType": "track"
+        }
+      }
+    ],
+    "track_list": {
+      "returned": 2,
+      "total": 11,
+      "complete": false,
+      "reason": "limit"
+    },
+    "provider_data": {
+      "artistId": 914892130,
+      "artistName": "Karan Aujla & Ikky",
+      "artistViewUrl": "https://music.apple.com/us/artist/karan-aujla/914892130?uo=4",
+      "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/100x100bb.jpg",
+      "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/60x60bb.jpg",
+      "collectionCensoredName": "P-POP CULTURE",
+      "collectionExplicitness": "explicit",
+      "collectionId": 1829591921,
+      "collectionName": "P-POP CULTURE",
+      "collectionPrice": 9.99,
+      "collectionType": "Album",
+      "collectionViewUrl": "https://music.apple.com/us/album/p-pop-culture/1829591921?uo=4",
+      "contentAdvisoryRating": "Explicit",
+      "copyright": "℗ 2025 Karan Aujla Music Inc., under exclusive license to Warner Music Canada Co. / Warner Music India",
+      "country": "USA",
+      "currency": "USD",
+      "primaryGenreName": "Pop",
+      "releaseDate": "2025-08-22T07:00:00Z",
+      "trackCount": 11,
+      "wrapperType": "collection"
+    },
+    "observed_at": "2026-10-21T10:54:36.211128524Z"
+  },
+  "source": {
+    "status": "partial",
+    "cached": false
+  }
+}

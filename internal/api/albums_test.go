@@ -45,6 +45,10 @@ func TestAlbumsGETGatewayLimitsAndPolicy(t *testing.T) {
 	if get.Code != 200 || post.Code != 200 || !reflect.DeepEqual(a, b) || a["source"] != nil || calls.Load() != 1 {
 		t.Fatalf("GET/POST/cache: %s %s %d", get.Body.String(), post.Body.String(), calls.Load())
 	}
+	var native albums.Result
+	if json.Unmarshal(get.Body.Bytes(), &native) != nil || native.Album.Discs[0].TrackList == nil || native.Album.Discs[0].TrackList.Returned != 2 || native.Album.Discs[0].TrackList.Reason != "unknown_total" {
+		t.Fatal("per-disc coverage missing or guessed through REST/gateway cache")
+	}
 	debug := call("GET", "/v1/albums?provider=applemusic&id=123&debug=true", "")
 	if debug.Code != 200 || !strings.Contains(debug.Body.String(), `"cached":true`) {
 		t.Fatal(debug.Body.String())

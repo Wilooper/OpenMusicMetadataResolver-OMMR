@@ -58,7 +58,7 @@ A partial album returns HTTP 200 with explicit completion information. Invalid i
 
 Albums share the existing per-provider physical request limiter, source enable flags and provider health circuits. Invalid album identity cannot become a successful response. Local request-budget failures and caller cancellation do not trip source health; an upstream page failure does. No authentication process is started.
 
-The independent `albums:v3` cache includes provider, exact ID, track limit, Apple storefront and runtime health signature. Complete entries cache for five minutes; partial entries for 30 seconds; failures without album metadata are not cached. Debug and production share entries. A different track limit has a separate entry and can cause a new upstream lookup. Every upstream body is limited to 4 MiB and redirects are refused.
+The independent `albums:v4` cache includes provider, exact ID, track limit, Apple storefront and runtime health signature. Complete entries cache for five minutes; partial entries for 30 seconds; failures without album metadata are not cached. Debug and production share entries. A different track limit has a separate entry and can cause a new upstream lookup. Every upstream body is limited to 4 MiB and redirects are refused.
 
 ```yaml
 api:
@@ -82,4 +82,29 @@ Protocol references: [Apple's album/song lookup examples](https://developer.appl
 
 ## Recording and credit graph
 
-Album responses also include `music_graph` for release relationships, contributors and returned track entries. MusicBrainz supplies release-group, recording, composition and scoped credit links where reported. Only returned tracks enter the graph. Album cache is now `albums:v3`; see [graph documentation](MUSIC_GRAPH.md).
+Album responses also include `music_graph` for release relationships, contributors and returned track entries. MusicBrainz supplies release-group, recording, composition and scoped credit links where reported. Only returned tracks enter the graph. Album cache is now `albums:v4`; see [graph documentation](MUSIC_GRAPH.md).
+
+
+## Apple disc coverage (2026-10-21)
+
+Apple `discs[].track_list` now reports `returned`, the optional source-declared disc `total`, `complete` and `reason`, separately from collection-wide `track_list`. Existing disc `total_tracks` remains available. Unknown disc totals stay unknown. Coverage describes returned entries after the caller's limit, so an unreturned later disc reports zero returned and `reason: limit`; it cannot claim completeness from hidden entries.
+
+Completeness checks validate contiguous numeric track positions, distinct native Apple track IDs, contiguous disc numbers, consistent per-disc track counts and any declared disc count. Printed source track numbers remain unchanged. A later row without a count cannot erase a previously reported disc total. Inconsistent source lists remain incomplete even when the collection's count happens to match. This adds no upstream requests or per-track fan-out. Other providers' disc models are unchanged; the new optional field currently applies only to Apple.
+
+Fresh public-only running-server checks returned:
+
+| Album | Collection coverage | Source-declared song-disc coverage |
+| --- | --- | --- |
+| DAMN. | 14/15, partial | 14/14, complete |
+| Goldberg, The 1955 & 1981 Recordings | 64/65, partial | 64/64, complete |
+| P-POP CULTURE | 11/11, complete | 5/5 + 6/6, complete |
+| Proof | 35/35, complete | 19/19 + 15/15 + 1/1, complete |
+
+These are two distinct scopes, not evidence that the collection's extra item is a video or booklet. Additional exploratory `musicVideo` queries repeated the song rows; combined entity queries duplicated them. Neither established the missing item's identity, and no fallback network requests were added. The collection totals remain unchanged.
+
+All five live cases (including a two-track limit) passed REST/JSON gateway/cache parity. Full build, vet and race/coverage checks passed: 256 top-level tests, 353 cases, zero failures/skips. Evidence: [live summary](test-results/album-coverage-2026-10-21/live-summary.json), captured responses alongside it, and [checks](test-results/album-coverage-2026-10-21/checks.json). Album cache advances to `albums:v4` to invalidate older completeness claims; resolved song caching is unchanged.
+
+```sh
+go build -o bin/server ./cmd/server
+python tools/live_album_coverage.py --server bin/server --output /tmp/ommr-album-coverage
+```

@@ -32,6 +32,7 @@ type Track struct {
 	ProviderData map[string]any `json:"provider_data,omitempty"`
 }
 type Disc struct {
+	TrackList    *TrackList     `json:"track_list,omitempty"`
 	ProviderData map[string]any `json:"provider_data,omitempty"`
 	Number       int            `json:"number"`
 	Title        string         `json:"title,omitempty"`

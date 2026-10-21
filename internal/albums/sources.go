@@ -127,7 +127,10 @@ func (s *Service) apple(ctx context.Context, q Query) (*Album, error) {
 	}
 	valid := true
 	seen := map[string]bool{}
+	seenIDs := map[string]bool{}
 	discs := map[int]Disc{}
+	discInvalid := map[int]bool{}
+	discCount := count(root["discCount"])
 	for _, v := range rows {
 		r := obj(v)
 		if text(r["wrapperType"]) != "track" {
@@ -138,17 +141,29 @@ func (s *Service) apple(ctx context.Context, q Query) (*Album, error) {
 			continue
 		}
 		t := Track{ID: text(r["trackId"]), Title: text(r["trackName"]), Position: int(number(r["trackNumber"])), DiscNumber: int(number(r["discNumber"])), TrackNumber: text(r["trackNumber"]), DurationMS: number(r["trackTimeMillis"]), Artists: []Artist{{ID: text(r["artistId"]), Name: text(r["artistName"])}}, ProviderData: catalog(r)}
-		key := strconv.Itoa(t.DiscNumber) + "/" + t.TrackNumber
-		if t.ID == "" || t.Title == "" || t.Position < 1 || t.DiscNumber < 1 || seen[key] {
+		key := strconv.Itoa(t.DiscNumber) + "/" + strconv.Itoa(t.Position)
+		if t.ID == "" || t.Title == "" || t.Position < 1 || t.DiscNumber < 1 || seen[key] || seenIDs[t.ID] {
 			valid = false
+			discInvalid[t.DiscNumber] = true
 			continue
 		}
 		seen[key] = true
+		seenIDs[t.ID] = true
 		declared := count(r["trackCount"])
-		if previous, ok := discs[t.DiscNumber]; ok && previous.Total != nil && declared != nil && *previous.Total != *declared {
-			valid = false
+		if previous, ok := discs[t.DiscNumber]; ok && previous.Total != nil {
+			if declared != nil && *previous.Total != *declared {
+				discInvalid[t.DiscNumber] = true
+			}
+			declared = previous.Total
 		}
 		discs[t.DiscNumber] = Disc{Number: t.DiscNumber, Total: declared}
+		if n := count(r["discCount"]); n != nil {
+			if discCount != nil && *discCount != *n {
+				valid = false
+			} else {
+				discCount = n
+			}
+		}
 		a.Tracks = append(a.Tracks, t)
 	}
 	for _, disc := range discs {
@@ -161,11 +176,58 @@ func (s *Service) apple(ctx context.Context, q Query) (*Album, error) {
 		}
 		return a.Tracks[i].Position < a.Tracks[j].Position
 	})
+	if discCount != nil && *discCount != len(a.Discs) {
+		valid = false
+	}
+	for i, d := range a.Discs {
+		if d.Number != i+1 {
+			valid = false
+		}
+	}
+	// Validate the source list before trimming, then describe only returned entries.
+	appleDiscCoverage(a, discInvalid, false)
+	for _, d := range a.Discs {
+		if discInvalid[d.Number] || (d.Total != nil && !d.TrackList.Complete) {
+			valid = false
+			discInvalid[d.Number] = true
+		}
+	}
+	trimmed := len(a.Tracks) > q.Limit
 	if len(a.Tracks) > q.Limit {
 		a.Tracks = a.Tracks[:q.Limit]
 	}
+	appleDiscCoverage(a, discInvalid, trimmed)
 	finish(a, q, valid)
 	return a, nil
+}
+
+func appleDiscCoverage(a *Album, invalid map[int]bool, limited bool) {
+	for i := range a.Discs {
+		d := &a.Discs[i]
+		coverage := &TrackList{Total: d.Total, Reason: "unknown_total"}
+		contiguous := true
+		for _, t := range a.Tracks {
+			if t.DiscNumber == d.Number {
+				coverage.Returned++
+				if t.Position != coverage.Returned {
+					contiguous = false
+				}
+			}
+		}
+		if !contiguous {
+			invalid[d.Number] = true
+		}
+		if d.Total != nil {
+			coverage.Reason = "incomplete_response"
+			if !invalid[d.Number] && coverage.Returned == *d.Total {
+				coverage.Complete = true
+				coverage.Reason = ""
+			} else if limited && !invalid[d.Number] && coverage.Returned < *d.Total {
+				coverage.Reason = "limit"
+			}
+		}
+		d.TrackList = coverage
+	}
 }
 func (s *Service) deezer(ctx context.Context, q Query) (*Album, error) {
 	m, err := s.get(ctx, q.Provider, "https://api.deezer.com/album/"+q.ID)
