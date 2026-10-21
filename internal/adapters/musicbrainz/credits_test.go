@@ -36,6 +36,21 @@ func TestWorkLyricistAndComposerAreActualRelations(t *testing.T) {
 
 type recordingTransport func(*http.Request) (*http.Response, error)
 
+func TestSpecializedCreditsAreRetained(t *testing.T) {
+	for _, role := range []string{"instrument", "vocal", "mix", "mastering", "recording", "conductor", "orchestrator", "co-producer", "executive producer", "programming", "remixer", "translator"} {
+		var credits []canonical.Credit
+		appendRelationCredit(&credits, provider.MusicBrainzRelation{Type: role, Artist: provider.MusicBrainzArtist{ID: "person", Name: "Contributor"}})
+		if len(credits) != 1 || !strings.EqualFold(credits[0].Roles[0], role) {
+			t.Fatalf("lost %s", role)
+		}
+	}
+	var credits []canonical.Credit
+	appendRelationCredit(&credits, provider.MusicBrainzRelation{Type: "unrecognized", Artist: provider.MusicBrainzArtist{Name: "Person"}})
+	if len(credits) != 0 {
+		t.Fatal("unknown role invented")
+	}
+}
+
 func (f recordingTransport) RoundTrip(r *http.Request) (*http.Response, error) { return f(r) }
 
 func TestISRCRequestsRetainRequestedCode(t *testing.T) {

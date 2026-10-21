@@ -36,4 +36,5 @@ func attachGraph(album *Album) {
 	}
 	graph := b.Result()
 	album.MusicGraph = &graph
+	album.CreditDetails = musicgraph.DetailedCredits(graph)
 }

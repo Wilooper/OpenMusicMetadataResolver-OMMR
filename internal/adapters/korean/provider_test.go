@@ -9,7 +9,48 @@ import (
 	"testing"
 
 	"github.com/ommr/ommr/internal/adapters"
+	"github.com/ommr/ommr/internal/musicgraph"
+	"golang.org/x/net/html"
 )
+
+func TestMelonContributorSectionOutsideSongInfo(t *testing.T) {
+	body := `<meta property="og:url" content="https://www.melon.com/song/detail.htm?songId=123"><div class="section_info"><div class="song_name">Song</div><div class="artist"><a href="javascript:melon.link.goArtistDetail('7')">Singer</a></div></div><div class="section_prdcr"><ul class="list_person"><li><a class="artist_name" href="javascript:melon.link.goArtistDetail('10')">Alex</a><span class="type">작곡</span></li><li><a class="artist_name" href="javascript:melon.link.goArtistDetail('11')">Alex</a><span class="type">작사</span></li><li><a class="artist_name" href="javascript:melon.link.goArtistDetail()">Last, First &amp; Partner</a><span class="type">편곡</span></li></ul></div><aside><a class="artist_name">Unrelated</a><span class="type">작곡</span></aside>`
+	doc, err := html.Parse(strings.NewReader(body))
+	if err != nil {
+		t.Fatal(err)
+	}
+	p := New("melon")
+	record, err := p.detail(doc, []byte(body), "123")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(record.Credits) != 3 || record.Credits[0].ID != "10" || record.Credits[1].ID != "11" || record.Credits[2].Name != "Last, First & Partner" || record.Credits[2].ID != "" {
+		t.Fatalf("contributors lost or guessed: %+v", record.Credits)
+	}
+	c := p.candidate(record)
+	if len(c.Track.Credits) != 3 {
+		t.Fatal("normalized credits missing")
+	}
+	var catalog map[string]any
+	_ = json.Unmarshal(c.RawResponse, &catalog)
+	g := musicgraph.TrackGraph(c.Track, []musicgraph.Record{{Provider: "melon", Track: c.Track, Catalog: catalog}}, nil)
+	d := musicgraph.DetailedCredits(g)
+	found := false
+	for _, e := range d.Credits {
+		if e.SourceRole == "작곡" {
+			found = true
+			if e.Role != "composer" || e.From != "melon:artist:10" || e.To != "melon:recording:123" {
+				t.Fatalf("credit identity/scope wrong: %+v", e)
+			}
+		}
+	}
+	if !found {
+		t.Fatal("original source role missing")
+	}
+	if _, err = p.detail(doc, []byte(body), "999"); err == nil {
+		t.Fatal("foreign song credits accepted")
+	}
+}
 
 func TestCatalogSearchAndExactDetail(t *testing.T) {
 	for _, name := range []string{"bugs", "genie", "melon"} {

@@ -79,7 +79,7 @@ func New(r *adapters.Registry, c cache.Cache, l *ratelimit.ProviderLimiter, ttl 
 		ttl:                      ttl,
 		maxCandidatesPerProvider: 10,
 		logger:                   slog.Default(),
-		cacheNamespace:           "resolved:rich-v15:default:",
+		cacheNamespace:           "resolved:rich-v16:default:",
 	}
 }
 
@@ -579,7 +579,7 @@ func (res *Resolver) resolve(ctx context.Context, req ResolveRequest) (*ResolveR
 			}
 		}
 	}
-	mergedTrack := res.merger.MergeCandidates(acceptedCandidates)
+	mergedTrack := res.merger.MergeCandidatesAnchored(acceptedCandidates, req.Query.DirectInput().Provider)
 	if mergedTrack != nil {
 		mergedTrack.IdentityMatches = deduplicateIdentityMatches(identityMatches)
 		isrcCount := len(mergedTrack.FieldSources["isrc"])

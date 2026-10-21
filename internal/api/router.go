@@ -40,6 +40,7 @@ func NewRouter(h *Handler, logger *slog.Logger, rps float64) http.Handler {
 	handler = middleware.RateLimiter(apiLimiter)(handler)
 	handler = middleware.Logger(logger)(handler)
 	handler = middleware.Recovery(logger)(handler)
+	handler = middleware.Compression(handler)
 	handler = middleware.RequestID(handler)
 
 	return handler

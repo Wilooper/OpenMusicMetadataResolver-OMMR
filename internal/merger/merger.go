@@ -250,22 +250,6 @@ func (m *Merger) MergeCandidates(candidates []canonical.TrackCandidate) *canonic
 		}
 	}
 
-	// 9c. Track / Disc Number
-	for _, prov := range titlePriority {
-		if cand, ok := byProvider[prov]; ok && cand.Track.TrackNumber > 0 {
-			res.TrackNumber = cand.Track.TrackNumber
-			res.FieldSources["track_number"] = []string{prov}
-			break
-		}
-	}
-	for _, cand := range candidates {
-		if cand.Track.DiscNumber > 0 {
-			res.DiscNumber = cand.Track.DiscNumber
-			res.FieldSources["disc_number"] = []string{cand.Provider}
-			break
-		}
-	}
-
 	// 9d. Label, Barcode, ISWC, PlayCount
 	for _, prov := range labelPriority {
 		if cand, ok := byProvider[prov]; ok && cand.Track.Label != "" {
@@ -396,6 +380,10 @@ func (m *Merger) MergeCandidates(candidates []canonical.TrackCandidate) *canonic
 	m.applyPolicy(res, candidates)
 	res.Confidence.Level = canonical.GetConfidenceLevel(topScore, len(res.FieldSources["isrc"]))
 	sort.Strings(res.Genres)
+	for i := range res.Credits {
+		sort.Strings(res.Credits[i].Roles)
+	}
+	sort.Slice(res.Credits, func(i, j int) bool { return res.Credits[i].Name < res.Credits[j].Name })
 	sort.Slice(res.Copyrights, func(i, j int) bool {
 		return res.Copyrights[i].Type+res.Copyrights[i].Text < res.Copyrights[j].Type+res.Copyrights[j].Text
 	})

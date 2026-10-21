@@ -301,3 +301,7 @@ Track and native album responses include a source-owned `music_graph`: recording
 ## Recording timing and album-count semantics
 
 Material duration contradictions can reject text-query outliers when a strict majority of distinct timed providers agrees, or contradictory cross-source candidates when a direct-ID recording supplies timing. The check is repeated after accepted detail hydration; exact requested ISRC identity remains unchanged. Unrequested Reimagined versions are rejected. Apple song-row `trackCount` is retained as source data and is no longer mislabeled as canonical album-wide total; use `/v1/albums` for declared collection totals/completion. See [varied entity verification](ENTITY_MATRIX_2026-10-19.md).
+
+## Detailed production metadata and compression
+
+`/v1/` JSON responses negotiate gzip above a 1024-byte threshold, preserving every response field. Clients can request `Accept-Encoding: gzip`; `curl --compressed` negotiates and decodes it. Responses vary on encoding. Production song data includes exact source album placements and a detailed contributor/credit index; direct IDs anchor edition positions where provided. Independent disc/track policy overrides are rejected: configure album priority instead. See [schema, migration, source coverage and measured packet sizes](DETAILED_PRODUCTION_METADATA.md).

@@ -15,6 +15,7 @@ import (
 	"github.com/ommr/ommr/internal/enrichment/wikipedia"
 	"github.com/ommr/ommr/internal/models/canonical"
 	"github.com/ommr/ommr/internal/models/provider"
+	"github.com/ommr/ommr/internal/musicgraph"
 	"github.com/ommr/ommr/pkg/query"
 )
 
@@ -345,9 +346,7 @@ func (p *Provider) normalizeRecording(rec provider.MusicBrainzRecording) canonic
 
 func appendRelationCredit(credits *[]canonical.Credit, relation provider.MusicBrainzRelation) {
 	role := strings.ToLower(relation.Type)
-	switch role {
-	case "lyricist", "composer", "writer", "producer", "engineer", "performer", "arranger":
-	default:
+	if !musicgraph.IsCreditRole(role) {
 		return
 	}
 	if relation.Artist.Name == "" {

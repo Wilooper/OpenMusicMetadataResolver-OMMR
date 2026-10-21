@@ -58,7 +58,7 @@ A partial album returns HTTP 200 with explicit completion information. Invalid i
 
 Albums share the existing per-provider physical request limiter, source enable flags and provider health circuits. Invalid album identity cannot become a successful response. Local request-budget failures and caller cancellation do not trip source health; an upstream page failure does. No authentication process is started.
 
-The independent `albums:v4` cache includes provider, exact ID, track limit, Apple storefront and runtime health signature. Complete entries cache for five minutes; partial entries for 30 seconds; failures without album metadata are not cached. Debug and production share entries. A different track limit has a separate entry and can cause a new upstream lookup. Every upstream body is limited to 4 MiB and redirects are refused.
+The independent `albums:v5` cache includes provider, exact ID, track limit, Apple storefront and runtime health signature. Complete entries cache for five minutes; partial entries for 30 seconds; failures without album metadata are not cached. Debug and production share entries. A different track limit has a separate entry and can cause a new upstream lookup. Every upstream body is limited to 4 MiB and redirects are refused.
 
 ```yaml
 api:
@@ -82,7 +82,7 @@ Protocol references: [Apple's album/song lookup examples](https://developer.appl
 
 ## Recording and credit graph
 
-Album responses also include `music_graph` for release relationships, contributors and returned track entries. MusicBrainz supplies release-group, recording, composition and scoped credit links where reported. Only returned tracks enter the graph. Album cache is now `albums:v4`; see [graph documentation](MUSIC_GRAPH.md).
+Album responses also include `music_graph` for release relationships, contributors and returned track entries. MusicBrainz supplies release-group, recording, composition and scoped credit links where reported. Only returned tracks enter the graph. Album cache is now `albums:v5`; see [graph documentation](MUSIC_GRAPH.md).
 
 
 ## Apple disc coverage (2026-10-21)
@@ -108,3 +108,5 @@ All five live cases (including a two-track limit) passed REST/JSON gateway/cache
 go build -o bin/server ./cmd/server
 python tools/live_album_coverage.py --server bin/server --output /tmp/ommr-album-coverage
 ```
+
+Native albums now also expose `credit_details`, a contributor index of their scoped graph edges. Cache advances to `albums:v5`. See [detailed credits and lossless transport](DETAILED_PRODUCTION_METADATA.md); no per-track credit network fan-out is added.

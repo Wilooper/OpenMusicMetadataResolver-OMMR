@@ -387,3 +387,5 @@ Track and native album responses include a source-owned `music_graph`: recording
 [Full verification (2026-10-19)](docs/FULL_VERIFICATION_2026-10-19.md): fresh Go race/coverage and Python tests, 58 running API checks, a 12-song live matrix, provider limitations, Android ARM64 cross-build and reproducible Termux-friendly commands.
 
 [Song/album/artist matrix](docs/ENTITY_MATRIX_2026-10-19.md): 14 styles and versions, source-owned album membership and artist profiles, explicit partial lists, and fixes for album-count semantics and recording-version/timing mismatches.
+
+Production data now includes source-owned album placements and a detailed contributor/credit index. Direct song IDs keep their edition-specific disc/track numbers together. Negotiated gzip retains all metadata while reducing measured live packets by about 75% for songs and 90% for a 35-track album. See [detailed production metadata](docs/DETAILED_PRODUCTION_METADATA.md) for schema, policy migration, source limits and evidence.

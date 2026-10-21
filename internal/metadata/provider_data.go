@@ -162,6 +162,7 @@ func Attach(track *canonical.Track, candidates []canonical.TrackCandidate) {
 		track.Extensions["explicit_status"], _ = json.Marshal(status)
 	}
 	track.Extensions["provider_data"], _ = json.Marshal(records)
+	attachPlacements(track, candidates)
 	Compare(track, candidates)
 }
 
@@ -233,4 +234,7 @@ func AttachGraph(track *canonical.Track, candidates []canonical.TrackCandidate) 
 		track.Extensions = map[string]json.RawMessage{}
 	}
 	track.Extensions["music_graph"], _ = json.Marshal(graph)
+	if details := musicgraph.DetailedCredits(graph); details != nil {
+		track.Extensions["credit_details"], _ = json.Marshal(details)
+	}
 }

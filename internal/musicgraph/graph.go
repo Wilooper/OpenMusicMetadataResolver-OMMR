@@ -175,6 +175,12 @@ func role(raw string) string {
 		return "vocalist"
 	case "music":
 		return "composer"
+	case "작곡", "작곡가":
+		return "composer"
+	case "작사", "작사가":
+		return "lyricist"
+	case "편곡":
+		return "arranger"
 	case "mix":
 		return "mixing_engineer"
 	case "mastering":
@@ -231,7 +237,7 @@ func TrackGraph(track canonical.Track, records []Record, release map[string]any)
 		b.Add(Edge{From: root, To: node, Type: "matched_catalog_entity", Source: r.Provider})
 		if album := r.Track.Album.IDs[r.Provider]; album != "" {
 			edition := b.Entity(r.Provider, "release", album, r.Track.Album.Title, nil)
-			b.Add(Edge{From: node, To: edition, Type: "appears_on", Source: r.Provider})
+			b.Add(Edge{From: node, To: edition, Type: "appears_on", Source: r.Provider, Position: r.Track.TrackNumber, DiscNumber: r.Track.DiscNumber})
 		}
 		if r.Provider == "musicbrainz" && text(r.Catalog["id"]) == native {
 			b.MusicBrainz("recording", r.Catalog)
@@ -273,6 +279,12 @@ func containsRecording(release map[string]any, id string) bool {
 	return false
 }
 func (b *Builder) CatalogCredits(provider, target string, m map[string]any) {
+	if provider == "melon" || provider == "genie" || provider == "bugs" {
+		for _, v := range list(m["credits"]) {
+			a := object(v)
+			b.Credit(provider, target, text(a["id"]), text(a["name"]), first(a["source_role"], a["role"]), text(a["name"]), "", nil)
+		}
+	}
 	if provider == "jiosaavn" {
 		artistMap := object(object(m["more_info"])["artistMap"])
 		if artistMap == nil {
