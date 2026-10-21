@@ -101,3 +101,7 @@ TIDAL uses its track-search relationship endpoint and explicitly requested artis
 See [RICH_CATALOGS.md](RICH_CATALOGS.md) for native Bugs/Genie/Melon song adapters, `bugs_id`/`genie_id`/`melon_id`, accepted YouTube artist/album context in provider data, optional Python pooling and `/v1/catalog` (also `operation: catalog` through the JSON gateway). These Korean adapters require no credentials; the optional Python path currently uses public YouTube access.
 
 HTML recovery: [decoder behavior, official-page fallbacks and live availability limits](HTML_RECOVERY.md). The empty 195-byte “Site Unavailable” response contains no recoverable song data.
+
+## SponsorBlock video highlights
+
+A keyless `sponsorblock` post-merge source queries highlight POIs for accepted YouTube video IDs only. Its normalized data appears once under `video_annotations.sponsorblock` in production and under extensions in debug. It reuses accepted YouTube metadata, validates exact video identity/duration, retains source attribution and cannot create recording IDs. Default optional timeout is 2s (`sponsorblock_timeout` / `OMMR_SPONSORBLOCK_TIMEOUT`, 100ms–30s); the overall request deadline still applies. Independent source/global enrichment flags, local request budgets and health/cache policy apply. See [SponsorBlock configuration, licensing and live evidence](SPONSORBLOCK.md).

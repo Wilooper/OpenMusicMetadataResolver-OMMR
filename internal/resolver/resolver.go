@@ -79,7 +79,7 @@ func New(r *adapters.Registry, c cache.Cache, l *ratelimit.ProviderLimiter, ttl 
 		ttl:                      ttl,
 		maxCandidatesPerProvider: 10,
 		logger:                   slog.Default(),
-		cacheNamespace:           "resolved:rich-v16:default:",
+		cacheNamespace:           "resolved:rich-v17:default:",
 	}
 }
 
@@ -649,6 +649,15 @@ func (res *Resolver) resolve(ctx context.Context, req ResolveRequest) (*ResolveR
 			for _, status := range enrichmentStatuses {
 				if status == "unavailable" && ttl > 30*time.Second {
 					ttl = 30 * time.Second
+				}
+			}
+			if status, enabled := enrichmentStatuses["sponsorblock"]; enabled && mergedTrack.IDs["ytmusic"] != "" {
+				freshness := time.Hour
+				if status == "no_data" {
+					freshness = 5 * time.Minute
+				}
+				if ttl > freshness {
+					ttl = freshness
 				}
 			}
 			_ = res.cache.Set(ctx, cacheKey, data, ttl)

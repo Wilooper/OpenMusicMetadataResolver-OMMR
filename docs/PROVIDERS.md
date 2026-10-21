@@ -150,3 +150,5 @@ Termux live verification: [confirmed public-page decoding and Deezer search/loca
 Public [artist profiles](ARTIST_PROFILES.md) use the existing Deezer, JioSaavn, Apple and MusicBrainz sources, with optional YouTube worker profiles. The artist service reuses source enable/circuit/rate budgets but does not merge artist identities into track candidates.
 
 Detailed-credit follow-up: Melon now reads its explicit contributor section outside the main song-info block, preserving source IDs or local identities and Korean role labels. MusicBrainz retains specialized performance/engineering/production roles in its flat view as well as the scoped graph. See [extraction evidence and limitations](DETAILED_PRODUCTION_METADATA.md).
+
+SponsorBlock is an optional keyless enrichment service for an accepted YouTube video's community highlight points, not a recording identity adapter. It appears in lifecycle status, honors `providers.enabled.sponsorblock`, and requires no startup probe or credentials. Its API/database data retains SponsorBlock's CC BY-NC-SA 4.0 attribution. See [exact video scope, timing checks and controls](SPONSORBLOCK.md).

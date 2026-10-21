@@ -1,0 +1,252 @@
+{
+  "track": {
+    "canonical_id": "ommr_track_c8cb5492900d4f4d",
+    "identity_status": "strong",
+    "identity_reasons": [
+      "exact_title_artist_match"
+    ],
+    "title": "Despacito ft. Daddy Yankee",
+    "artists": [
+      {
+        "name": "Luis Fonsi",
+        "role": "main"
+      }
+    ],
+    "album": {
+      "title": "Despacito ft. Daddy Yankee",
+      "images": [
+        {
+          "url": "https://i.ytimg.com/vi/kJQP7kiw5Fk/hqdefault.jpg",
+          "width": 200,
+          "height": 113,
+          "type": "thumbnail"
+        }
+      ]
+    },
+    "duration_ms": 0,
+    "release_date": "",
+    "explicit": false,
+    "genres": [],
+    "credits": [],
+    "images": [
+      {
+        "url": "https://i.ytimg.com/vi/kJQP7kiw5Fk/hqdefault.jpg",
+        "width": 200,
+        "height": 113,
+        "type": "thumbnail"
+      }
+    ],
+    "ids": {
+      "ytmusic": "kJQP7kiw5Fk"
+    },
+    "identity_matches": [
+      {
+        "provider": "ytmusic",
+        "id": "kJQP7kiw5Fk",
+        "confidence": 0.8,
+        "method": "direct_id"
+      }
+    ],
+    "sources": [
+      "ytmusic"
+    ],
+    "field_sources": {
+      "album": [
+        "ytmusic"
+      ],
+      "album_position": [
+        "ytmusic"
+      ],
+      "artists": [
+        "ytmusic"
+      ],
+      "images": [
+        "ytmusic"
+      ],
+      "title": [
+        "ytmusic"
+      ]
+    },
+    "match_score": 1,
+    "match_breakdown": {
+      "title": 1,
+      "artists": 1
+    },
+    "confidence": {
+      "level": "exact",
+      "score": 1
+    },
+    "completeness": 0.4,
+    "relations": {},
+    "extensions": {
+      "credit_details": {
+        "contributors": [
+          {
+            "id": "ytmusic:local_artist:8d510bedfc498b10b5d7059d",
+            "name": "Luis Fonsi",
+            "provider": "ytmusic",
+            "local": true
+          }
+        ],
+        "credits": [
+          {
+            "from": "ytmusic:local_artist:8d510bedfc498b10b5d7059d",
+            "to": "ytmusic:recording:kJQP7kiw5Fk",
+            "type": "credit",
+            "source": "ytmusic",
+            "role": "primary_artist",
+            "source_role": "main",
+            "credited_as": "Luis Fonsi"
+          }
+        ]
+      },
+      "explicit_status": "unknown",
+      "music_graph": {
+        "version": 1,
+        "root": "ommr:recording:ommr_track_c8cb5492900d4f4d",
+        "nodes": [
+          {
+            "id": "ommr:recording:ommr_track_c8cb5492900d4f4d",
+            "type": "recording",
+            "provider": "ommr",
+            "native_id": "ommr_track_c8cb5492900d4f4d",
+            "name": "Despacito ft. Daddy Yankee"
+          },
+          {
+            "id": "ytmusic:local_artist:8d510bedfc498b10b5d7059d",
+            "type": "artist",
+            "provider": "ytmusic",
+            "name": "Luis Fonsi",
+            "local": true
+          },
+          {
+            "id": "ytmusic:recording:kJQP7kiw5Fk",
+            "type": "recording",
+            "provider": "ytmusic",
+            "native_id": "kJQP7kiw5Fk",
+            "name": "Despacito ft. Daddy Yankee"
+          }
+        ],
+        "edges": [
+          {
+            "from": "ommr:recording:ommr_track_c8cb5492900d4f4d",
+            "to": "ytmusic:recording:kJQP7kiw5Fk",
+            "type": "matched_catalog_entity",
+            "source": "ytmusic"
+          },
+          {
+            "from": "ytmusic:local_artist:8d510bedfc498b10b5d7059d",
+            "to": "ytmusic:recording:kJQP7kiw5Fk",
+            "type": "credit",
+            "source": "ytmusic",
+            "role": "primary_artist",
+            "source_role": "main",
+            "credited_as": "Luis Fonsi"
+          }
+        ],
+        "truncated": false
+      },
+      "platform_links": {
+        "ommr_id": "ommr_track_c8cb5492900d4f4d",
+        "platforms": {
+          "youtube": {
+            "id": "kJQP7kiw5Fk",
+            "id_type": "video_id",
+            "url": "https://www.youtube.com/watch?v=kJQP7kiw5Fk",
+            "url_source": "id_template",
+            "confidence": 0.8,
+            "match_method": "direct_id"
+          },
+          "ytmusic": {
+            "id": "kJQP7kiw5Fk",
+            "id_type": "video_id",
+            "url": "https://music.youtube.com/watch?v=kJQP7kiw5Fk",
+            "url_source": "id_template",
+            "confidence": 0.8,
+            "match_method": "direct_id"
+          }
+        },
+        "unavailable_platforms": [
+          "amazonmusic",
+          "applemusic",
+          "bugs",
+          "deezer",
+          "genie",
+          "jiosaavn",
+          "melon",
+          "musicbrainz",
+          "pandora",
+          "qobuz",
+          "soundcloud",
+          "spotify",
+          "tidal"
+        ]
+      },
+      "provider_data": {
+        "ytmusic": {
+          "metadata": {
+            "album": {
+              "images": [
+                {
+                  "height": 113,
+                  "type": "thumbnail",
+                  "url": "https://i.ytimg.com/vi/kJQP7kiw5Fk/hqdefault.jpg",
+                  "width": 200
+                }
+              ],
+              "title": "Despacito ft. Daddy Yankee"
+            },
+            "artists": [
+              {
+                "name": "Luis Fonsi",
+                "role": "main"
+              }
+            ],
+            "credits": null,
+            "duration_ms": 0,
+            "explicit": false,
+            "genres": null,
+            "ids": {
+              "ytmusic": "kJQP7kiw5Fk"
+            },
+            "images": [
+              {
+                "height": 113,
+                "type": "thumbnail",
+                "url": "https://i.ytimg.com/vi/kJQP7kiw5Fk/hqdefault.jpg",
+                "width": 200
+              }
+            ],
+            "release_date": "",
+            "title": "Despacito ft. Daddy Yankee"
+          }
+        }
+      }
+    }
+  },
+  "metadata_sources": [
+    "ytmusic"
+  ],
+  "provider_status": [
+    {
+      "name": "ytmusic",
+      "success": true,
+      "matched": true,
+      "contributed": true,
+      "cached": false,
+      "latency_ms": 11187,
+      "version": "ytmusic-innertube-v2"
+    }
+  ],
+  "resolution_strategy": {
+    "input_type": "youtube_id",
+    "primary_source": "ytmusic",
+    "cross_resolved": false
+  },
+  "resolver_stats": {
+    "providers_queried": 1,
+    "providers_matched": 1,
+    "providers_contributed": 1,
+    "candidates_evaluated": 1
+  }
+}

@@ -1,0 +1,35 @@
+[
+  {
+    "case": "positive_exact_video",
+    "passed": false,
+    "error": "SponsorBlock highlight unavailable",
+    "seconds": 9.131
+  },
+  {
+    "case": "production_gzip_gateway_cache",
+    "passed": false,
+    "error": "annotation absent",
+    "seconds": 0.005
+  },
+  {
+    "case": "no_accepted_youtube_id",
+    "title": "Boyfriend",
+    "video_annotations_absent": true,
+    "passed": true,
+    "seconds": 6.223
+  },
+  {
+    "case": "additional_video_coverage",
+    "title": "Boyfriend",
+    "enrichment_status": "no_data",
+    "passed": true,
+    "seconds": 0.24
+  },
+  {
+    "case": "source_disabled",
+    "source_state": "disabled",
+    "metadata_resolved": true,
+    "passed": true,
+    "seconds": 7.19
+  }
+]

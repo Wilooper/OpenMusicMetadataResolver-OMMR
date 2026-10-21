@@ -5,6 +5,7 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+	"time"
 )
 
 func TestLoadConfigDefaults(t *testing.T) {
@@ -23,6 +24,29 @@ func TestLoadConfigDefaults(t *testing.T) {
 	}
 	if cfg.BulkWorkers != 10 {
 		t.Errorf("expected bulk workers 10, got %d", cfg.BulkWorkers)
+	}
+}
+
+func TestSponsorBlockTimeoutConfiguration(t *testing.T) {
+	for _, tc := range []struct {
+		value string
+		valid bool
+	}{
+		{"100ms", true}, {"10s", true}, {"30s", true}, {"0s", false}, {"50ms", false}, {"31s", false}, {"invalid", false},
+	} {
+		t.Run(tc.value, func(t *testing.T) {
+			t.Setenv("OMMR_SPONSORBLOCK_TIMEOUT", tc.value)
+			cfg, err := LoadConfig()
+			if (err == nil) != tc.valid {
+				t.Fatalf("validation: %v", err)
+			}
+			if tc.valid {
+				expected, _ := time.ParseDuration(tc.value)
+				if cfg.SponsorBlockTimeout != expected {
+					t.Fatal("timeout override lost")
+				}
+			}
+		})
 	}
 }
 

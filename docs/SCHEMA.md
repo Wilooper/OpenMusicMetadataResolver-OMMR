@@ -179,3 +179,7 @@ Apple native albums additionally expose optional `discs[].track_list` coverage, 
 ## Source-owned placement and detailed credits
 
 Production tracks add `album_placements` (provider, native album/song IDs, optional disc/track numbers, selected flag) and `credit_details` (deduplicated contributor identities and scoped graph credit edges). Debug tracks retain these under `extensions`. Native albums also expose `credit_details`. The selected album and numeric positions come from one observation; direct native song IDs anchor their source edition where available. Unknown positions are omitted. [Full schema, examples, limits and transport](DETAILED_PRODUCTION_METADATA.md).
+
+## Video-specific annotations
+
+Production resolved tracks may include `video_annotations.sponsorblock`; debug tracks retain it under `extensions.video_annotations`. It carries exact YouTube video identity, source/license attribution, optional source video duration and millisecond `points_of_interest` with UUID, category/action, votes, lock status, submitted duration and an explicit duration-check flag. It is omitted when unavailable or inapplicable. These timestamps refer to the accepted video, not another recording or platform. See [schema and validation](SPONSORBLOCK.md).

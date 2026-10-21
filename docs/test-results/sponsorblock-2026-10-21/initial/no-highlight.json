@@ -1,0 +1,28 @@
+{
+  "track": null,
+  "metadata_sources": [],
+  "provider_status": [
+    {
+      "name": "ytmusic",
+      "success": false,
+      "matched": false,
+      "contributed": false,
+      "cached": false,
+      "latency_ms": 70,
+      "error": "ytmusic oembed returned status 400",
+      "rejection_reason": "provider_error",
+      "version": "ytmusic-innertube-v2"
+    }
+  ],
+  "resolution_strategy": {
+    "input_type": "youtube_id",
+    "primary_source": "",
+    "cross_resolved": false
+  },
+  "resolver_stats": {
+    "providers_queried": 1,
+    "providers_matched": 0,
+    "providers_contributed": 0,
+    "candidates_evaluated": 0
+  }
+}

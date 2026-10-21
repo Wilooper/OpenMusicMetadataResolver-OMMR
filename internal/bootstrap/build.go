@@ -159,7 +159,7 @@ func Build(ctx context.Context, cfg *config.Config, backend cache.Cache) (*Runti
 	for _, plan := range plans {
 		known[plan.Name] = true
 	}
-	for _, name := range []string{"coverartarchive", "musicbrainz_release", "lastfm", "discogs", "acoustid"} {
+	for _, name := range []string{"coverartarchive", "musicbrainz_release", "lastfm", "discogs", "acoustid", "sponsorblock"} {
 		known[name] = true
 	}
 	for name := range cfg.Lifecycle.Enabled {
@@ -191,7 +191,9 @@ func Build(ctx context.Context, cfg *config.Config, backend cache.Cache) (*Runti
 	// Credential checks deliberately use an uncached client.
 	probeClient := catalog.NewClient(res.WaitProvider)
 	enrichers := []catalog.Enricher{}
-	for _, source := range []catalog.Enricher{catalog.NewCoverArt(client), catalog.NewMusicBrainzRelease(client)} {
+	sponsorBlock := catalog.NewSponsorBlock(client)
+	sponsorBlock.RequestTimeout = cfg.SponsorBlockTimeout
+	for _, source := range []catalog.Enricher{catalog.NewCoverArt(client), catalog.NewMusicBrainzRelease(client), sponsorBlock} {
 		name := source.Name()
 		if cfg.EnableEnrichment && cfg.Lifecycle.ProviderEnabled(name) {
 			manager.Set(name, "active", "public", "absent", "")
@@ -231,7 +233,7 @@ func Build(ctx context.Context, cfg *config.Config, backend cache.Cache) (*Runti
 		}
 	}
 	res.Configure(policy, enrichers...)
-	res.SetCacheVariant(fmt.Sprintf("python:%t/profiles:%t", pythonPool != nil, cfg.Extractor.Profiles))
+	res.SetCacheVariant(fmt.Sprintf("python:%t/profiles:%t/sponsorblock_timeout:%s", pythonPool != nil, cfg.Extractor.Profiles, sponsorBlock.Timeout()))
 	res.SetProviderHealth(manager)
 	built = true
 	artistService := artists.New(limiter.Wait, backend)

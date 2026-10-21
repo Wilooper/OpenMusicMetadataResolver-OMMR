@@ -50,3 +50,35 @@ func TestRequiredCatalogBootProbeRejectsHTTP200Errors(t *testing.T) {
 		t.Fatalf("expected two boot probes, got %d", requests)
 	}
 }
+
+func TestSponsorBlockLifecycleRegistrationAndFlags(t *testing.T) {
+	for _, mode := range []string{"enabled", "source_disabled", "enrichment_disabled"} {
+		t.Run(mode, func(t *testing.T) {
+			enabled := map[string]bool{}
+			for _, name := range []string{"spotify", "applemusic", "ytmusic", "musicbrainz", "deezer", "soundcloud", "jiosaavn", "qobuz", "tidal", "amazonmusic", "pandora", "bugs", "genie", "melon", "coverartarchive", "musicbrainz_release"} {
+				enabled[name] = false
+			}
+			enabled["sponsorblock"] = mode != "source_disabled"
+			cfg := &config.Config{EnableEnrichment: mode != "enrichment_disabled", Lifecycle: config.LifecycleConfig{FailureThreshold: 2, Cooldown: time.Minute, ProbeTimeout: time.Second, StartupTimeout: time.Second, ProbeWorkers: 2, Enabled: enabled}}
+			runtime, err := Build(context.Background(), cfg, nil)
+			if err != nil {
+				t.Fatal(err)
+			}
+			found := false
+			for _, s := range runtime.Health.Snapshot() {
+				if s.Name == "sponsorblock" {
+					found = true
+					if (s.State == "active") != (mode == "enabled") {
+						t.Fatalf("wrong source state: %+v", s)
+					}
+				}
+			}
+			if !found {
+				t.Fatal("missing source lifecycle")
+			}
+			if _, ok := runtime.Registry.Get("sponsorblock"); ok {
+				t.Fatal("annotations became recording identity adapter")
+			}
+		})
+	}
+}

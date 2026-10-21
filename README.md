@@ -389,3 +389,5 @@ Track and native album responses include a source-owned `music_graph`: recording
 [Song/album/artist matrix](docs/ENTITY_MATRIX_2026-10-19.md): 14 styles and versions, source-owned album membership and artist profiles, explicit partial lists, and fixes for album-count semantics and recording-version/timing mismatches.
 
 Production data now includes source-owned album placements and a detailed contributor/credit index. Direct song IDs keep their edition-specific disc/track numbers together. Negotiated gzip retains all metadata while reducing measured live packets by about 75% for songs and 90% for a 35-track album. See [detailed production metadata](docs/DETAILED_PRODUCTION_METADATA.md) for schema, policy migration, source limits and evidence.
+
+Resolved tracks with an accepted YouTube ID can now include SponsorBlock community highlight points under `video_annotations.sponsorblock`, preserving exact-video timing, votes and attribution. Missing/unavailable highlights remain absent. See [SponsorBlock POIs](docs/SPONSORBLOCK.md) for schema, timeout/cache controls, dataset license and live results.

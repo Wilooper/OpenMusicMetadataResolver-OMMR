@@ -1,0 +1,382 @@
+{
+  "track": {
+    "canonical_id": "ommr_track_f71b51302738bb16",
+    "identity_status": "strong",
+    "identity_reasons": [
+      "exact_title_artist_match"
+    ],
+    "title": "Boyfriend",
+    "artists": [
+      {
+        "name": "Karan Aujla & Ikky",
+        "role": "main",
+        "ids": {
+          "applemusic": "914892130"
+        }
+      }
+    ],
+    "album": {
+      "title": "P-POP CULTURE",
+      "release_date": "2025-08-22",
+      "images": [
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/600x600bb.jpg",
+          "width": 600,
+          "height": 600,
+          "type": "cover"
+        },
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/100x100bb.jpg",
+          "width": 100,
+          "height": 100,
+          "type": "cover"
+        }
+      ],
+      "ids": {
+        "applemusic": "1829591921"
+      }
+    },
+    "duration_ms": 160796,
+    "release_date": "2025-08-22",
+    "explicit": false,
+    "genres": [
+      "Pop"
+    ],
+    "credits": [],
+    "images": [
+      {
+        "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/100x100bb.jpg",
+        "width": 100,
+        "height": 100,
+        "type": "cover"
+      },
+      {
+        "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/600x600bb.jpg",
+        "width": 600,
+        "height": 600,
+        "type": "cover"
+      }
+    ],
+    "preview_url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/64/5b/2b/645b2b11-1249-3ff3-e3af-c02189159868/mzaf_17613725717610713218.plus.aac.p.m4a",
+    "track_number": 4,
+    "disc_number": 1,
+    "ids": {
+      "applemusic": "1829591986",
+      "applemusic_url": "https://music.apple.com/us/album/boyfriend/1829591921?i=1829591986"
+    },
+    "identity_matches": [
+      {
+        "provider": "applemusic",
+        "id": "1829591986",
+        "confidence": 0.95,
+        "method": "direct_id"
+      }
+    ],
+    "sources": [
+      "applemusic"
+    ],
+    "field_sources": {
+      "album": [
+        "applemusic"
+      ],
+      "album_position": [
+        "applemusic"
+      ],
+      "artists": [
+        "applemusic"
+      ],
+      "disc_number": [
+        "applemusic"
+      ],
+      "duration": [
+        "applemusic"
+      ],
+      "duration_ms": [
+        "applemusic"
+      ],
+      "explicit": [
+        "applemusic"
+      ],
+      "genres": [
+        "applemusic"
+      ],
+      "images": [
+        "applemusic"
+      ],
+      "preview_url": [
+        "applemusic"
+      ],
+      "release_date": [
+        "applemusic"
+      ],
+      "title": [
+        "applemusic"
+      ],
+      "track_number": [
+        "applemusic"
+      ]
+    },
+    "match_score": 1,
+    "match_breakdown": {
+      "title": 1,
+      "artists": 1,
+      "duration": 1,
+      "release_date": 1
+    },
+    "confidence": {
+      "level": "exact",
+      "score": 1
+    },
+    "completeness": 0.6800000000000002,
+    "relations": {},
+    "extensions": {
+      "album_placements": [
+        {
+          "provider": "applemusic",
+          "album_id": "1829591921",
+          "track_id": "1829591986",
+          "disc_number": 1,
+          "track_number": 4,
+          "selected": true
+        }
+      ],
+      "credit_details": {
+        "contributors": [
+          {
+            "id": "applemusic:artist:914892130",
+            "name": "Karan Aujla & Ikky",
+            "provider": "applemusic",
+            "native_id": "914892130"
+          }
+        ],
+        "credits": [
+          {
+            "from": "applemusic:artist:914892130",
+            "to": "applemusic:recording:1829591986",
+            "type": "credit",
+            "source": "applemusic",
+            "role": "primary_artist",
+            "source_role": "main",
+            "credited_as": "Karan Aujla & Ikky"
+          }
+        ]
+      },
+      "explicit_status": "clean",
+      "music_graph": {
+        "version": 1,
+        "root": "ommr:recording:ommr_track_f71b51302738bb16",
+        "nodes": [
+          {
+            "id": "applemusic:artist:914892130",
+            "type": "artist",
+            "provider": "applemusic",
+            "native_id": "914892130",
+            "name": "Karan Aujla & Ikky"
+          },
+          {
+            "id": "applemusic:recording:1829591986",
+            "type": "recording",
+            "provider": "applemusic",
+            "native_id": "1829591986",
+            "name": "Boyfriend"
+          },
+          {
+            "id": "applemusic:release:1829591921",
+            "type": "release",
+            "provider": "applemusic",
+            "native_id": "1829591921",
+            "name": "P-POP CULTURE"
+          },
+          {
+            "id": "ommr:recording:ommr_track_f71b51302738bb16",
+            "type": "recording",
+            "provider": "ommr",
+            "native_id": "ommr_track_f71b51302738bb16",
+            "name": "Boyfriend"
+          }
+        ],
+        "edges": [
+          {
+            "from": "applemusic:artist:914892130",
+            "to": "applemusic:recording:1829591986",
+            "type": "credit",
+            "source": "applemusic",
+            "role": "primary_artist",
+            "source_role": "main",
+            "credited_as": "Karan Aujla & Ikky"
+          },
+          {
+            "from": "applemusic:recording:1829591986",
+            "to": "applemusic:release:1829591921",
+            "type": "appears_on",
+            "source": "applemusic",
+            "position": 4,
+            "disc_number": 1
+          },
+          {
+            "from": "ommr:recording:ommr_track_f71b51302738bb16",
+            "to": "applemusic:recording:1829591986",
+            "type": "matched_catalog_entity",
+            "source": "applemusic"
+          }
+        ],
+        "truncated": false
+      },
+      "platform_links": {
+        "ommr_id": "ommr_track_f71b51302738bb16",
+        "platforms": {
+          "applemusic": {
+            "id": "1829591986",
+            "id_type": "track_id",
+            "url": "https://music.apple.com/us/album/boyfriend/1829591921?i=1829591986",
+            "url_source": "provider",
+            "confidence": 0.95,
+            "match_method": "direct_id"
+          }
+        },
+        "unavailable_platforms": [
+          "amazonmusic",
+          "bugs",
+          "deezer",
+          "genie",
+          "jiosaavn",
+          "melon",
+          "musicbrainz",
+          "pandora",
+          "qobuz",
+          "soundcloud",
+          "spotify",
+          "tidal",
+          "youtube",
+          "ytmusic"
+        ]
+      },
+      "provider_data": {
+        "applemusic": {
+          "catalog": {
+            "artistId": 914892130,
+            "artistName": "Karan Aujla & Ikky",
+            "artistViewUrl": "https://music.apple.com/us/artist/karan-aujla/914892130?uo=4",
+            "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/100x100bb.jpg",
+            "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/30x30bb.jpg",
+            "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/60x60bb.jpg",
+            "collectionCensoredName": "P-POP CULTURE",
+            "collectionExplicitness": "explicit",
+            "collectionId": 1829591921,
+            "collectionName": "P-POP CULTURE",
+            "collectionPrice": 9.99,
+            "collectionViewUrl": "https://music.apple.com/us/album/boyfriend/1829591921?i=1829591986&uo=4",
+            "country": "USA",
+            "currency": "USD",
+            "discCount": 2,
+            "discNumber": 1,
+            "isStreamable": true,
+            "kind": "song",
+            "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/64/5b/2b/645b2b11-1249-3ff3-e3af-c02189159868/mzaf_17613725717610713218.plus.aac.p.m4a",
+            "primaryGenreName": "Pop",
+            "releaseDate": "2025-08-22T12:00:00Z",
+            "trackCensoredName": "Boyfriend",
+            "trackCount": 5,
+            "trackExplicitness": "notExplicit",
+            "trackId": 1829591986,
+            "trackName": "Boyfriend",
+            "trackNumber": 4,
+            "trackPrice": 1.29,
+            "trackTimeMillis": 160796,
+            "trackViewUrl": "https://music.apple.com/us/album/boyfriend/1829591921?i=1829591986&uo=4",
+            "wrapperType": "track"
+          },
+          "metadata": {
+            "album": {
+              "ids": {
+                "applemusic": "1829591921"
+              },
+              "images": [
+                {
+                  "height": 600,
+                  "type": "cover",
+                  "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/600x600bb.jpg",
+                  "width": 600
+                },
+                {
+                  "height": 100,
+                  "type": "cover",
+                  "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/100x100bb.jpg",
+                  "width": 100
+                }
+              ],
+              "release_date": "2025-08-22",
+              "title": "P-POP CULTURE"
+            },
+            "artists": [
+              {
+                "ids": {
+                  "applemusic": "914892130"
+                },
+                "name": "Karan Aujla & Ikky",
+                "role": "main"
+              }
+            ],
+            "credits": null,
+            "disc_number": 1,
+            "duration_ms": 160796,
+            "explicit": false,
+            "genres": [
+              "Pop"
+            ],
+            "ids": {
+              "applemusic": "1829591986",
+              "applemusic_url": "https://music.apple.com/us/album/boyfriend/1829591921?i=1829591986"
+            },
+            "images": [
+              {
+                "height": 600,
+                "type": "cover",
+                "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/600x600bb.jpg",
+                "width": 600
+              },
+              {
+                "height": 100,
+                "type": "cover",
+                "url": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/100x100bb.jpg",
+                "width": 100
+              }
+            ],
+            "preview_url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/64/5b/2b/645b2b11-1249-3ff3-e3af-c02189159868/mzaf_17613725717610713218.plus.aac.p.m4a",
+            "release_date": "2025-08-22",
+            "title": "Boyfriend",
+            "track_number": 4
+          }
+        }
+      }
+    }
+  },
+  "metadata_sources": [
+    "applemusic"
+  ],
+  "provider_status": [
+    {
+      "name": "applemusic",
+      "success": true,
+      "matched": true,
+      "contributed": true,
+      "cached": false,
+      "latency_ms": 7168,
+      "version": "applemusic-v2-album-counts"
+    }
+  ],
+  "resolution_strategy": {
+    "input_type": "apple_id",
+    "primary_source": "applemusic",
+    "cross_resolved": false
+  },
+  "enrichment_status": {
+    "sponsorblock": "no_data"
+  },
+  "resolver_stats": {
+    "providers_queried": 1,
+    "providers_matched": 1,
+    "providers_contributed": 1,
+    "candidates_evaluated": 1
+  }
+}

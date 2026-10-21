@@ -1,0 +1,52 @@
+[
+  {
+    "case": "positive_exact_video",
+    "title": "Luis Fonsi - Despacito ft. Daddy Yankee",
+    "video_id": "kJQP7kiw5Fk",
+    "source_duration_ms": 282000,
+    "points": [
+      {
+        "id": "bcf6e75825bca74f69df17bda9e5b7509a4a6957c367080a672d26ccc20aded46",
+        "time_ms": 21808,
+        "category": "poi_highlight",
+        "action_type": "poi",
+        "votes": 9,
+        "locked": 1,
+        "submission_video_duration_ms": 281521,
+        "duration_checked": true
+      }
+    ],
+    "enrichment_status": "ok",
+    "passed": true,
+    "seconds": 12.789
+  },
+  {
+    "case": "production_gzip_gateway_cache",
+    "plain_bytes": 7083,
+    "gzip_bytes": 2417,
+    "metadata_equal": true,
+    "passed": true,
+    "seconds": 0.009
+  },
+  {
+    "case": "no_accepted_youtube_id",
+    "title": "Boyfriend",
+    "video_annotations_absent": true,
+    "passed": true,
+    "seconds": 7.174
+  },
+  {
+    "case": "additional_video_coverage",
+    "title": "Boyfriend",
+    "enrichment_status": "no_data",
+    "passed": true,
+    "seconds": 0.199
+  },
+  {
+    "case": "source_disabled",
+    "source_state": "disabled",
+    "metadata_resolved": true,
+    "passed": true,
+    "seconds": 11.193
+  }
+]

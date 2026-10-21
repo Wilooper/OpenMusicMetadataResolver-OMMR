@@ -305,3 +305,5 @@ Material duration contradictions can reject text-query outliers when a strict ma
 ## Detailed production metadata and compression
 
 `/v1/` JSON responses negotiate gzip above a 1024-byte threshold, preserving every response field. Clients can request `Accept-Encoding: gzip`; `curl --compressed` negotiates and decodes it. Responses vary on encoding. Production song data includes exact source album placements and a detailed contributor/credit index; direct IDs anchor edition positions where provided. Independent disc/track policy overrides are rejected: configure album priority instead. See [schema, migration, source coverage and measured packet sizes](DETAILED_PRODUCTION_METADATA.md).
+
+Resolved production tracks can additionally expose `video_annotations.sponsorblock` for an accepted YouTube ID. Source-specific millisecond highlight timestamps, votes and license attribution are retained; missing/unavailable points remain absent. Debug tracks retain this under extensions with enrichment status. Gzip and the JSON gateway preserve the same data. See [SponsorBlock schema and operator settings](SPONSORBLOCK.md).
