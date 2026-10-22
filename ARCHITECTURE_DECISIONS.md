@@ -167,3 +167,57 @@ Expose public song URLs through existing source extraction and the JSON gateway.
 Add a separate native Go artist-profile service and `/v1/artists` operation instead of treating artists as canonical track candidates. Existing public sources provide independent artist identities, source-owned top/recent/catalog track context, biographies/images and explicitly reported totals. A bounded name search must yield one exact normalized name within that source; ambiguities expose native-ID choices. Exact artist responses must match the requested native identity. No global cross-provider artist or recording identity is inferred from profile aggregation.
 
 Audience observations retain metric kind, original display precision, source field, scope, period and actual fetch time. Monthly audience is not monthly plays; abbreviated values are not exact integers; catalog samples/recording totals are not streaming track/play totals. Unknown periods/counts remain unknown. Provider profiles cache independently with short partial/ambiguity TTLs and existing enable/circuit policies. The optional public YouTube worker adds bounded artist search and an explicit fresh-call path; audience cache misses bypass its general six-hour entity cache and retain actual observation timestamps. Production omits execution diagnostics, and endpoint policy applies to the JSON gateway as well as GET. No credentials or playback capability is added.
+
+
+## ADR 027: Shared direct-link input and runtime capability discovery (2026-10-19)
+
+Normalize supported track links before resolver cache/coalescing and provider requests. Centralize typed direct lookup and candidate ID ownership across the matcher and seed filter, adding JioSaavn page/native and MusicBrainz recording inputs without changing identity thresholds. Track URLs are parsed locally against explicit provider hosts/routes; no short-link expansion or arbitrary upstream fetch is added. Tracking-free typed inputs share cache identities. REST, JSON and bulk use the same resolver path.
+
+Expose configuration-aware capability discovery through GET and the JSON gateway, using registered adapters, independent artist services, health snapshots and optional worker availability. Discovery is schema-versioned, contains no secrets, performs no network probes, and cannot turn on disabled features. Readiness describes local eligibility, not guaranteed upstream success. Existing metadata cache namespace remains rich-v12.
+
+
+## ADR 028: Native exact album catalogs and explicit completion (2026-10-19)
+
+Add an independent Go album service for exact public Apple Music/iTunes, Deezer, JioSaavn and MusicBrainz release IDs, exposed through REST, JSON configuration and capability discovery. Keep album editions and source identities separate; do not alter immutable canonical track/album models or matching gates. Preserve native disc/track positions, MusicBrainz track-entry and recording IDs, source-declared totals and sanitized extra catalog fields. Do not equate a returned sample with a complete album.
+
+Bound pagination, response bodies and returned entries; reconstruct Deezer pages on the fixed host rather than following upstream URLs. Missing pages preserve verified album metadata with explicit partial status. Honor shared request budgets, lifecycle/health controls and debug policy. Cache albums independently by provider, ID, storefront, limit and health signature; retain observation timestamps and short partial TTLs. Optional YouTube catalog support remains in the existing worker. No credential import, playback access, per-track detail fan-out or cross-source album merging is introduced.
+
+
+## ADR 029: Evidence-scoped recording, edition and contributor graph (2026-10-19)
+
+Add a deterministic bounded graph as metadata extensions, preserving immutable canonical schemas and all identity acceptance gates. Keep source recordings, release editions, release groups, works, artists, labels and track entries distinct. Only accepted source-owned records and checked release enrichment enter resolved graphs. Related entity links never seed another accepted recording or become cross-platform IDs. Preserve MusicBrainz directions, credited names, attributes and dates; keep unknown semantics unnormalized rather than guessing. Release remaster links do not imply per-recording changes. Work/recording/release credits keep their actual scope; name-only credits remain local to their source/entity.
+
+Expose the same graph in production and debug without execution diagnostics. Native album graphs include returned entries only. Extend existing exact MusicBrainz requests instead of introducing recursive network crawling, and build graphs locally from returned metadata. Bound graph size/depth, sort deterministically and advance resolved caching to rich-v13 and album caching to albums:v2. No title-derived relationships, credentials, playback access or global name-based artist merging are introduced.
+
+
+## ADR 030: Contributor decoding and cached graph invalidation (2026-10-19)
+
+Full verification found that structured JioSaavn contributor names could retain HTML entities while normalized fallback credits were decoded, producing an incorrect display name and duplicate local contributor. Decode the source name before constructing graph nodes and deduplicating fallback credits, preserving native artist identity. Advance resolved caching to rich-v14 and native albums to albums:v3 to invalidate previously persisted graphs. Keep relationship scopes, identity thresholds and the graph schema unchanged. The verification tool preserves the virtualenv interpreter path rather than resolving its symlink outside the environment.
+
+
+## ADR 031: Entity-scoped counts and material recording contradictions (2026-10-19)
+
+Varied live entity tests exposed per-disc/row song counts mislabeled as Apple collection totals, an unrequested Reimagined recording, and materially different same-title/same-performer classical recordings merged across sources. Keep Apple song counts in source catalog data and obtain album-wide totals only from collection metadata. Add qualified Reimagined version recognition. Reject known large duration contradictions only with a strict majority of at least two distinct timed sources on text queries, or an exact direct-ID timing anchor; preserve exact requested ISRC behavior. Apply the same check after accepted detail hydration and rebuild identity matches/status before merge so newly revealed timing contradictions cannot leak IDs or graph metadata. Unknown/sparse/tied timing evidence is not proof of identity. Preserve existing thresholds and canonical schemas; advance resolved caching to rich-v15. Native album collection caching remains albums:v3.
+
+
+## ADR 032: Scope-aware Apple album coverage and list integrity (2026-10-21)
+
+Live DAMN. and Goldberg collection probes still expose one more collection item than returned songs. Retain the collection's exact declared total and partial state; do not infer the missing item's media type or invent a fallback. Expose optional per-disc track-list coverage from source-declared song-row disc counts. Validate contiguous positions/discs, unique native track IDs, consistent disc counts and source-reported track totals before claiming album completeness. Normalize numeric slot keys while preserving printed track numbers. Missing later count fields do not erase known totals. Validate full source lists before trimming; coverage and graphs describe returned entries only. Keep other provider/canonical schemas, recording identity gates and request counts unchanged. Advance native album caching to albums:v4; song cache remains rich-v15.
+
+
+## ADR 033: Edition-owned positions, detailed source credits and lossless transport (2026-10-21)
+
+Select album metadata and numeric disc/track positions as one accepted provider tuple. Direct native song requests anchor their own edition when a native album reference is supplied. Preserve alternative placements with source-owned track/album IDs; never fill unknown positions or edition totals/UPC/catalog details solely from another same-title album. Retain legacy same-title album IDs as references rather than edition-equivalence proof. Reject independent disc/track priority configuration with an album-priority migration message; retain recording identity acceptance gates and canonical schemas.
+
+Index existing graph credits using deduplicated contributor references and explicit graph subject IDs, keeping source roles, attributes/instruments, dates and actual recording/work/release scope. Parse Melon's verified explicit contributor section outside the main song panel, preserving IDs where supplied and name-only local identities otherwise. Broaden MusicBrainz flat-role retention to match its existing graph capabilities; never invent missing credits or merge people globally by name.
+
+Reduce wire bytes with negotiated streaming gzip rather than deleting catalog metadata. Use a 1024-byte prefix threshold and pooled BestSpeed writers, preserving cache/encoding separation, Vary and existing-encoding/no-transform/range behavior. Measure lossless live sizes and document source failures separately from transport behavior. Resolved caching advances to rich-v16 and native albums to albums:v5; Korean provider versions advance to public-v2-credits. No new recursive catalog crawling, authenticated access or playback capability is added.
+
+
+## ADR 034: Exact-video SponsorBlock POI enrichment (2026-10-21)
+
+Add a keyless post-merge source for SponsorBlock poi_highlight / poi annotations. Reuse accepted YouTube IDs and their owned source-duration metadata; never query rejected/unknown videos, search by song title, seed recording identity, or transfer video timestamps to another platform's audio. Fetch recommended four-character SHA-256 buckets, select only the exact full video ID, preserve equal-time points, reject malformed/out-of-bounds/stale submissions and retain community votes, locks and attribution. Bound and explicitly flag truncated point sets. Do not invent highlight ranges or infer song structure.
+
+Store normalized annotations once under video_annotations, exposing them directly in production and under extensions in debug. Preserve SponsorBlock's separate CC BY-NC-SA 4.0 source/license attribution. Apply shared source budgets, lifecycle flags, cache/circuit controls and fail-open behavior. Add an explicit 404-as-empty cache policy for this source only; other HTTP/application errors keep existing failure behavior. Bound raw and resolved caching independently and refresh missing/failing results sooner.
+
+Default optional lookup time is two seconds, configurable to 100ms–30s and bounded by the request deadline; carry this budget through wrappers and HTTP without widening other enrichers. Include the timeout in the cache variant. Record the slow-runtime timeout failures separately from successful longer-budget live checks. Advance resolved caching to rich-v17; native album caching remains albums:v5. No source submissions, credentials, playback commands or recursive YouTube calls are introduced.

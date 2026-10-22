@@ -2,6 +2,7 @@ package provider
 
 // KoreanRecord is one public catalog entity, with source-labelled detail fields.
 type KoreanRecord struct {
+	Credits     []KoreanCredit    `json:"credits,omitempty"`
 	ID          string            `json:"id"`
 	Title       string            `json:"title"`
 	Artists     []KoreanArtist    `json:"artists"`
@@ -13,6 +14,12 @@ type KoreanRecord struct {
 	ISRC        string            `json:"isrc,omitempty"`
 	Fields      map[string]string `json:"fields,omitempty"`
 	Structured  map[string]any    `json:"structured,omitempty"`
+}
+type KoreanCredit struct {
+	ID         string `json:"id,omitempty"`
+	Name       string `json:"name"`
+	Role       string `json:"role,omitempty"`
+	SourceRole string `json:"source_role"`
 }
 type KoreanArtist struct {
 	ID   string `json:"id,omitempty"`

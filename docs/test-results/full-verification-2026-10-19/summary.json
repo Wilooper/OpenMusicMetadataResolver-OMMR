@@ -1,0 +1,29 @@
+{
+  "coverage": "75.0% Go statement coverage from final full race suite",
+  "initial_runner_issue": "Coverage subprocess could not locate go on PATH; fixed runner PATH and repeated successfully. Not a failing product test.",
+  "fixes": [
+    "Preserve virtualenv interpreter path instead of resolving its symlink in live_rich_catalogs.py",
+    "Decode JioSaavn HTML-escaped contributor names before graph identity/fallback deduplication; regression test passes"
+  ],
+  "provider_song_acceptance_counts": {
+    "applemusic": 12,
+    "bugs": 8,
+    "genie": 9,
+    "melon": 10,
+    "ytmusic": 11
+  },
+  "python_unit_tests": 8,
+  "runtime_exclusions": [
+    "No real credentials, login or protected catalog access tested",
+    "Redis server and Docker unavailable; live Redis/container integration not run",
+    "Android ARM64 cross-build passed; Android execution/battery/load unmeasured",
+    "Warm-cache 32-request check is not a sustained production load benchmark"
+  ],
+  "known_limitations": [
+    "Deezer/JioSaavn/MusicBrainz homepages and API routes returned identical 195-byte Site Unavailable HTML; origin unconfirmed",
+    "Spotify anonymous search failed; public direct-ID embed lookup succeeded in a separate fresh server",
+    "YouTube Python artist and limited album calls succeeded; album/song/credit operations showed transient failures; direct public credits retry succeeded",
+    "Provider circuits currently cover the whole source, not independent search/detail capabilities",
+    "Accepted cross-provider identifiers passed resolver gates; no independent audio fingerprint verification was performed"
+  ]
+}

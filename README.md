@@ -22,6 +22,10 @@ Music metadata across streaming services is heavily fragmented:
 ### The OMMR Solution
 OMMR accepts a platform identifier or artist and title and returns a canonical record with field provenance and identity confidence. Public paths require no keys; richer official catalog modes and some partner APIs require credentials and may have account restrictions. See [metadata fields and provider evidence](docs/METADATA_CATALOG.md).
 
+### Native album catalogs
+
+Fetch album metadata and ordered track lists with `/v1/albums?provider=applemusic&id=1829591921`. Native Go support covers Apple Music, Deezer, JioSaavn and MusicBrainz releases. Responses report whether the list is complete and preserve source totals, disc positions and extra catalog fields. See [native albums](docs/NATIVE_ALBUMS.md) for limits, JSON queries and live verification.
+
 ### Private configuration
 
 Cross-platform identifiers and song URLs are available at
@@ -372,3 +376,18 @@ JioSaavn [public song-page input](docs/JIOSAAVN_PUBLIC_PAGES.md) reads known pag
 [Known Unknowns album verification](docs/YOUTUBE_KNOWN_UNKNOWNS_VERIFICATION.md) includes all 10 songs, public YouTube credits, source metadata, and a fixed same-album/wrong-title identity leak.
 
 [Artist profiles](docs/ARTIST_PROFILES.md): `GET /v1/artists?artist=Gur%20Sidhu` returns public source-owned bios, artist images, top/recent tracks, audience metrics with time periods and explicitly reported catalog totals. Exact artist IDs and ambiguity choices are supported; no credentials are required for the native sources.
+
+
+Share a track link directly with `/v1/resolve?url=...` or the JSON/bulk APIs. [Share links and discovery](docs/SHARE_LINKS_AND_CAPABILITIES.md) covers nine supported services, JioSaavn/MusicBrainz direct seeds and `/v1/capabilities`. The [2026-10-19 status review](docs/STATUS_2026-10-19.md) summarizes the latest Termux results and remaining limitations.
+
+## Recording relationships and structured credits
+
+Track and native album responses include a source-owned `music_graph`: recordings, exact release editions, release groups, compositions and contributors, with directed relationships and scoped credits. Debug tracks keep the graph under `extensions.music_graph`; production tracks expose it directly. Related versions do not become accepted recording IDs. See [graph schema, scope and source coverage](docs/MUSIC_GRAPH.md).
+
+[Full verification (2026-10-19)](docs/FULL_VERIFICATION_2026-10-19.md): fresh Go race/coverage and Python tests, 58 running API checks, a 12-song live matrix, provider limitations, Android ARM64 cross-build and reproducible Termux-friendly commands.
+
+[Song/album/artist matrix](docs/ENTITY_MATRIX_2026-10-19.md): 14 styles and versions, source-owned album membership and artist profiles, explicit partial lists, and fixes for album-count semantics and recording-version/timing mismatches.
+
+Production data now includes source-owned album placements and a detailed contributor/credit index. Direct song IDs keep their edition-specific disc/track numbers together. Negotiated gzip retains all metadata while reducing measured live packets by about 75% for songs and 90% for a 35-track album. See [detailed production metadata](docs/DETAILED_PRODUCTION_METADATA.md) for schema, policy migration, source limits and evidence.
+
+Resolved tracks with an accepted YouTube ID can now include SponsorBlock community highlight points under `video_annotations.sponsorblock`, preserving exact-video timing, votes and attribution. Missing/unavailable highlights remain absent. See [SponsorBlock POIs](docs/SPONSORBLOCK.md) for schema, timeout/cache controls, dataset license and live results.

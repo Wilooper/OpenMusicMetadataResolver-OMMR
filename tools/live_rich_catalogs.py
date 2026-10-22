@@ -28,7 +28,7 @@ def main():
             port=sock.getsockname()[1]
         configuration=f'port: {port}\ncredentials_dir: ""\ncache_dir: {root / "cache"}\nprovider_timeout: 15s\n'
         if args.python:
-            configuration+='extractor:\n  enabled: true\n  python: '+json.dumps(str(args.python.resolve()))+'\n  script: '+json.dumps(str(repository/'workers/ytmusic/worker.py'))+'\n  workers: 2\n  timeout: 8s\n  profiles: true\n'
+            configuration+='extractor:\n  enabled: true\n  python: '+json.dumps(str(args.python.absolute()))+'\n  script: '+json.dumps(str(repository/'workers/ytmusic/worker.py'))+'\n  workers: 2\n  timeout: 8s\n  profiles: true\n'
         config=root/'test.yaml'
         config.write_text(configuration)
         config.chmod(0o600)

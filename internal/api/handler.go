@@ -3,6 +3,7 @@ package api
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -13,6 +14,7 @@ import (
 	"time"
 
 	"github.com/ommr/ommr/internal/adapters"
+	"github.com/ommr/ommr/internal/albums"
 	"github.com/ommr/ommr/internal/artists"
 	"github.com/ommr/ommr/internal/config"
 	"github.com/ommr/ommr/internal/enrichment/catalog"
@@ -28,6 +30,7 @@ import (
 )
 
 type Handler struct {
+	albums      *albums.Service
 	artists     *artists.Service
 	extractor   *extractors.Pool
 	health      *providerhealth.Manager
@@ -74,11 +77,17 @@ func (h *Handler) handleResolve(w http.ResponseWriter, r *http.Request, linksOnl
 	}
 
 	q := r.URL.Query()
-	spotifyID := h.idResolver.ExtractSpotifyID(q.Get("spotify_id"))
-	youtubeID := h.idResolver.ExtractYouTubeID(q.Get("youtube_id"))
+	inputURL := q.Get("url")
+	if q.Has("url") && (len(q["url"]) != 1 || strings.TrimSpace(inputURL) == "") {
+		http.Error(w, `{"error":"provide one nonempty music url"}`, 400)
+		return
+	}
+	jiosaavnID, jiosaavnURL, musicbrainzID := q.Get("jiosaavn_id"), q.Get("jiosaavn_url"), q.Get("musicbrainz_id")
+	spotifyID := q.Get("spotify_id")
+	youtubeID := q.Get("youtube_id")
 	deezerID := q.Get("deezer_id")
 	appleID := q.Get("apple_id")
-	soundcloudID := h.idResolver.ExtractSoundCloudID(q.Get("soundcloud_id"))
+	soundcloudID := q.Get("soundcloud_id")
 	qobuzID := q.Get("qobuz_id")
 	tidalID := q.Get("tidal_id")
 	amazonMusicID := q.Get("amazonmusic_id")
@@ -95,7 +104,7 @@ func (h *Handler) handleResolve(w http.ResponseWriter, r *http.Request, linksOnl
 	title := q.Get("title")
 	album := q.Get("album")
 
-	if spotifyID == "" && youtubeID == "" && deezerID == "" && appleID == "" && soundcloudID == "" && qobuzID == "" && tidalID == "" && amazonMusicID == "" && pandoraID == "" && bugsID == "" && genieID == "" && melonID == "" && isrc == "" && (artist == "" || title == "") {
+	if inputURL == "" && jiosaavnID == "" && jiosaavnURL == "" && musicbrainzID == "" && spotifyID == "" && youtubeID == "" && deezerID == "" && appleID == "" && soundcloudID == "" && qobuzID == "" && tidalID == "" && amazonMusicID == "" && pandoraID == "" && bugsID == "" && genieID == "" && melonID == "" && isrc == "" && (artist == "" || title == "") {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusBadRequest)
 		_, _ = w.Write([]byte(`{"error":"Provide a supported provider ID, isrc, or both artist and title."}`))
@@ -111,6 +120,10 @@ func (h *Handler) handleResolve(w http.ResponseWriter, r *http.Request, linksOnl
 
 	req := resolver.ResolveRequest{
 		Query: adapters.Query{
+			URL:           inputURL,
+			JioSaavnID:    jiosaavnID,
+			JioSaavnURL:   jiosaavnURL,
+			MusicBrainzID: musicbrainzID,
 			SpotifyID:     spotifyID,
 			YouTubeID:     youtubeID,
 			DeezerID:      deezerID,
@@ -140,6 +153,9 @@ func (h *Handler) handleResolve(w http.ResponseWriter, r *http.Request, linksOnl
 	if err != nil {
 		w.Header().Set("Content-Type", "application/json")
 		status := http.StatusInternalServerError
+		if errors.Is(err, idresolver.ErrInput) {
+			status = http.StatusBadRequest
+		}
 		if strings.Contains(err.Error(), "not registered") {
 			status = http.StatusBadRequest
 		}
@@ -249,9 +265,6 @@ func (h *Handler) HandleBulk(w http.ResponseWriter, r *http.Request) {
 			defer wg.Done()
 			for idx := range jobs {
 				itemQuery := req.Queries[idx]
-				itemQuery.SpotifyID = h.idResolver.ExtractSpotifyID(itemQuery.SpotifyID)
-				itemQuery.YouTubeID = h.idResolver.ExtractYouTubeID(itemQuery.YouTubeID)
-				itemQuery.SoundCloudID = h.idResolver.ExtractSoundCloudID(itemQuery.SoundCloudID)
 
 				resReq := resolver.ResolveRequest{
 					Query:       itemQuery,

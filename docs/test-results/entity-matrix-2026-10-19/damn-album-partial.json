@@ -1,0 +1,1115 @@
+{
+  "album": {
+    "music_graph": {
+      "version": 1,
+      "root": "applemusic:release:1440881722",
+      "nodes": [
+        {
+          "id": "applemusic:artist:368183298",
+          "type": "artist",
+          "provider": "applemusic",
+          "native_id": "368183298",
+          "name": "Kendrick Lamar"
+        },
+        {
+          "id": "applemusic:release:1440881722",
+          "type": "release",
+          "provider": "applemusic",
+          "native_id": "1440881722",
+          "name": "DAMN."
+        },
+        {
+          "id": "applemusic:track_entry:1440881722/1/1/1440881736",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1440881722/1/1/1440881736",
+          "name": "BLOOD."
+        },
+        {
+          "id": "applemusic:track_entry:1440881722/1/10/1440882172",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1440881722/1/10/1440882172",
+          "name": "LOVE. (FEAT. ZACARI.)"
+        },
+        {
+          "id": "applemusic:track_entry:1440881722/1/11/1440882173",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1440881722/1/11/1440882173",
+          "name": "XXX. (FEAT. U2.)"
+        },
+        {
+          "id": "applemusic:track_entry:1440881722/1/12/1440882176",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1440881722/1/12/1440882176",
+          "name": "FEAR."
+        },
+        {
+          "id": "applemusic:track_entry:1440881722/1/13/1440882179",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1440881722/1/13/1440882179",
+          "name": "GOD."
+        },
+        {
+          "id": "applemusic:track_entry:1440881722/1/14/1440882184",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1440881722/1/14/1440882184",
+          "name": "DUCKWORTH."
+        },
+        {
+          "id": "applemusic:track_entry:1440881722/1/2/1440881990",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1440881722/1/2/1440881990",
+          "name": "DNA."
+        },
+        {
+          "id": "applemusic:track_entry:1440881722/1/3/1440881997",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1440881722/1/3/1440881997",
+          "name": "YAH."
+        },
+        {
+          "id": "applemusic:track_entry:1440881722/1/4/1440882002",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1440881722/1/4/1440882002",
+          "name": "ELEMENT."
+        },
+        {
+          "id": "applemusic:track_entry:1440881722/1/5/1440882007",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1440881722/1/5/1440882007",
+          "name": "FEEL."
+        },
+        {
+          "id": "applemusic:track_entry:1440881722/1/6/1440882009",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1440881722/1/6/1440882009",
+          "name": "LOYALTY. (FEAT. RIHANNA.)"
+        },
+        {
+          "id": "applemusic:track_entry:1440881722/1/7/1440882161",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1440881722/1/7/1440882161",
+          "name": "PRIDE."
+        },
+        {
+          "id": "applemusic:track_entry:1440881722/1/8/1440882165",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1440881722/1/8/1440882165",
+          "name": "HUMBLE."
+        },
+        {
+          "id": "applemusic:track_entry:1440881722/1/9/1440882169",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1440881722/1/9/1440882169",
+          "name": "LUST."
+        }
+      ],
+      "edges": [
+        {
+          "from": "applemusic:artist:368183298",
+          "to": "applemusic:release:1440881722",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "Kendrick Lamar"
+        },
+        {
+          "from": "applemusic:artist:368183298",
+          "to": "applemusic:track_entry:1440881722/1/1/1440881736",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "Kendrick Lamar"
+        },
+        {
+          "from": "applemusic:artist:368183298",
+          "to": "applemusic:track_entry:1440881722/1/10/1440882172",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "Kendrick Lamar"
+        },
+        {
+          "from": "applemusic:artist:368183298",
+          "to": "applemusic:track_entry:1440881722/1/11/1440882173",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "Kendrick Lamar"
+        },
+        {
+          "from": "applemusic:artist:368183298",
+          "to": "applemusic:track_entry:1440881722/1/12/1440882176",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "Kendrick Lamar"
+        },
+        {
+          "from": "applemusic:artist:368183298",
+          "to": "applemusic:track_entry:1440881722/1/13/1440882179",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "Kendrick Lamar"
+        },
+        {
+          "from": "applemusic:artist:368183298",
+          "to": "applemusic:track_entry:1440881722/1/14/1440882184",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "Kendrick Lamar"
+        },
+        {
+          "from": "applemusic:artist:368183298",
+          "to": "applemusic:track_entry:1440881722/1/2/1440881990",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "Kendrick Lamar"
+        },
+        {
+          "from": "applemusic:artist:368183298",
+          "to": "applemusic:track_entry:1440881722/1/3/1440881997",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "Kendrick Lamar"
+        },
+        {
+          "from": "applemusic:artist:368183298",
+          "to": "applemusic:track_entry:1440881722/1/4/1440882002",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "Kendrick Lamar"
+        },
+        {
+          "from": "applemusic:artist:368183298",
+          "to": "applemusic:track_entry:1440881722/1/5/1440882007",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "Kendrick Lamar"
+        },
+        {
+          "from": "applemusic:artist:368183298",
+          "to": "applemusic:track_entry:1440881722/1/6/1440882009",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "Kendrick Lamar"
+        },
+        {
+          "from": "applemusic:artist:368183298",
+          "to": "applemusic:track_entry:1440881722/1/7/1440882161",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "Kendrick Lamar"
+        },
+        {
+          "from": "applemusic:artist:368183298",
+          "to": "applemusic:track_entry:1440881722/1/8/1440882165",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "Kendrick Lamar"
+        },
+        {
+          "from": "applemusic:artist:368183298",
+          "to": "applemusic:track_entry:1440881722/1/9/1440882169",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "Kendrick Lamar"
+        },
+        {
+          "from": "applemusic:track_entry:1440881722/1/1/1440881736",
+          "to": "applemusic:release:1440881722",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 1,
+          "disc_number": 1,
+          "track_number": "1"
+        },
+        {
+          "from": "applemusic:track_entry:1440881722/1/10/1440882172",
+          "to": "applemusic:release:1440881722",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 10,
+          "disc_number": 1,
+          "track_number": "10"
+        },
+        {
+          "from": "applemusic:track_entry:1440881722/1/11/1440882173",
+          "to": "applemusic:release:1440881722",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 11,
+          "disc_number": 1,
+          "track_number": "11"
+        },
+        {
+          "from": "applemusic:track_entry:1440881722/1/12/1440882176",
+          "to": "applemusic:release:1440881722",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 12,
+          "disc_number": 1,
+          "track_number": "12"
+        },
+        {
+          "from": "applemusic:track_entry:1440881722/1/13/1440882179",
+          "to": "applemusic:release:1440881722",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 13,
+          "disc_number": 1,
+          "track_number": "13"
+        },
+        {
+          "from": "applemusic:track_entry:1440881722/1/14/1440882184",
+          "to": "applemusic:release:1440881722",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 14,
+          "disc_number": 1,
+          "track_number": "14"
+        },
+        {
+          "from": "applemusic:track_entry:1440881722/1/2/1440881990",
+          "to": "applemusic:release:1440881722",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 2,
+          "disc_number": 1,
+          "track_number": "2"
+        },
+        {
+          "from": "applemusic:track_entry:1440881722/1/3/1440881997",
+          "to": "applemusic:release:1440881722",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 3,
+          "disc_number": 1,
+          "track_number": "3"
+        },
+        {
+          "from": "applemusic:track_entry:1440881722/1/4/1440882002",
+          "to": "applemusic:release:1440881722",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 4,
+          "disc_number": 1,
+          "track_number": "4"
+        },
+        {
+          "from": "applemusic:track_entry:1440881722/1/5/1440882007",
+          "to": "applemusic:release:1440881722",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 5,
+          "disc_number": 1,
+          "track_number": "5"
+        },
+        {
+          "from": "applemusic:track_entry:1440881722/1/6/1440882009",
+          "to": "applemusic:release:1440881722",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 6,
+          "disc_number": 1,
+          "track_number": "6"
+        },
+        {
+          "from": "applemusic:track_entry:1440881722/1/7/1440882161",
+          "to": "applemusic:release:1440881722",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 7,
+          "disc_number": 1,
+          "track_number": "7"
+        },
+        {
+          "from": "applemusic:track_entry:1440881722/1/8/1440882165",
+          "to": "applemusic:release:1440881722",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 8,
+          "disc_number": 1,
+          "track_number": "8"
+        },
+        {
+          "from": "applemusic:track_entry:1440881722/1/9/1440882169",
+          "to": "applemusic:release:1440881722",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 9,
+          "disc_number": 1,
+          "track_number": "9"
+        }
+      ],
+      "truncated": false
+    },
+    "provider": "applemusic",
+    "id": "1440881722",
+    "title": "DAMN.",
+    "url": "https://music.apple.com/us/album/damn/1440881722?uo=4",
+    "artists": [
+      {
+        "id": "368183298",
+        "name": "Kendrick Lamar"
+      }
+    ],
+    "release_date": "2017-04-14T07:00:00Z",
+    "copyright": "℗ 2017 Aftermath/Interscope (Top Dawg Entertainment)",
+    "images": [
+      "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/ab/16/ef/ab16efe9-e7f1-66ec-021c-5592a23f0f9e/17UMGIM88793.rgb.jpg/100x100bb.jpg"
+    ],
+    "discs": [
+      {
+        "number": 1,
+        "total_tracks": 14
+      }
+    ],
+    "tracks": [
+      {
+        "id": "1440881736",
+        "title": "BLOOD.",
+        "position": 1,
+        "disc_number": 1,
+        "track_number": "1",
+        "duration_ms": 118067,
+        "artists": [
+          {
+            "id": "368183298",
+            "name": "Kendrick Lamar"
+          }
+        ],
+        "provider_data": {
+          "artistId": 368183298,
+          "artistName": "Kendrick Lamar",
+          "artistViewUrl": "https://music.apple.com/us/artist/kendrick-lamar/368183298?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/ab/16/ef/ab16efe9-e7f1-66ec-021c-5592a23f0f9e/17UMGIM88793.rgb.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/ab/16/ef/ab16efe9-e7f1-66ec-021c-5592a23f0f9e/17UMGIM88793.rgb.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/ab/16/ef/ab16efe9-e7f1-66ec-021c-5592a23f0f9e/17UMGIM88793.rgb.jpg/60x60bb.jpg",
+          "collectionCensoredName": "DAMN.",
+          "collectionExplicitness": "cleaned",
+          "collectionId": 1440881722,
+          "collectionName": "DAMN.",
+          "collectionPrice": 10.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/blood/1440881722?i=1440881736&uo=4",
+          "contentAdvisoryRating": "Clean",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 1,
+          "discNumber": 1,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/78/4c/b8/784cb89d-504b-c0ed-06c9-283aeb2a5c15/mzaf_11389245269113098382.plus.aac.p.m4a",
+          "primaryGenreName": "Hip-Hop/Rap",
+          "releaseDate": "2017-04-14T12:00:00Z",
+          "trackCensoredName": "BLOOD.",
+          "trackCount": 14,
+          "trackExplicitness": "cleaned",
+          "trackId": 1440881736,
+          "trackName": "BLOOD.",
+          "trackNumber": 1,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 118067,
+          "trackViewUrl": "https://music.apple.com/us/album/blood/1440881722?i=1440881736&uo=4",
+          "wrapperType": "track"
+        }
+      },
+      {
+        "id": "1440881990",
+        "title": "DNA.",
+        "position": 2,
+        "disc_number": 1,
+        "track_number": "2",
+        "duration_ms": 185947,
+        "artists": [
+          {
+            "id": "368183298",
+            "name": "Kendrick Lamar"
+          }
+        ],
+        "provider_data": {
+          "artistId": 368183298,
+          "artistName": "Kendrick Lamar",
+          "artistViewUrl": "https://music.apple.com/us/artist/kendrick-lamar/368183298?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/ab/16/ef/ab16efe9-e7f1-66ec-021c-5592a23f0f9e/17UMGIM88793.rgb.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/ab/16/ef/ab16efe9-e7f1-66ec-021c-5592a23f0f9e/17UMGIM88793.rgb.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/ab/16/ef/ab16efe9-e7f1-66ec-021c-5592a23f0f9e/17UMGIM88793.rgb.jpg/60x60bb.jpg",
+          "collectionCensoredName": "DAMN.",
+          "collectionExplicitness": "cleaned",
+          "collectionId": 1440881722,
+          "collectionName": "DAMN.",
+          "collectionPrice": 10.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/dna/1440881722?i=1440881990&uo=4",
+          "contentAdvisoryRating": "Clean",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 1,
+          "discNumber": 1,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/2f/9e/3f/2f9e3fae-1e5f-18df-c762-039e3cc13028/mzaf_8715454916909593560.plus.aac.p.m4a",
+          "primaryGenreName": "Hip-Hop/Rap",
+          "releaseDate": "2017-04-14T12:00:00Z",
+          "trackCensoredName": "DNA.",
+          "trackCount": 14,
+          "trackExplicitness": "cleaned",
+          "trackId": 1440881990,
+          "trackName": "DNA.",
+          "trackNumber": 2,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 185947,
+          "trackViewUrl": "https://music.apple.com/us/album/dna/1440881722?i=1440881990&uo=4",
+          "wrapperType": "track"
+        }
+      },
+      {
+        "id": "1440881997",
+        "title": "YAH.",
+        "position": 3,
+        "disc_number": 1,
+        "track_number": "3",
+        "duration_ms": 160293,
+        "artists": [
+          {
+            "id": "368183298",
+            "name": "Kendrick Lamar"
+          }
+        ],
+        "provider_data": {
+          "artistId": 368183298,
+          "artistName": "Kendrick Lamar",
+          "artistViewUrl": "https://music.apple.com/us/artist/kendrick-lamar/368183298?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/ab/16/ef/ab16efe9-e7f1-66ec-021c-5592a23f0f9e/17UMGIM88793.rgb.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/ab/16/ef/ab16efe9-e7f1-66ec-021c-5592a23f0f9e/17UMGIM88793.rgb.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/ab/16/ef/ab16efe9-e7f1-66ec-021c-5592a23f0f9e/17UMGIM88793.rgb.jpg/60x60bb.jpg",
+          "collectionCensoredName": "DAMN.",
+          "collectionExplicitness": "cleaned",
+          "collectionId": 1440881722,
+          "collectionName": "DAMN.",
+          "collectionPrice": 10.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/yah/1440881722?i=1440881997&uo=4",
+          "contentAdvisoryRating": "Clean",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 1,
+          "discNumber": 1,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/d3/1d/e7/d31de772-8e48-04dc-3b64-2d622a7b0687/mzaf_15817607525452955465.plus.aac.p.m4a",
+          "primaryGenreName": "Hip-Hop/Rap",
+          "releaseDate": "2017-04-14T12:00:00Z",
+          "trackCensoredName": "YAH.",
+          "trackCount": 14,
+          "trackExplicitness": "cleaned",
+          "trackId": 1440881997,
+          "trackName": "YAH.",
+          "trackNumber": 3,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 160293,
+          "trackViewUrl": "https://music.apple.com/us/album/yah/1440881722?i=1440881997&uo=4",
+          "wrapperType": "track"
+        }
+      },
+      {
+        "id": "1440882002",
+        "title": "ELEMENT.",
+        "position": 4,
+        "disc_number": 1,
+        "track_number": "4",
+        "duration_ms": 208733,
+        "artists": [
+          {
+            "id": "368183298",
+            "name": "Kendrick Lamar"
+          }
+        ],
+        "provider_data": {
+          "artistId": 368183298,
+          "artistName": "Kendrick Lamar",
+          "artistViewUrl": "https://music.apple.com/us/artist/kendrick-lamar/368183298?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/ab/16/ef/ab16efe9-e7f1-66ec-021c-5592a23f0f9e/17UMGIM88793.rgb.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/ab/16/ef/ab16efe9-e7f1-66ec-021c-5592a23f0f9e/17UMGIM88793.rgb.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/ab/16/ef/ab16efe9-e7f1-66ec-021c-5592a23f0f9e/17UMGIM88793.rgb.jpg/60x60bb.jpg",
+          "collectionCensoredName": "DAMN.",
+          "collectionExplicitness": "cleaned",
+          "collectionId": 1440881722,
+          "collectionName": "DAMN.",
+          "collectionPrice": 10.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/element/1440881722?i=1440882002&uo=4",
+          "contentAdvisoryRating": "Clean",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 1,
+          "discNumber": 1,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/ef/e1/ae/efe1aef5-580d-e9bf-66c6-bbe09666b79c/mzaf_9190598522687891612.plus.aac.p.m4a",
+          "primaryGenreName": "Hip-Hop/Rap",
+          "releaseDate": "2017-04-14T12:00:00Z",
+          "trackCensoredName": "ELEMENT.",
+          "trackCount": 14,
+          "trackExplicitness": "cleaned",
+          "trackId": 1440882002,
+          "trackName": "ELEMENT.",
+          "trackNumber": 4,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 208733,
+          "trackViewUrl": "https://music.apple.com/us/album/element/1440881722?i=1440882002&uo=4",
+          "wrapperType": "track"
+        }
+      },
+      {
+        "id": "1440882007",
+        "title": "FEEL.",
+        "position": 5,
+        "disc_number": 1,
+        "track_number": "5",
+        "duration_ms": 214827,
+        "artists": [
+          {
+            "id": "368183298",
+            "name": "Kendrick Lamar"
+          }
+        ],
+        "provider_data": {
+          "artistId": 368183298,
+          "artistName": "Kendrick Lamar",
+          "artistViewUrl": "https://music.apple.com/us/artist/kendrick-lamar/368183298?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/ab/16/ef/ab16efe9-e7f1-66ec-021c-5592a23f0f9e/17UMGIM88793.rgb.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/ab/16/ef/ab16efe9-e7f1-66ec-021c-5592a23f0f9e/17UMGIM88793.rgb.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/ab/16/ef/ab16efe9-e7f1-66ec-021c-5592a23f0f9e/17UMGIM88793.rgb.jpg/60x60bb.jpg",
+          "collectionCensoredName": "DAMN.",
+          "collectionExplicitness": "cleaned",
+          "collectionId": 1440881722,
+          "collectionName": "DAMN.",
+          "collectionPrice": 10.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/feel/1440881722?i=1440882007&uo=4",
+          "contentAdvisoryRating": "Clean",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 1,
+          "discNumber": 1,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/05/6c/fd/056cfdc3-6249-18e9-089e-caa96dc1e9d4/mzaf_16955642116095945915.plus.aac.p.m4a",
+          "primaryGenreName": "Hip-Hop/Rap",
+          "releaseDate": "2017-04-14T12:00:00Z",
+          "trackCensoredName": "FEEL.",
+          "trackCount": 14,
+          "trackExplicitness": "cleaned",
+          "trackId": 1440882007,
+          "trackName": "FEEL.",
+          "trackNumber": 5,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 214827,
+          "trackViewUrl": "https://music.apple.com/us/album/feel/1440881722?i=1440882007&uo=4",
+          "wrapperType": "track"
+        }
+      },
+      {
+        "id": "1440882009",
+        "title": "LOYALTY. (FEAT. RIHANNA.)",
+        "position": 6,
+        "disc_number": 1,
+        "track_number": "6",
+        "duration_ms": 227360,
+        "artists": [
+          {
+            "id": "368183298",
+            "name": "Kendrick Lamar"
+          }
+        ],
+        "provider_data": {
+          "artistId": 368183298,
+          "artistName": "Kendrick Lamar",
+          "artistViewUrl": "https://music.apple.com/us/artist/kendrick-lamar/368183298?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/ab/16/ef/ab16efe9-e7f1-66ec-021c-5592a23f0f9e/17UMGIM88793.rgb.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/ab/16/ef/ab16efe9-e7f1-66ec-021c-5592a23f0f9e/17UMGIM88793.rgb.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/ab/16/ef/ab16efe9-e7f1-66ec-021c-5592a23f0f9e/17UMGIM88793.rgb.jpg/60x60bb.jpg",
+          "collectionCensoredName": "DAMN.",
+          "collectionExplicitness": "cleaned",
+          "collectionId": 1440881722,
+          "collectionName": "DAMN.",
+          "collectionPrice": 10.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/loyalty-feat-rihanna/1440881722?i=1440882009&uo=4",
+          "contentAdvisoryRating": "Clean",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 1,
+          "discNumber": 1,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/c7/6b/77/c76b776f-177b-ee76-fe02-7fb6c3430213/mzaf_914370182241799884.plus.aac.p.m4a",
+          "primaryGenreName": "Hip-Hop/Rap",
+          "releaseDate": "2017-04-14T12:00:00Z",
+          "trackCensoredName": "LOYALTY. (FEAT. RIHANNA.)",
+          "trackCount": 14,
+          "trackExplicitness": "cleaned",
+          "trackId": 1440882009,
+          "trackName": "LOYALTY. (FEAT. RIHANNA.)",
+          "trackNumber": 6,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 227360,
+          "trackViewUrl": "https://music.apple.com/us/album/loyalty-feat-rihanna/1440881722?i=1440882009&uo=4",
+          "wrapperType": "track"
+        }
+      },
+      {
+        "id": "1440882161",
+        "title": "PRIDE.",
+        "position": 7,
+        "disc_number": 1,
+        "track_number": "7",
+        "duration_ms": 275253,
+        "artists": [
+          {
+            "id": "368183298",
+            "name": "Kendrick Lamar"
+          }
+        ],
+        "provider_data": {
+          "artistId": 368183298,
+          "artistName": "Kendrick Lamar",
+          "artistViewUrl": "https://music.apple.com/us/artist/kendrick-lamar/368183298?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/ab/16/ef/ab16efe9-e7f1-66ec-021c-5592a23f0f9e/17UMGIM88793.rgb.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/ab/16/ef/ab16efe9-e7f1-66ec-021c-5592a23f0f9e/17UMGIM88793.rgb.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/ab/16/ef/ab16efe9-e7f1-66ec-021c-5592a23f0f9e/17UMGIM88793.rgb.jpg/60x60bb.jpg",
+          "collectionCensoredName": "DAMN.",
+          "collectionExplicitness": "cleaned",
+          "collectionId": 1440881722,
+          "collectionName": "DAMN.",
+          "collectionPrice": 10.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/pride/1440881722?i=1440882161&uo=4",
+          "contentAdvisoryRating": "Clean",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 1,
+          "discNumber": 1,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/a2/62/a5/a262a57e-b097-39ca-7bdf-ed1b48cf4b89/mzaf_14877025091424403949.plus.aac.p.m4a",
+          "primaryGenreName": "Hip-Hop/Rap",
+          "releaseDate": "2017-04-14T12:00:00Z",
+          "trackCensoredName": "PRIDE.",
+          "trackCount": 14,
+          "trackExplicitness": "cleaned",
+          "trackId": 1440882161,
+          "trackName": "PRIDE.",
+          "trackNumber": 7,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 275253,
+          "trackViewUrl": "https://music.apple.com/us/album/pride/1440881722?i=1440882161&uo=4",
+          "wrapperType": "track"
+        }
+      },
+      {
+        "id": "1440882165",
+        "title": "HUMBLE.",
+        "position": 8,
+        "disc_number": 1,
+        "track_number": "8",
+        "duration_ms": 177000,
+        "artists": [
+          {
+            "id": "368183298",
+            "name": "Kendrick Lamar"
+          }
+        ],
+        "provider_data": {
+          "artistId": 368183298,
+          "artistName": "Kendrick Lamar",
+          "artistViewUrl": "https://music.apple.com/us/artist/kendrick-lamar/368183298?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/ab/16/ef/ab16efe9-e7f1-66ec-021c-5592a23f0f9e/17UMGIM88793.rgb.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/ab/16/ef/ab16efe9-e7f1-66ec-021c-5592a23f0f9e/17UMGIM88793.rgb.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/ab/16/ef/ab16efe9-e7f1-66ec-021c-5592a23f0f9e/17UMGIM88793.rgb.jpg/60x60bb.jpg",
+          "collectionCensoredName": "DAMN.",
+          "collectionExplicitness": "cleaned",
+          "collectionId": 1440881722,
+          "collectionName": "DAMN.",
+          "collectionPrice": 10.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/humble/1440881722?i=1440882165&uo=4",
+          "contentAdvisoryRating": "Clean",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 1,
+          "discNumber": 1,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/1f/2e/37/1f2e37be-bdd0-d770-6ea4-091011a6aade/mzaf_2360827885900940865.plus.aac.p.m4a",
+          "primaryGenreName": "Hip-Hop/Rap",
+          "releaseDate": "2017-03-30T12:00:00Z",
+          "trackCensoredName": "HUMBLE.",
+          "trackCount": 14,
+          "trackExplicitness": "cleaned",
+          "trackId": 1440882165,
+          "trackName": "HUMBLE.",
+          "trackNumber": 8,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 177000,
+          "trackViewUrl": "https://music.apple.com/us/album/humble/1440881722?i=1440882165&uo=4",
+          "wrapperType": "track"
+        }
+      },
+      {
+        "id": "1440882169",
+        "title": "LUST.",
+        "position": 9,
+        "disc_number": 1,
+        "track_number": "9",
+        "duration_ms": 307880,
+        "artists": [
+          {
+            "id": "368183298",
+            "name": "Kendrick Lamar"
+          }
+        ],
+        "provider_data": {
+          "artistId": 368183298,
+          "artistName": "Kendrick Lamar",
+          "artistViewUrl": "https://music.apple.com/us/artist/kendrick-lamar/368183298?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/ab/16/ef/ab16efe9-e7f1-66ec-021c-5592a23f0f9e/17UMGIM88793.rgb.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/ab/16/ef/ab16efe9-e7f1-66ec-021c-5592a23f0f9e/17UMGIM88793.rgb.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/ab/16/ef/ab16efe9-e7f1-66ec-021c-5592a23f0f9e/17UMGIM88793.rgb.jpg/60x60bb.jpg",
+          "collectionCensoredName": "DAMN.",
+          "collectionExplicitness": "cleaned",
+          "collectionId": 1440881722,
+          "collectionName": "DAMN.",
+          "collectionPrice": 10.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/lust/1440881722?i=1440882169&uo=4",
+          "contentAdvisoryRating": "Clean",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 1,
+          "discNumber": 1,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/36/95/aa/3695aa04-9911-51d5-8795-dcab5e00bd35/mzaf_7119579264989507265.plus.aac.p.m4a",
+          "primaryGenreName": "Hip-Hop/Rap",
+          "releaseDate": "2017-04-14T12:00:00Z",
+          "trackCensoredName": "LUST.",
+          "trackCount": 14,
+          "trackExplicitness": "cleaned",
+          "trackId": 1440882169,
+          "trackName": "LUST.",
+          "trackNumber": 9,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 307880,
+          "trackViewUrl": "https://music.apple.com/us/album/lust/1440881722?i=1440882169&uo=4",
+          "wrapperType": "track"
+        }
+      },
+      {
+        "id": "1440882172",
+        "title": "LOVE. (FEAT. ZACARI.)",
+        "position": 10,
+        "disc_number": 1,
+        "track_number": "10",
+        "duration_ms": 213400,
+        "artists": [
+          {
+            "id": "368183298",
+            "name": "Kendrick Lamar"
+          }
+        ],
+        "provider_data": {
+          "artistId": 368183298,
+          "artistName": "Kendrick Lamar",
+          "artistViewUrl": "https://music.apple.com/us/artist/kendrick-lamar/368183298?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/ab/16/ef/ab16efe9-e7f1-66ec-021c-5592a23f0f9e/17UMGIM88793.rgb.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/ab/16/ef/ab16efe9-e7f1-66ec-021c-5592a23f0f9e/17UMGIM88793.rgb.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/ab/16/ef/ab16efe9-e7f1-66ec-021c-5592a23f0f9e/17UMGIM88793.rgb.jpg/60x60bb.jpg",
+          "collectionCensoredName": "DAMN.",
+          "collectionExplicitness": "cleaned",
+          "collectionId": 1440881722,
+          "collectionName": "DAMN.",
+          "collectionPrice": 10.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/love-feat-zacari/1440881722?i=1440882172&uo=4",
+          "contentAdvisoryRating": "Clean",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 1,
+          "discNumber": 1,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/c2/d4/6e/c2d46e14-410d-ac9c-3b9f-86d7985b6d52/mzaf_11438991059017104342.plus.aac.p.m4a",
+          "primaryGenreName": "Hip-Hop/Rap",
+          "releaseDate": "2017-04-14T12:00:00Z",
+          "trackCensoredName": "LOVE. (FEAT. ZACARI.)",
+          "trackCount": 14,
+          "trackExplicitness": "cleaned",
+          "trackId": 1440882172,
+          "trackName": "LOVE. (FEAT. ZACARI.)",
+          "trackNumber": 10,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 213400,
+          "trackViewUrl": "https://music.apple.com/us/album/love-feat-zacari/1440881722?i=1440882172&uo=4",
+          "wrapperType": "track"
+        }
+      },
+      {
+        "id": "1440882173",
+        "title": "XXX. (FEAT. U2.)",
+        "position": 11,
+        "disc_number": 1,
+        "track_number": "11",
+        "duration_ms": 254200,
+        "artists": [
+          {
+            "id": "368183298",
+            "name": "Kendrick Lamar"
+          }
+        ],
+        "provider_data": {
+          "artistId": 368183298,
+          "artistName": "Kendrick Lamar",
+          "artistViewUrl": "https://music.apple.com/us/artist/kendrick-lamar/368183298?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/ab/16/ef/ab16efe9-e7f1-66ec-021c-5592a23f0f9e/17UMGIM88793.rgb.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/ab/16/ef/ab16efe9-e7f1-66ec-021c-5592a23f0f9e/17UMGIM88793.rgb.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/ab/16/ef/ab16efe9-e7f1-66ec-021c-5592a23f0f9e/17UMGIM88793.rgb.jpg/60x60bb.jpg",
+          "collectionCensoredName": "DAMN.",
+          "collectionExplicitness": "cleaned",
+          "collectionId": 1440881722,
+          "collectionName": "DAMN.",
+          "collectionPrice": 10.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/xxx-feat-u2/1440881722?i=1440882173&uo=4",
+          "contentAdvisoryRating": "Clean",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 1,
+          "discNumber": 1,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/b7/31/3a/b7313ae4-55ad-bb76-7728-b1cc80235ee5/mzaf_16292633710797845432.plus.aac.p.m4a",
+          "primaryGenreName": "Hip-Hop/Rap",
+          "releaseDate": "2017-04-14T12:00:00Z",
+          "trackCensoredName": "XXX. (FEAT. U2.)",
+          "trackCount": 14,
+          "trackExplicitness": "cleaned",
+          "trackId": 1440882173,
+          "trackName": "XXX. (FEAT. U2.)",
+          "trackNumber": 11,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 254200,
+          "trackViewUrl": "https://music.apple.com/us/album/xxx-feat-u2/1440881722?i=1440882173&uo=4",
+          "wrapperType": "track"
+        }
+      },
+      {
+        "id": "1440882176",
+        "title": "FEAR.",
+        "position": 12,
+        "disc_number": 1,
+        "track_number": "12",
+        "duration_ms": 460573,
+        "artists": [
+          {
+            "id": "368183298",
+            "name": "Kendrick Lamar"
+          }
+        ],
+        "provider_data": {
+          "artistId": 368183298,
+          "artistName": "Kendrick Lamar",
+          "artistViewUrl": "https://music.apple.com/us/artist/kendrick-lamar/368183298?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/ab/16/ef/ab16efe9-e7f1-66ec-021c-5592a23f0f9e/17UMGIM88793.rgb.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/ab/16/ef/ab16efe9-e7f1-66ec-021c-5592a23f0f9e/17UMGIM88793.rgb.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/ab/16/ef/ab16efe9-e7f1-66ec-021c-5592a23f0f9e/17UMGIM88793.rgb.jpg/60x60bb.jpg",
+          "collectionCensoredName": "DAMN.",
+          "collectionExplicitness": "cleaned",
+          "collectionId": 1440881722,
+          "collectionName": "DAMN.",
+          "collectionPrice": 10.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/fear/1440881722?i=1440882176&uo=4",
+          "contentAdvisoryRating": "Clean",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 1,
+          "discNumber": 1,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/e8/0d/0f/e80d0f01-5c30-4e33-38e6-b7c9dc69ac58/mzaf_2592679999581592591.plus.aac.p.m4a",
+          "primaryGenreName": "Hip-Hop/Rap",
+          "releaseDate": "2017-04-14T12:00:00Z",
+          "trackCensoredName": "FEAR.",
+          "trackCount": 14,
+          "trackExplicitness": "cleaned",
+          "trackId": 1440882176,
+          "trackName": "FEAR.",
+          "trackNumber": 12,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 460573,
+          "trackViewUrl": "https://music.apple.com/us/album/fear/1440881722?i=1440882176&uo=4",
+          "wrapperType": "track"
+        }
+      },
+      {
+        "id": "1440882179",
+        "title": "GOD.",
+        "position": 13,
+        "disc_number": 1,
+        "track_number": "13",
+        "duration_ms": 248827,
+        "artists": [
+          {
+            "id": "368183298",
+            "name": "Kendrick Lamar"
+          }
+        ],
+        "provider_data": {
+          "artistId": 368183298,
+          "artistName": "Kendrick Lamar",
+          "artistViewUrl": "https://music.apple.com/us/artist/kendrick-lamar/368183298?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/ab/16/ef/ab16efe9-e7f1-66ec-021c-5592a23f0f9e/17UMGIM88793.rgb.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/ab/16/ef/ab16efe9-e7f1-66ec-021c-5592a23f0f9e/17UMGIM88793.rgb.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/ab/16/ef/ab16efe9-e7f1-66ec-021c-5592a23f0f9e/17UMGIM88793.rgb.jpg/60x60bb.jpg",
+          "collectionCensoredName": "DAMN.",
+          "collectionExplicitness": "cleaned",
+          "collectionId": 1440881722,
+          "collectionName": "DAMN.",
+          "collectionPrice": 10.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/god/1440881722?i=1440882179&uo=4",
+          "contentAdvisoryRating": "Clean",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 1,
+          "discNumber": 1,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/4a/4f/0e/4a4f0e8a-ade9-2241-5da2-851f378ef8d4/mzaf_17393957642115099531.plus.aac.p.m4a",
+          "primaryGenreName": "Hip-Hop/Rap",
+          "releaseDate": "2017-04-14T12:00:00Z",
+          "trackCensoredName": "GOD.",
+          "trackCount": 14,
+          "trackExplicitness": "cleaned",
+          "trackId": 1440882179,
+          "trackName": "GOD.",
+          "trackNumber": 13,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 248827,
+          "trackViewUrl": "https://music.apple.com/us/album/god/1440881722?i=1440882179&uo=4",
+          "wrapperType": "track"
+        }
+      },
+      {
+        "id": "1440882184",
+        "title": "DUCKWORTH.",
+        "position": 14,
+        "disc_number": 1,
+        "track_number": "14",
+        "duration_ms": 248613,
+        "artists": [
+          {
+            "id": "368183298",
+            "name": "Kendrick Lamar"
+          }
+        ],
+        "provider_data": {
+          "artistId": 368183298,
+          "artistName": "Kendrick Lamar",
+          "artistViewUrl": "https://music.apple.com/us/artist/kendrick-lamar/368183298?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/ab/16/ef/ab16efe9-e7f1-66ec-021c-5592a23f0f9e/17UMGIM88793.rgb.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/ab/16/ef/ab16efe9-e7f1-66ec-021c-5592a23f0f9e/17UMGIM88793.rgb.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/ab/16/ef/ab16efe9-e7f1-66ec-021c-5592a23f0f9e/17UMGIM88793.rgb.jpg/60x60bb.jpg",
+          "collectionCensoredName": "DAMN.",
+          "collectionExplicitness": "cleaned",
+          "collectionId": 1440881722,
+          "collectionName": "DAMN.",
+          "collectionPrice": 10.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/duckworth/1440881722?i=1440882184&uo=4",
+          "contentAdvisoryRating": "Clean",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 1,
+          "discNumber": 1,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/95/6c/58/956c5816-ed0e-6042-89c5-195cdb943105/mzaf_5999594718415838985.plus.aac.p.m4a",
+          "primaryGenreName": "Hip-Hop/Rap",
+          "releaseDate": "2017-04-14T12:00:00Z",
+          "trackCensoredName": "DUCKWORTH.",
+          "trackCount": 14,
+          "trackExplicitness": "cleaned",
+          "trackId": 1440882184,
+          "trackName": "DUCKWORTH.",
+          "trackNumber": 14,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 248613,
+          "trackViewUrl": "https://music.apple.com/us/album/duckworth/1440881722?i=1440882184&uo=4",
+          "wrapperType": "track"
+        }
+      }
+    ],
+    "track_list": {
+      "returned": 14,
+      "total": 15,
+      "complete": false,
+      "reason": "incomplete_response"
+    },
+    "provider_data": {
+      "amgArtistId": 2412704,
+      "artistId": 368183298,
+      "artistName": "Kendrick Lamar",
+      "artistViewUrl": "https://music.apple.com/us/artist/kendrick-lamar/368183298?uo=4",
+      "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/ab/16/ef/ab16efe9-e7f1-66ec-021c-5592a23f0f9e/17UMGIM88793.rgb.jpg/100x100bb.jpg",
+      "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/ab/16/ef/ab16efe9-e7f1-66ec-021c-5592a23f0f9e/17UMGIM88793.rgb.jpg/60x60bb.jpg",
+      "collectionCensoredName": "DAMN.",
+      "collectionExplicitness": "cleaned",
+      "collectionId": 1440881722,
+      "collectionName": "DAMN.",
+      "collectionPrice": 10.99,
+      "collectionType": "Album",
+      "collectionViewUrl": "https://music.apple.com/us/album/damn/1440881722?uo=4",
+      "contentAdvisoryRating": "Clean",
+      "copyright": "℗ 2017 Aftermath/Interscope (Top Dawg Entertainment)",
+      "country": "USA",
+      "currency": "USD",
+      "primaryGenreName": "Hip-Hop/Rap",
+      "releaseDate": "2017-04-14T07:00:00Z",
+      "trackCount": 15,
+      "wrapperType": "collection"
+    },
+    "observed_at": "2026-10-19T12:34:23.484288526Z"
+  },
+  "source": {
+    "status": "partial",
+    "cached": false
+  }
+}

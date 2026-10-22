@@ -1,0 +1,522 @@
+{
+  "environment": "Remote Linux runtime; public-only Apple provider, isolated disk cache; no operator credentials",
+  "base_commit": "7504321b85e5c1009319701d49f67a6f4e4ad2ad",
+  "cases": [
+    {
+      "case": "capabilities",
+      "status": 200,
+      "milliseconds": 1.22,
+      "capabilities": {
+        "api": {
+          "allow_debug": true,
+          "allow_overrides": true,
+          "default_operation": "resolve",
+          "endpoints": {
+            "artists": {
+              "method": "GET",
+              "path": "/v1/artists",
+              "enabled": true,
+              "runtime_available": true
+            },
+            "bulk": {
+              "method": "POST",
+              "path": "/v1/bulk",
+              "enabled": true,
+              "runtime_available": true
+            },
+            "capabilities": {
+              "method": "GET",
+              "path": "/v1/capabilities",
+              "enabled": true,
+              "runtime_available": true
+            },
+            "catalog": {
+              "method": "GET",
+              "path": "/v1/catalog",
+              "enabled": true,
+              "runtime_available": false
+            },
+            "extract": {
+              "method": "GET",
+              "path": "/v1/extract",
+              "enabled": true,
+              "runtime_available": true
+            },
+            "fingerprint": {
+              "method": "POST",
+              "path": "/v1/fingerprint",
+              "enabled": true,
+              "runtime_available": false
+            },
+            "health": {
+              "method": "GET",
+              "path": "/v1/health",
+              "enabled": true,
+              "runtime_available": true
+            },
+            "links": {
+              "method": "GET",
+              "path": "/v1/links",
+              "enabled": true,
+              "runtime_available": true
+            },
+            "providers": {
+              "method": "GET",
+              "path": "/v1/providers",
+              "enabled": true,
+              "runtime_available": true
+            },
+            "query": {
+              "method": "POST",
+              "path": "/v1/query",
+              "enabled": true,
+              "runtime_available": true
+            },
+            "resolve": {
+              "method": "GET",
+              "path": "/v1/resolve",
+              "enabled": true,
+              "runtime_available": true
+            },
+            "search": {
+              "method": "GET",
+              "path": "/v1/search",
+              "enabled": true,
+              "runtime_available": true
+            }
+          }
+        },
+        "capabilities_version": 1,
+        "limits": {
+          "artist_max_limit": 50,
+          "bulk_max_items": 5,
+          "bulk_workers": 2,
+          "catalog_max_limit": 100,
+          "request_timeout_ms": 12000,
+          "search_max_limit": 50
+        },
+        "providers": [
+          {
+            "name": "amazonmusic",
+            "enabled": false,
+            "track_adapter_registered": false,
+            "track_runtime_available": false,
+            "track_id_field": "amazonmusic_id",
+            "track_url_input": false,
+            "operations": []
+          },
+          {
+            "name": "applemusic",
+            "version": "applemusic-v1",
+            "enabled": true,
+            "track_adapter_registered": true,
+            "track_runtime_available": true,
+            "track_id_field": "apple_id",
+            "track_url_input": true,
+            "operations": [
+              "artists",
+              "bulk",
+              "extract",
+              "links",
+              "resolve",
+              "search"
+            ]
+          },
+          {
+            "name": "bugs",
+            "enabled": false,
+            "track_adapter_registered": false,
+            "track_runtime_available": false,
+            "track_id_field": "bugs_id",
+            "track_url_input": false,
+            "operations": []
+          },
+          {
+            "name": "deezer",
+            "enabled": false,
+            "track_adapter_registered": false,
+            "track_runtime_available": false,
+            "track_id_field": "deezer_id",
+            "track_url_input": true,
+            "operations": []
+          },
+          {
+            "name": "genie",
+            "enabled": false,
+            "track_adapter_registered": false,
+            "track_runtime_available": false,
+            "track_id_field": "genie_id",
+            "track_url_input": false,
+            "operations": []
+          },
+          {
+            "name": "jiosaavn",
+            "enabled": false,
+            "track_adapter_registered": false,
+            "track_runtime_available": false,
+            "track_id_field": "jiosaavn_id",
+            "track_url_input": true,
+            "operations": []
+          },
+          {
+            "name": "melon",
+            "enabled": false,
+            "track_adapter_registered": false,
+            "track_runtime_available": false,
+            "track_id_field": "melon_id",
+            "track_url_input": false,
+            "operations": []
+          },
+          {
+            "name": "musicbrainz",
+            "enabled": false,
+            "track_adapter_registered": false,
+            "track_runtime_available": false,
+            "track_id_field": "musicbrainz_id",
+            "track_url_input": true,
+            "operations": []
+          },
+          {
+            "name": "pandora",
+            "enabled": false,
+            "track_adapter_registered": false,
+            "track_runtime_available": false,
+            "track_id_field": "pandora_id",
+            "track_url_input": false,
+            "operations": []
+          },
+          {
+            "name": "qobuz",
+            "enabled": false,
+            "track_adapter_registered": false,
+            "track_runtime_available": false,
+            "track_id_field": "qobuz_id",
+            "track_url_input": true,
+            "operations": []
+          },
+          {
+            "name": "soundcloud",
+            "enabled": false,
+            "track_adapter_registered": false,
+            "track_runtime_available": false,
+            "track_id_field": "soundcloud_id",
+            "track_url_input": true,
+            "operations": []
+          },
+          {
+            "name": "spotify",
+            "enabled": false,
+            "track_adapter_registered": false,
+            "track_runtime_available": false,
+            "track_id_field": "spotify_id",
+            "track_url_input": true,
+            "operations": []
+          },
+          {
+            "name": "tidal",
+            "enabled": false,
+            "track_adapter_registered": false,
+            "track_runtime_available": false,
+            "track_id_field": "tidal_id",
+            "track_url_input": true,
+            "operations": []
+          },
+          {
+            "name": "ytmusic",
+            "enabled": false,
+            "track_adapter_registered": false,
+            "track_runtime_available": false,
+            "track_id_field": "youtube_id",
+            "track_url_input": true,
+            "operations": []
+          }
+        ]
+      }
+    },
+    {
+      "case": "share_url_cold",
+      "status": 200,
+      "milliseconds": 6754.09,
+      "title": "Boyfriend",
+      "ids": {
+        "applemusic": "1829591986",
+        "applemusic_url": "https://music.apple.com/us/album/boyfriend/1829591921?i=1829591986"
+      },
+      "duration_ms": 160796,
+      "sources": [
+        {
+          "name": "applemusic",
+          "success": true,
+          "cached": false
+        }
+      ]
+    },
+    {
+      "case": "share_url_gateway_warm",
+      "status": 200,
+      "milliseconds": 1.19,
+      "title": "Boyfriend",
+      "ids": {
+        "applemusic": "1829591986",
+        "applemusic_url": "https://music.apple.com/us/album/boyfriend/1829591921?i=1829591986"
+      },
+      "duration_ms": 160796,
+      "sources": [
+        {
+          "name": "applemusic",
+          "success": true,
+          "cached": true
+        }
+      ]
+    },
+    {
+      "case": "share_url_links",
+      "status": 200,
+      "milliseconds": 0.98
+    },
+    {
+      "case": "foreign_url_rejected",
+      "status": 400,
+      "milliseconds": 0.6,
+      "error": "invalid music input: unsupported track link; use a direct song or recording URL"
+    },
+    {
+      "case": "bulk_url_isolation",
+      "status": 200,
+      "milliseconds": 1.85,
+      "successful": 1,
+      "failed": 1
+    },
+    {
+      "case": "capabilities_gateway",
+      "status": 200,
+      "milliseconds": 0.59,
+      "capabilities": {
+        "api": {
+          "allow_debug": true,
+          "allow_overrides": true,
+          "default_operation": "resolve",
+          "endpoints": {
+            "artists": {
+              "method": "GET",
+              "path": "/v1/artists",
+              "enabled": true,
+              "runtime_available": true
+            },
+            "bulk": {
+              "method": "POST",
+              "path": "/v1/bulk",
+              "enabled": true,
+              "runtime_available": true
+            },
+            "capabilities": {
+              "method": "GET",
+              "path": "/v1/capabilities",
+              "enabled": true,
+              "runtime_available": true
+            },
+            "catalog": {
+              "method": "GET",
+              "path": "/v1/catalog",
+              "enabled": true,
+              "runtime_available": false
+            },
+            "extract": {
+              "method": "GET",
+              "path": "/v1/extract",
+              "enabled": true,
+              "runtime_available": true
+            },
+            "fingerprint": {
+              "method": "POST",
+              "path": "/v1/fingerprint",
+              "enabled": true,
+              "runtime_available": false
+            },
+            "health": {
+              "method": "GET",
+              "path": "/v1/health",
+              "enabled": true,
+              "runtime_available": true
+            },
+            "links": {
+              "method": "GET",
+              "path": "/v1/links",
+              "enabled": true,
+              "runtime_available": true
+            },
+            "providers": {
+              "method": "GET",
+              "path": "/v1/providers",
+              "enabled": true,
+              "runtime_available": true
+            },
+            "query": {
+              "method": "POST",
+              "path": "/v1/query",
+              "enabled": true,
+              "runtime_available": true
+            },
+            "resolve": {
+              "method": "GET",
+              "path": "/v1/resolve",
+              "enabled": true,
+              "runtime_available": true
+            },
+            "search": {
+              "method": "GET",
+              "path": "/v1/search",
+              "enabled": true,
+              "runtime_available": true
+            }
+          }
+        },
+        "capabilities_version": 1,
+        "limits": {
+          "artist_max_limit": 50,
+          "bulk_max_items": 5,
+          "bulk_workers": 2,
+          "catalog_max_limit": 100,
+          "request_timeout_ms": 12000,
+          "search_max_limit": 50
+        },
+        "providers": [
+          {
+            "name": "amazonmusic",
+            "enabled": false,
+            "track_adapter_registered": false,
+            "track_runtime_available": false,
+            "track_id_field": "amazonmusic_id",
+            "track_url_input": false,
+            "operations": []
+          },
+          {
+            "name": "applemusic",
+            "version": "applemusic-v1",
+            "enabled": true,
+            "track_adapter_registered": true,
+            "track_runtime_available": true,
+            "track_id_field": "apple_id",
+            "track_url_input": true,
+            "operations": [
+              "artists",
+              "bulk",
+              "extract",
+              "links",
+              "resolve",
+              "search"
+            ]
+          },
+          {
+            "name": "bugs",
+            "enabled": false,
+            "track_adapter_registered": false,
+            "track_runtime_available": false,
+            "track_id_field": "bugs_id",
+            "track_url_input": false,
+            "operations": []
+          },
+          {
+            "name": "deezer",
+            "enabled": false,
+            "track_adapter_registered": false,
+            "track_runtime_available": false,
+            "track_id_field": "deezer_id",
+            "track_url_input": true,
+            "operations": []
+          },
+          {
+            "name": "genie",
+            "enabled": false,
+            "track_adapter_registered": false,
+            "track_runtime_available": false,
+            "track_id_field": "genie_id",
+            "track_url_input": false,
+            "operations": []
+          },
+          {
+            "name": "jiosaavn",
+            "enabled": false,
+            "track_adapter_registered": false,
+            "track_runtime_available": false,
+            "track_id_field": "jiosaavn_id",
+            "track_url_input": true,
+            "operations": []
+          },
+          {
+            "name": "melon",
+            "enabled": false,
+            "track_adapter_registered": false,
+            "track_runtime_available": false,
+            "track_id_field": "melon_id",
+            "track_url_input": false,
+            "operations": []
+          },
+          {
+            "name": "musicbrainz",
+            "enabled": false,
+            "track_adapter_registered": false,
+            "track_runtime_available": false,
+            "track_id_field": "musicbrainz_id",
+            "track_url_input": true,
+            "operations": []
+          },
+          {
+            "name": "pandora",
+            "enabled": false,
+            "track_adapter_registered": false,
+            "track_runtime_available": false,
+            "track_id_field": "pandora_id",
+            "track_url_input": false,
+            "operations": []
+          },
+          {
+            "name": "qobuz",
+            "enabled": false,
+            "track_adapter_registered": false,
+            "track_runtime_available": false,
+            "track_id_field": "qobuz_id",
+            "track_url_input": true,
+            "operations": []
+          },
+          {
+            "name": "soundcloud",
+            "enabled": false,
+            "track_adapter_registered": false,
+            "track_runtime_available": false,
+            "track_id_field": "soundcloud_id",
+            "track_url_input": true,
+            "operations": []
+          },
+          {
+            "name": "spotify",
+            "enabled": false,
+            "track_adapter_registered": false,
+            "track_runtime_available": false,
+            "track_id_field": "spotify_id",
+            "track_url_input": true,
+            "operations": []
+          },
+          {
+            "name": "tidal",
+            "enabled": false,
+            "track_adapter_registered": false,
+            "track_runtime_available": false,
+            "track_id_field": "tidal_id",
+            "track_url_input": true,
+            "operations": []
+          },
+          {
+            "name": "ytmusic",
+            "enabled": false,
+            "track_adapter_registered": false,
+            "track_runtime_available": false,
+            "track_id_field": "youtube_id",
+            "track_url_input": true,
+            "operations": []
+          }
+        ]
+      }
+    }
+  ]
+}

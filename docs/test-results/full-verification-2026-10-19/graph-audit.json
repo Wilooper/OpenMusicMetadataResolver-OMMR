@@ -1,0 +1,162 @@
+{
+  "cases": [
+    {
+      "case": "01-public.json",
+      "checks": {
+        "has_graph": true,
+        "root_exists": true,
+        "no_dangling_edges": true,
+        "bounded": true,
+        "no_root_diagnostics": true
+      },
+      "passed": true,
+      "graph_nodes": 18,
+      "graph_edges": 17
+    },
+    {
+      "case": "02-public.json",
+      "checks": {
+        "has_graph": true,
+        "root_exists": true,
+        "no_dangling_edges": true,
+        "bounded": true,
+        "no_root_diagnostics": true
+      },
+      "passed": true,
+      "graph_nodes": 12,
+      "graph_edges": 11
+    },
+    {
+      "case": "03-public.json",
+      "checks": {
+        "has_graph": true,
+        "root_exists": true,
+        "no_dangling_edges": true,
+        "bounded": true,
+        "no_root_diagnostics": true
+      },
+      "passed": true,
+      "graph_nodes": 7,
+      "graph_edges": 6
+    },
+    {
+      "case": "04-public.json",
+      "checks": {
+        "has_graph": true,
+        "root_exists": true,
+        "no_dangling_edges": true,
+        "bounded": true,
+        "no_root_diagnostics": true
+      },
+      "passed": true,
+      "graph_nodes": 16,
+      "graph_edges": 15
+    },
+    {
+      "case": "05-public.json",
+      "checks": {
+        "has_graph": true,
+        "root_exists": true,
+        "no_dangling_edges": true,
+        "bounded": true,
+        "no_root_diagnostics": true
+      },
+      "passed": true,
+      "graph_nodes": 16,
+      "graph_edges": 15
+    },
+    {
+      "case": "06-public.json",
+      "checks": {
+        "has_graph": true,
+        "root_exists": true,
+        "no_dangling_edges": true,
+        "bounded": true,
+        "no_root_diagnostics": true
+      },
+      "passed": true,
+      "graph_nodes": 7,
+      "graph_edges": 6
+    },
+    {
+      "case": "07-public.json",
+      "checks": {
+        "has_graph": true,
+        "root_exists": true,
+        "no_dangling_edges": true,
+        "bounded": true,
+        "no_root_diagnostics": true
+      },
+      "passed": true,
+      "graph_nodes": 16,
+      "graph_edges": 15
+    },
+    {
+      "case": "08-public.json",
+      "checks": {
+        "has_graph": true,
+        "root_exists": true,
+        "no_dangling_edges": true,
+        "bounded": true,
+        "no_root_diagnostics": true
+      },
+      "passed": true,
+      "graph_nodes": 16,
+      "graph_edges": 15
+    },
+    {
+      "case": "09-public.json",
+      "checks": {
+        "has_graph": true,
+        "root_exists": true,
+        "no_dangling_edges": true,
+        "bounded": true,
+        "no_root_diagnostics": true
+      },
+      "passed": true,
+      "graph_nodes": 16,
+      "graph_edges": 15
+    },
+    {
+      "case": "10-public.json",
+      "checks": {
+        "has_graph": true,
+        "root_exists": true,
+        "no_dangling_edges": true,
+        "bounded": true,
+        "no_root_diagnostics": true
+      },
+      "passed": true,
+      "graph_nodes": 16,
+      "graph_edges": 15
+    },
+    {
+      "case": "11-public.json",
+      "checks": {
+        "has_graph": true,
+        "root_exists": true,
+        "no_dangling_edges": true,
+        "bounded": true,
+        "no_root_diagnostics": true
+      },
+      "passed": true,
+      "graph_nodes": 16,
+      "graph_edges": 15
+    },
+    {
+      "case": "12-public.json",
+      "checks": {
+        "has_graph": true,
+        "root_exists": true,
+        "no_dangling_edges": true,
+        "bounded": true,
+        "no_root_diagnostics": true
+      },
+      "passed": true,
+      "graph_nodes": 16,
+      "graph_edges": 15
+    }
+  ],
+  "passed": 12,
+  "failed": []
+}

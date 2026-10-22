@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"net/url"
+	"time"
 
 	"github.com/ommr/ommr/internal/adapters"
 	"github.com/ommr/ommr/internal/enrichment/catalog"
@@ -91,6 +92,12 @@ type enrichment struct {
 
 func WrapEnricher(source catalog.Enricher, m *Manager) catalog.Enricher {
 	return &enrichment{source, m}
+}
+func (e *enrichment) Timeout() time.Duration {
+	if source, ok := e.Enricher.(catalog.TimedEnricher); ok {
+		return source.Timeout()
+	}
+	return 5 * time.Second
 }
 func (e *enrichment) Enrich(ctx context.Context, track canonical.Track) (*catalog.Result, error) {
 	lease, err := e.manager.Begin(e.Name())

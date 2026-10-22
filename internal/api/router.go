@@ -14,6 +14,8 @@ func NewRouter(h *Handler, logger *slog.Logger, rps float64) http.Handler {
 	mux := http.NewServeMux()
 
 	// REST API Endpoints
+	mux.HandleFunc("/v1/capabilities", h.withDefaults("capabilities", h.HandleCapabilities))
+	mux.HandleFunc("/v1/albums", h.withDefaults("albums", h.HandleAlbums))
 	mux.HandleFunc("/v1/artists", h.withDefaults("artists", h.HandleArtists))
 	mux.HandleFunc("/v1/catalog", h.withDefaults("catalog", h.HandleCatalog))
 	mux.HandleFunc("/v1/resolve", h.withDefaults("resolve", h.HandleResolve))
@@ -38,6 +40,7 @@ func NewRouter(h *Handler, logger *slog.Logger, rps float64) http.Handler {
 	handler = middleware.RateLimiter(apiLimiter)(handler)
 	handler = middleware.Logger(logger)(handler)
 	handler = middleware.Recovery(logger)(handler)
+	handler = middleware.Compression(handler)
 	handler = middleware.RequestID(handler)
 
 	return handler

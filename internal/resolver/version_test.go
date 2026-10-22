@@ -42,3 +42,28 @@ func TestUnrequestedRemixCannotLeakRecordingID(t *testing.T) {
 		t.Fatalf("unrequested version accepted: %+v", result.Track)
 	}
 }
+
+func TestUnrequestedReimaginedCannotLeakRecordingID(t *testing.T) {
+	// Captured public metadata: original Genie 81785038 is 316s; Apple's
+	// 1750709920 and YouTube X0uOx8nj67M identify a ~380s Reimagined version.
+	for _, title := range []string{"Experience (Reimagined)", "Experience - Re-imagined"} {
+		candidate := canonical.TrackCandidate{Provider: "deezer", Track: canonical.Track{Title: title, Artists: []canonical.Artist{{Name: "Ludovico Einaudi"}}, DurationMS: 380082, IDs: map[string]string{"deezer": "reimagined"}}}
+		fixture := &detailFixture{original: candidate, rich: candidate}
+		registry := adapters.NewRegistry()
+		registry.Register(fixture)
+		resolver := New(registry, nil, ratelimit.NewProviderLimiter(), time.Hour)
+		result, err := resolver.Resolve(context.Background(), ResolveRequest{Query: adapters.Query{Title: "Experience", Artist: "Ludovico Einaudi"}})
+		if err != nil {
+			t.Fatal(err)
+		}
+		if result.Track != nil || fixture.calls != 0 {
+			t.Fatal("unrequested reimagined recording accepted")
+		}
+	}
+	if !compatibleVersion("Experience (Reimagined)", "Experience (Reimagined)") {
+		t.Fatal("explicitly requested version rejected")
+	}
+	if compatibleVersion("Experience (Reimagined)", "Experience") {
+		t.Fatal("original accepted for requested reimagined version")
+	}
+}

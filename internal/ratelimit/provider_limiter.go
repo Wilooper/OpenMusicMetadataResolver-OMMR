@@ -33,6 +33,7 @@ func NewProviderLimiter() *ProviderLimiter {
 	pl.SetLimit("applemusic", 1.0/3.0, 1)
 	pl.SetLimit("applemusic_catalog", 5, 1)
 	pl.SetLimit("coverartarchive", 3, 1)
+	pl.SetLimit("sponsorblock", 2, 1)
 	pl.SetLimit("lastfm", 3, 1)
 	pl.SetLimit("discogs", 1, 1)
 	pl.SetLimit("acoustid", 3, 1)

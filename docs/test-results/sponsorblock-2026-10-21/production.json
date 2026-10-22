@@ -1,0 +1,288 @@
+{
+  "track": {
+    "video_annotations": {
+      "sponsorblock": {
+        "source": "SponsorBlock",
+        "source_url": "https://sponsor.ajay.app",
+        "license": "CC-BY-NC-SA-4.0",
+        "license_url": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+        "attribution": "Uses SponsorBlock data from https://sponsor.ajay.app",
+        "service": "YouTube",
+        "video_id": "kJQP7kiw5Fk",
+        "video_duration_ms": 282000,
+        "points_of_interest": [
+          {
+            "id": "bcf6e75825bca74f69df17bda9e5b7509a4a6957c367080a672d26ccc20aded46",
+            "time_ms": 21808,
+            "category": "poi_highlight",
+            "action_type": "poi",
+            "votes": 9,
+            "locked": 1,
+            "submission_video_duration_ms": 281521,
+            "duration_checked": true
+          }
+        ]
+      }
+    },
+    "credit_details": {
+      "contributors": [
+        {
+          "id": "ytmusic:local_artist:452156edfbb41e056bc48841",
+          "name": "LuisFonsi",
+          "provider": "ytmusic",
+          "local": true
+        }
+      ],
+      "credits": [
+        {
+          "from": "ytmusic:local_artist:452156edfbb41e056bc48841",
+          "to": "ytmusic:recording:kJQP7kiw5Fk",
+          "type": "credit",
+          "source": "ytmusic",
+          "role": "primary_artist",
+          "source_role": "main",
+          "credited_as": "LuisFonsi"
+        }
+      ]
+    },
+    "canonical_id": "ommr_track_94de94a788033c35",
+    "identity_status": "strong",
+    "title": "Luis Fonsi - Despacito ft. Daddy Yankee",
+    "artists": [
+      {
+        "name": "LuisFonsi",
+        "role": "main"
+      }
+    ],
+    "album": {
+      "title": ""
+    },
+    "duration_ms": 282000,
+    "release_date": "",
+    "music_graph": {
+      "version": 1,
+      "root": "ommr:recording:ommr_track_94de94a788033c35",
+      "nodes": [
+        {
+          "id": "ommr:recording:ommr_track_94de94a788033c35",
+          "type": "recording",
+          "provider": "ommr",
+          "native_id": "ommr_track_94de94a788033c35",
+          "name": "Luis Fonsi - Despacito ft. Daddy Yankee"
+        },
+        {
+          "id": "ytmusic:local_artist:452156edfbb41e056bc48841",
+          "type": "artist",
+          "provider": "ytmusic",
+          "name": "LuisFonsi",
+          "local": true
+        },
+        {
+          "id": "ytmusic:recording:kJQP7kiw5Fk",
+          "type": "recording",
+          "provider": "ytmusic",
+          "native_id": "kJQP7kiw5Fk",
+          "name": "Luis Fonsi - Despacito ft. Daddy Yankee"
+        }
+      ],
+      "edges": [
+        {
+          "from": "ommr:recording:ommr_track_94de94a788033c35",
+          "to": "ytmusic:recording:kJQP7kiw5Fk",
+          "type": "matched_catalog_entity",
+          "source": "ytmusic"
+        },
+        {
+          "from": "ytmusic:local_artist:452156edfbb41e056bc48841",
+          "to": "ytmusic:recording:kJQP7kiw5Fk",
+          "type": "credit",
+          "source": "ytmusic",
+          "role": "primary_artist",
+          "source_role": "main",
+          "credited_as": "LuisFonsi"
+        }
+      ],
+      "truncated": false
+    },
+    "provider_data": {
+      "ytmusic": {
+        "catalog": {
+          "author": "LuisFonsiVEVO",
+          "channelId": "UCLp8RBhQHu9wSsq62j_Md6A",
+          "keywords": [
+            "Luis",
+            "Fonsi",
+            "Despacito",
+            "UMLE",
+            "Latino",
+            "Latin",
+            "Pop",
+            "Luis Fonsi",
+            "Daddy Yankee",
+            "Music Video",
+            "Oficial",
+            "Official Music Video",
+            "#Despacito",
+            "Zuleyka Rivera",
+            "Super model",
+            "Miss Universe",
+            "Puerto Rico",
+            "한글자막",
+            "日本語字幕",
+            "subtítulos en español",
+            "Türkçe Altyazılı",
+            "Phụ đề tiếng Việt",
+            "Subtitles in Tagalog",
+            "Teks dalam Bahasa Indonesia",
+            "उपशीर्षक हिंदी में",
+            "Sarikata Dalam Bahasa Malaysia",
+            "คำบรรยายภาษาไทย",
+            "ルイス・フォンシ",
+            "루이스 폰시",
+            "路易斯方辛",
+            "路易斯冯西"
+          ],
+          "lengthSeconds": "282",
+          "shortDescription": "“Despacito” disponible ya en todas las plataformas digitales: https://UMLE.lnk.to/DOoUzFp \n“Imposible” disponible ya en todas las plataformas digitales: https://UMLE.lnk.to/IMPOSIBLEFp\n“Calypso” disponible ya en todas las plataformas digitales: https://UMLE.lnk.to/CLYPSFp\nEchame La Culpa disponible ya en todas las plataformas digitales: https://UMLE.lnk.to/ELCFp\n\n\nBest of Luis Fonsi / Lo mejor Luis Fonsi: https://goo.gl/KLWPSa \nSubscribe here: https://goo.gl/nkhcGc\nSigue a Luis Fonsi: \nOfficial Site: http://www.luisfonsi.com/ \nFacebook: https://www.facebook.com/luisfonsi/ \nTwitter: https://twitter.com/LuisFonsi \nInstagram: https://www.instagram.com/luisfonsi\n\n#LuisFonsi #Despacito #Imposible #Calypso #EchamelaCulpa #NadaEsImposible #NothingisImpossible #LF\n\n\nMusic video by Luis Fonsi performing Despacito. (C) 2017 Universal Music Latino",
+          "thumbnail": {
+            "thumbnails": [
+              {
+                "height": 94,
+                "url": "https://i.ytimg.com/vi/kJQP7kiw5Fk/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLCuffhiAPaneh-5dnyfyvY_mDwxhQ",
+                "width": 168
+              },
+              {
+                "height": 110,
+                "url": "https://i.ytimg.com/vi/kJQP7kiw5Fk/hqdefault.jpg?sqp=-oaymwEbCMQBEG5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLCSClHfmcg5flSGH5szQ5_q0bjhhw",
+                "width": 196
+              },
+              {
+                "height": 138,
+                "url": "https://i.ytimg.com/vi/kJQP7kiw5Fk/hqdefault.jpg?sqp=-oaymwEcCPYBEIoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLC7mQvF1DbgLkymd5TjUQjWLbaJ3A",
+                "width": 246
+              },
+              {
+                "height": 188,
+                "url": "https://i.ytimg.com/vi/kJQP7kiw5Fk/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLChhqt6BsXSQcF3FCSelM_95HnXgg",
+                "width": 336
+              },
+              {
+                "height": 1080,
+                "url": "https://i.ytimg.com/vi_webp/kJQP7kiw5Fk/maxresdefault.webp",
+                "width": 1920
+              }
+            ]
+          },
+          "title": "Luis Fonsi - Despacito ft. Daddy Yankee",
+          "videoId": "kJQP7kiw5Fk"
+        },
+        "metadata": {
+          "album": {
+            "title": ""
+          },
+          "artists": [
+            {
+              "name": "LuisFonsi",
+              "role": "main"
+            }
+          ],
+          "credits": null,
+          "duration_ms": 282000,
+          "explicit": false,
+          "genres": null,
+          "ids": {
+            "ytmusic": "kJQP7kiw5Fk"
+          },
+          "images": [
+            {
+              "height": 94,
+              "type": "thumbnail",
+              "url": "https://i.ytimg.com/vi/kJQP7kiw5Fk/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLCuffhiAPaneh-5dnyfyvY_mDwxhQ",
+              "width": 168
+            },
+            {
+              "height": 110,
+              "type": "thumbnail",
+              "url": "https://i.ytimg.com/vi/kJQP7kiw5Fk/hqdefault.jpg?sqp=-oaymwEbCMQBEG5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLCSClHfmcg5flSGH5szQ5_q0bjhhw",
+              "width": 196
+            },
+            {
+              "height": 138,
+              "type": "thumbnail",
+              "url": "https://i.ytimg.com/vi/kJQP7kiw5Fk/hqdefault.jpg?sqp=-oaymwEcCPYBEIoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLC7mQvF1DbgLkymd5TjUQjWLbaJ3A",
+              "width": 246
+            },
+            {
+              "height": 188,
+              "type": "thumbnail",
+              "url": "https://i.ytimg.com/vi/kJQP7kiw5Fk/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLChhqt6BsXSQcF3FCSelM_95HnXgg",
+              "width": 336
+            },
+            {
+              "height": 1080,
+              "type": "thumbnail",
+              "url": "https://i.ytimg.com/vi_webp/kJQP7kiw5Fk/maxresdefault.webp",
+              "width": 1920
+            }
+          ],
+          "release_date": "",
+          "title": "Luis Fonsi - Despacito ft. Daddy Yankee"
+        }
+      }
+    },
+    "explicit_status": "unknown",
+    "explicit": false,
+    "images": [
+      {
+        "url": "https://i.ytimg.com/vi/kJQP7kiw5Fk/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLCuffhiAPaneh-5dnyfyvY_mDwxhQ",
+        "width": 168,
+        "height": 94,
+        "type": "thumbnail"
+      },
+      {
+        "url": "https://i.ytimg.com/vi/kJQP7kiw5Fk/hqdefault.jpg?sqp=-oaymwEbCMQBEG5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLCSClHfmcg5flSGH5szQ5_q0bjhhw",
+        "width": 196,
+        "height": 110,
+        "type": "thumbnail"
+      },
+      {
+        "url": "https://i.ytimg.com/vi/kJQP7kiw5Fk/hqdefault.jpg?sqp=-oaymwEcCPYBEIoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLC7mQvF1DbgLkymd5TjUQjWLbaJ3A",
+        "width": 246,
+        "height": 138,
+        "type": "thumbnail"
+      },
+      {
+        "url": "https://i.ytimg.com/vi/kJQP7kiw5Fk/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLChhqt6BsXSQcF3FCSelM_95HnXgg",
+        "width": 336,
+        "height": 188,
+        "type": "thumbnail"
+      },
+      {
+        "url": "https://i.ytimg.com/vi_webp/kJQP7kiw5Fk/maxresdefault.webp",
+        "width": 1920,
+        "height": 1080,
+        "type": "thumbnail"
+      }
+    ],
+    "ids": {
+      "ytmusic": "kJQP7kiw5Fk"
+    },
+    "extensions": {
+      "platform_links": {
+        "ommr_id": "ommr_track_94de94a788033c35",
+        "platforms": {
+          "youtube": {
+            "id": "kJQP7kiw5Fk",
+            "id_type": "video_id",
+            "url": "https://www.youtube.com/watch?v=kJQP7kiw5Fk"
+          },
+          "ytmusic": {
+            "id": "kJQP7kiw5Fk",
+            "id_type": "video_id",
+            "url": "https://music.youtube.com/watch?v=kJQP7kiw5Fk"
+          }
+        }
+      }
+    }
+  }
+}

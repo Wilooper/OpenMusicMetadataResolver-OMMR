@@ -1,0 +1,28 @@
+[
+  {
+    "check": "build",
+    "exit_code": 0,
+    "seconds": 2.173
+  },
+  {
+    "check": "vet",
+    "exit_code": 0,
+    "seconds": 0.472
+  },
+  {
+    "check": "race_coverage",
+    "exit_code": 0,
+    "seconds": 14.271,
+    "top_level_tests_passed": 246,
+    "test_cases_passed": 331,
+    "failed": [],
+    "skipped": [],
+    "build_failed": [],
+    "coverage": "total:\t\t\t\t\t\t\t\t\t(statements)\t\t\t75.0%"
+  },
+  {
+    "check": "python",
+    "exit_code": 0,
+    "seconds": 0.127
+  }
+]

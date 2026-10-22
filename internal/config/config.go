@@ -21,41 +21,42 @@ type ExtractorConfig struct {
 }
 
 type Config struct {
-	Extractor          ExtractorConfig `mapstructure:"extractor"`
-	API                APIConfig       `mapstructure:"api"`
-	Lifecycle          LifecycleConfig `mapstructure:"providers"`
-	SpotifySessionFile string
-	SpotifyCookie      string
-	SpotifyCookieFile  string
-	SpotifyAccessToken string
-	SpotifyTokenExpiry int64
-	AppleSessionFile   string
-	AppleCookie        string
-	AppleCookieFile    string
-	AppleUserToken     string
-	PandoraProbeID     string
-	YTMusicSessionFile string
-	QobuzAppID         string        `mapstructure:"qobuz_app_id"`
-	QobuzToken         string        `mapstructure:"qobuz_token"`
-	QobuzBaseURL       string        `mapstructure:"qobuz_base_url"`
-	TidalToken         string        `mapstructure:"tidal_token"`
-	TidalBaseURL       string        `mapstructure:"tidal_base_url"`
-	PandoraToken       string        `mapstructure:"pandora_token"`
-	PandoraBaseURL     string        `mapstructure:"pandora_base_url"`
-	LastFMKey          string        `mapstructure:"lastfm_api_key"`
-	DiscogsToken       string        `mapstructure:"discogs_token"`
-	AcoustIDKey        string        `mapstructure:"acoustid_api_key"`
-	MetadataPolicy     string        `mapstructure:"metadata_policy"`
-	EnableEnrichment   bool          `mapstructure:"enable_enrichment"`
-	Port               int           `mapstructure:"port"`
-	CacheProvider      string        `mapstructure:"cache_provider"` // "disk" or "redis"
-	CacheDir           string        `mapstructure:"cache_dir"`
-	CacheTTL           time.Duration `mapstructure:"cache_ttl"`
-	RedisURL           string        `mapstructure:"redis_url"`
-	RateLimitRPS       float64       `mapstructure:"rate_limit_rps"`
-	ProviderTimeout    time.Duration `mapstructure:"provider_timeout"`
-	BulkMaxItems       int           `mapstructure:"bulk_max_items"`
-	BulkWorkers        int           `mapstructure:"bulk_workers"`
+	SponsorBlockTimeout time.Duration   `mapstructure:"sponsorblock_timeout"`
+	Extractor           ExtractorConfig `mapstructure:"extractor"`
+	API                 APIConfig       `mapstructure:"api"`
+	Lifecycle           LifecycleConfig `mapstructure:"providers"`
+	SpotifySessionFile  string
+	SpotifyCookie       string
+	SpotifyCookieFile   string
+	SpotifyAccessToken  string
+	SpotifyTokenExpiry  int64
+	AppleSessionFile    string
+	AppleCookie         string
+	AppleCookieFile     string
+	AppleUserToken      string
+	PandoraProbeID      string
+	YTMusicSessionFile  string
+	QobuzAppID          string        `mapstructure:"qobuz_app_id"`
+	QobuzToken          string        `mapstructure:"qobuz_token"`
+	QobuzBaseURL        string        `mapstructure:"qobuz_base_url"`
+	TidalToken          string        `mapstructure:"tidal_token"`
+	TidalBaseURL        string        `mapstructure:"tidal_base_url"`
+	PandoraToken        string        `mapstructure:"pandora_token"`
+	PandoraBaseURL      string        `mapstructure:"pandora_base_url"`
+	LastFMKey           string        `mapstructure:"lastfm_api_key"`
+	DiscogsToken        string        `mapstructure:"discogs_token"`
+	AcoustIDKey         string        `mapstructure:"acoustid_api_key"`
+	MetadataPolicy      string        `mapstructure:"metadata_policy"`
+	EnableEnrichment    bool          `mapstructure:"enable_enrichment"`
+	Port                int           `mapstructure:"port"`
+	CacheProvider       string        `mapstructure:"cache_provider"` // "disk" or "redis"
+	CacheDir            string        `mapstructure:"cache_dir"`
+	CacheTTL            time.Duration `mapstructure:"cache_ttl"`
+	RedisURL            string        `mapstructure:"redis_url"`
+	RateLimitRPS        float64       `mapstructure:"rate_limit_rps"`
+	ProviderTimeout     time.Duration `mapstructure:"provider_timeout"`
+	BulkMaxItems        int           `mapstructure:"bulk_max_items"`
+	BulkWorkers         int           `mapstructure:"bulk_workers"`
 
 	// Spotify for Developers credentials. When both are set the Spotify
 	// adapter uses the official client-credentials OAuth flow; otherwise it
@@ -106,6 +107,7 @@ func LoadConfig() (*Config, error) {
 	v.SetDefault("rate_limit_rps", 50.0)
 	v.SetDefault("provider_timeout", "10s")
 	v.SetDefault("enable_enrichment", true)
+	v.SetDefault("sponsorblock_timeout", "2s")
 	v.SetDefault("bulk_max_items", 100)
 	v.SetDefault("bulk_workers", 10)
 	v.SetDefault("apple_storefront", "us")
@@ -132,6 +134,10 @@ func LoadConfig() (*Config, error) {
 	cfg.AcoustIDKey = v.GetString("acoustid_api_key")
 	cfg.MetadataPolicy = v.GetString("metadata_policy")
 	cfg.EnableEnrichment = v.GetBool("enable_enrichment")
+	cfg.SponsorBlockTimeout = v.GetDuration("sponsorblock_timeout")
+	if cfg.SponsorBlockTimeout < 100*time.Millisecond || cfg.SponsorBlockTimeout > 30*time.Second {
+		return nil, fmt.Errorf("sponsorblock_timeout must be between 100ms and 30s")
+	}
 	cfg.Port = v.GetInt("port")
 	cfg.CacheProvider = v.GetString("cache_provider")
 	cfg.CacheDir = v.GetString("cache_dir")

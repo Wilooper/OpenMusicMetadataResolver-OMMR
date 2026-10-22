@@ -250,3 +250,19 @@ func TestMetadataComparisonRemainsDebugOnly(t *testing.T) {
 		t.Fatal("comparison diagnostics projection failed")
 	}
 }
+
+func TestStructuredGraphAvailableInProductionAndDebug(t *testing.T) {
+	h, calls := responseFixture(t)
+	public, _ := readResponse(t, h.HandleResolve, "GET", "/v1/resolve?artist=Singer&title=Song", "")
+	debug, _ := readResponse(t, h.HandleResolve, "GET", "/v1/resolve?artist=Singer&title=Song&debug=true", "")
+	p := public["track"].(map[string]any)["music_graph"]
+	d := debug["track"].(map[string]any)["extensions"].(map[string]any)["music_graph"]
+	pb, _ := json.Marshal(p)
+	db, _ := json.Marshal(d)
+	if p == nil || string(pb) != string(db) || calls.Load() != 1 {
+		t.Fatal("graph lost across presentation/cache modes")
+	}
+	if !strings.Contains(string(pb), `"role":"lyricist"`) || strings.Contains(string(pb), "match_score") {
+		t.Fatal("graph lost music credit or leaked execution data")
+	}
+}

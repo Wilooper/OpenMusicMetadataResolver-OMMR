@@ -1,0 +1,55 @@
+[
+  {
+    "case": "known-unknowns-album",
+    "http_status": 502,
+    "seconds": 3.119,
+    "title": null,
+    "ids": null,
+    "sources": [],
+    "error": "catalog metadata unavailable"
+  },
+  {
+    "case": "coach-credits",
+    "http_status": 502,
+    "seconds": 3.009,
+    "title": null,
+    "ids": null,
+    "sources": [],
+    "error": "catalog metadata unavailable"
+  },
+  {
+    "case": "known-unknowns-limited",
+    "http_status": 200,
+    "seconds": 2.404,
+    "title": null,
+    "ids": null,
+    "sources": [],
+    "error": null
+  },
+  {
+    "case": "coach-song",
+    "http_status": 502,
+    "seconds": 6.011,
+    "title": null,
+    "ids": null,
+    "sources": [],
+    "error": "catalog metadata unavailable"
+  },
+  {
+    "case": "spotify-direct-public",
+    "http_status": 200,
+    "seconds": 3.674,
+    "title": "Never Gonna Give You Up",
+    "ids": {
+      "spotify": "4uLU6hMCjMI75M1A2tKUQC"
+    },
+    "sources": [
+      {
+        "provider": "spotify",
+        "status": "ok",
+        "error": null
+      }
+    ],
+    "error": null
+  }
+]

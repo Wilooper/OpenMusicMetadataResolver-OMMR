@@ -1,0 +1,154 @@
+[
+  {
+    "case": "damn",
+    "id": "1440881722",
+    "title": "DAMN.",
+    "seconds": 6.051,
+    "collection": {
+      "returned": 14,
+      "total": 15,
+      "complete": false,
+      "reason": "incomplete_response"
+    },
+    "discs": [
+      {
+        "number": 1,
+        "coverage": {
+          "returned": 14,
+          "total": 14,
+          "complete": true
+        }
+      }
+    ],
+    "rest_gateway_cache_equal": true,
+    "passed": true
+  },
+  {
+    "case": "goldberg",
+    "id": "594521223",
+    "title": "Bach: Goldberg Variations, BWV 988 (The 1955 & 1981 Recordings)",
+    "seconds": 0.046,
+    "collection": {
+      "returned": 64,
+      "total": 65,
+      "complete": false,
+      "reason": "incomplete_response"
+    },
+    "discs": [
+      {
+        "number": 1,
+        "coverage": {
+          "returned": 64,
+          "total": 64,
+          "complete": true
+        }
+      }
+    ],
+    "rest_gateway_cache_equal": true,
+    "passed": true
+  },
+  {
+    "case": "p-pop",
+    "id": "1829591921",
+    "title": "P-POP CULTURE",
+    "seconds": 2.973,
+    "collection": {
+      "returned": 11,
+      "total": 11,
+      "complete": true
+    },
+    "discs": [
+      {
+        "number": 1,
+        "coverage": {
+          "returned": 5,
+          "total": 5,
+          "complete": true
+        }
+      },
+      {
+        "number": 2,
+        "coverage": {
+          "returned": 6,
+          "total": 6,
+          "complete": true
+        }
+      }
+    ],
+    "rest_gateway_cache_equal": true,
+    "passed": true
+  },
+  {
+    "case": "proof",
+    "id": "1627573936",
+    "title": "Proof",
+    "seconds": 3.055,
+    "collection": {
+      "returned": 35,
+      "total": 35,
+      "complete": true
+    },
+    "discs": [
+      {
+        "number": 1,
+        "coverage": {
+          "returned": 19,
+          "total": 19,
+          "complete": true
+        }
+      },
+      {
+        "number": 2,
+        "coverage": {
+          "returned": 15,
+          "total": 15,
+          "complete": true
+        }
+      },
+      {
+        "number": 3,
+        "coverage": {
+          "returned": 1,
+          "total": 1,
+          "complete": true
+        }
+      }
+    ],
+    "rest_gateway_cache_equal": true,
+    "passed": true
+  },
+  {
+    "case": "p-pop-limited",
+    "id": "1829591921",
+    "title": "P-POP CULTURE",
+    "seconds": 2.943,
+    "collection": {
+      "returned": 2,
+      "total": 11,
+      "complete": false,
+      "reason": "limit"
+    },
+    "discs": [
+      {
+        "number": 1,
+        "coverage": {
+          "returned": 2,
+          "total": 5,
+          "complete": false,
+          "reason": "limit"
+        }
+      },
+      {
+        "number": 2,
+        "coverage": {
+          "returned": 0,
+          "total": 6,
+          "complete": false,
+          "reason": "limit"
+        }
+      }
+    ],
+    "rest_gateway_cache_equal": true,
+    "passed": true
+  }
+]

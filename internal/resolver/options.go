@@ -27,7 +27,7 @@ func (res *Resolver) Configure(policy merger.Policy, enrichers ...catalog.Enrich
 		Enrichers []string
 	}{policy, names})
 	sum := sha256.Sum256(data)
-	res.cacheNamespace = "resolved:rich-v12:" + hex.EncodeToString(sum[:8]) + ":"
+	res.cacheNamespace = "resolved:rich-v17:" + hex.EncodeToString(sum[:8]) + ":"
 	res.enrichers = append([]catalog.Enricher(nil), enrichers...)
 }
 
@@ -47,7 +47,11 @@ func (res *Resolver) enrichCatalogs(ctx context.Context, track *canonical.Track)
 		wg.Add(1)
 		go func() {
 			defer wg.Done()
-			work, cancel := context.WithTimeout(ctx, 5*time.Second)
+			timeout := 5 * time.Second
+			if source, ok := enricher.(catalog.TimedEnricher); ok {
+				timeout = source.Timeout()
+			}
+			work, cancel := context.WithTimeout(ctx, timeout)
 			defer cancel()
 			result, err := enricher.Enrich(work, *track)
 			results[i] = outcome{enricher.Name(), result, err}
@@ -73,7 +77,11 @@ func (res *Resolver) enrichCatalogs(ctx context.Context, track *canonical.Track)
 			continue
 		}
 		statuses[item.name] = "ok"
-		records[item.name] = item.result.Data
+		if item.name == "sponsorblock" {
+			track.Extensions["video_annotations"], _ = json.Marshal(map[string]any{"sponsorblock": item.result.Data})
+		} else {
+			records[item.name] = item.result.Data
+		}
 		for _, image := range item.result.Images {
 			if !images[image.URL] {
 				track.Images = append(track.Images, image)

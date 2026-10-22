@@ -12,6 +12,7 @@ bulk_workers: 10
 credentials_dir: ./credentials
 apple_storefront: us
 enable_enrichment: true
+sponsorblock_timeout: 2s
 metadata_policy: '{"mode":"consensus"}'
 
 api:
@@ -31,6 +32,8 @@ api:
     fingerprint: true
     catalog: true
     artists: true
+    albums: true
+    capabilities: true
     query: true
     providers: true
     health: true
@@ -60,6 +63,7 @@ providers:
     pandora: true
     coverartarchive: true
     musicbrainz_release: true
+    sponsorblock: true
     lastfm: true
     discogs: true
     acoustid: true

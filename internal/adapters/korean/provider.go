@@ -32,7 +32,7 @@ func New(name string) *Provider {
 	return &Provider{name, bases[name], &http.Client{Timeout: 8 * time.Second, CheckRedirect: func(*http.Request, []*http.Request) error { return http.ErrUseLastResponse }}}
 }
 func (p *Provider) Name() string    { return p.name }
-func (p *Provider) Version() string { return p.name + "-public-v1" }
+func (p *Provider) Version() string { return p.name + "-public-v2-credits" }
 func (p *Provider) endpoint(kind, id string) string {
 	switch p.name {
 	case "bugs":
@@ -159,6 +159,11 @@ func (p *Provider) candidate(r provider.KoreanRecord) canonical.TrackCandidate {
 	}
 	if r.Fields != nil {
 		t.Extensions["korean_detail"] = json.RawMessage(`true`)
+	}
+	for _, credit := range r.Credits {
+		if credit.Role != "" {
+			t.Credits = append(t.Credits, canonical.Credit{Name: credit.Name, Roles: []string{credit.Role}})
+		}
 	}
 	raw, _ := json.Marshal(r)
 	return canonical.TrackCandidate{Provider: p.name, Track: t, RawResponse: raw}
@@ -460,6 +465,20 @@ func (p *Provider) detail(doc *html.Node, body []byte, id string) (provider.Kore
 	}
 	if len(r.Artists) == 0 && p.name == "melon" {
 		r.Artists = artists(byClass(scope, "artist"))
+	}
+	if p.name == "melon" {
+		walk(byClass(doc, "section_prdcr"), func(n *html.Node) {
+			if n.Data != "li" {
+				return
+			}
+			person := byClass(n, "artist_name")
+			name, label := text(person), text(byClass(n, "type"))
+			if name == "" || label == "" {
+				return
+			}
+			role := map[string]string{"작사": "lyricist", "작곡": "composer", "편곡": "arranger"}[label]
+			r.Credits = append(r.Credits, provider.KoreanCredit{ID: reference(person, "artist"), Name: name, Role: role, SourceRole: label})
+		})
 	}
 	if len(r.Artists) == 0 {
 		if by, ok := data["byArtist"].(map[string]any); ok && str(by, "name") != "" {

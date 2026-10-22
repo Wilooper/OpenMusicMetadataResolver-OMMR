@@ -1,0 +1,23 @@
+[
+  {
+    "command": "go build ./...",
+    "exit_code": 0
+  },
+  {
+    "command": "go vet ./...",
+    "exit_code": 0
+  },
+  {
+    "command": "go test ./...",
+    "exit_code": 0
+  },
+  {
+    "command": "go test -race ./internal/idresolver ./internal/adapters ./internal/api ./internal/config ./internal/matcher ./internal/resolver ./internal/artists",
+    "exit_code": 0
+  },
+  {
+    "command": "python -m unittest discover -s workers/ytmusic",
+    "exit_code": 0,
+    "tests": 8
+  }
+]

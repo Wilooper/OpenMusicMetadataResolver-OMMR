@@ -1,0 +1,408 @@
+{
+  "cases": [
+    {
+      "case": "health",
+      "expected_http": 200,
+      "actual_http": 200,
+      "passed": true,
+      "milliseconds": 0.57
+    },
+    {
+      "case": "providers",
+      "expected_http": 200,
+      "actual_http": 200,
+      "passed": true,
+      "milliseconds": 0.8
+    },
+    {
+      "case": "capabilities",
+      "expected_http": 200,
+      "actual_http": 200,
+      "passed": true,
+      "milliseconds": 1.22
+    },
+    {
+      "case": "capabilities_gateway",
+      "expected_http": 200,
+      "actual_http": 200,
+      "passed": true,
+      "milliseconds": 1.16
+    },
+    {
+      "case": "missing_input",
+      "expected_http": 400,
+      "actual_http": 400,
+      "passed": true,
+      "milliseconds": 0.66
+    },
+    {
+      "case": "bad_debug",
+      "expected_http": 400,
+      "actual_http": 400,
+      "passed": true,
+      "milliseconds": 0.46
+    },
+    {
+      "case": "repeated_debug",
+      "expected_http": 400,
+      "actual_http": 400,
+      "passed": true,
+      "milliseconds": 0.52
+    },
+    {
+      "case": "foreign_url",
+      "expected_http": 400,
+      "actual_http": 400,
+      "passed": true,
+      "milliseconds": 0.76
+    },
+    {
+      "case": "typed_foreign_url",
+      "expected_http": 400,
+      "actual_http": 400,
+      "passed": true,
+      "milliseconds": 0.63
+    },
+    {
+      "case": "mixed_url_id",
+      "expected_http": 400,
+      "actual_http": 400,
+      "passed": true,
+      "milliseconds": 0.65
+    },
+    {
+      "case": "bad_album_id",
+      "expected_http": 400,
+      "actual_http": 400,
+      "passed": true,
+      "milliseconds": 0.45
+    },
+    {
+      "case": "repeated_album_id",
+      "expected_http": 400,
+      "actual_http": 400,
+      "passed": true,
+      "milliseconds": 0.69
+    },
+    {
+      "case": "album_limit_overflow",
+      "expected_http": 400,
+      "actual_http": 400,
+      "passed": true,
+      "milliseconds": 0.67
+    },
+    {
+      "case": "bad_artist_id",
+      "expected_http": 400,
+      "actual_http": 400,
+      "passed": true,
+      "milliseconds": 0.67
+    },
+    {
+      "case": "resolve_method",
+      "expected_http": 405,
+      "actual_http": 405,
+      "passed": true,
+      "milliseconds": 0.58
+    },
+    {
+      "case": "links_method",
+      "expected_http": 405,
+      "actual_http": 405,
+      "passed": true,
+      "milliseconds": 0.73
+    },
+    {
+      "case": "extract_method",
+      "expected_http": 405,
+      "actual_http": 405,
+      "passed": true,
+      "milliseconds": 0.63
+    },
+    {
+      "case": "search_method",
+      "expected_http": 405,
+      "actual_http": 405,
+      "passed": true,
+      "milliseconds": 1.01
+    },
+    {
+      "case": "artists_method",
+      "expected_http": 405,
+      "actual_http": 405,
+      "passed": true,
+      "milliseconds": 0.39
+    },
+    {
+      "case": "albums_method",
+      "expected_http": 405,
+      "actual_http": 405,
+      "passed": true,
+      "milliseconds": 0.7
+    },
+    {
+      "case": "capabilities_method",
+      "expected_http": 405,
+      "actual_http": 405,
+      "passed": true,
+      "milliseconds": 0.56
+    },
+    {
+      "case": "catalog_method",
+      "expected_http": 405,
+      "actual_http": 405,
+      "passed": true,
+      "milliseconds": 0.84
+    },
+    {
+      "case": "providers_method",
+      "expected_http": 405,
+      "actual_http": 405,
+      "passed": true,
+      "milliseconds": 0.76
+    },
+    {
+      "case": "bulk_method",
+      "expected_http": 405,
+      "actual_http": 405,
+      "passed": true,
+      "milliseconds": 1.06
+    },
+    {
+      "case": "query_method",
+      "expected_http": 405,
+      "actual_http": 405,
+      "passed": true,
+      "milliseconds": 0.7
+    },
+    {
+      "case": "fingerprint_without_key",
+      "expected_http": 503,
+      "actual_http": 503,
+      "passed": true,
+      "milliseconds": 0.61
+    },
+    {
+      "case": "catalog_without_worker",
+      "expected_http": 503,
+      "actual_http": 503,
+      "passed": true,
+      "milliseconds": 2.1
+    },
+    {
+      "case": "album_disabled_source",
+      "expected_http": 503,
+      "actual_http": 503,
+      "passed": true,
+      "milliseconds": 2.47
+    },
+    {
+      "case": "invalid_gateway_28",
+      "expected_http": 400,
+      "actual_http": 400,
+      "passed": true,
+      "milliseconds": 0.92
+    },
+    {
+      "case": "invalid_gateway_29",
+      "expected_http": 400,
+      "actual_http": 400,
+      "passed": true,
+      "milliseconds": 0.69
+    },
+    {
+      "case": "invalid_gateway_30",
+      "expected_http": 400,
+      "actual_http": 400,
+      "passed": true,
+      "milliseconds": 0.73
+    },
+    {
+      "case": "resolve_share_public",
+      "expected_http": 200,
+      "actual_http": 200,
+      "passed": true,
+      "milliseconds": 7712.3
+    },
+    {
+      "case": "resolve_debug_cached",
+      "expected_http": 200,
+      "actual_http": 200,
+      "passed": true,
+      "milliseconds": 2.15
+    },
+    {
+      "case": "resolve_gateway_parity",
+      "expected_http": 200,
+      "actual_http": 200,
+      "passed": true,
+      "milliseconds": 2.11
+    },
+    {
+      "case": "graph_public_debug_parity",
+      "passed": true
+    },
+    {
+      "case": "production_diagnostics_omitted",
+      "passed": true
+    },
+    {
+      "case": "links",
+      "expected_http": 200,
+      "actual_http": 200,
+      "passed": true,
+      "milliseconds": 1.93
+    },
+    {
+      "case": "extract_exact",
+      "expected_http": 200,
+      "actual_http": 200,
+      "passed": true,
+      "milliseconds": 15.35
+    },
+    {
+      "case": "bulk_error_isolation",
+      "expected_http": 200,
+      "actual_http": 200,
+      "passed": true,
+      "milliseconds": 1.85
+    },
+    {
+      "case": "bulk_empty",
+      "expected_http": 400,
+      "actual_http": 400,
+      "passed": true,
+      "milliseconds": 0.65
+    },
+    {
+      "case": "bulk_limit",
+      "expected_http": 400,
+      "actual_http": 400,
+      "passed": true,
+      "milliseconds": 1.01
+    },
+    {
+      "case": "album_complete",
+      "expected_http": 200,
+      "actual_http": 200,
+      "passed": true,
+      "milliseconds": 3006.46
+    },
+    {
+      "case": "album_gateway_cached",
+      "expected_http": 200,
+      "actual_http": 200,
+      "passed": true,
+      "milliseconds": 1.86
+    },
+    {
+      "case": "album_limit_and_graph",
+      "expected_http": 200,
+      "actual_http": 200,
+      "passed": true,
+      "milliseconds": 2992.11
+    },
+    {
+      "case": "artist_native",
+      "expected_http": 200,
+      "actual_http": 200,
+      "passed": true,
+      "milliseconds": 3095.0
+    },
+    {
+      "case": "search",
+      "expected_http": 200,
+      "actual_http": 200,
+      "passed": true,
+      "milliseconds": 2902.33
+    },
+    {
+      "case": "search_large_page",
+      "expected_http": 200,
+      "actual_http": 200,
+      "passed": true,
+      "milliseconds": 2997.35
+    },
+    {
+      "case": "32_warm_requests_16_clients",
+      "passed": true,
+      "wall_seconds": 0.039,
+      "median_ms": 8.39,
+      "p95_ms": 14.82,
+      "maximum_ms": 20.83
+    },
+    {
+      "case": "disk_cache_survives_restart",
+      "expected_http": 200,
+      "actual_http": 200,
+      "passed": true,
+      "milliseconds": 4.42
+    },
+    {
+      "case": "configured_default_operation",
+      "expected_http": 200,
+      "actual_http": 200,
+      "passed": true,
+      "milliseconds": 1.16
+    },
+    {
+      "case": "disabled_album_get",
+      "expected_http": 404,
+      "actual_http": 404,
+      "passed": true,
+      "milliseconds": 0.66
+    },
+    {
+      "case": "disabled_album_gateway",
+      "expected_http": 404,
+      "actual_http": 404,
+      "passed": true,
+      "milliseconds": 1.13
+    },
+    {
+      "case": "disabled_search_get",
+      "expected_http": 404,
+      "actual_http": 404,
+      "passed": true,
+      "milliseconds": 0.59
+    },
+    {
+      "case": "disabled_search_gateway",
+      "expected_http": 404,
+      "actual_http": 404,
+      "passed": true,
+      "milliseconds": 0.42
+    },
+    {
+      "case": "disabled_metrics",
+      "expected_http": 404,
+      "actual_http": 404,
+      "passed": true,
+      "milliseconds": 0.52
+    },
+    {
+      "case": "debug_policy_get",
+      "expected_http": 200,
+      "actual_http": 200,
+      "passed": true,
+      "milliseconds": 7906.16
+    },
+    {
+      "case": "debug_policy_gateway",
+      "expected_http": 200,
+      "actual_http": 200,
+      "passed": true,
+      "milliseconds": 1.45
+    },
+    {
+      "case": "locked_operation",
+      "expected_http": 200,
+      "actual_http": 200,
+      "passed": true,
+      "milliseconds": 0.93
+    }
+  ],
+  "passed": 58,
+  "failed": [],
+  "scope": "Isolated public Apple; real upstream for positive catalog cases; no credentials; warm-cache concurrency only"
+}

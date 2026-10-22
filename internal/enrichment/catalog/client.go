@@ -26,6 +26,10 @@ type Enricher interface {
 	Name() string
 	Enrich(context.Context, canonical.Track) (*Result, error)
 }
+type TimedEnricher interface {
+	Enricher
+	Timeout() time.Duration
+}
 type Client struct {
 	HTTP  *http.Client
 	Wait  WaitFunc
@@ -36,6 +40,16 @@ func NewClient(wait WaitFunc) *Client {
 	return &Client{HTTP: &http.Client{Timeout: 5 * time.Second, CheckRedirect: func(*http.Request, []*http.Request) error { return http.ErrUseLastResponse }}, Wait: wait}
 }
 func (c *Client) Request(ctx context.Context, provider, method, endpoint, token string, form url.Values, target any) error {
+	return c.request(ctx, provider, method, endpoint, token, form, target, requestCachePolicy{ttl: 24 * time.Hour})
+}
+
+type requestCachePolicy struct {
+	ttl          time.Duration
+	notFoundTTL  time.Duration
+	notFoundJSON []byte
+}
+
+func (c *Client) request(ctx context.Context, provider, method, endpoint, token string, form url.Values, target any, policy requestCachePolicy) error {
 	cacheKey := ""
 	if method == http.MethodGet && c.Cache != nil {
 		sum := sha256.Sum256([]byte(provider + "\n" + endpoint + "\n" + token))
@@ -84,6 +98,15 @@ func (c *Client) Request(ctx context.Context, provider, method, endpoint, token 
 		return fmt.Errorf("catalog request failed")
 	}
 	defer resp.Body.Close()
+	if resp.StatusCode == http.StatusNotFound && policy.notFoundJSON != nil {
+		if err := json.Unmarshal(policy.notFoundJSON, target); err != nil {
+			return err
+		}
+		if cacheKey != "" {
+			_ = c.Cache.Set(ctx, cacheKey, policy.notFoundJSON, policy.notFoundTTL)
+		}
+		return nil
+	}
 	if resp.StatusCode != 200 {
 		return fmt.Errorf("catalog HTTP %d", resp.StatusCode)
 	}
@@ -99,7 +122,7 @@ func (c *Client) Request(ctx context.Context, provider, method, endpoint, token 
 	_ = json.Unmarshal(data, &envelope)
 	applicationError := envelope["error"] != nil || envelope["errors"] != nil || envelope["status"] == "error"
 	if cacheKey != "" && !applicationError {
-		_ = c.Cache.Set(ctx, cacheKey, data, 24*time.Hour)
+		_ = c.Cache.Set(ctx, cacheKey, data, policy.ttl)
 	}
 	return nil
 }

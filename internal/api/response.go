@@ -27,31 +27,35 @@ func parseDebug(w http.ResponseWriter, r *http.Request) (bool, bool) {
 
 // Keep the public schema explicit so new internal diagnostics cannot leak by default.
 type publicTrack struct {
-	CanonicalID    string                     `json:"canonical_id"`
-	IdentityStatus string                     `json:"identity_status,omitempty"`
-	Title          string                     `json:"title"`
-	Artists        []canonical.Artist         `json:"artists"`
-	Album          canonical.Album            `json:"album"`
-	DurationMS     int64                      `json:"duration_ms"`
-	ReleaseDate    string                     `json:"release_date"`
-	ProviderData   map[string]json.RawMessage `json:"provider_data,omitempty"`
-	ExplicitStatus string                     `json:"explicit_status"`
-	Explicit       bool                       `json:"explicit"`
-	ISRC           string                     `json:"isrc,omitempty"`
-	ISWC           string                     `json:"iswc,omitempty"`
-	Genres         []string                   `json:"genres,omitempty"`
-	Language       string                     `json:"language,omitempty"`
-	Credits        []canonical.Credit         `json:"credits,omitempty"`
-	Images         []canonical.Image          `json:"images,omitempty"`
-	PreviewURL     string                     `json:"preview_url,omitempty"`
-	TrackNumber    int                        `json:"track_number,omitempty"`
-	DiscNumber     int                        `json:"disc_number,omitempty"`
-	Label          string                     `json:"label,omitempty"`
-	Barcode        string                     `json:"barcode,omitempty"`
-	Copyrights     []canonical.Copyright      `json:"copyrights,omitempty"`
-	PlayCount      int64                      `json:"play_count,omitempty"`
-	IDs            map[string]string          `json:"ids"`
-	Extensions     map[string]any             `json:"extensions,omitempty"`
+	VideoAnnotations json.RawMessage            `json:"video_annotations,omitempty"`
+	AlbumPlacements  json.RawMessage            `json:"album_placements,omitempty"`
+	CreditDetails    json.RawMessage            `json:"credit_details,omitempty"`
+	CanonicalID      string                     `json:"canonical_id"`
+	IdentityStatus   string                     `json:"identity_status,omitempty"`
+	Title            string                     `json:"title"`
+	Artists          []canonical.Artist         `json:"artists"`
+	Album            canonical.Album            `json:"album"`
+	DurationMS       int64                      `json:"duration_ms"`
+	ReleaseDate      string                     `json:"release_date"`
+	MusicGraph       json.RawMessage            `json:"music_graph,omitempty"`
+	ProviderData     map[string]json.RawMessage `json:"provider_data,omitempty"`
+	ExplicitStatus   string                     `json:"explicit_status"`
+	Explicit         bool                       `json:"explicit"`
+	ISRC             string                     `json:"isrc,omitempty"`
+	ISWC             string                     `json:"iswc,omitempty"`
+	Genres           []string                   `json:"genres,omitempty"`
+	Language         string                     `json:"language,omitempty"`
+	Credits          []canonical.Credit         `json:"credits,omitempty"`
+	Images           []canonical.Image          `json:"images,omitempty"`
+	PreviewURL       string                     `json:"preview_url,omitempty"`
+	TrackNumber      int                        `json:"track_number,omitempty"`
+	DiscNumber       int                        `json:"disc_number,omitempty"`
+	Label            string                     `json:"label,omitempty"`
+	Barcode          string                     `json:"barcode,omitempty"`
+	Copyrights       []canonical.Copyright      `json:"copyrights,omitempty"`
+	PlayCount        int64                      `json:"play_count,omitempty"`
+	IDs              map[string]string          `json:"ids"`
+	Extensions       map[string]any             `json:"extensions,omitempty"`
 }
 
 func trackResponse(track *canonical.Track, debug bool) any {
@@ -72,7 +76,7 @@ func trackResponse(track *canonical.Track, debug bool) any {
 	explicitStatus := "unknown"
 	_ = json.Unmarshal(track.Extensions["explicit_status"], &explicitStatus)
 	return publicTrack{
-		ProviderData: providerData, ExplicitStatus: explicitStatus,
+		VideoAnnotations: track.Extensions["video_annotations"], AlbumPlacements: track.Extensions["album_placements"], CreditDetails: track.Extensions["credit_details"], MusicGraph: track.Extensions["music_graph"], ProviderData: providerData, ExplicitStatus: explicitStatus,
 		CanonicalID: track.CanonicalID, IdentityStatus: track.IdentityStatus,
 		Title: track.Title, Artists: track.Artists, Album: track.Album,
 		DurationMS: track.DurationMS, ReleaseDate: track.ReleaseDate, Explicit: track.Explicit,

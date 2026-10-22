@@ -22,7 +22,7 @@ func (c *MusicBrainzRelease) Enrich(ctx context.Context, track canonical.Track) 
 	if !mbidPattern.MatchString(id) {
 		return nil, nil
 	}
-	q := url.Values{"inc": {"artist-credits+labels+recordings+release-groups+url-rels"}, "fmt": {"json"}}
+	q := url.Values{"inc": {"artist-credits+labels+recordings+release-groups+release-rels+artist-rels+recording-rels+recording-level-rels+work-rels+work-level-rels+url-rels"}, "fmt": {"json"}}
 	var record map[string]any
 	if err := c.Client.Request(ctx, "musicbrainz", "GET", c.base+"/release/"+id+"?"+q.Encode(), "", nil, &record); err != nil {
 		return nil, err

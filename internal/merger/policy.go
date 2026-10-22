@@ -34,6 +34,9 @@ func ParsePolicy(raw string) (Policy, error) {
 		return policy, fmt.Errorf("metadata policy mode must be consensus or priority")
 	}
 	for field, names := range policy.Priorities {
+		if field == "track_number" || field == "disc_number" {
+			return policy, fmt.Errorf("%s must follow the selected edition; configure album priority instead", field)
+		}
 		if !policyFields[field] {
 			return policy, fmt.Errorf("unsupported metadata policy field %q", field)
 		}
@@ -65,7 +68,7 @@ func (m *Merger) applyPolicy(track *canonical.Track, candidates []canonical.Trac
 	typ := value.Type()
 	for i := 0; i < value.NumField(); i++ {
 		field := strings.Split(typ.Field(i).Tag.Get("json"), ",")[0]
-		if !policyFields[field] {
+		if !policyFields[field] || field == "track_number" || field == "disc_number" {
 			continue
 		}
 		priorities := titlePriority
@@ -153,26 +156,21 @@ func (m *Merger) applyPolicy(track *canonical.Track, candidates []canonical.Trac
 							album.IDs[key] = id
 						}
 					}
-					if album.Label == "" {
-						album.Label = a.Label
-					}
-					if album.UPC == "" {
-						album.UPC = a.UPC
-					}
-					if album.Barcode == "" {
-						album.Barcode = a.Barcode
-					}
-					if album.TotalTracks == 0 {
-						album.TotalTracks = a.TotalTracks
-					}
-					if album.Type == "" {
-						album.Type = a.Type
-					}
-					if album.ReleaseDate == "" {
-						album.ReleaseDate = a.ReleaseDate
-					}
 				}
 				track.Album = album
+				// Position belongs to this exact source edition, not the recording consensus.
+				selected := choices[0].candidate
+				track.TrackNumber = selected.Track.TrackNumber
+				track.DiscNumber = selected.Track.DiscNumber
+				delete(track.FieldSources, "track_number")
+				delete(track.FieldSources, "disc_number")
+				track.FieldSources["album_position"] = []string{selected.Provider}
+				if track.TrackNumber > 0 {
+					track.FieldSources["track_number"] = []string{selected.Provider}
+				}
+				if track.DiscNumber > 0 {
+					track.FieldSources["disc_number"] = []string{selected.Provider}
+				}
 			}
 			sources := []string{}
 			for _, c := range choices {

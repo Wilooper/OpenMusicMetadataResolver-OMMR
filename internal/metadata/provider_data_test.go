@@ -48,3 +48,34 @@ func TestProviderDataDoesNotMutateInputOrLoseExtensionMetadata(t *testing.T) {
 		t.Fatal("input map was mutated")
 	}
 }
+
+func TestGraphUsesVerifiedDetailsAndKeepsWorkCreditsScoped(t *testing.T) {
+	candidate := canonical.TrackCandidate{Provider: "musicbrainz", Track: canonical.Track{Title: "Song", IDs: map[string]string{"musicbrainz": "accepted"}, Credits: []canonical.Credit{{Name: "Writer", Roles: []string{"Lyricist"}}}, Extensions: map[string]json.RawMessage{"recording_details": json.RawMessage(`{"id":"accepted","title":"Song","relations":[{"type":"performance","direction":"forward","work":{"id":"work","title":"Composition","relations":[{"type":"lyricist","direction":"backward","artist":{"id":"writer","name":"Writer"}}]}}]}`)}}}
+	track := candidate.Track
+	track.CanonicalID = "canonical"
+	Attach(&track, []canonical.TrackCandidate{candidate})
+	AttachGraph(&track, []canonical.TrackCandidate{candidate})
+	var graph struct {
+		Edges []struct{ From, To, Type, Role string }
+	}
+	if json.Unmarshal(track.Extensions["music_graph"], &graph) != nil {
+		t.Fatal("missing graph")
+	}
+	found := false
+	for _, e := range graph.Edges {
+		if e.Role == "lyricist" {
+			if e.To != "musicbrainz:work:work" {
+				t.Fatal("work credit flattened onto recording")
+			}
+			found = true
+		}
+	}
+	if !found {
+		t.Fatal("verified legacy detail extension not consumed")
+	}
+	candidate.Track.Extensions["recording_details"] = json.RawMessage(`{"id":"foreign","title":"Wrong","relations":[{"type":"performance","direction":"forward","work":{"id":"foreign-work"}}]}`)
+	AttachGraph(&track, []canonical.TrackCandidate{candidate})
+	if strings.Contains(string(track.Extensions["music_graph"]), "foreign-work") {
+		t.Fatal("unverified detail graph leaked")
+	}
+}
