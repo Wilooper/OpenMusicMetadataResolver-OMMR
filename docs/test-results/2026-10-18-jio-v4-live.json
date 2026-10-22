@@ -1,0 +1,44 @@
+[
+  {
+    "case": "affected",
+    "seconds": 10.003,
+    "sources": [
+      {
+        "provider": "deezer",
+        "version": "deezer-v2-html",
+        "status": "error",
+        "error": "public catalog request failed"
+      },
+      {
+        "provider": "jiosaavn",
+        "version": "jiosaavn-search-v3-catalog",
+        "status": "error",
+        "error": "provider returned an unavailable HTML page without catalog data"
+      },
+      {
+        "provider": "musicbrainz",
+        "version": "musicbrainz-v3-html",
+        "status": "error",
+        "error": "provider returned an unavailable HTML page without catalog data"
+      }
+    ],
+    "track_title": null,
+    "ids": null
+  },
+  {
+    "case": "control",
+    "seconds": 6.012,
+    "sources": [
+      {
+        "provider": "applemusic",
+        "version": "applemusic-v1",
+        "status": "ok"
+      }
+    ],
+    "track_title": "Boyfriend",
+    "ids": {
+      "applemusic": "1829591986",
+      "applemusic_url": "https://music.apple.com/us/album/boyfriend/1829591921?i=1829591986"
+    }
+  }
+]

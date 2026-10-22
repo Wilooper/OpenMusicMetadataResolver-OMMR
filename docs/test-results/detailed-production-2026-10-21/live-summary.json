@@ -1,0 +1,86 @@
+[
+  {
+    "case": "boyfriend",
+    "title": "Boyfriend",
+    "plain_bytes": 6261,
+    "gzip_bytes": 1562,
+    "reduction_percent": 75.05,
+    "lossless": true,
+    "disc_number": 1,
+    "track_number": 4,
+    "placement": {
+      "provider": "applemusic",
+      "album_id": "1829591921",
+      "track_id": "1829591986",
+      "disc_number": 1,
+      "track_number": 4,
+      "selected": true
+    },
+    "passed": true
+  },
+  {
+    "case": "p-pop-disc2",
+    "title": "Flip-Side (Sandy's Interlude)",
+    "plain_bytes": 6496,
+    "gzip_bytes": 1600,
+    "reduction_percent": 75.37,
+    "lossless": true,
+    "disc_number": 2,
+    "track_number": 1,
+    "placement": {
+      "provider": "applemusic",
+      "album_id": "1829591921",
+      "track_id": "1829591990",
+      "disc_number": 2,
+      "track_number": 1,
+      "selected": true
+    },
+    "passed": true
+  },
+  {
+    "case": "proof-disc3",
+    "title": "For Youth",
+    "plain_bytes": 6138,
+    "gzip_bytes": 1536,
+    "reduction_percent": 74.98,
+    "lossless": true,
+    "disc_number": 3,
+    "track_number": 1,
+    "placement": {
+      "provider": "applemusic",
+      "album_id": "1627573936",
+      "track_id": "1627577723",
+      "disc_number": 3,
+      "track_number": 1,
+      "selected": true
+    },
+    "passed": true
+  },
+  {
+    "case": "melon-credits",
+    "title": "Boyfriend",
+    "plain_bytes": 6774,
+    "gzip_bytes": 1699,
+    "reduction_percent": 74.92,
+    "lossless": true,
+    "composers": [
+      "Ikwinder Sahota",
+      "Karan Aujla",
+      "Milan D'Agostini"
+    ],
+    "source_roles": [
+      "main",
+      "작곡"
+    ],
+    "passed": true
+  },
+  {
+    "case": "proof-album",
+    "title": "Proof",
+    "plain_bytes": 86287,
+    "gzip_bytes": 8362,
+    "reduction_percent": 90.31,
+    "lossless": true,
+    "passed": true
+  }
+]

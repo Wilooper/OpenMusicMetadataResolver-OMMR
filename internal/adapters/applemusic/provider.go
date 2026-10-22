@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"io"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -20,13 +19,14 @@ import (
 
 const (
 	ProviderName    = "applemusic"
-	ProviderVersion = "applemusic-v1"
+	ProviderVersion = "applemusic-v2-album-counts"
 	BaseURL         = "https://itunes.apple.com"
 )
 
 type Provider struct {
 	httpClient     *http.Client
 	catalogToken   string
+	userToken      string
 	storefront     string
 	catalogBaseURL string
 }
@@ -35,7 +35,7 @@ var _ adapters.ProviderAdapter = (*Provider)(nil)
 
 func New() *Provider {
 	return &Provider{
-		httpClient: &http.Client{Timeout: 5 * time.Second, CheckRedirect: func(_ *http.Request, _ []*http.Request) error { return http.ErrUseLastResponse }},
+		httpClient: &http.Client{Timeout: 15 * time.Second, CheckRedirect: func(_ *http.Request, _ []*http.Request) error { return http.ErrUseLastResponse }},
 	}
 }
 
@@ -69,6 +69,7 @@ func (p *Provider) FetchByID(ctx context.Context, idType string, id string) (*ca
 	}
 
 	reqURL := fmt.Sprintf("%s/lookup?id=%s&entity=song", BaseURL, url.QueryEscape(id))
+	reqURL += "&country=" + url.QueryEscape(p.publicStorefront())
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, reqURL, nil)
 	if err != nil {
 		return nil, err
@@ -84,7 +85,7 @@ func (p *Provider) FetchByID(ctx context.Context, idType string, id string) (*ca
 		return nil, fmt.Errorf("apple music API returned status %d", resp.StatusCode)
 	}
 
-	body, err := io.ReadAll(resp.Body)
+	body, err := adapters.ReadJSONBody(resp)
 	if err != nil {
 		return nil, err
 	}
@@ -131,6 +132,7 @@ func (p *Provider) Search(ctx context.Context, q adapters.Query) ([]canonical.Tr
 	}
 
 	reqURL := fmt.Sprintf("%s/search?term=%s&entity=song&limit=5", BaseURL, url.QueryEscape(term))
+	reqURL += "&country=" + url.QueryEscape(p.publicStorefront())
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, reqURL, nil)
 	if err != nil {
 		return nil, err
@@ -146,7 +148,7 @@ func (p *Provider) Search(ctx context.Context, q adapters.Query) ([]canonical.Tr
 		return nil, fmt.Errorf("apple music search returned status %d", resp.StatusCode)
 	}
 
-	body, err := io.ReadAll(resp.Body)
+	body, err := adapters.ReadJSONBody(resp)
 	if err != nil {
 		return nil, err
 	}
@@ -195,6 +197,8 @@ func (p *Provider) normalizeResult(item provider.AppleTrackResult) canonical.Tra
 		images = append(images, canonical.Image{URL: item.ArtworkUrl100, Width: 100, Height: 100, Type: "cover"})
 	}
 
+	// A song row's trackCount can exclude other discs or bonus media.
+	// Only the collection endpoint establishes an album-wide total.
 	album := canonical.Album{
 		Title:       item.CollectionName,
 		ReleaseDate: parseDate(item.ReleaseDate),
@@ -234,4 +238,24 @@ func parseDate(d string) string {
 		return d[:10]
 	}
 	return d
+}
+
+func (p *Provider) RateLimitKey() string {
+	if p.catalogToken != "" {
+		return "applemusic_catalog"
+	}
+	return ProviderName
+}
+
+func NewWithSession(developerToken, userToken, storefront string) *Provider {
+	p := NewWithCatalog(developerToken, storefront)
+	p.userToken = userToken
+	return p
+}
+
+func (p *Provider) publicStorefront() string {
+	if p.storefront == "" {
+		return "us"
+	}
+	return p.storefront
 }

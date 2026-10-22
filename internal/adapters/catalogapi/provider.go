@@ -97,13 +97,18 @@ func (p *Provider) Search(ctx context.Context, q adapters.Query) ([]canonical.Tr
 	if resp.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("%s API returned status %d", p.cfg.Name, resp.StatusCode)
 	}
-	data, err := io.ReadAll(io.LimitReader(resp.Body, 4<<20))
+	data, err := adapters.ReadJSONBody(resp)
 	if err != nil {
 		return nil, err
 	}
 	var root any
-	if err := json.Unmarshal(data, &root); err != nil {
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.UseNumber()
+	if err := decoder.Decode(&root); err != nil {
 		return nil, err
+	}
+	if errorEnvelope(root) {
+		return nil, errors.New("provider returned an API error")
 	}
 	items := findTrackItems(root)
 	out := make([]canonical.TrackCandidate, 0, len(items))
@@ -112,7 +117,7 @@ func (p *Provider) Search(ctx context.Context, q adapters.Query) ([]canonical.Tr
 		if track.Title == "" {
 			continue
 		}
-		out = append(out, canonical.TrackCandidate{Provider: p.cfg.Name, Track: track, MatchScore: 0.75, RawResponse: data})
+		out = append(out, canonical.TrackCandidate{Provider: p.cfg.Name, Track: track, MatchScore: 0.75, RawResponse: entityJSON(item)})
 	}
 	return out, nil
 }
@@ -130,13 +135,18 @@ func (p *Provider) requestCandidate(ctx context.Context, method, path string, bo
 	if resp.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("%s API returned status %d", p.cfg.Name, resp.StatusCode)
 	}
-	data, err := io.ReadAll(io.LimitReader(resp.Body, 4<<20))
+	data, err := adapters.ReadJSONBody(resp)
 	if err != nil {
 		return nil, err
 	}
 	var root any
-	if err := json.Unmarshal(data, &root); err != nil {
+	decoder := json.NewDecoder(bytes.NewReader(data))
+	decoder.UseNumber()
+	if err := decoder.Decode(&root); err != nil {
 		return nil, err
+	}
+	if errorEnvelope(root) {
+		return nil, errors.New("provider returned an API error")
 	}
 	item := findSingleTrack(root)
 	if item == nil {
@@ -146,7 +156,7 @@ func (p *Provider) requestCandidate(ctx context.Context, method, path string, bo
 	if track.Title == "" {
 		return nil, errors.New("provider response contained an empty track title")
 	}
-	return &canonical.TrackCandidate{Provider: p.cfg.Name, Track: track, MatchScore: 1, RawResponse: data}, nil
+	return &canonical.TrackCandidate{Provider: p.cfg.Name, Track: track, MatchScore: 1, RawResponse: entityJSON(item)}, nil
 }
 
 func (p *Provider) newRequest(ctx context.Context, method, path string, body []byte) (*http.Request, error) {
@@ -180,72 +190,9 @@ func (p *Provider) newRequest(ctx context.Context, method, path string, body []b
 	return req, nil
 }
 
-func findSingleTrack(root any) map[string]any {
-	for _, obj := range walkObjects(root) {
-		candidate := obj
-		if attributes, ok := obj["attributes"].(map[string]any); ok {
-			candidate = mergeMaps(attributes, obj)
-			candidate["_relationships"] = obj["relationships"]
-			candidate["_included"] = objectArray(root, "included")
-		}
-		if firstString(candidate, "title", "name") != "" && (candidate["artists"] != nil || candidate["artist"] != nil || candidate["album"] != nil || candidate["_relationships"] != nil || strings.Contains(strings.ToLower(firstString(obj, "type")), "track")) {
-			return candidate
-		}
-	}
-	return nil
-}
-
-func findTrackItems(root any) []map[string]any {
-	var found []map[string]any
-	for _, obj := range walkObjects(root) {
-		if arr, ok := obj["items"].([]any); ok {
-			for _, entry := range arr {
-				if item, ok := entry.(map[string]any); ok && firstString(item, "title", "name") != "" {
-					found = append(found, item)
-				}
-			}
-		}
-		if arr, ok := obj["tracks"].([]any); ok {
-			for _, entry := range arr {
-				if item, ok := entry.(map[string]any); ok && firstString(item, "title", "name") != "" {
-					found = append(found, item)
-				}
-			}
-		}
-		if arr, ok := obj["entities"].([]any); ok {
-			for _, entry := range arr {
-				if item, ok := entry.(map[string]any); ok && firstString(item, "title", "name") != "" {
-					found = append(found, item)
-				}
-			}
-		}
-	}
-	return found
-}
-
-func walkObjects(root any) []map[string]any {
-	var out []map[string]any
-	var walk func(any)
-	walk = func(value any) {
-		switch typed := value.(type) {
-		case map[string]any:
-			out = append(out, typed)
-			for _, child := range typed {
-				walk(child)
-			}
-		case []any:
-			for _, child := range typed {
-				walk(child)
-			}
-		}
-	}
-	walk(root)
-	return out
-}
-
 func normalize(obj map[string]any, provider string) canonical.Track {
 	if data, ok := obj["attributes"].(map[string]any); ok {
-		obj = mergeMaps(data, obj)
+		obj = mergeMaps(obj, data)
 	}
 	title := firstString(obj, "title", "name")
 	artists := normalizeArtists(obj["artists"], provider)
@@ -253,10 +200,13 @@ func normalize(obj map[string]any, provider string) canonical.Track {
 		artists = normalizeArtists(obj["artist"], provider)
 	}
 	if len(artists) == 0 {
+		artists = normalizeArtists(obj["performer"], provider)
+	}
+	if len(artists) == 0 {
 		artists = normalizeRelationshipArtists(obj, provider)
 	}
 	albumObj, _ := obj["album"].(map[string]any)
-	album := canonical.Album{Title: firstString(albumObj, "title", "name"), ReleaseDate: firstString(albumObj, "releaseDate", "release_date", "releaseDatePrecision")}
+	album := canonical.Album{Title: firstString(albumObj, "title", "name"), ReleaseDate: firstString(albumObj, "releaseDate", "release_date")}
 	images := normalizeImages(obj["images"], "cover")
 	if len(images) == 0 {
 		images = normalizeImages(albumObj["images"], "cover")
@@ -271,12 +221,19 @@ func normalize(obj map[string]any, provider string) canonical.Track {
 		images = normalizeImages(obj["artwork"], "cover")
 	}
 	album.Images = images
-	duration := number(obj["duration_ms"])
+	if id := firstString(albumObj, "id"); id != "" {
+		album.IDs = map[string]string{provider: id}
+	}
+	album.Type = firstString(albumObj, "album_type", "albumType")
+	album.Label = labelName(albumObj["label"])
+	album.UPC = firstString(albumObj, "upc", "barcode")
+	album.TotalTracks = int(number(albumObj["number_of_tracks"]))
+	duration := durationMilliseconds(obj["duration_ms"], true)
 	if duration == 0 {
-		duration = number(obj["durationMs"])
+		duration = durationMilliseconds(obj["durationMs"], true)
 	}
 	if duration == 0 {
-		duration = number(obj["duration"]) * 1000
+		duration = durationMilliseconds(obj["duration"], false)
 	}
 	releaseDate := firstString(obj, "releaseDate", "release_date")
 	if releaseDate == "" {
@@ -298,8 +255,23 @@ func normalize(obj map[string]any, provider string) canonical.Track {
 	if preview := firstString(obj, "previewUrl", "preview_url"); preview != "" {
 		track.PreviewURL = preview
 	}
-	if label := firstString(obj, "label"); label != "" {
+	track.Genres = stringSlice(obj["genres"])
+	track.Language = firstString(obj, "language")
+	track.Explicit, _ = explicitValue(obj)
+	track.TrackNumber = int(number(obj["trackNumber"]))
+	if track.TrackNumber == 0 {
+		track.TrackNumber = int(number(obj["track_number"]))
+	}
+	track.DiscNumber = int(number(obj["discNumber"]))
+	if track.DiscNumber == 0 {
+		track.DiscNumber = int(number(obj["media_number"]))
+	}
+	track.Barcode = firstString(obj, "barcode", "upc")
+	if label := labelName(obj["label"]); label != "" {
 		track.Label = label
+	}
+	if copyright := firstString(obj, "copyright"); copyright != "" {
+		track.Copyrights = []canonical.Copyright{{Text: copyright}}
 	}
 	if credits, ok := obj["credits"].([]any); ok {
 		for _, raw := range credits {
@@ -423,6 +395,9 @@ func firstString(obj map[string]any, keys ...string) string {
 		if s, ok := obj[key].(string); ok && s != "" {
 			return s
 		}
+		if v, ok := obj[key].(json.Number); ok {
+			return v.String()
+		}
 		if v, ok := obj[key].(float64); ok && v != 0 {
 			return strconv.FormatInt(int64(v), 10)
 		}
@@ -432,6 +407,9 @@ func firstString(obj map[string]any, keys ...string) string {
 
 func number(value any) int64 {
 	switch v := value.(type) {
+	case json.Number:
+		n, _ := v.Int64()
+		return n
 	case float64:
 		return int64(v)
 	case string:
@@ -464,3 +442,8 @@ func mergeMaps(primary, fallback map[string]any) map[string]any {
 }
 
 func EscapedID(id string) string { return url.PathEscape(strings.TrimSpace(id)) }
+
+func errorEnvelope(root any) bool {
+	object, ok := root.(map[string]any)
+	return ok && (object["error"] != nil || object["errors"] != nil || object["status"] == "error")
+}

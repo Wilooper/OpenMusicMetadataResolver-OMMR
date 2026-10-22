@@ -59,6 +59,9 @@ func (p *Provider) catalogRequest(ctx context.Context, path string, params url.V
 		return nil, err
 	}
 	req.Header.Set("Authorization", "Bearer "+p.catalogToken)
+	if p.userToken != "" {
+		req.Header.Set("Music-User-Token", p.userToken)
+	}
 	resp, err := p.httpClient.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("Apple catalog request failed: %w", err)

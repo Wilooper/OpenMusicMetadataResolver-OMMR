@@ -3,6 +3,7 @@ package api
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -13,35 +14,46 @@ import (
 	"time"
 
 	"github.com/ommr/ommr/internal/adapters"
+	"github.com/ommr/ommr/internal/albums"
+	"github.com/ommr/ommr/internal/artists"
 	"github.com/ommr/ommr/internal/config"
+	"github.com/ommr/ommr/internal/enrichment/catalog"
+	"github.com/ommr/ommr/internal/extractors"
 	"github.com/ommr/ommr/internal/identity"
 	"github.com/ommr/ommr/internal/idresolver"
 	"github.com/ommr/ommr/internal/matcher"
 	"github.com/ommr/ommr/internal/models/canonical"
 	"github.com/ommr/ommr/internal/platformlinks"
+	"github.com/ommr/ommr/internal/providerhealth"
 	"github.com/ommr/ommr/internal/resolver"
 	"github.com/ommr/ommr/pkg/query"
 )
 
 type Handler struct {
-	resolver   *resolver.Resolver
-	registry   *adapters.Registry
-	idResolver *idresolver.IDResolver
-	idEngine   *identity.IdentityEngine
-	matcher    *matcher.Matcher
-	cfg        *config.Config
-	startTime  time.Time
+	albums      *albums.Service
+	artists     *artists.Service
+	extractor   *extractors.Pool
+	health      *providerhealth.Manager
+	fingerprint *catalog.AcoustID
+	resolver    *resolver.Resolver
+	registry    *adapters.Registry
+	idResolver  *idresolver.IDResolver
+	idEngine    *identity.IdentityEngine
+	matcher     *matcher.Matcher
+	cfg         *config.Config
+	startTime   time.Time
 }
 
 func NewHandler(res *resolver.Resolver, reg *adapters.Registry, cfg *config.Config) *Handler {
 	return &Handler{
-		resolver:   res,
-		registry:   reg,
-		idResolver: idresolver.New(),
-		idEngine:   identity.New(),
-		matcher:    matcher.New(),
-		cfg:        cfg,
-		startTime:  time.Now(),
+		resolver:    res,
+		fingerprint: catalog.NewAcoustID(catalog.NewClient(res.WaitProvider), cfg.AcoustIDKey),
+		registry:    reg,
+		idResolver:  idresolver.New(),
+		idEngine:    identity.New(),
+		matcher:     matcher.New(),
+		cfg:         cfg,
+		startTime:   time.Now(),
 	}
 }
 
@@ -55,17 +67,27 @@ func (h *Handler) HandleLinks(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *Handler) handleResolve(w http.ResponseWriter, r *http.Request, linksOnly bool) {
+	debug, valid := parseDebug(w, r)
+	if !valid {
+		return
+	}
 	if r.Method != http.MethodGet {
 		http.Error(w, `{"error":"Method not allowed"}`, http.StatusMethodNotAllowed)
 		return
 	}
 
 	q := r.URL.Query()
-	spotifyID := h.idResolver.ExtractSpotifyID(q.Get("spotify_id"))
-	youtubeID := h.idResolver.ExtractYouTubeID(q.Get("youtube_id"))
+	inputURL := q.Get("url")
+	if q.Has("url") && (len(q["url"]) != 1 || strings.TrimSpace(inputURL) == "") {
+		http.Error(w, `{"error":"provide one nonempty music url"}`, 400)
+		return
+	}
+	jiosaavnID, jiosaavnURL, musicbrainzID := q.Get("jiosaavn_id"), q.Get("jiosaavn_url"), q.Get("musicbrainz_id")
+	spotifyID := q.Get("spotify_id")
+	youtubeID := q.Get("youtube_id")
 	deezerID := q.Get("deezer_id")
 	appleID := q.Get("apple_id")
-	soundcloudID := h.idResolver.ExtractSoundCloudID(q.Get("soundcloud_id"))
+	soundcloudID := q.Get("soundcloud_id")
 	qobuzID := q.Get("qobuz_id")
 	tidalID := q.Get("tidal_id")
 	amazonMusicID := q.Get("amazonmusic_id")
@@ -73,12 +95,16 @@ func (h *Handler) handleResolve(w http.ResponseWriter, r *http.Request, linksOnl
 		amazonMusicID = q.Get("amazon_music_id")
 	}
 	pandoraID := q.Get("pandora_id")
+	bugsID := q.Get("bugs_id")
+	genieID := q.Get("genie_id")
+	melonID := q.Get("melon_id")
+
 	isrc := q.Get("isrc")
 	artist := q.Get("artist")
 	title := q.Get("title")
 	album := q.Get("album")
 
-	if spotifyID == "" && youtubeID == "" && deezerID == "" && appleID == "" && soundcloudID == "" && qobuzID == "" && tidalID == "" && amazonMusicID == "" && pandoraID == "" && isrc == "" && (artist == "" || title == "") {
+	if inputURL == "" && jiosaavnID == "" && jiosaavnURL == "" && musicbrainzID == "" && spotifyID == "" && youtubeID == "" && deezerID == "" && appleID == "" && soundcloudID == "" && qobuzID == "" && tidalID == "" && amazonMusicID == "" && pandoraID == "" && bugsID == "" && genieID == "" && melonID == "" && isrc == "" && (artist == "" || title == "") {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusBadRequest)
 		_, _ = w.Write([]byte(`{"error":"Provide a supported provider ID, isrc, or both artist and title."}`))
@@ -94,6 +120,10 @@ func (h *Handler) handleResolve(w http.ResponseWriter, r *http.Request, linksOnl
 
 	req := resolver.ResolveRequest{
 		Query: adapters.Query{
+			URL:           inputURL,
+			JioSaavnID:    jiosaavnID,
+			JioSaavnURL:   jiosaavnURL,
+			MusicBrainzID: musicbrainzID,
 			SpotifyID:     spotifyID,
 			YouTubeID:     youtubeID,
 			DeezerID:      deezerID,
@@ -103,10 +133,14 @@ func (h *Handler) handleResolve(w http.ResponseWriter, r *http.Request, linksOnl
 			TidalID:       tidalID,
 			AmazonMusicID: amazonMusicID,
 			PandoraID:     pandoraID,
-			ISRC:          isrc,
-			Artist:        artist,
-			Title:         title,
-			Album:         album,
+			BugsID:        bugsID,
+			GenieID:       genieID,
+			MelonID:       melonID,
+
+			ISRC:   isrc,
+			Artist: artist,
+			Title:  title,
+			Album:  album,
 		},
 		Sources:     sources,
 		BypassCache: bypassCache,
@@ -118,14 +152,27 @@ func (h *Handler) handleResolve(w http.ResponseWriter, r *http.Request, linksOnl
 	resp, err := h.resolver.Resolve(ctx, req)
 	if err != nil {
 		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusInternalServerError)
+		status := http.StatusInternalServerError
+		if errors.Is(err, idresolver.ErrInput) {
+			status = http.StatusBadRequest
+		}
+		if strings.Contains(err.Error(), "not registered") {
+			status = http.StatusBadRequest
+		}
+		if strings.Contains(err.Error(), "no provider adapters available") {
+			status = http.StatusServiceUnavailable
+		}
+		w.WriteHeader(status)
 		_, _ = w.Write([]byte(fmt.Sprintf(`{"error":%q}`, err.Error())))
 		return
 	}
 
 	w.Header().Set("Content-Type", "application/json")
 	if linksOnly {
-		result := linksResponse{ProviderStatus: resp.ProviderStatus}
+		result := linksResponse{}
+		if debug {
+			result.ProviderStatus = resp.ProviderStatus
+		}
 		if resp.Track != nil {
 			result.Links = platformlinks.Build(*resp.Track)
 			result.Title = resp.Track.Title
@@ -134,14 +181,33 @@ func (h *Handler) handleResolve(w http.ResponseWriter, r *http.Request, linksOnl
 		} else {
 			result.Links = platformlinks.Build(canonical.Track{})
 		}
-		_ = json.NewEncoder(w).Encode(result)
+		if debug {
+			_ = json.NewEncoder(w).Encode(result)
+		} else {
+			_ = json.NewEncoder(w).Encode(struct {
+				Links          any                `json:"links"`
+				Title          string             `json:"title,omitempty"`
+				Artists        []canonical.Artist `json:"artists,omitempty"`
+				IdentityStatus string             `json:"identity_status,omitempty"`
+			}{catalogResponse(result.Links, false), result.Title, result.Artists, result.IdentityStatus})
+		}
 		return
 	}
-	_ = json.NewEncoder(w).Encode(resp)
+	if debug {
+		_ = json.NewEncoder(w).Encode(resp)
+	} else {
+		_ = json.NewEncoder(w).Encode(struct {
+			Track any `json:"track"`
+		}{trackResponse(resp.Track, false)})
+	}
 }
 
 // HandleBulk handles POST /v1/bulk
 func (h *Handler) HandleBulk(w http.ResponseWriter, r *http.Request) {
+	debug, valid := parseDebug(w, r)
+	if !valid {
+		return
+	}
 	if r.Method != http.MethodPost {
 		http.Error(w, `{"error":"Method not allowed"}`, http.StatusMethodNotAllowed)
 		return
@@ -161,6 +227,13 @@ func (h *Handler) HandleBulk(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if !h.cfg.API.OverridesAllowed() || len(req.Sources) == 0 {
+		if raw := r.URL.Query().Get("sources"); raw != "" {
+			req.Sources = strings.Split(raw, ",")
+		} else {
+			req.Sources = append([]string(nil), h.cfg.API.DefaultSources...)
+		}
+	}
 	if len(req.Queries) == 0 {
 		http.Error(w, `{"error":"Queries array cannot be empty"}`, http.StatusBadRequest)
 		return
@@ -173,6 +246,10 @@ func (h *Handler) HandleBulk(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	bulkBypassCache := h.cfg.API.BypassCache
+	if raw := r.URL.Query().Get("bypass_cache"); raw != "" {
+		bulkBypassCache, _ = strconv.ParseBool(raw)
+	}
 	results := make([]BulkItemResult, len(req.Queries))
 	workers := h.cfg.BulkWorkers
 	if workers <= 0 {
@@ -188,13 +265,11 @@ func (h *Handler) HandleBulk(w http.ResponseWriter, r *http.Request) {
 			defer wg.Done()
 			for idx := range jobs {
 				itemQuery := req.Queries[idx]
-				itemQuery.SpotifyID = h.idResolver.ExtractSpotifyID(itemQuery.SpotifyID)
-				itemQuery.YouTubeID = h.idResolver.ExtractYouTubeID(itemQuery.YouTubeID)
-				itemQuery.SoundCloudID = h.idResolver.ExtractSoundCloudID(itemQuery.SoundCloudID)
 
 				resReq := resolver.ResolveRequest{
-					Query:   itemQuery,
-					Sources: req.Sources,
+					Query:       itemQuery,
+					Sources:     req.Sources,
+					BypassCache: bulkBypassCache,
 				}
 
 				ctx, cancel := context.WithTimeout(r.Context(), h.cfg.ProviderTimeout)
@@ -211,8 +286,10 @@ func (h *Handler) HandleBulk(w http.ResponseWriter, r *http.Request) {
 					results[idx] = BulkItemResult{
 						QueryIndex: idx,
 						Success:    res.Track != nil,
-						Track:      res.Track,
-						Sources:    res.ProviderStatus,
+						Track:      trackResponse(res.Track, debug),
+					}
+					if debug {
+						results[idx].Sources = res.ProviderStatus
 					}
 				}
 			}
@@ -248,6 +325,10 @@ func (h *Handler) HandleBulk(w http.ResponseWriter, r *http.Request) {
 
 // HandleSearch handles GET /v1/search?q=query&page=1&limit=10
 func (h *Handler) HandleSearch(w http.ResponseWriter, r *http.Request) {
+	debug, valid := parseDebug(w, r)
+	if !valid {
+		return
+	}
 	if r.Method != http.MethodGet {
 		http.Error(w, `{"error":"Method not allowed"}`, http.StatusMethodNotAllowed)
 		return
@@ -294,6 +375,9 @@ func (h *Handler) HandleSearch(w http.ResponseWriter, r *http.Request) {
 		wg.Add(1)
 		go func() {
 			defer wg.Done()
+			if err := h.resolver.WaitProvider(ctx, ad.Name()); err != nil {
+				return
+			}
 			cands, err := ad.Search(ctx, searchQuery)
 			if err == nil && len(cands) > 0 {
 				scored := h.matcher.ScoreCandidates(cands, searchQuery)
@@ -301,8 +385,11 @@ func (h *Handler) HandleSearch(w http.ResponseWriter, r *http.Request) {
 				for _, c := range scored {
 					avail := make([]string, 0, len(c.Track.IDs))
 					for k := range c.Track.IDs {
-						avail = append(avail, k)
+						if !strings.HasSuffix(k, "_url") && !strings.HasSuffix(k, "_track_id") {
+							avail = append(avail, k)
+						}
 					}
+					sort.Strings(avail)
 					if len(avail) == 0 {
 						avail = []string{c.Provider}
 					}
@@ -328,12 +415,21 @@ func (h *Handler) HandleSearch(w http.ResponseWriter, r *http.Request) {
 
 	// Sort results descending by match_score
 	sort.Slice(allResults, func(i, j int) bool {
-		return allResults[i].MatchScore > allResults[j].MatchScore
+		if allResults[i].MatchScore != allResults[j].MatchScore {
+			return allResults[i].MatchScore > allResults[j].MatchScore
+		}
+		if allResults[i].CanonicalID != allResults[j].CanonicalID {
+			return allResults[i].CanonicalID < allResults[j].CanonicalID
+		}
+		return strings.Join(allResults[i].AvailableOn, ",") < strings.Join(allResults[j].AvailableOn, ",")
 	})
 
 	// Paginate results
 	total := len(allResults)
-	start := (page - 1) * limit
+	start := total
+	if page-1 <= total/limit {
+		start = (page - 1) * limit
+	}
 	end := start + limit
 
 	var paginated []canonical.SearchResult
@@ -346,9 +442,13 @@ func (h *Handler) HandleSearch(w http.ResponseWriter, r *http.Request) {
 		paginated = []canonical.SearchResult{}
 	}
 
+	publicResults := make([]any, len(paginated))
+	for i, result := range paginated {
+		publicResults[i] = searchResponse(result, debug)
+	}
 	resp := SearchResponse{
 		Query:   cleanedQ,
-		Results: paginated,
+		Results: publicResults,
 		Page:    page,
 		Limit:   limit,
 		Total:   total,
@@ -367,6 +467,15 @@ func (h *Handler) HandleHealth(w http.ResponseWriter, r *http.Request) {
 		CacheProvider: h.cfg.CacheProvider,
 	}
 
+	if h.health != nil {
+		if len(h.registry.List()) == 0 {
+			resp.Status = "degraded"
+		}
+		resp.Providers = map[string]int{}
+		for _, status := range h.health.Snapshot() {
+			resp.Providers[status.State]++
+		}
+	}
 	w.Header().Set("Content-Type", "application/json")
 	_ = json.NewEncoder(w).Encode(resp)
 }

@@ -1,0 +1,83 @@
+[
+  {
+    "category": "requested_reimagined",
+    "query_artist": "Ludovico Einaudi",
+    "query_title": "Experience (Reimagined)",
+    "song_http": 200,
+    "song_seconds": 11.412,
+    "song_resolved": true,
+    "title": "Experience (Reimagined)",
+    "artists": [
+      "Ludovico Einaudi"
+    ],
+    "ids": {
+      "applemusic": "1750709920",
+      "applemusic_url": "https://music.apple.com/us/album/experience-reimagined/1750709263?i=1750709920",
+      "bugs": "115360300",
+      "bugs_url": "https://music.bugs.co.kr/track/115360300",
+      "ytmusic": "X0uOx8nj67M"
+    },
+    "duration_ms": 380082,
+    "genres": [
+      "Classical"
+    ],
+    "explicit": false,
+    "credits_count": 0,
+    "song_graph_valid": true,
+    "album": {
+      "http": 200,
+      "seconds": 0.017,
+      "id": "1750709263",
+      "title": "In A Time Lapse (Reimagined) - EP",
+      "track_list": {
+        "returned": 4,
+        "total": 4,
+        "complete": true
+      },
+      "discs": 1,
+      "contains_source_track": true,
+      "graph_valid": true,
+      "song_reported_album_total": null,
+      "album_total": 4,
+      "reported_totals_consistent": true,
+      "source_disc_count": 1
+    },
+    "artist": {
+      "http": 200,
+      "seconds": 2.998,
+      "id": "7420827",
+      "name": "Ludovico Einaudi",
+      "identity_method": "exact_id",
+      "images": 0,
+      "recent_tracks": 5,
+      "biography": false,
+      "counts": {},
+      "metrics": [],
+      "sources": [
+        {
+          "provider": "applemusic",
+          "status": "ok",
+          "cached": false
+        }
+      ]
+    },
+    "source_observations": {
+      "applemusic": {
+        "title": "Experience (Reimagined)",
+        "duration_ms": 380082,
+        "isrc": null
+      },
+      "bugs": {
+        "title": "Experience (Reimagined)",
+        "duration_ms": 380000,
+        "isrc": null
+      },
+      "ytmusic": {
+        "title": "Experience (Reimagined)",
+        "duration_ms": 381000,
+        "isrc": null
+      }
+    },
+    "material_duration_conflict": false
+  }
+]

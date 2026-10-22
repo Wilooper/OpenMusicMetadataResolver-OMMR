@@ -1,0 +1,93 @@
+{
+  "provider": "jiosaavn",
+  "version": "jiosaavn-search-v4-routes",
+  "query": {
+    "artist": "Karan Aujla",
+    "title": "Boyfriend"
+  },
+  "adapter_status": "error",
+  "adapter_error_kind": "unavailable_catalog_page",
+  "operation": "search",
+  "candidates": [],
+  "requests": [
+    {
+      "phase": "adapter.search",
+      "method": "GET",
+      "url": "https://www.jiosaavn.com/api.php?__call=search.getResults\u0026_format=json\u0026_marker=0\u0026api_version=4\u0026ctx=web6dot0\u0026n=20\u0026p=0\u0026q=Karan+Aujla+Boyfriend",
+      "status": 200,
+      "protocol": "HTTP/2.0",
+      "content_type": "text/html",
+      "server": "openresty/1.27.1.1",
+      "bytes": 195,
+      "sha256": "5b131ca14aa96311d3432b0062c7443d3b0e6346ec279bd376a75f0a76bcd5d7",
+      "kind": "site_unavailable_html",
+      "elapsed_ms": 5640
+    },
+    {
+      "phase": "adapter.search",
+      "method": "GET",
+      "url": "https://www.jiosaavn.com/search/song/Karan%20Aujla%20Boyfriend",
+      "status": 200,
+      "protocol": "HTTP/2.0",
+      "content_type": "text/html",
+      "server": "openresty/1.27.1.1",
+      "bytes": 195,
+      "sha256": "5b131ca14aa96311d3432b0062c7443d3b0e6346ec279bd376a75f0a76bcd5d7",
+      "kind": "site_unavailable_html",
+      "elapsed_ms": 311
+    },
+    {
+      "phase": "route.home",
+      "method": "GET",
+      "url": "https://www.jiosaavn.com/",
+      "status": 200,
+      "protocol": "HTTP/2.0",
+      "content_type": "text/html",
+      "server": "openresty/1.27.1.1",
+      "bytes": 195,
+      "sha256": "5b131ca14aa96311d3432b0062c7443d3b0e6346ec279bd376a75f0a76bcd5d7",
+      "kind": "site_unavailable_html",
+      "elapsed_ms": 921
+    },
+    {
+      "phase": "route.share_lookup",
+      "method": "GET",
+      "url": "https://www.jiosaavn.com/api.php?__call=webapi.get\u0026_format=json\u0026_marker=0\u0026ctx=web6dot0\u0026token=OQsEfQFVUXk\u0026type=song",
+      "status": 200,
+      "protocol": "HTTP/2.0",
+      "content_type": "text/html",
+      "server": "openresty/1.27.1.1",
+      "bytes": 195,
+      "sha256": "5b131ca14aa96311d3432b0062c7443d3b0e6346ec279bd376a75f0a76bcd5d7",
+      "kind": "site_unavailable_html",
+      "elapsed_ms": 1030
+    },
+    {
+      "phase": "route.autocomplete",
+      "method": "GET",
+      "url": "https://www.jiosaavn.com/api.php?__call=autocomplete.get\u0026_format=json\u0026_marker=0\u0026cc=in\u0026includeMetaTags=1\u0026query=Karan+Aujla+Boyfriend",
+      "status": 200,
+      "protocol": "HTTP/2.0",
+      "content_type": "text/html",
+      "server": "openresty/1.27.1.1",
+      "bytes": 195,
+      "sha256": "5b131ca14aa96311d3432b0062c7443d3b0e6346ec279bd376a75f0a76bcd5d7",
+      "kind": "site_unavailable_html",
+      "elapsed_ms": 1008
+    },
+    {
+      "phase": "route.legacy_search",
+      "method": "GET",
+      "url": "https://www.jiosaavn.com/api.php?__call=search.getResults\u0026_format=json\u0026_marker=0\u0026ctx=web6dot0\u0026q=Karan+Aujla+Boyfriend",
+      "status": 200,
+      "protocol": "HTTP/2.0",
+      "content_type": "text/html",
+      "server": "openresty/1.27.1.1",
+      "bytes": 195,
+      "sha256": "5b131ca14aa96311d3432b0062c7443d3b0e6346ec279bd376a75f0a76bcd5d7",
+      "kind": "site_unavailable_html",
+      "elapsed_ms": 996
+    }
+  ],
+  "observation": "homepage_and_api_unavailable_origin_unconfirmed"
+}

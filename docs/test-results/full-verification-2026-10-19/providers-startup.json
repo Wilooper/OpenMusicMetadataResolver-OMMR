@@ -1,0 +1,182 @@
+{
+  "providers": [
+    {
+      "name": "acoustid",
+      "state": "disabled",
+      "mode": "off",
+      "credentials": "absent",
+      "reason": "credentials_missing",
+      "consecutive_failures": 0,
+      "last_checked": "2026-10-19T21:01:37.113081287+09:00",
+      "retry_at": "0001-01-01T00:00:00Z"
+    },
+    {
+      "name": "amazonmusic",
+      "state": "disabled",
+      "mode": "off",
+      "credentials": "absent",
+      "reason": "credentials_missing",
+      "consecutive_failures": 0,
+      "last_checked": "2026-10-19T21:01:37.113071442+09:00",
+      "retry_at": "0001-01-01T00:00:00Z"
+    },
+    {
+      "name": "applemusic",
+      "state": "active",
+      "mode": "public",
+      "credentials": "absent",
+      "consecutive_failures": 0,
+      "last_checked": "2026-10-19T21:01:37.113063671+09:00",
+      "retry_at": "0001-01-01T00:00:00Z"
+    },
+    {
+      "name": "bugs",
+      "state": "active",
+      "mode": "public",
+      "credentials": "absent",
+      "consecutive_failures": 0,
+      "last_checked": "2026-10-19T21:01:37.113060346+09:00",
+      "retry_at": "0001-01-01T00:00:00Z"
+    },
+    {
+      "name": "coverartarchive",
+      "state": "active",
+      "mode": "public",
+      "credentials": "absent",
+      "consecutive_failures": 0,
+      "last_checked": "2026-10-19T21:01:37.113077802+09:00",
+      "retry_at": "0001-01-01T00:00:00Z"
+    },
+    {
+      "name": "deezer",
+      "state": "active",
+      "mode": "public",
+      "credentials": "absent",
+      "consecutive_failures": 0,
+      "last_checked": "2026-10-19T21:01:37.11305655+09:00",
+      "retry_at": "0001-01-01T00:00:00Z"
+    },
+    {
+      "name": "discogs",
+      "state": "disabled",
+      "mode": "off",
+      "credentials": "absent",
+      "reason": "credentials_missing",
+      "consecutive_failures": 0,
+      "last_checked": "2026-10-19T21:01:37.113081137+09:00",
+      "retry_at": "0001-01-01T00:00:00Z"
+    },
+    {
+      "name": "genie",
+      "state": "active",
+      "mode": "public",
+      "credentials": "absent",
+      "consecutive_failures": 0,
+      "last_checked": "2026-10-19T21:01:37.113061598+09:00",
+      "retry_at": "0001-01-01T00:00:00Z"
+    },
+    {
+      "name": "jiosaavn",
+      "state": "active",
+      "mode": "public",
+      "credentials": "absent",
+      "consecutive_failures": 0,
+      "last_checked": "2026-10-19T21:01:37.113059645+09:00",
+      "retry_at": "0001-01-01T00:00:00Z"
+    },
+    {
+      "name": "lastfm",
+      "state": "disabled",
+      "mode": "off",
+      "credentials": "absent",
+      "reason": "credentials_missing",
+      "consecutive_failures": 0,
+      "last_checked": "2026-10-19T21:01:37.113080916+09:00",
+      "retry_at": "0001-01-01T00:00:00Z"
+    },
+    {
+      "name": "melon",
+      "state": "active",
+      "mode": "public",
+      "credentials": "absent",
+      "consecutive_failures": 0,
+      "last_checked": "2026-10-19T21:01:37.113062019+09:00",
+      "retry_at": "0001-01-01T00:00:00Z"
+    },
+    {
+      "name": "musicbrainz",
+      "state": "active",
+      "mode": "public",
+      "credentials": "absent",
+      "consecutive_failures": 0,
+      "last_checked": "2026-10-19T21:01:37.113050982+09:00",
+      "retry_at": "0001-01-01T00:00:00Z"
+    },
+    {
+      "name": "musicbrainz_release",
+      "state": "active",
+      "mode": "public",
+      "credentials": "absent",
+      "consecutive_failures": 0,
+      "last_checked": "2026-10-19T21:01:37.113079014+09:00",
+      "retry_at": "0001-01-01T00:00:00Z"
+    },
+    {
+      "name": "pandora",
+      "state": "disabled",
+      "mode": "off",
+      "credentials": "absent",
+      "reason": "credentials_missing",
+      "consecutive_failures": 0,
+      "last_checked": "2026-10-19T21:01:37.113073996+09:00",
+      "retry_at": "0001-01-01T00:00:00Z"
+    },
+    {
+      "name": "qobuz",
+      "state": "disabled",
+      "mode": "off",
+      "credentials": "absent",
+      "reason": "credentials_missing",
+      "consecutive_failures": 0,
+      "last_checked": "2026-10-19T21:01:37.113070681+09:00",
+      "retry_at": "0001-01-01T00:00:00Z"
+    },
+    {
+      "name": "soundcloud",
+      "state": "active",
+      "mode": "public",
+      "credentials": "absent",
+      "consecutive_failures": 0,
+      "last_checked": "2026-10-19T21:01:37.113057872+09:00",
+      "retry_at": "0001-01-01T00:00:00Z"
+    },
+    {
+      "name": "spotify",
+      "state": "active",
+      "mode": "public",
+      "credentials": "absent",
+      "consecutive_failures": 0,
+      "last_checked": "2026-10-19T21:01:37.11306266+09:00",
+      "retry_at": "0001-01-01T00:00:00Z"
+    },
+    {
+      "name": "tidal",
+      "state": "disabled",
+      "mode": "off",
+      "credentials": "absent",
+      "reason": "credentials_missing",
+      "consecutive_failures": 0,
+      "last_checked": "2026-10-19T21:01:37.113071242+09:00",
+      "retry_at": "0001-01-01T00:00:00Z"
+    },
+    {
+      "name": "ytmusic",
+      "state": "active",
+      "mode": "public",
+      "credentials": "absent",
+      "consecutive_failures": 0,
+      "last_checked": "2026-10-19T21:01:37.113069399+09:00",
+      "retry_at": "0001-01-01T00:00:00Z"
+    }
+  ]
+}

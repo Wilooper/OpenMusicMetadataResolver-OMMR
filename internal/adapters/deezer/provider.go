@@ -4,13 +4,14 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"io"
 	"net/http"
 	"net/url"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/ommr/ommr/internal/adapters"
+	"github.com/ommr/ommr/internal/adapters/webdata"
 	"github.com/ommr/ommr/internal/models/canonical"
 	"github.com/ommr/ommr/internal/models/provider"
 	"github.com/ommr/ommr/pkg/query"
@@ -18,19 +19,21 @@ import (
 
 const (
 	ProviderName    = "deezer"
-	ProviderVersion = "deezer-v1"
+	ProviderVersion = "deezer-v3-search"
 	BaseURL         = "https://api.deezer.com"
 )
 
 type Provider struct {
 	httpClient *http.Client
+	web        *webdata.Fallback
 }
 
 var _ adapters.ProviderAdapter = (*Provider)(nil)
 
 func New() *Provider {
 	return &Provider{
-		httpClient: &http.Client{Timeout: 5 * time.Second},
+		web:        webdata.NewFallback("www.deezer.com"),
+		httpClient: &http.Client{Timeout: 15 * time.Second},
 	}
 }
 
@@ -53,6 +56,9 @@ func (p *Provider) FetchByID(ctx context.Context, idType string, id string) (*ca
 		return nil, err
 	}
 
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("Accept-Language", "en")
+	req.Header.Set("User-Agent", "OMMR/1.0 (https://github.com/Wilooper/OpenMusicMetadataResolver-OMMR)")
 	resp, err := p.httpClient.Do(req)
 	if err != nil {
 		return nil, err
@@ -63,7 +69,10 @@ func (p *Provider) FetchByID(ctx context.Context, idType string, id string) (*ca
 		return nil, fmt.Errorf("deezer API returned status %d", resp.StatusCode)
 	}
 
-	body, err := io.ReadAll(resp.Body)
+	body, err := webdata.Read(resp, webdata.Request{Provider: ProviderName, Mode: "track", ID: id})
+	if webdata.Recoverable(err) && p.web != nil && validWebTrackID(id) {
+		body, err = p.web.Try(ctx, "https://www.deezer.com/track/"+id, webdata.Request{Provider: ProviderName, Mode: "track", ID: id})
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -72,7 +81,7 @@ func (p *Provider) FetchByID(ctx context.Context, idType string, id string) (*ca
 	if err := json.Unmarshal(body, &trackResp); err != nil {
 		return nil, err
 	}
-	if trackResp.ID == 0 {
+	if trackResp.ID == 0 || strconv.FormatInt(trackResp.ID, 10) != id {
 		return nil, fmt.Errorf("deezer track %s not found", id)
 	}
 
@@ -90,7 +99,9 @@ func (p *Provider) Search(ctx context.Context, q adapters.Query) ([]canonical.Tr
 	if q.ISRC != "" {
 		searchQ = fmt.Sprintf("isrc:\"%s\"", q.ISRC)
 	} else if q.Artist != "" && q.Title != "" {
-		searchQ = fmt.Sprintf("artist:\"%s\" track:\"%s\"", query.CleanArtist(q.Artist), query.CleanTitle(q.Title))
+		// Live catalog search omits valid recordings with combined field filters.
+		// Retrieve bounded text candidates; the resolver still verifies identity.
+		searchQ = strings.TrimSpace(q.Artist + " " + q.Title)
 	} else if q.Title != "" {
 		searchQ = query.CleanTitle(q.Title)
 	} else {
@@ -103,6 +114,9 @@ func (p *Provider) Search(ctx context.Context, q adapters.Query) ([]canonical.Tr
 		return nil, err
 	}
 
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("Accept-Language", "en")
+	req.Header.Set("User-Agent", "OMMR/1.0 (https://github.com/Wilooper/OpenMusicMetadataResolver-OMMR)")
 	resp, err := p.httpClient.Do(req)
 	if err != nil {
 		return nil, err
@@ -113,7 +127,10 @@ func (p *Provider) Search(ctx context.Context, q adapters.Query) ([]canonical.Tr
 		return nil, fmt.Errorf("deezer search returned status %d", resp.StatusCode)
 	}
 
-	body, err := io.ReadAll(resp.Body)
+	body, err := webdata.Read(resp, webdata.Request{Provider: ProviderName, Mode: "search"})
+	if q.ISRC == "" && webdata.Recoverable(err) && p.web != nil {
+		body, err = p.web.Try(ctx, "https://www.deezer.com/search/"+url.PathEscape(strings.TrimSpace(q.Artist+" "+q.Title))+"/track", webdata.Request{Provider: ProviderName, Mode: "search"})
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -125,6 +142,11 @@ func (p *Provider) Search(ctx context.Context, q adapters.Query) ([]canonical.Tr
 
 	candidates := make([]canonical.TrackCandidate, 0, len(searchResp.Data))
 	for _, item := range searchResp.Data {
+		// Text search includes tribute artists whose names can pass fuzzy scoring.
+		// Require a reported artist name rather than promoting a near-name cover.
+		if q.ISRC == "" && q.Artist != "" && !searchArtist(item, q.Artist) {
+			continue
+		}
 		cand := canonical.TrackCandidate{
 			Provider:    ProviderName,
 			Track:       p.normalizeTrack(item),
@@ -137,21 +159,34 @@ func (p *Provider) Search(ctx context.Context, q adapters.Query) ([]canonical.Tr
 	return candidates, nil
 }
 
+func searchArtist(item provider.DeezerTrackResponse, name string) bool {
+	name = query.CleanArtist(name)
+	if name != "" && query.CleanArtist(item.Artist.Name) == name {
+		return true
+	}
+	for _, artist := range item.Contributors {
+		if name != "" && query.CleanArtist(artist.Name) == name {
+			return true
+		}
+	}
+	return false
+}
+
 func (p *Provider) normalizeTrack(dt provider.DeezerTrackResponse) canonical.Track {
 	artists := []canonical.Artist{
 		{
 			Name: dt.Artist.Name,
 			Role: "main",
-			IDs:  map[string]string{"deezer": strconv.FormatInt(dt.Artist.ID, 10)},
+			IDs:  deezerEntityIDs(dt.Artist.ID),
 		},
 	}
 
 	for _, contrib := range dt.Contributors {
-		if contrib.ID != dt.Artist.ID {
+		if strings.TrimSpace(contrib.Name) != "" && !strings.EqualFold(contrib.Name, dt.Artist.Name) && (contrib.ID <= 0 || contrib.ID != dt.Artist.ID) {
 			artists = append(artists, canonical.Artist{
 				Name: contrib.Name,
 				Role: contrib.Role,
-				IDs:  map[string]string{"deezer": strconv.FormatInt(contrib.ID, 10)},
+				IDs:  deezerEntityIDs(contrib.ID),
 			})
 		}
 	}
@@ -167,13 +202,19 @@ func (p *Provider) normalizeTrack(dt provider.DeezerTrackResponse) canonical.Tra
 		images = append(images, canonical.Image{URL: dt.Album.CoverMedium, Width: 250, Height: 250, Type: "cover"})
 	}
 
+	if len(dt.StructuredMetadata) > 0 {
+		for i := range images {
+			images[i].Width = 0
+			images[i].Height = 0
+		}
+	}
 	album := canonical.Album{
 		Title:       dt.Album.Title,
 		ReleaseDate: dt.Album.ReleaseDate,
 		Label:       dt.Album.Label,
 		UPC:         dt.Album.UPC,
 		Images:      images,
-		IDs:         map[string]string{"deezer": strconv.FormatInt(dt.Album.ID, 10)},
+		IDs:         deezerEntityIDs(dt.Album.ID),
 	}
 
 	return canonical.Track{
@@ -195,4 +236,29 @@ func (p *Provider) normalizeTrack(dt provider.DeezerTrackResponse) canonical.Tra
 		IDs:         map[string]string{"deezer": strconv.FormatInt(dt.ID, 10)},
 		Sources:     []string{ProviderName},
 	}
+}
+
+func validWebTrackID(id string) bool {
+	if id == "" || len(id) > 18 {
+		return false
+	}
+	for _, v := range id {
+		if v < '0' || v > '9' {
+			return false
+		}
+	}
+	return true
+}
+
+func (p *Provider) SetFallbackWait(wait func(context.Context) error) {
+	if p.web != nil {
+		p.web.SetWait(wait)
+	}
+}
+
+func deezerEntityIDs(id int64) map[string]string {
+	if id > 0 {
+		return map[string]string{"deezer": strconv.FormatInt(id, 10)}
+	}
+	return map[string]string{}
 }

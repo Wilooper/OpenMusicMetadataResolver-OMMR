@@ -1,0 +1,56 @@
+[
+  {
+    "case": "jio-api",
+    "url": "https://www.jiosaavn.com/api.php?__call=search.getResults&q=Karan%20Aujla%20Boyfriend&_format=json&_marker=0&ctx=web6dot0",
+    "status": 200,
+    "type": "text/html",
+    "bytes": 195,
+    "preview": "<html>\n    <head><title>Site Unavailable</title></head>\n    <body>\n      <center>\n        <h1>Site Unavailable",
+    "sha256": "5b131ca14aa96311d3432b0062c7443d3b0e6346ec279bd376a75f0a76bcd5d7"
+  },
+  {
+    "case": "jio-web",
+    "url": "https://www.jiosaavn.com/search/song/Karan%20Aujla%20Boyfriend",
+    "status": 200,
+    "type": "text/html",
+    "bytes": 195,
+    "preview": "<html>\n    <head><title>Site Unavailable</title></head>\n    <body>\n      <center>\n        <h1>Site Unavailable",
+    "sha256": "5b131ca14aa96311d3432b0062c7443d3b0e6346ec279bd376a75f0a76bcd5d7"
+  },
+  {
+    "case": "deezer-api",
+    "url": "https://api.deezer.com/search?q=Daft%20Punk%20Get%20Lucky&limit=5",
+    "status": 200,
+    "type": "text/html",
+    "bytes": 195,
+    "preview": "<html>\n    <head><title>Site Unavailable</title></head>\n    <body>\n      <center>\n        <h1>Site Unavailable",
+    "sha256": "5b131ca14aa96311d3432b0062c7443d3b0e6346ec279bd376a75f0a76bcd5d7"
+  },
+  {
+    "case": "deezer-web",
+    "url": "https://www.deezer.com/search/Daft%20Punk%20Get%20Lucky/track",
+    "status": 200,
+    "type": "text/html",
+    "bytes": 195,
+    "preview": "<html>\n    <head><title>Site Unavailable</title></head>\n    <body>\n      <center>\n        <h1>Site Unavailable",
+    "sha256": "5b131ca14aa96311d3432b0062c7443d3b0e6346ec279bd376a75f0a76bcd5d7"
+  },
+  {
+    "case": "mb-api",
+    "url": "https://musicbrainz.org/ws/2/recording/?query=artist:Daft%20Punk%20AND%20recording:Get%20Lucky&fmt=json&limit=5",
+    "status": 200,
+    "type": "text/html",
+    "bytes": 195,
+    "preview": "<html>\n    <head><title>Site Unavailable</title></head>\n    <body>\n      <center>\n        <h1>Site Unavailable",
+    "sha256": "5b131ca14aa96311d3432b0062c7443d3b0e6346ec279bd376a75f0a76bcd5d7"
+  },
+  {
+    "case": "mb-web",
+    "url": "https://musicbrainz.org/search?query=Daft%20Punk%20Get%20Lucky&type=recording&method=indexed",
+    "status": 200,
+    "type": "text/html",
+    "bytes": 195,
+    "preview": "<html>\n    <head><title>Site Unavailable</title></head>\n    <body>\n      <center>\n        <h1>Site Unavailable",
+    "sha256": "5b131ca14aa96311d3432b0062c7443d3b0e6346ec279bd376a75f0a76bcd5d7"
+  }
+]

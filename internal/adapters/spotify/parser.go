@@ -2,6 +2,7 @@ package spotify
 
 import (
 	"encoding/json"
+	"fmt"
 	"regexp"
 	"strings"
 
@@ -56,7 +57,11 @@ func ParseOembed(spotifyID string, oembed provider.SpotifyOembedResponse) canoni
 // It prefers the __NEXT_DATA__ payload (rich metadata) and falls back to the
 // legacy "resource" script tag.
 func ParseEmbedHTML(spotifyID string, htmlContent string) (*canonical.Track, error) {
-	if track, err := ParseEmbedNextData(spotifyID, []byte(htmlContent)); err == nil && track != nil && track.Title != "" {
+	track, err := ParseEmbedNextData(spotifyID, []byte(htmlContent))
+	if err != nil {
+		return nil, err
+	}
+	if track != nil && track.Title != "" {
 		return track, nil
 	}
 
@@ -70,6 +75,12 @@ func ParseEmbedHTML(spotifyID string, htmlContent string) (*canonical.Track, err
 		return nil, err
 	}
 
+	if id, ok := stateData["id"].(string); ok && id != "" && id != spotifyID {
+		return nil, fmt.Errorf("Spotify legacy embed returned another ID")
+	}
+	if uri, ok := stateData["uri"].(string); ok && uri != "" && uri != "spotify:track:"+spotifyID {
+		return nil, fmt.Errorf("Spotify legacy embed returned another URI")
+	}
 	title, _ := stateData["name"].(string)
 	if title == "" {
 		return nil, nil
@@ -100,6 +111,15 @@ func ParseEmbedNextData(spotifyID string, body []byte) (*canonical.Track, error)
 		return nil, nil
 	}
 
+	if entity.ID != "" && entity.ID != spotifyID {
+		return nil, fmt.Errorf("Spotify embed returned another track ID")
+	}
+	if entity.URI != "" && entity.URI != "spotify:track:"+spotifyID {
+		return nil, fmt.Errorf("Spotify embed returned another track URI")
+	}
+	if entity.ID == "" && entity.URI == "" {
+		return nil, fmt.Errorf("Spotify embed returned no track identity")
+	}
 	artists := make([]canonical.Artist, 0, len(entity.Artists))
 	for _, a := range entity.Artists {
 		artist := canonical.Artist{Name: a.Name, Role: "main"}

@@ -1,0 +1,41 @@
+{
+  "provider": "musicbrainz",
+  "version": "musicbrainz-v3-html",
+  "query": {
+    "artist": "Juss",
+    "title": "Mera Mann"
+  },
+  "adapter_status": "error",
+  "adapter_error_kind": "unavailable_catalog_page",
+  "operation": "search",
+  "candidates": [],
+  "requests": [
+    {
+      "phase": "adapter.search",
+      "method": "GET",
+      "url": "https://musicbrainz.org/ws/2/recording/?fmt=json\u0026limit=5\u0026query=artist%3A%22juss%22+AND+recording%3A%22mera+mann%22",
+      "status": 200,
+      "protocol": "HTTP/2.0",
+      "content_type": "text/html",
+      "server": "openresty/1.27.1.1",
+      "bytes": 195,
+      "sha256": "5b131ca14aa96311d3432b0062c7443d3b0e6346ec279bd376a75f0a76bcd5d7",
+      "kind": "site_unavailable_html",
+      "elapsed_ms": 6167
+    },
+    {
+      "phase": "adapter.search",
+      "method": "GET",
+      "url": "https://musicbrainz.org/search?method=indexed\u0026query=artist%3A%22juss%22+AND+recording%3A%22mera+mann%22\u0026type=recording",
+      "status": 200,
+      "protocol": "HTTP/2.0",
+      "content_type": "text/html",
+      "server": "openresty/1.27.1.1",
+      "bytes": 195,
+      "sha256": "5b131ca14aa96311d3432b0062c7443d3b0e6346ec279bd376a75f0a76bcd5d7",
+      "kind": "site_unavailable_html",
+      "elapsed_ms": 345
+    }
+  ],
+  "observation": "insufficient_evidence"
+}

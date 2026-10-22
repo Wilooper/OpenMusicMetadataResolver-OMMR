@@ -77,11 +77,20 @@ func (m *Matcher) ScoreCandidate(cand canonical.TrackCandidate, target adapters.
 	//    unrelated artists sharing a common prefix are not over-scored)
 	targetArtist := query.CleanArtist(target.Artist)
 	if targetArtist != "" && len(cand.Track.Artists) > 0 {
-		candArtist := query.CleanArtist(cand.Track.Artists[0].Name)
-		jw := JaroWinkler(targetArtist, candArtist)
-		ts := TokenSetRatio(targetArtist, candArtist)
-		score := 0.6*jw + 0.4*ts
-		breakdown.Artists = floatPtr(score)
+		names := make([]string, 0, len(cand.Track.Artists)+1)
+		for _, artist := range cand.Track.Artists {
+			names = append(names, artist.Name)
+		}
+		names = append(names, strings.Join(names, " "))
+		best := 0.0
+		for _, name := range names {
+			candArtist := query.CleanArtist(name)
+			score := 0.6*JaroWinkler(targetArtist, candArtist) + 0.4*TokenSetRatio(targetArtist, candArtist)
+			if score > best {
+				best = score
+			}
+		}
+		breakdown.Artists = floatPtr(best)
 	} else if len(cand.Track.Artists) > 0 {
 		breakdown.Artists = floatPtr(0.8)
 	}
@@ -161,48 +170,5 @@ func (m *Matcher) ScoreCandidates(candidates []canonical.TrackCandidate, target 
 // directIDMatch reports whether the target query carries a platform ID that
 // exactly matches one of the candidate's IDs.
 func directIDMatch(target adapters.Query, c canonical.TrackCandidate) bool {
-	for k, v := range c.Track.IDs {
-		if !strings.EqualFold(k, c.Provider) {
-			continue
-		}
-		switch k {
-		case "spotify":
-			if target.SpotifyID != "" && v == target.SpotifyID {
-				return true
-			}
-		case "ytmusic":
-			if target.YouTubeID != "" && v == target.YouTubeID {
-				return true
-			}
-		case "deezer":
-			if target.DeezerID != "" && v == target.DeezerID {
-				return true
-			}
-		case "applemusic":
-			if target.AppleID != "" && v == target.AppleID {
-				return true
-			}
-		case "soundcloud":
-			if target.SoundCloudID != "" && v == target.SoundCloudID {
-				return true
-			}
-		case "qobuz":
-			if target.QobuzID != "" && v == target.QobuzID {
-				return true
-			}
-		case "tidal":
-			if target.TidalID != "" && v == target.TidalID {
-				return true
-			}
-		case "amazonmusic":
-			if target.AmazonMusicID != "" && v == target.AmazonMusicID {
-				return true
-			}
-		case "pandora":
-			if target.PandoraID != "" && v == target.PandoraID {
-				return true
-			}
-		}
-	}
-	return false
+	return adapters.DirectIDMatch(target, c)
 }

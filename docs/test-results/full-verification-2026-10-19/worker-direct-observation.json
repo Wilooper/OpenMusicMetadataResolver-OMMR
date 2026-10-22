@@ -1,0 +1,28 @@
+{
+  "exit_code": 0,
+  "observations": [
+    {
+      "operation": "album",
+      "ok": false,
+      "exception_type": "ReadTimeout",
+      "cause_type": null,
+      "seconds": 3.005
+    },
+    {
+      "operation": "credits",
+      "ok": true,
+      "title": null,
+      "track_count": null,
+      "returned": 0,
+      "sections": [
+        "other_sections",
+        "performed_by",
+        "written_by",
+        "produced_by",
+        "music_metadata_provided_by"
+      ],
+      "seconds": 3.461
+    }
+  ],
+  "stderr_present": false
+}

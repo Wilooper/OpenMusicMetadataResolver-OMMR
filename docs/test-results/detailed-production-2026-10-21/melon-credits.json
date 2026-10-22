@@ -1,0 +1,415 @@
+{
+  "track": {
+    "album_placements": [
+      {
+        "provider": "melon",
+        "album_id": "12061172",
+        "track_id": "39664161",
+        "selected": true
+      }
+    ],
+    "credit_details": {
+      "contributors": [
+        {
+          "id": "melon:artist:2900906",
+          "name": "Karan Aujla",
+          "provider": "melon",
+          "native_id": "2900906"
+        },
+        {
+          "id": "melon:artist:2942719",
+          "name": "Ikky",
+          "provider": "melon",
+          "native_id": "2942719"
+        },
+        {
+          "id": "melon:local_artist:0745b8c8c732fe952eb29595",
+          "name": "Karan Aujla",
+          "provider": "melon",
+          "local": true
+        },
+        {
+          "id": "melon:local_artist:9ce917ed44cec603f48b580e",
+          "name": "Ikwinder Sahota",
+          "provider": "melon",
+          "local": true
+        },
+        {
+          "id": "melon:local_artist:c0c36fff1a1e1de51d8761fe",
+          "name": "Milan D'Agostini",
+          "provider": "melon",
+          "local": true
+        }
+      ],
+      "credits": [
+        {
+          "from": "melon:artist:2900906",
+          "to": "melon:recording:39664161",
+          "type": "credit",
+          "source": "melon",
+          "role": "primary_artist",
+          "source_role": "main",
+          "credited_as": "Karan Aujla"
+        },
+        {
+          "from": "melon:artist:2942719",
+          "to": "melon:recording:39664161",
+          "type": "credit",
+          "source": "melon",
+          "role": "primary_artist",
+          "source_role": "main",
+          "credited_as": "Ikky"
+        },
+        {
+          "from": "melon:local_artist:0745b8c8c732fe952eb29595",
+          "to": "melon:recording:39664161",
+          "type": "credit",
+          "source": "melon",
+          "role": "composer",
+          "source_role": "작곡",
+          "credited_as": "Karan Aujla"
+        },
+        {
+          "from": "melon:local_artist:9ce917ed44cec603f48b580e",
+          "to": "melon:recording:39664161",
+          "type": "credit",
+          "source": "melon",
+          "role": "composer",
+          "source_role": "작곡",
+          "credited_as": "Ikwinder Sahota"
+        },
+        {
+          "from": "melon:local_artist:c0c36fff1a1e1de51d8761fe",
+          "to": "melon:recording:39664161",
+          "type": "credit",
+          "source": "melon",
+          "role": "composer",
+          "source_role": "작곡",
+          "credited_as": "Milan D'Agostini"
+        }
+      ]
+    },
+    "canonical_id": "ommr_track_2a01a46d3adef36c",
+    "identity_status": "strong",
+    "title": "Boyfriend",
+    "artists": [
+      {
+        "name": "Karan Aujla",
+        "role": "main",
+        "ids": {
+          "melon": "2900906"
+        }
+      },
+      {
+        "name": "Ikky",
+        "role": "main",
+        "ids": {
+          "melon": "2942719"
+        }
+      }
+    ],
+    "album": {
+      "title": "P-POP CULTURE",
+      "ids": {
+        "melon": "12061172"
+      }
+    },
+    "duration_ms": 0,
+    "release_date": "2025-08-22",
+    "music_graph": {
+      "version": 1,
+      "root": "ommr:recording:ommr_track_2a01a46d3adef36c",
+      "nodes": [
+        {
+          "id": "melon:artist:2900906",
+          "type": "artist",
+          "provider": "melon",
+          "native_id": "2900906",
+          "name": "Karan Aujla"
+        },
+        {
+          "id": "melon:artist:2942719",
+          "type": "artist",
+          "provider": "melon",
+          "native_id": "2942719",
+          "name": "Ikky"
+        },
+        {
+          "id": "melon:local_artist:0745b8c8c732fe952eb29595",
+          "type": "artist",
+          "provider": "melon",
+          "name": "Karan Aujla",
+          "local": true
+        },
+        {
+          "id": "melon:local_artist:9ce917ed44cec603f48b580e",
+          "type": "artist",
+          "provider": "melon",
+          "name": "Ikwinder Sahota",
+          "local": true
+        },
+        {
+          "id": "melon:local_artist:c0c36fff1a1e1de51d8761fe",
+          "type": "artist",
+          "provider": "melon",
+          "name": "Milan D'Agostini",
+          "local": true
+        },
+        {
+          "id": "melon:recording:39664161",
+          "type": "recording",
+          "provider": "melon",
+          "native_id": "39664161",
+          "name": "Boyfriend"
+        },
+        {
+          "id": "melon:release:12061172",
+          "type": "release",
+          "provider": "melon",
+          "native_id": "12061172",
+          "name": "P-POP CULTURE"
+        },
+        {
+          "id": "ommr:recording:ommr_track_2a01a46d3adef36c",
+          "type": "recording",
+          "provider": "ommr",
+          "native_id": "ommr_track_2a01a46d3adef36c",
+          "name": "Boyfriend"
+        }
+      ],
+      "edges": [
+        {
+          "from": "melon:artist:2900906",
+          "to": "melon:recording:39664161",
+          "type": "credit",
+          "source": "melon",
+          "role": "primary_artist",
+          "source_role": "main",
+          "credited_as": "Karan Aujla"
+        },
+        {
+          "from": "melon:artist:2942719",
+          "to": "melon:recording:39664161",
+          "type": "credit",
+          "source": "melon",
+          "role": "primary_artist",
+          "source_role": "main",
+          "credited_as": "Ikky"
+        },
+        {
+          "from": "melon:local_artist:0745b8c8c732fe952eb29595",
+          "to": "melon:recording:39664161",
+          "type": "credit",
+          "source": "melon",
+          "role": "composer",
+          "source_role": "작곡",
+          "credited_as": "Karan Aujla"
+        },
+        {
+          "from": "melon:local_artist:9ce917ed44cec603f48b580e",
+          "to": "melon:recording:39664161",
+          "type": "credit",
+          "source": "melon",
+          "role": "composer",
+          "source_role": "작곡",
+          "credited_as": "Ikwinder Sahota"
+        },
+        {
+          "from": "melon:local_artist:c0c36fff1a1e1de51d8761fe",
+          "to": "melon:recording:39664161",
+          "type": "credit",
+          "source": "melon",
+          "role": "composer",
+          "source_role": "작곡",
+          "credited_as": "Milan D'Agostini"
+        },
+        {
+          "from": "melon:recording:39664161",
+          "to": "melon:release:12061172",
+          "type": "appears_on",
+          "source": "melon"
+        },
+        {
+          "from": "ommr:recording:ommr_track_2a01a46d3adef36c",
+          "to": "melon:recording:39664161",
+          "type": "matched_catalog_entity",
+          "source": "melon"
+        }
+      ],
+      "truncated": false
+    },
+    "provider_data": {
+      "melon": {
+        "catalog": {
+          "album": "P-POP CULTURE",
+          "album_id": "12061172",
+          "artists": [
+            {
+              "id": "2900906",
+              "name": "Karan Aujla"
+            },
+            {
+              "id": "2942719",
+              "name": "Ikky"
+            }
+          ],
+          "credits": [
+            {
+              "name": "Ikwinder Sahota",
+              "role": "composer",
+              "source_role": "작곡"
+            },
+            {
+              "name": "Karan Aujla",
+              "role": "composer",
+              "source_role": "작곡"
+            },
+            {
+              "name": "Milan D'Agostini",
+              "role": "composer",
+              "source_role": "작곡"
+            }
+          ],
+          "fields": {
+            "FLAC": "Flac 16/24bit",
+            "공유": "",
+            "댓글": "0개",
+            "발매일": "2025.08.22",
+            "앨범": "P-POP CULTURE",
+            "장르": "POP"
+          },
+          "id": "39664161",
+          "image": "https://cdnimg.melon.co.kr/cm2/album/images/120/61/172/12061172_20250819134821.jpg",
+          "structured": {
+            "@context": "http://schema.org",
+            "@id": "http://www.melon.com/album/detail.htm?albumId=39664161&ref=google",
+            "@type": "MusicRecording",
+            "description": "Boyfriend",
+            "image": "https://cdnimg.melon.co.kr/cm2/album/images/120/61/172/12061172_20250819134821.jpg",
+            "inAlbum": {
+              "@id": "http://www.melon.com/album/detail.htm?albumId=12061172",
+              "@type": "MusicAlbum",
+              "name": "P-POP CULTURE"
+            },
+            "name": "Boyfriend",
+            "sameAs": "http://www.melon.com/song/detail.htm?songId=39664161",
+            "url": [
+              "http://www.melon.com/album/detail.htm?albumId=39664161&ref=google",
+              "android-app://com.iloen.melon/melonapp/details/song/39664161?autoplay=Y&ref=google&pvmenuid=1000000455&contstype=N10001&contsid=39664161"
+            ]
+          },
+          "title": "Boyfriend"
+        },
+        "extra": {
+          "korean_detail": true
+        },
+        "metadata": {
+          "album": {
+            "ids": {
+              "melon": "12061172"
+            },
+            "title": "P-POP CULTURE"
+          },
+          "artists": [
+            {
+              "ids": {
+                "melon": "2900906"
+              },
+              "name": "Karan Aujla",
+              "role": "main"
+            },
+            {
+              "ids": {
+                "melon": "2942719"
+              },
+              "name": "Ikky",
+              "role": "main"
+            }
+          ],
+          "credits": [
+            {
+              "name": "Ikwinder Sahota",
+              "roles": [
+                "composer"
+              ]
+            },
+            {
+              "name": "Karan Aujla",
+              "roles": [
+                "composer"
+              ]
+            },
+            {
+              "name": "Milan D'Agostini",
+              "roles": [
+                "composer"
+              ]
+            }
+          ],
+          "duration_ms": 0,
+          "explicit": false,
+          "genres": [
+            "POP"
+          ],
+          "ids": {
+            "melon": "39664161",
+            "melon_url": "https://www.melon.com/song/detail.htm?songId=39664161"
+          },
+          "images": [
+            {
+              "url": "https://cdnimg.melon.co.kr/cm2/album/images/120/61/172/12061172_20250819134821.jpg"
+            }
+          ],
+          "release_date": "2025-08-22",
+          "title": "Boyfriend"
+        }
+      }
+    },
+    "explicit_status": "unknown",
+    "explicit": false,
+    "genres": [
+      "POP"
+    ],
+    "credits": [
+      {
+        "name": "Ikwinder Sahota",
+        "roles": [
+          "composer"
+        ]
+      },
+      {
+        "name": "Karan Aujla",
+        "roles": [
+          "composer"
+        ]
+      },
+      {
+        "name": "Milan D'Agostini",
+        "roles": [
+          "composer"
+        ]
+      }
+    ],
+    "images": [
+      {
+        "url": "https://cdnimg.melon.co.kr/cm2/album/images/120/61/172/12061172_20250819134821.jpg"
+      }
+    ],
+    "ids": {
+      "melon": "39664161",
+      "melon_url": "https://www.melon.com/song/detail.htm?songId=39664161"
+    },
+    "extensions": {
+      "platform_links": {
+        "ommr_id": "ommr_track_2a01a46d3adef36c",
+        "platforms": {
+          "melon": {
+            "id": "39664161",
+            "id_type": "track_id",
+            "url": "https://www.melon.com/song/detail.htm?songId=39664161"
+          }
+        }
+      }
+    }
+  }
+}

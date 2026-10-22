@@ -1,0 +1,8 @@
+{
+  "target": "android/arm64",
+  "cgo_enabled": false,
+  "exit_code": 0,
+  "seconds": 16.775,
+  "output": "",
+  "execution": "Not executed; Linux host has no Android runtime"
+}

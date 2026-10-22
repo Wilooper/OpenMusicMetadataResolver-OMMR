@@ -1,0 +1,900 @@
+{
+  "album": {
+    "music_graph": {
+      "version": 1,
+      "root": "applemusic:release:1829591921",
+      "nodes": [
+        {
+          "id": "applemusic:artist:914892130",
+          "type": "artist",
+          "provider": "applemusic",
+          "native_id": "914892130",
+          "name": "Karan Aujla & Ikky"
+        },
+        {
+          "id": "applemusic:release:1829591921",
+          "type": "release",
+          "provider": "applemusic",
+          "native_id": "1829591921",
+          "name": "P-POP CULTURE"
+        },
+        {
+          "id": "applemusic:track_entry:1829591921/1/1/1829591922",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1829591921/1/1/1829591922",
+          "name": "I Really Do..."
+        },
+        {
+          "id": "applemusic:track_entry:1829591921/1/2/1829591983",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1829591921/1/2/1829591983",
+          "name": "For A Reason"
+        },
+        {
+          "id": "applemusic:track_entry:1829591921/1/3/1829591985",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1829591921/1/3/1829591985",
+          "name": "You're U Tho"
+        },
+        {
+          "id": "applemusic:track_entry:1829591921/1/4/1829591986",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1829591921/1/4/1829591986",
+          "name": "Boyfriend"
+        },
+        {
+          "id": "applemusic:track_entry:1829591921/1/5/1829591989",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1829591921/1/5/1829591989",
+          "name": "HIM."
+        },
+        {
+          "id": "applemusic:track_entry:1829591921/2/1/1829591990",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1829591921/2/1/1829591990",
+          "name": "Flip-Side (Sandy's Interlude)"
+        },
+        {
+          "id": "applemusic:track_entry:1829591921/2/2/1829591991",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1829591921/2/2/1829591991",
+          "name": "I'ma Do My Thiiing"
+        },
+        {
+          "id": "applemusic:track_entry:1829591921/2/3/1829591992",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1829591921/2/3/1829591992",
+          "name": "Daytona"
+        },
+        {
+          "id": "applemusic:track_entry:1829591921/2/4/1829591994",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1829591921/2/4/1829591994",
+          "name": "7.7 Magnitude"
+        },
+        {
+          "id": "applemusic:track_entry:1829591921/2/5/1829591995",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1829591921/2/5/1829591995",
+          "name": "MF Gabhru!"
+        },
+        {
+          "id": "applemusic:track_entry:1829591921/2/6/1829591997",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1829591921/2/6/1829591997",
+          "name": "P-POP CULTURE"
+        }
+      ],
+      "edges": [
+        {
+          "from": "applemusic:artist:914892130",
+          "to": "applemusic:release:1829591921",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "Karan Aujla & Ikky"
+        },
+        {
+          "from": "applemusic:artist:914892130",
+          "to": "applemusic:track_entry:1829591921/1/1/1829591922",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "Karan Aujla & Ikky"
+        },
+        {
+          "from": "applemusic:artist:914892130",
+          "to": "applemusic:track_entry:1829591921/1/2/1829591983",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "Karan Aujla & Ikky"
+        },
+        {
+          "from": "applemusic:artist:914892130",
+          "to": "applemusic:track_entry:1829591921/1/3/1829591985",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "Karan Aujla & Ikky"
+        },
+        {
+          "from": "applemusic:artist:914892130",
+          "to": "applemusic:track_entry:1829591921/1/4/1829591986",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "Karan Aujla & Ikky"
+        },
+        {
+          "from": "applemusic:artist:914892130",
+          "to": "applemusic:track_entry:1829591921/1/5/1829591989",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "Karan Aujla & Ikky"
+        },
+        {
+          "from": "applemusic:artist:914892130",
+          "to": "applemusic:track_entry:1829591921/2/1/1829591990",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "Karan Aujla & Ikky"
+        },
+        {
+          "from": "applemusic:artist:914892130",
+          "to": "applemusic:track_entry:1829591921/2/2/1829591991",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "Karan Aujla & Ikky"
+        },
+        {
+          "from": "applemusic:artist:914892130",
+          "to": "applemusic:track_entry:1829591921/2/3/1829591992",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "Karan Aujla & Ikky"
+        },
+        {
+          "from": "applemusic:artist:914892130",
+          "to": "applemusic:track_entry:1829591921/2/4/1829591994",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "Karan Aujla & Ikky"
+        },
+        {
+          "from": "applemusic:artist:914892130",
+          "to": "applemusic:track_entry:1829591921/2/5/1829591995",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "Karan Aujla & Ikky"
+        },
+        {
+          "from": "applemusic:artist:914892130",
+          "to": "applemusic:track_entry:1829591921/2/6/1829591997",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "Karan Aujla & Ikky"
+        },
+        {
+          "from": "applemusic:track_entry:1829591921/1/1/1829591922",
+          "to": "applemusic:release:1829591921",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 1,
+          "disc_number": 1,
+          "track_number": "1"
+        },
+        {
+          "from": "applemusic:track_entry:1829591921/1/2/1829591983",
+          "to": "applemusic:release:1829591921",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 2,
+          "disc_number": 1,
+          "track_number": "2"
+        },
+        {
+          "from": "applemusic:track_entry:1829591921/1/3/1829591985",
+          "to": "applemusic:release:1829591921",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 3,
+          "disc_number": 1,
+          "track_number": "3"
+        },
+        {
+          "from": "applemusic:track_entry:1829591921/1/4/1829591986",
+          "to": "applemusic:release:1829591921",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 4,
+          "disc_number": 1,
+          "track_number": "4"
+        },
+        {
+          "from": "applemusic:track_entry:1829591921/1/5/1829591989",
+          "to": "applemusic:release:1829591921",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 5,
+          "disc_number": 1,
+          "track_number": "5"
+        },
+        {
+          "from": "applemusic:track_entry:1829591921/2/1/1829591990",
+          "to": "applemusic:release:1829591921",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 1,
+          "disc_number": 2,
+          "track_number": "1"
+        },
+        {
+          "from": "applemusic:track_entry:1829591921/2/2/1829591991",
+          "to": "applemusic:release:1829591921",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 2,
+          "disc_number": 2,
+          "track_number": "2"
+        },
+        {
+          "from": "applemusic:track_entry:1829591921/2/3/1829591992",
+          "to": "applemusic:release:1829591921",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 3,
+          "disc_number": 2,
+          "track_number": "3"
+        },
+        {
+          "from": "applemusic:track_entry:1829591921/2/4/1829591994",
+          "to": "applemusic:release:1829591921",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 4,
+          "disc_number": 2,
+          "track_number": "4"
+        },
+        {
+          "from": "applemusic:track_entry:1829591921/2/5/1829591995",
+          "to": "applemusic:release:1829591921",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 5,
+          "disc_number": 2,
+          "track_number": "5"
+        },
+        {
+          "from": "applemusic:track_entry:1829591921/2/6/1829591997",
+          "to": "applemusic:release:1829591921",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 6,
+          "disc_number": 2,
+          "track_number": "6"
+        }
+      ],
+      "truncated": false
+    },
+    "provider": "applemusic",
+    "id": "1829591921",
+    "title": "P-POP CULTURE",
+    "url": "https://music.apple.com/us/album/p-pop-culture/1829591921?uo=4",
+    "artists": [
+      {
+        "id": "914892130",
+        "name": "Karan Aujla & Ikky"
+      }
+    ],
+    "release_date": "2025-08-22T07:00:00Z",
+    "copyright": "℗ 2025 Karan Aujla Music Inc., under exclusive license to Warner Music Canada Co. / Warner Music India",
+    "images": [
+      "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/100x100bb.jpg"
+    ],
+    "discs": [
+      {
+        "track_list": {
+          "returned": 5,
+          "total": 5,
+          "complete": true
+        },
+        "number": 1,
+        "total_tracks": 5
+      },
+      {
+        "track_list": {
+          "returned": 6,
+          "total": 6,
+          "complete": true
+        },
+        "number": 2,
+        "total_tracks": 6
+      }
+    ],
+    "tracks": [
+      {
+        "id": "1829591922",
+        "title": "I Really Do...",
+        "position": 1,
+        "disc_number": 1,
+        "track_number": "1",
+        "duration_ms": 193842,
+        "artists": [
+          {
+            "id": "914892130",
+            "name": "Karan Aujla & Ikky"
+          }
+        ],
+        "provider_data": {
+          "artistId": 914892130,
+          "artistName": "Karan Aujla & Ikky",
+          "artistViewUrl": "https://music.apple.com/us/artist/karan-aujla/914892130?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/60x60bb.jpg",
+          "collectionCensoredName": "P-POP CULTURE",
+          "collectionExplicitness": "explicit",
+          "collectionId": 1829591921,
+          "collectionName": "P-POP CULTURE",
+          "collectionPrice": 9.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/i-really-do/1829591921?i=1829591922&uo=4",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 2,
+          "discNumber": 1,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/d0/7d/37/d07d3767-640b-8ef5-bb09-3158add717d2/mzaf_5291182584280425882.plus.aac.p.m4a",
+          "primaryGenreName": "Pop",
+          "releaseDate": "2025-08-22T12:00:00Z",
+          "trackCensoredName": "I Really Do...",
+          "trackCount": 5,
+          "trackExplicitness": "notExplicit",
+          "trackId": 1829591922,
+          "trackName": "I Really Do...",
+          "trackNumber": 1,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 193842,
+          "trackViewUrl": "https://music.apple.com/us/album/i-really-do/1829591921?i=1829591922&uo=4",
+          "wrapperType": "track"
+        }
+      },
+      {
+        "id": "1829591983",
+        "title": "For A Reason",
+        "position": 2,
+        "disc_number": 1,
+        "track_number": "2",
+        "duration_ms": 180000,
+        "artists": [
+          {
+            "id": "914892130",
+            "name": "Karan Aujla & Ikky"
+          }
+        ],
+        "provider_data": {
+          "artistId": 914892130,
+          "artistName": "Karan Aujla & Ikky",
+          "artistViewUrl": "https://music.apple.com/us/artist/karan-aujla/914892130?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/60x60bb.jpg",
+          "collectionCensoredName": "P-POP CULTURE",
+          "collectionExplicitness": "explicit",
+          "collectionId": 1829591921,
+          "collectionName": "P-POP CULTURE",
+          "collectionPrice": 9.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/for-a-reason/1829591921?i=1829591983&uo=4",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 2,
+          "discNumber": 1,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/88/c6/5b/88c65b26-c766-69d3-2603-4857e66903d4/mzaf_7154011662261729475.plus.aac.p.m4a",
+          "primaryGenreName": "Pop",
+          "releaseDate": "2025-08-22T12:00:00Z",
+          "trackCensoredName": "For A Reason",
+          "trackCount": 5,
+          "trackExplicitness": "notExplicit",
+          "trackId": 1829591983,
+          "trackName": "For A Reason",
+          "trackNumber": 2,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 180000,
+          "trackViewUrl": "https://music.apple.com/us/album/for-a-reason/1829591921?i=1829591983&uo=4",
+          "wrapperType": "track"
+        }
+      },
+      {
+        "id": "1829591985",
+        "title": "You're U Tho",
+        "position": 3,
+        "disc_number": 1,
+        "track_number": "3",
+        "duration_ms": 183750,
+        "artists": [
+          {
+            "id": "914892130",
+            "name": "Karan Aujla & Ikky"
+          }
+        ],
+        "provider_data": {
+          "artistId": 914892130,
+          "artistName": "Karan Aujla & Ikky",
+          "artistViewUrl": "https://music.apple.com/us/artist/karan-aujla/914892130?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/60x60bb.jpg",
+          "collectionCensoredName": "P-POP CULTURE",
+          "collectionExplicitness": "explicit",
+          "collectionId": 1829591921,
+          "collectionName": "P-POP CULTURE",
+          "collectionPrice": 9.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/youre-u-tho/1829591921?i=1829591985&uo=4",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 2,
+          "discNumber": 1,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/21/26/cc/2126cc11-3188-ee57-2b79-ea3318bc65ea/mzaf_3473518575977923397.plus.aac.p.m4a",
+          "primaryGenreName": "Pop",
+          "releaseDate": "2025-08-22T12:00:00Z",
+          "trackCensoredName": "You're U Tho",
+          "trackCount": 5,
+          "trackExplicitness": "notExplicit",
+          "trackId": 1829591985,
+          "trackName": "You're U Tho",
+          "trackNumber": 3,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 183750,
+          "trackViewUrl": "https://music.apple.com/us/album/youre-u-tho/1829591921?i=1829591985&uo=4",
+          "wrapperType": "track"
+        }
+      },
+      {
+        "id": "1829591986",
+        "title": "Boyfriend",
+        "position": 4,
+        "disc_number": 1,
+        "track_number": "4",
+        "duration_ms": 160796,
+        "artists": [
+          {
+            "id": "914892130",
+            "name": "Karan Aujla & Ikky"
+          }
+        ],
+        "provider_data": {
+          "artistId": 914892130,
+          "artistName": "Karan Aujla & Ikky",
+          "artistViewUrl": "https://music.apple.com/us/artist/karan-aujla/914892130?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/60x60bb.jpg",
+          "collectionCensoredName": "P-POP CULTURE",
+          "collectionExplicitness": "explicit",
+          "collectionId": 1829591921,
+          "collectionName": "P-POP CULTURE",
+          "collectionPrice": 9.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/boyfriend/1829591921?i=1829591986&uo=4",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 2,
+          "discNumber": 1,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/64/5b/2b/645b2b11-1249-3ff3-e3af-c02189159868/mzaf_17613725717610713218.plus.aac.p.m4a",
+          "primaryGenreName": "Pop",
+          "releaseDate": "2025-08-22T12:00:00Z",
+          "trackCensoredName": "Boyfriend",
+          "trackCount": 5,
+          "trackExplicitness": "notExplicit",
+          "trackId": 1829591986,
+          "trackName": "Boyfriend",
+          "trackNumber": 4,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 160796,
+          "trackViewUrl": "https://music.apple.com/us/album/boyfriend/1829591921?i=1829591986&uo=4",
+          "wrapperType": "track"
+        }
+      },
+      {
+        "id": "1829591989",
+        "title": "HIM.",
+        "position": 5,
+        "disc_number": 1,
+        "track_number": "5",
+        "duration_ms": 191875,
+        "artists": [
+          {
+            "id": "914892130",
+            "name": "Karan Aujla & Ikky"
+          }
+        ],
+        "provider_data": {
+          "artistId": 914892130,
+          "artistName": "Karan Aujla & Ikky",
+          "artistViewUrl": "https://music.apple.com/us/artist/karan-aujla/914892130?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/60x60bb.jpg",
+          "collectionCensoredName": "P-POP CULTURE",
+          "collectionExplicitness": "explicit",
+          "collectionId": 1829591921,
+          "collectionName": "P-POP CULTURE",
+          "collectionPrice": 9.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/him/1829591921?i=1829591989&uo=4",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 2,
+          "discNumber": 1,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/78/5f/0c/785f0cd6-9447-6400-226c-759f1ce26937/mzaf_8334105940591511376.plus.aac.p.m4a",
+          "primaryGenreName": "Pop",
+          "releaseDate": "2025-08-22T12:00:00Z",
+          "trackCensoredName": "HIM.",
+          "trackCount": 5,
+          "trackExplicitness": "notExplicit",
+          "trackId": 1829591989,
+          "trackName": "HIM.",
+          "trackNumber": 5,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 191875,
+          "trackViewUrl": "https://music.apple.com/us/album/him/1829591921?i=1829591989&uo=4",
+          "wrapperType": "track"
+        }
+      },
+      {
+        "id": "1829591990",
+        "title": "Flip-Side (Sandy's Interlude)",
+        "position": 1,
+        "disc_number": 2,
+        "track_number": "1",
+        "duration_ms": 113632,
+        "artists": [
+          {
+            "id": "914892130",
+            "name": "Karan Aujla & Ikky"
+          }
+        ],
+        "provider_data": {
+          "artistId": 914892130,
+          "artistName": "Karan Aujla & Ikky",
+          "artistViewUrl": "https://music.apple.com/us/artist/karan-aujla/914892130?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/60x60bb.jpg",
+          "collectionCensoredName": "P-POP CULTURE",
+          "collectionExplicitness": "explicit",
+          "collectionId": 1829591921,
+          "collectionName": "P-POP CULTURE",
+          "collectionPrice": 9.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/flip-side-sandys-interlude/1829591921?i=1829591990&uo=4",
+          "contentAdvisoryRating": "Explicit",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 2,
+          "discNumber": 2,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/f9/37/6d/f9376dea-b085-c812-7523-d1803f6f7dcc/mzaf_1649105733850712070.plus.aac.p.m4a",
+          "primaryGenreName": "Pop",
+          "releaseDate": "2025-08-22T12:00:00Z",
+          "trackCensoredName": "Flip-Side (Sandy's Interlude)",
+          "trackCount": 6,
+          "trackExplicitness": "explicit",
+          "trackId": 1829591990,
+          "trackName": "Flip-Side (Sandy's Interlude)",
+          "trackNumber": 1,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 113632,
+          "trackViewUrl": "https://music.apple.com/us/album/flip-side-sandys-interlude/1829591921?i=1829591990&uo=4",
+          "wrapperType": "track"
+        }
+      },
+      {
+        "id": "1829591991",
+        "title": "I'ma Do My Thiiing",
+        "position": 2,
+        "disc_number": 2,
+        "track_number": "2",
+        "duration_ms": 193263,
+        "artists": [
+          {
+            "id": "914892130",
+            "name": "Karan Aujla & Ikky"
+          }
+        ],
+        "provider_data": {
+          "artistId": 914892130,
+          "artistName": "Karan Aujla & Ikky",
+          "artistViewUrl": "https://music.apple.com/us/artist/karan-aujla/914892130?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/60x60bb.jpg",
+          "collectionCensoredName": "P-POP CULTURE",
+          "collectionExplicitness": "explicit",
+          "collectionId": 1829591921,
+          "collectionName": "P-POP CULTURE",
+          "collectionPrice": 9.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/ima-do-my-thiiing/1829591921?i=1829591991&uo=4",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 2,
+          "discNumber": 2,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/ef/e3/aa/efe3aa3f-f9af-634b-a0a5-91bcae40aa6f/mzaf_9276112993002037683.plus.aac.p.m4a",
+          "primaryGenreName": "Pop",
+          "releaseDate": "2025-08-22T12:00:00Z",
+          "trackCensoredName": "I'ma Do My Thiiing",
+          "trackCount": 6,
+          "trackExplicitness": "notExplicit",
+          "trackId": 1829591991,
+          "trackName": "I'ma Do My Thiiing",
+          "trackNumber": 2,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 193263,
+          "trackViewUrl": "https://music.apple.com/us/album/ima-do-my-thiiing/1829591921?i=1829591991&uo=4",
+          "wrapperType": "track"
+        }
+      },
+      {
+        "id": "1829591992",
+        "title": "Daytona",
+        "position": 3,
+        "disc_number": 2,
+        "track_number": "3",
+        "duration_ms": 193247,
+        "artists": [
+          {
+            "id": "914892130",
+            "name": "Karan Aujla & Ikky"
+          }
+        ],
+        "provider_data": {
+          "artistId": 914892130,
+          "artistName": "Karan Aujla & Ikky",
+          "artistViewUrl": "https://music.apple.com/us/artist/karan-aujla/914892130?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/60x60bb.jpg",
+          "collectionCensoredName": "P-POP CULTURE",
+          "collectionExplicitness": "explicit",
+          "collectionId": 1829591921,
+          "collectionName": "P-POP CULTURE",
+          "collectionPrice": 9.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/daytona/1829591921?i=1829591992&uo=4",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 2,
+          "discNumber": 2,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/93/42/c6/9342c6d2-2246-e77c-6154-db9f09ee10ad/mzaf_9021329454267433629.plus.aac.p.m4a",
+          "primaryGenreName": "Pop",
+          "releaseDate": "2025-08-22T12:00:00Z",
+          "trackCensoredName": "Daytona",
+          "trackCount": 6,
+          "trackExplicitness": "notExplicit",
+          "trackId": 1829591992,
+          "trackName": "Daytona",
+          "trackNumber": 3,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 193247,
+          "trackViewUrl": "https://music.apple.com/us/album/daytona/1829591921?i=1829591992&uo=4",
+          "wrapperType": "track"
+        }
+      },
+      {
+        "id": "1829591994",
+        "title": "7.7 Magnitude",
+        "position": 4,
+        "disc_number": 2,
+        "track_number": "4",
+        "duration_ms": 243668,
+        "artists": [
+          {
+            "id": "914892130",
+            "name": "Karan Aujla & Ikky"
+          }
+        ],
+        "provider_data": {
+          "artistId": 914892130,
+          "artistName": "Karan Aujla & Ikky",
+          "artistViewUrl": "https://music.apple.com/us/artist/karan-aujla/914892130?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/60x60bb.jpg",
+          "collectionCensoredName": "P-POP CULTURE",
+          "collectionExplicitness": "explicit",
+          "collectionId": 1829591921,
+          "collectionName": "P-POP CULTURE",
+          "collectionPrice": 9.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/7-7-magnitude/1829591921?i=1829591994&uo=4",
+          "contentAdvisoryRating": "Explicit",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 2,
+          "discNumber": 2,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/3d/3a/fe/3d3afe14-df85-68ae-0367-320eb22c9915/mzaf_1764877831308524397.plus.aac.p.m4a",
+          "primaryGenreName": "Pop",
+          "releaseDate": "2025-08-22T12:00:00Z",
+          "trackCensoredName": "7.7 Magnitude",
+          "trackCount": 6,
+          "trackExplicitness": "explicit",
+          "trackId": 1829591994,
+          "trackName": "7.7 Magnitude",
+          "trackNumber": 4,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 243668,
+          "trackViewUrl": "https://music.apple.com/us/album/7-7-magnitude/1829591921?i=1829591994&uo=4",
+          "wrapperType": "track"
+        }
+      },
+      {
+        "id": "1829591995",
+        "title": "MF Gabhru!",
+        "position": 5,
+        "disc_number": 2,
+        "track_number": "5",
+        "duration_ms": 200386,
+        "artists": [
+          {
+            "id": "914892130",
+            "name": "Karan Aujla & Ikky"
+          }
+        ],
+        "provider_data": {
+          "artistId": 914892130,
+          "artistName": "Karan Aujla & Ikky",
+          "artistViewUrl": "https://music.apple.com/us/artist/karan-aujla/914892130?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/60x60bb.jpg",
+          "collectionCensoredName": "P-POP CULTURE",
+          "collectionExplicitness": "explicit",
+          "collectionId": 1829591921,
+          "collectionName": "P-POP CULTURE",
+          "collectionPrice": 9.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/mf-gabhru/1829591921?i=1829591995&uo=4",
+          "contentAdvisoryRating": "Explicit",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 2,
+          "discNumber": 2,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/14/d1/3c/14d13c97-1df8-9df5-54d6-637ba52cbc8b/mzaf_15836909109234338574.plus.aac.p.m4a",
+          "primaryGenreName": "Rock",
+          "releaseDate": "2025-08-01T07:00:00Z",
+          "trackCensoredName": "MF Gabhru!",
+          "trackCount": 6,
+          "trackExplicitness": "explicit",
+          "trackId": 1829591995,
+          "trackName": "MF Gabhru!",
+          "trackNumber": 5,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 200386,
+          "trackViewUrl": "https://music.apple.com/us/album/mf-gabhru/1829591921?i=1829591995&uo=4",
+          "wrapperType": "track"
+        }
+      },
+      {
+        "id": "1829591997",
+        "title": "P-POP CULTURE",
+        "position": 6,
+        "disc_number": 2,
+        "track_number": "6",
+        "duration_ms": 211768,
+        "artists": [
+          {
+            "id": "914892130",
+            "name": "Karan Aujla & Ikky"
+          }
+        ],
+        "provider_data": {
+          "artistId": 914892130,
+          "artistName": "Karan Aujla & Ikky",
+          "artistViewUrl": "https://music.apple.com/us/artist/karan-aujla/914892130?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/60x60bb.jpg",
+          "collectionCensoredName": "P-POP CULTURE",
+          "collectionExplicitness": "explicit",
+          "collectionId": 1829591921,
+          "collectionName": "P-POP CULTURE",
+          "collectionPrice": 9.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/p-pop-culture/1829591921?i=1829591997&uo=4",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 2,
+          "discNumber": 2,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/55/24/e3/5524e3d4-7bfc-1604-6979-72dd0d01750a/mzaf_5381285629743850846.plus.aac.p.m4a",
+          "primaryGenreName": "Pop",
+          "releaseDate": "2025-08-22T12:00:00Z",
+          "trackCensoredName": "P-POP CULTURE",
+          "trackCount": 6,
+          "trackExplicitness": "notExplicit",
+          "trackId": 1829591997,
+          "trackName": "P-POP CULTURE",
+          "trackNumber": 6,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 211768,
+          "trackViewUrl": "https://music.apple.com/us/album/p-pop-culture/1829591921?i=1829591997&uo=4",
+          "wrapperType": "track"
+        }
+      }
+    ],
+    "track_list": {
+      "returned": 11,
+      "total": 11,
+      "complete": true
+    },
+    "provider_data": {
+      "artistId": 914892130,
+      "artistName": "Karan Aujla & Ikky",
+      "artistViewUrl": "https://music.apple.com/us/artist/karan-aujla/914892130?uo=4",
+      "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/100x100bb.jpg",
+      "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/06/bd/e1/06bde161-335b-87fa-650a-f0d04bd9f55d/5021732889621.jpg/60x60bb.jpg",
+      "collectionCensoredName": "P-POP CULTURE",
+      "collectionExplicitness": "explicit",
+      "collectionId": 1829591921,
+      "collectionName": "P-POP CULTURE",
+      "collectionPrice": 9.99,
+      "collectionType": "Album",
+      "collectionViewUrl": "https://music.apple.com/us/album/p-pop-culture/1829591921?uo=4",
+      "contentAdvisoryRating": "Explicit",
+      "copyright": "℗ 2025 Karan Aujla Music Inc., under exclusive license to Warner Music Canada Co. / Warner Music India",
+      "country": "USA",
+      "currency": "USD",
+      "primaryGenreName": "Pop",
+      "releaseDate": "2025-08-22T07:00:00Z",
+      "trackCount": 11,
+      "wrapperType": "collection"
+    },
+    "observed_at": "2026-10-21T10:54:30.210878111Z"
+  },
+  "source": {
+    "status": "ok",
+    "cached": false
+  }
+}

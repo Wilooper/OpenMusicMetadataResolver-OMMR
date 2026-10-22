@@ -80,3 +80,7 @@ work MBID, ISWC, language or article. The extractor chooses the largest reported
 thumbnail, falling back to the largest other image; it does not upscale images.
 
 References: [Spotify track](https://developer.spotify.com/documentation/web-api/reference/get-track), [Spotify album](https://developer.spotify.com/documentation/web-api/reference/get-an-album), [Apple song attributes](https://developer.apple.com/documentation/applemusicapi/songs/attributes-data.dictionary), [Apple developer token](https://developer.apple.com/documentation/applemusicapi/generating-developer-tokens), [MusicBrainz API](https://musicbrainz.org/doc/MusicBrainz_API), [MusicBrainz works](https://musicbrainz.org/doc/How_to_Use_Works), [Amazon Music API V2](https://developer.amazon.com/docs/music/API_web_overview_v2.html).
+
+## Provider-specific coverage
+
+Fields not represented in unified Track (popularity, market availability, version details, notes, physical formats, styles, images, release relationships and editorial context) are retained in scoped provider data when supplied and safely tied to an accepted entity. These fields remain available even when a different source wins the canonical value. Exact source scopes and known gaps: [ENRICHMENT.md](ENRICHMENT.md).

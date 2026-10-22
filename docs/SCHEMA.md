@@ -1,3 +1,5 @@
+> This document describes the full internal canonical schema, returned by data endpoints with `debug=true`. Default production responses use an explicit metadata-only projection; see [API_SPEC.md](API_SPEC.md#production-and-debug-responses). Internal Track JSON and cache entries are unchanged.
+
 # OMMR Domain Schema Specification
 
 ## Canonical Domain Schemas (`internal/models/canonical/`)
@@ -145,3 +147,39 @@ type ResolverStats struct {
 `match_method`. See [PLATFORM_LINKS.md](PLATFORM_LINKS.md). Unknown identifiers
 and URLs are omitted. Only a provider's own ID is emitted as an IdentityMatch;
 provider `_url` and `_track_id` helpers in `ids` do not assert extra matches.
+
+## Additive metadata extensions and public projection
+
+The immutable internal `Track` stores accepted source records in `extensions.provider_data` and explicit evidence state in `extensions.explicit_status`. Production promotes these to `provider_data` and `explicit_status`. Canonical matching/provenance diagnostics remain debug-only. The public provider-data schema and source scopes are documented in [ENRICHMENT.md](ENRICHMENT.md); new catalog fields do not require changing Track's Go fields.
+
+## Provider lifecycle status
+
+`/v1/providers` is an operational schema independent of canonical metadata. It contains name/state/mode, startup credential outcome, failure streak, last evaluation and retry time. Credentials and account profile details are never included. API policy and safe status meanings are defined in [PROVIDER_LIFECYCLE.md](PROVIDER_LIFECYCLE.md).
+
+## Debug metadata comparison
+
+`track.extensions.metadata_comparison` is an optional debug-only map keyed by canonical field name. Each entry contains `selected`, `selected_sources`, `values` (provider to original reported value) and `different`. It compares populated evidence only; unknown explicit defaults do not vote. Representational/precision differences are retained rather than treated as automatic rejection. This extension is omitted by production DTOs. Canonical artists may now use an evidence-backed separate list while source-specific combined displays remain in provider data. Native person IDs are never copied from a compound display to each person.
+
+## Rich public catalogs
+
+See [RICH_CATALOGS.md](RICH_CATALOGS.md) for native Bugs/Genie/Melon song adapters, `bugs_id`/`genie_id`/`melon_id`, accepted YouTube artist/album context in provider data, optional Python pooling and `/v1/catalog` (also `operation: catalog` through the JSON gateway). These Korean adapters require no credentials; the optional Python path currently uses public YouTube access.
+
+Artist profiles use an independent source-owned schema rather than the canonical Track schema. See [artist profile fields and metric periods](ARTIST_PROFILES.md#fields); `internal/artists/models.go` defines the wire types. Metrics expose exact values only when reported and preserve display text/time scope.
+
+## Independent native albums
+
+`/v1/albums` uses a separate album/release response model; canonical `Track` and `Album` remain unchanged. Album tracks preserve native entry IDs, optional recording IDs, disc/track positions and sanitized catalog extras. Completion and provider-declared totals are explicit. See [NATIVE_ALBUMS.md](NATIVE_ALBUMS.md).
+
+## Recording relationships and structured credits
+
+Track and native album responses include a source-owned `music_graph`: recordings, exact release editions, release groups, compositions and contributors, with directed relationships and scoped credits. Debug tracks keep the graph under `extensions.music_graph`; production tracks expose it directly. Related versions do not become accepted recording IDs. See [graph schema, scope and source coverage](MUSIC_GRAPH.md).
+
+Apple native albums additionally expose optional `discs[].track_list` coverage, using the same returned/total/complete/reason fields as collection coverage. Disc completeness describes returned source-declared song slots; it does not replace the collection total. Unknown totals remain absent. See [disc coverage and live examples](NATIVE_ALBUMS.md#apple-disc-coverage-2026-10-21).
+
+## Source-owned placement and detailed credits
+
+Production tracks add `album_placements` (provider, native album/song IDs, optional disc/track numbers, selected flag) and `credit_details` (deduplicated contributor identities and scoped graph credit edges). Debug tracks retain these under `extensions`. Native albums also expose `credit_details`. The selected album and numeric positions come from one observation; direct native song IDs anchor their source edition where available. Unknown positions are omitted. [Full schema, examples, limits and transport](DETAILED_PRODUCTION_METADATA.md).
+
+## Video-specific annotations
+
+Production resolved tracks may include `video_annotations.sponsorblock`; debug tracks retain it under `extensions.video_annotations`. It carries exact YouTube video identity, source/license attribution, optional source video duration and millisecond `points_of_interest` with UUID, category/action, votes, lock status, submitted duration and an explicit duration-check flag. It is omitted when unavailable or inapplicable. These timestamps refer to the accepted video, not another recording or platform. See [schema and validation](SPONSORBLOCK.md).

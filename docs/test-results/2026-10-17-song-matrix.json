@@ -1,0 +1,283 @@
+[
+  {
+    "query_artist": "Karan Aujla",
+    "query_title": "Boyfriend",
+    "http_status": 200,
+    "public_http_status": 200,
+    "title": "Boyfriend",
+    "artists": [
+      "Karan Aujla",
+      "Ikky"
+    ],
+    "ids": {
+      "applemusic": "1829591986",
+      "applemusic_url": "https://music.apple.com/us/album/boyfriend/1829591921?i=1829591986",
+      "ytmusic": "tIjUfo30r4M"
+    },
+    "duration_ms": 160796,
+    "identity_status": "strong",
+    "cold_seconds": 7.807,
+    "warm_seconds": 0.002,
+    "debug_bytes": 12083,
+    "public_bytes": 8400,
+    "same_record": true,
+    "same_provider_data": true
+  },
+  {
+    "query_artist": "Talwiinder",
+    "query_title": "Tu",
+    "http_status": 200,
+    "public_http_status": 200,
+    "title": "Tu",
+    "artists": [
+      "Talwiinder",
+      "Sanjoy"
+    ],
+    "ids": {
+      "applemusic": "1755529616",
+      "applemusic_url": "https://music.apple.com/us/album/tu/1755529615?i=1755529616",
+      "ytmusic": "uOQG38DriDM"
+    },
+    "duration_ms": 132086,
+    "identity_status": "strong",
+    "cold_seconds": 0.599,
+    "warm_seconds": 0.002,
+    "debug_bytes": 11970,
+    "public_bytes": 8347,
+    "same_record": true,
+    "same_provider_data": true
+  },
+  {
+    "query_artist": "Daft Punk",
+    "query_title": "Get Lucky",
+    "http_status": 200,
+    "public_http_status": 200,
+    "title": "Get Lucky",
+    "artists": [
+      "Daft Punk",
+      "Pharrell Williams",
+      "Nile Rodgers"
+    ],
+    "ids": {
+      "applemusic": "617154366",
+      "applemusic_url": "https://music.apple.com/us/album/get-lucky/617154241?i=617154366",
+      "ytmusic": "4D7u5KF7SP8"
+    },
+    "duration_ms": 369629,
+    "identity_status": "probable",
+    "cold_seconds": 2.476,
+    "warm_seconds": 2.997,
+    "debug_bytes": 12835,
+    "public_bytes": 9061,
+    "same_record": true,
+    "same_provider_data": true
+  },
+  {
+    "query_artist": "The Weeknd",
+    "query_title": "Blinding Lights",
+    "http_status": 200,
+    "public_http_status": 200,
+    "title": "Blinding Lights",
+    "artists": [
+      "The Weeknd"
+    ],
+    "ids": {
+      "applemusic": "1499378607",
+      "applemusic_url": "https://music.apple.com/us/album/blinding-lights/1499378108?i=1499378607",
+      "ytmusic": "J7p4bzqLvCw"
+    },
+    "duration_ms": 200046,
+    "identity_status": "strong",
+    "cold_seconds": 3.005,
+    "warm_seconds": 0.002,
+    "debug_bytes": 10786,
+    "public_bytes": 8118,
+    "same_record": true,
+    "same_provider_data": true
+  },
+  {
+    "query_artist": "Adele",
+    "query_title": "Hello",
+    "http_status": 200,
+    "public_http_status": 200,
+    "title": "Hello",
+    "artists": [
+      "Adele"
+    ],
+    "ids": {
+      "applemusic": "1544494392",
+      "applemusic_url": "https://music.apple.com/us/album/hello/1544494115?i=1544494392",
+      "ytmusic": "yjo_aXygRDI"
+    },
+    "duration_ms": 295502,
+    "identity_status": "strong",
+    "cold_seconds": 2.996,
+    "warm_seconds": 0.002,
+    "debug_bytes": 10439,
+    "public_bytes": 7826,
+    "same_record": true,
+    "same_provider_data": true
+  },
+  {
+    "query_artist": "BTS",
+    "query_title": "Dynamite",
+    "http_status": 200,
+    "public_http_status": 200,
+    "title": "Dynamite",
+    "artists": [
+      "BTS"
+    ],
+    "ids": {
+      "applemusic": "1596532400",
+      "applemusic_url": "https://music.apple.com/us/album/dynamite/1596532185?i=1596532400",
+      "ytmusic": "HaEYUJ2aRHs"
+    },
+    "duration_ms": 199054,
+    "identity_status": "strong",
+    "cold_seconds": 2.993,
+    "warm_seconds": 0.003,
+    "debug_bytes": 10529,
+    "public_bytes": 7913,
+    "same_record": true,
+    "same_provider_data": true
+  },
+  {
+    "query_artist": "Queen",
+    "query_title": "Bohemian Rhapsody",
+    "http_status": 200,
+    "public_http_status": 200,
+    "title": "Bohemian Rhapsody",
+    "artists": [
+      "Queen"
+    ],
+    "ids": {
+      "applemusic": "6781024437",
+      "applemusic_url": "https://music.apple.com/us/album/bohemian-rhapsody/6781024026?i=6781024437",
+      "ytmusic": "BSTsnWoslP4"
+    },
+    "duration_ms": 355155,
+    "identity_status": "strong",
+    "cold_seconds": 2.995,
+    "warm_seconds": 0.003,
+    "debug_bytes": 10848,
+    "public_bytes": 8132,
+    "same_record": true,
+    "same_provider_data": true
+  },
+  {
+    "query_artist": "Arijit Singh",
+    "query_title": "Tum Hi Ho",
+    "http_status": 200,
+    "public_http_status": 200,
+    "title": "Tum Hi Ho (From \"Aashiqui 2)",
+    "artists": [
+      "Arijit Singh"
+    ],
+    "ids": {
+      "applemusic": "1193103463",
+      "applemusic_url": "https://music.apple.com/us/album/tum-hi-ho-from-aashiqui-2/1193103366?i=1193103463",
+      "ytmusic": "fsiPzT50ZiM"
+    },
+    "duration_ms": 261974,
+    "identity_status": "strong",
+    "cold_seconds": 3.003,
+    "warm_seconds": 0.002,
+    "debug_bytes": 10971,
+    "public_bytes": 8296,
+    "same_record": true,
+    "same_provider_data": true
+  },
+  {
+    "query_artist": "Luis Fonsi",
+    "query_title": "Despacito",
+    "http_status": 200,
+    "public_http_status": 200,
+    "title": "Despacito",
+    "artists": [
+      "Luis Fonsi",
+      "Daddy Yankee"
+    ],
+    "ids": {
+      "applemusic": "1447401620",
+      "applemusic_url": "https://music.apple.com/us/album/despacito/1447401519?i=1447401620",
+      "ytmusic": "FXovf5dsRTw"
+    },
+    "duration_ms": 229387,
+    "identity_status": "strong",
+    "cold_seconds": 2.989,
+    "warm_seconds": 0.002,
+    "debug_bytes": 11110,
+    "public_bytes": 8448,
+    "same_record": true,
+    "same_provider_data": true
+  },
+  {
+    "query_artist": "YOASOBI",
+    "query_title": "Idol",
+    "http_status": 200,
+    "public_http_status": 200,
+    "title": "Idol",
+    "artists": [
+      "YOASOBI"
+    ],
+    "ids": {
+      "applemusic": "1679278167",
+      "applemusic_url": "https://music.apple.com/us/album/idol/1679278166?i=1679278167",
+      "ytmusic": "IzJ_ioBHrPU"
+    },
+    "duration_ms": 213234,
+    "identity_status": "strong",
+    "cold_seconds": 3.004,
+    "warm_seconds": 0.002,
+    "debug_bytes": 10466,
+    "public_bytes": 7847,
+    "same_record": true,
+    "same_provider_data": true
+  },
+  {
+    "query_artist": "Taylor Swift",
+    "query_title": "Anti-Hero",
+    "http_status": 200,
+    "public_http_status": 200,
+    "title": "Anti-Hero",
+    "artists": [
+      "Taylor Swift"
+    ],
+    "ids": {
+      "applemusic": "1649434293",
+      "applemusic_url": "https://music.apple.com/us/album/anti-hero/1649434004?i=1649434293",
+      "ytmusic": "3YgtjHZyCIQ"
+    },
+    "duration_ms": 200690,
+    "identity_status": "strong",
+    "cold_seconds": 2.993,
+    "warm_seconds": 0.002,
+    "debug_bytes": 10681,
+    "public_bytes": 8021,
+    "same_record": true,
+    "same_provider_data": true
+  },
+  {
+    "query_artist": "Billie Eilish",
+    "query_title": "bad guy",
+    "http_status": 200,
+    "public_http_status": 200,
+    "title": "bad guy",
+    "artists": [
+      "Billie Eilish"
+    ],
+    "ids": {
+      "applemusic": "1450695739",
+      "applemusic_url": "https://music.apple.com/us/album/bad-guy/1450695723?i=1450695739",
+      "ytmusic": "ZD6rXLXZOEI"
+    },
+    "duration_ms": 194088,
+    "identity_status": "strong",
+    "cold_seconds": 3.003,
+    "warm_seconds": 0.002,
+    "debug_bytes": 10996,
+    "public_bytes": 8239,
+    "same_record": true,
+    "same_provider_data": true
+  }
+]

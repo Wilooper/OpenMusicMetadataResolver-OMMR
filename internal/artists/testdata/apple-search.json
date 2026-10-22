@@ -1,0 +1,30 @@
+{
+  "resultCount": 3,
+  "results": [
+    {
+      "wrapperType": "artist",
+      "artistType": "Artist",
+      "artistName": "Gur Sidhu",
+      "artistLinkUrl": "https://music.apple.com/us/artist/gur-sidhu/862626825?uo=4",
+      "artistId": 862626825,
+      "primaryGenreName": "Regional Indian",
+      "primaryGenreId": 1266
+    },
+    {
+      "wrapperType": "artist",
+      "artistType": "Artist",
+      "artistName": "Gur Sidhu",
+      "artistLinkUrl": "https://music.apple.com/us/artist/gur-sidhu/1794763192?uo=4",
+      "artistId": 1794763192,
+      "primaryGenreName": "Punjabi Pop",
+      "primaryGenreId": 100033
+    },
+    {
+      "wrapperType": "artist",
+      "artistType": "Artist",
+      "artistName": "GUR SIDHU",
+      "artistLinkUrl": "https://music.apple.com/us/artist/gur-sidhu/6789679205?uo=4",
+      "artistId": 6789679205
+    }
+  ]
+}

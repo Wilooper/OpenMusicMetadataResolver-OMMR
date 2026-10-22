@@ -19,7 +19,7 @@ import (
 
 const (
 	ProviderName    = "ytmusic"
-	ProviderVersion = "ytmusic-innertube-v1"
+	ProviderVersion = "ytmusic-innertube-v2"
 	OembedURL       = "https://www.youtube.com/oembed"
 )
 
@@ -63,10 +63,12 @@ func (p *Provider) FetchByID(ctx context.Context, idType string, id string) (*ca
 	// Preferred path: InnerTube player metadata (exact title, channel, duration).
 	if player, err := p.innerTube.FetchPlayer(ctx, id); err == nil {
 		track := p.normalizePlayer(id, *player)
+		raw, _ := json.Marshal(player)
 		return &canonical.TrackCandidate{
-			Provider:   ProviderName,
-			Track:      track,
-			MatchScore: 1.0,
+			Provider:    ProviderName,
+			RawResponse: raw,
+			Track:       track,
+			MatchScore:  1.0,
 		}, nil
 	}
 
@@ -132,6 +134,13 @@ func (p *Provider) Search(ctx context.Context, q adapters.Query) ([]canonical.Tr
 		return nil, nil
 	}
 
+	songs, musicErr := p.innerTube.searchSongs(ctx, searchTerm, 8)
+	if musicErr == nil && len(songs) > 0 {
+		return songs, nil
+	}
+	if ctx.Err() != nil {
+		return nil, ctx.Err()
+	}
 	videos, err := p.innerTube.SearchYouTube(ctx, searchTerm, 8)
 	if err != nil {
 		return nil, err
@@ -147,6 +156,9 @@ func (p *Provider) Search(ctx context.Context, q adapters.Query) ([]canonical.Tr
 			Track:      p.innerTube.parseVideo(v),
 			MatchScore: 0.90,
 		})
+	}
+	if len(candidates) == 0 && musicErr != nil {
+		return nil, musicErr
 	}
 	return candidates, nil
 }

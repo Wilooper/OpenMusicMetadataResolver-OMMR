@@ -1,0 +1,35 @@
+port: 18082
+cache_provider: disk
+cache_dir: /data/data/com.termux/files/usr/tmp/ommr-artists/cache-final
+credentials_dir: /data/data/com.termux/files/usr/tmp/ommr-artists/no-credentials
+provider_timeout: 25s
+enable_enrichment: false
+api:
+  default_sources: [ytmusic, applemusic, jiosaavn, deezer, musicbrainz]
+providers:
+  enabled:
+    spotify: false
+    ytmusic: true
+    applemusic: true
+    soundcloud: false
+    bugs: false
+    genie: false
+    melon: false
+    qobuz: false
+    tidal: false
+    amazonmusic: false
+    pandora: false
+    coverartarchive: false
+    musicbrainz_release: false
+    lastfm: false
+    discogs: false
+    acoustid: false
+
+extractor:
+  enabled: true
+  python: /data/data/com.termux/files/home/test/OMMR/.venv/bin/python
+  script: /data/data/com.termux/files/home/test/OMMR/workers/ytmusic/worker.py
+  workers: 1
+  timeout: 20s
+  ttl: 6h
+  profiles: true

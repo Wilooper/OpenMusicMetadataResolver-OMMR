@@ -4,7 +4,6 @@ import (
 	"context"
 	"strings"
 	"sync"
-	"time"
 
 	"golang.org/x/time/rate"
 )
@@ -22,16 +21,22 @@ func NewProviderLimiter() *ProviderLimiter {
 	}
 
 	// Default per-provider rate limits:
-	// MusicBrainz: 1 req/sec (burst 2)
+	// MusicBrainz: 1 req/sec, no burst
 	// Deezer: 50 req/sec (burst 10)
-	// Apple Music: 20 req/sec (burst 5)
+	// Keyless iTunes: approximately 20/minute; catalog uses a separate conservative budget.
 	// YTMusic: 20 req/sec (burst 5)
 	// Spotify: 10 req/sec (burst 3)
 	// SoundCloud: 10 req/sec (burst 3)
 	// JioSaavn: 5 req/sec (burst 2)
-	pl.SetLimit("musicbrainz", 1, 2)
+	pl.SetLimit("musicbrainz", 1, 1)
 	pl.SetLimit("deezer", 50, 10)
-	pl.SetLimit("applemusic", 20, 5)
+	pl.SetLimit("applemusic", 1.0/3.0, 1)
+	pl.SetLimit("applemusic_catalog", 5, 1)
+	pl.SetLimit("coverartarchive", 3, 1)
+	pl.SetLimit("sponsorblock", 2, 1)
+	pl.SetLimit("lastfm", 3, 1)
+	pl.SetLimit("discogs", 1, 1)
+	pl.SetLimit("acoustid", 3, 1)
 	pl.SetLimit("ytmusic", 20, 5)
 	pl.SetLimit("spotify", 10, 3)
 	pl.SetLimit("soundcloud", 10, 3)
@@ -40,6 +45,9 @@ func NewProviderLimiter() *ProviderLimiter {
 	pl.SetLimit("tidal", 10, 3)
 	pl.SetLimit("amazonmusic", 5, 2)
 	pl.SetLimit("pandora", 5, 2)
+	pl.SetLimit("bugs", 1, 1)
+	pl.SetLimit("genie", 1, 1)
+	pl.SetLimit("melon", 1, 1)
 
 	return pl
 }
@@ -62,7 +70,5 @@ func (p *ProviderLimiter) Wait(ctx context.Context, provider string) error {
 		return nil
 	}
 
-	ctxTimeout, cancel := context.WithTimeout(ctx, 3*time.Second)
-	defer cancel()
-	return limiter.Wait(ctxTimeout)
+	return limiter.Wait(ctx)
 }

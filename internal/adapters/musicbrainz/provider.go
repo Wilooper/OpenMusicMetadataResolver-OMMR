@@ -4,36 +4,42 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"io"
+	"golang.org/x/time/rate"
 	"net/http"
 	"net/url"
 	"strings"
 	"time"
 
 	"github.com/ommr/ommr/internal/adapters"
+	"github.com/ommr/ommr/internal/adapters/webdata"
 	"github.com/ommr/ommr/internal/enrichment/wikipedia"
 	"github.com/ommr/ommr/internal/models/canonical"
 	"github.com/ommr/ommr/internal/models/provider"
+	"github.com/ommr/ommr/internal/musicgraph"
 	"github.com/ommr/ommr/pkg/query"
 )
 
 const (
 	ProviderName    = "musicbrainz"
-	ProviderVersion = "musicbrainz-v2"
+	ProviderVersion = "musicbrainz-v4-relationships"
 	BaseURL         = "https://musicbrainz.org/ws/2"
-	UserAgent       = "OMMR/1.0.0 (https://github.com/ommr/ommr)"
+	UserAgent       = "OMMR/1.0.0 (https://github.com/Wilooper/OpenMusicMetadataResolver-OMMR)"
 )
 
 type Provider struct {
 	httpClient *http.Client
+	web        *webdata.Fallback
 }
 
 var _ adapters.ProviderAdapter = (*Provider)(nil)
 
 func New() *Provider {
-	return &Provider{
-		httpClient: &http.Client{Timeout: 5 * time.Second},
-	}
+	limiter := rate.NewLimiter(1, 1)
+	transport := webdata.LimitedTransport{Base: http.DefaultTransport, Limiter: limiter}
+	client := &http.Client{Timeout: 15 * time.Second, Transport: transport}
+	fallback := webdata.NewFallback("musicbrainz.org")
+	fallback.SetTransport(transport)
+	return &Provider{web: fallback, httpClient: client}
 }
 
 func (p *Provider) Name() string {
@@ -53,7 +59,7 @@ func (p *Provider) FetchByID(ctx context.Context, idType string, id string) (*ca
 	if idType == "isrc" {
 		reqURL = fmt.Sprintf("%s/isrc/%s?inc=artists+releases+isrcs+tags&fmt=json", BaseURL, url.PathEscape(id))
 	} else {
-		reqURL = fmt.Sprintf("%s/recording/%s?inc=artists+releases+isrcs+tags+artist-rels+work-rels+work-level-rels+url-rels&fmt=json", BaseURL, url.PathEscape(id))
+		reqURL = fmt.Sprintf("%s/recording/%s?inc=artists+releases+isrcs+tags+artist-rels+recording-rels+release-rels+release-groups+work-rels+work-level-rels+url-rels&fmt=json", BaseURL, url.PathEscape(id))
 	}
 
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, reqURL, nil)
@@ -73,7 +79,14 @@ func (p *Provider) FetchByID(ctx context.Context, idType string, id string) (*ca
 		return nil, fmt.Errorf("musicbrainz API returned status %d", resp.StatusCode)
 	}
 
-	body, err := io.ReadAll(resp.Body)
+	htmlMode := "track"
+	if idType == "isrc" {
+		htmlMode = "isrc"
+	}
+	body, err := webdata.Read(resp, webdata.Request{Provider: ProviderName, Mode: htmlMode, ID: id})
+	if idType != "isrc" && webdata.Recoverable(err) && p.web != nil {
+		body, err = p.web.Try(ctx, "https://musicbrainz.org/recording/"+url.PathEscape(id), webdata.Request{Provider: ProviderName, Mode: "track", ID: id})
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -166,6 +179,10 @@ func (p *Provider) Enrich(ctx context.Context, track canonical.Track) (*canonica
 		}
 		candidate.Track.ISRC = recording.ISRCs[0]
 	}
+	if candidate.Track.Extensions == nil {
+		candidate.Track.Extensions = map[string]json.RawMessage{}
+	}
+	candidate.Track.Extensions["recording_details"] = append(json.RawMessage(nil), candidate.RawResponse...)
 	return &candidate.Track, nil
 }
 
@@ -199,7 +216,10 @@ func (p *Provider) Search(ctx context.Context, q adapters.Query) ([]canonical.Tr
 		return nil, fmt.Errorf("musicbrainz search returned status %d", resp.StatusCode)
 	}
 
-	body, err := io.ReadAll(resp.Body)
+	body, err := webdata.Read(resp, webdata.Request{Provider: ProviderName, Mode: "search"})
+	if q.ISRC == "" && webdata.Recoverable(err) && p.web != nil {
+		body, err = p.web.Try(ctx, "https://musicbrainz.org/search?"+url.Values{"query": {luceneQuery}, "type": {"recording"}, "method": {"indexed"}}.Encode(), webdata.Request{Provider: ProviderName, Mode: "search"})
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -326,9 +346,7 @@ func (p *Provider) normalizeRecording(rec provider.MusicBrainzRecording) canonic
 
 func appendRelationCredit(credits *[]canonical.Credit, relation provider.MusicBrainzRelation) {
 	role := strings.ToLower(relation.Type)
-	switch role {
-	case "lyricist", "composer", "writer", "producer", "engineer", "performer", "arranger":
-	default:
+	if !musicgraph.IsCreditRole(role) {
 		return
 	}
 	if relation.Artist.Name == "" {
@@ -355,4 +373,10 @@ func escapeLucene(input string) string {
 		res = strings.ReplaceAll(res, char, `\`+char)
 	}
 	return res
+}
+
+func (p *Provider) SetFallbackWait(wait func(context.Context) error) {
+	if p.web != nil {
+		p.web.SetWait(wait)
+	}
 }

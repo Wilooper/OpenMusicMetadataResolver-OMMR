@@ -1,0 +1,266 @@
+{
+  "track": {
+    "album_placements": [
+      {
+        "provider": "applemusic",
+        "album_id": "1627573936",
+        "track_id": "1627577723",
+        "disc_number": 3,
+        "track_number": 1,
+        "selected": true
+      }
+    ],
+    "credit_details": {
+      "contributors": [
+        {
+          "id": "applemusic:artist:883131348",
+          "name": "BTS",
+          "provider": "applemusic",
+          "native_id": "883131348"
+        }
+      ],
+      "credits": [
+        {
+          "from": "applemusic:artist:883131348",
+          "to": "applemusic:recording:1627577723",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "main",
+          "credited_as": "BTS"
+        }
+      ]
+    },
+    "canonical_id": "ommr_track_b9b9ca16a5da24c1",
+    "identity_status": "strong",
+    "title": "For Youth",
+    "artists": [
+      {
+        "name": "BTS",
+        "role": "main",
+        "ids": {
+          "applemusic": "883131348"
+        }
+      }
+    ],
+    "album": {
+      "title": "Proof",
+      "release_date": "2022-06-10",
+      "images": [
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/600x600bb.jpg",
+          "width": 600,
+          "height": 600,
+          "type": "cover"
+        },
+        {
+          "url": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/100x100bb.jpg",
+          "width": 100,
+          "height": 100,
+          "type": "cover"
+        }
+      ],
+      "ids": {
+        "applemusic": "1627573936"
+      }
+    },
+    "duration_ms": 264481,
+    "release_date": "2022-06-10",
+    "music_graph": {
+      "version": 1,
+      "root": "ommr:recording:ommr_track_b9b9ca16a5da24c1",
+      "nodes": [
+        {
+          "id": "applemusic:artist:883131348",
+          "type": "artist",
+          "provider": "applemusic",
+          "native_id": "883131348",
+          "name": "BTS"
+        },
+        {
+          "id": "applemusic:recording:1627577723",
+          "type": "recording",
+          "provider": "applemusic",
+          "native_id": "1627577723",
+          "name": "For Youth"
+        },
+        {
+          "id": "applemusic:release:1627573936",
+          "type": "release",
+          "provider": "applemusic",
+          "native_id": "1627573936",
+          "name": "Proof"
+        },
+        {
+          "id": "ommr:recording:ommr_track_b9b9ca16a5da24c1",
+          "type": "recording",
+          "provider": "ommr",
+          "native_id": "ommr_track_b9b9ca16a5da24c1",
+          "name": "For Youth"
+        }
+      ],
+      "edges": [
+        {
+          "from": "applemusic:artist:883131348",
+          "to": "applemusic:recording:1627577723",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "main",
+          "credited_as": "BTS"
+        },
+        {
+          "from": "applemusic:recording:1627577723",
+          "to": "applemusic:release:1627573936",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 1,
+          "disc_number": 3
+        },
+        {
+          "from": "ommr:recording:ommr_track_b9b9ca16a5da24c1",
+          "to": "applemusic:recording:1627577723",
+          "type": "matched_catalog_entity",
+          "source": "applemusic"
+        }
+      ],
+      "truncated": false
+    },
+    "provider_data": {
+      "applemusic": {
+        "catalog": {
+          "artistId": 883131348,
+          "artistName": "BTS",
+          "artistViewUrl": "https://music.apple.com/us/artist/bts/883131348?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/60x60bb.jpg",
+          "collectionCensoredName": "Proof",
+          "collectionExplicitness": "notExplicit",
+          "collectionId": 1627573936,
+          "collectionName": "Proof",
+          "collectionPrice": 17.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/for-youth/1627573936?i=1627577723&uo=4",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 3,
+          "discNumber": 3,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/e6/7d/f5/e67df505-2182-e8a2-663e-4804e31e1843/mzaf_10104120108728519175.plus.aac.p.m4a",
+          "primaryGenreName": "K-Pop",
+          "releaseDate": "2022-06-10T12:00:00Z",
+          "trackCensoredName": "For Youth",
+          "trackCount": 1,
+          "trackExplicitness": "notExplicit",
+          "trackId": 1627577723,
+          "trackName": "For Youth",
+          "trackNumber": 1,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 264481,
+          "trackViewUrl": "https://music.apple.com/us/album/for-youth/1627573936?i=1627577723&uo=4",
+          "wrapperType": "track"
+        },
+        "metadata": {
+          "album": {
+            "ids": {
+              "applemusic": "1627573936"
+            },
+            "images": [
+              {
+                "height": 600,
+                "type": "cover",
+                "url": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/600x600bb.jpg",
+                "width": 600
+              },
+              {
+                "height": 100,
+                "type": "cover",
+                "url": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/100x100bb.jpg",
+                "width": 100
+              }
+            ],
+            "release_date": "2022-06-10",
+            "title": "Proof"
+          },
+          "artists": [
+            {
+              "ids": {
+                "applemusic": "883131348"
+              },
+              "name": "BTS",
+              "role": "main"
+            }
+          ],
+          "credits": null,
+          "disc_number": 3,
+          "duration_ms": 264481,
+          "explicit": false,
+          "genres": [
+            "K-Pop"
+          ],
+          "ids": {
+            "applemusic": "1627577723",
+            "applemusic_url": "https://music.apple.com/us/album/for-youth/1627573936?i=1627577723"
+          },
+          "images": [
+            {
+              "height": 600,
+              "type": "cover",
+              "url": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/600x600bb.jpg",
+              "width": 600
+            },
+            {
+              "height": 100,
+              "type": "cover",
+              "url": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/100x100bb.jpg",
+              "width": 100
+            }
+          ],
+          "preview_url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/e6/7d/f5/e67df505-2182-e8a2-663e-4804e31e1843/mzaf_10104120108728519175.plus.aac.p.m4a",
+          "release_date": "2022-06-10",
+          "title": "For Youth",
+          "track_number": 1
+        }
+      }
+    },
+    "explicit_status": "clean",
+    "explicit": false,
+    "genres": [
+      "K-Pop"
+    ],
+    "images": [
+      {
+        "url": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/100x100bb.jpg",
+        "width": 100,
+        "height": 100,
+        "type": "cover"
+      },
+      {
+        "url": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/600x600bb.jpg",
+        "width": 600,
+        "height": 600,
+        "type": "cover"
+      }
+    ],
+    "preview_url": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/e6/7d/f5/e67df505-2182-e8a2-663e-4804e31e1843/mzaf_10104120108728519175.plus.aac.p.m4a",
+    "track_number": 1,
+    "disc_number": 3,
+    "ids": {
+      "applemusic": "1627577723",
+      "applemusic_url": "https://music.apple.com/us/album/for-youth/1627573936?i=1627577723"
+    },
+    "extensions": {
+      "platform_links": {
+        "ommr_id": "ommr_track_b9b9ca16a5da24c1",
+        "platforms": {
+          "applemusic": {
+            "id": "1627577723",
+            "id_type": "track_id",
+            "url": "https://music.apple.com/us/album/for-youth/1627573936?i=1627577723"
+          }
+        }
+      }
+    }
+  }
+}

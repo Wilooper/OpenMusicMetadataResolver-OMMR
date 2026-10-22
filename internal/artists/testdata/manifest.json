@@ -1,0 +1,37 @@
+[
+  {
+    "capture": "deezer-search",
+    "original_sha256": "b7a8dd8e1e1710d40fbf4f1fe0305ae7d6d1ee02f769bea5a02e12c7db3a8721",
+    "original_bytes": 3902
+  },
+  {
+    "capture": "deezer-profile",
+    "original_sha256": "3a0301c8a92237e4e3d20a4b35ef20649b06c1e10cdbbc149a09af79656df684",
+    "original_bytes": 907
+  },
+  {
+    "capture": "deezer-top",
+    "original_sha256": "3db74a71a453a7bf58330c282773e6225aab15fa9f2922670a8cfea5b3c4975b",
+    "original_bytes": 17426
+  },
+  {
+    "capture": "jio-search",
+    "original_sha256": "ecc06b7e19e8ab51f4538403cf6601ae21a07677fe3be91f6bc751b7307f1026",
+    "original_bytes": 1678
+  },
+  {
+    "capture": "jio-profile",
+    "original_sha256": "8ef5ace80ad439d2466ddd222db001d959adfbfc08b663268680fffd193381ae",
+    "original_bytes": 70734
+  },
+  {
+    "capture": "apple-search",
+    "original_sha256": "4f2c33893b767d6df2e5f8c22bc284378ed59a8248ca0afba3cad9a8558735cb",
+    "original_bytes": 692
+  },
+  {
+    "capture": "apple-profile",
+    "original_sha256": "6c52290398e1e81dbd15e1397b5afe5089d0fe8bff284a73edac14e8855d328a",
+    "original_bytes": 7957
+  }
+]

@@ -12,7 +12,7 @@ func TestBuildPlatformIdentifiersAndURLs(t *testing.T) {
 		"spotify": "4cOdK2wGLETKBW3PvgPWqT", "ytmusic": "x-KOXck57lc", "applemusic": "123", "deezer": "456", "qobuz": "789", "tidal": "321", "amazonmusic": "B084KPC3Q7", "pandora": "TR:151362660", "soundcloud": "m83/midnight-city", "soundcloud_track_id": "123456", "jiosaavn": "Rh0ueE1XXQM", "jiosaavn_track_id": "native123", "jiosaavn_url": "https://www.jiosaavn.com/song/get-lucky/Rh0ueE1XXQM", "musicbrainz": "12345678-1234-1234-1234-123456789abc",
 	}, IdentityMatches: []canonical.IdentityMatch{{Provider: "spotify", ID: "4cOdK2wGLETKBW3PvgPWqT", Confidence: .97, Method: "isrc"}}}
 	got := Build(track)
-	if got.OMMRID != track.CanonicalID || got.ISRC != track.ISRC || len(got.Platforms) != 12 || len(got.UnavailablePlatforms) != 0 {
+	if got.OMMRID != track.CanonicalID || got.ISRC != track.ISRC || len(got.Platforms) != 12 || len(got.UnavailablePlatforms) != 3 {
 		t.Fatalf("incomplete catalog: %+v", got)
 	}
 	for _, provider := range []string{"spotify", "youtube", "ytmusic", "applemusic", "deezer", "qobuz", "tidal", "amazonmusic", "soundcloud", "jiosaavn", "musicbrainz"} {
@@ -64,7 +64,7 @@ func TestProviderURLMustMatchPlatformAndRecording(t *testing.T) {
 func TestInvalidIDsAndUnresolvedPlatformsHaveNoInventedLinks(t *testing.T) {
 	track := canonical.Track{IDs: map[string]string{"ytmusic": "bad&v=other", "spotify": "not-a-track-id", "deezer": "123/../../evil", "unknown": "123"}}
 	got := Build(track)
-	if len(got.Platforms) != 0 || len(got.UnavailablePlatforms) != 12 || got.OMMRID != "" || got.ISRC != "" {
+	if len(got.Platforms) != 0 || len(got.UnavailablePlatforms) != len(providers)+1 || got.OMMRID != "" || got.ISRC != "" {
 		t.Fatalf("fabricated links: %+v", got)
 	}
 	Attach(&track)

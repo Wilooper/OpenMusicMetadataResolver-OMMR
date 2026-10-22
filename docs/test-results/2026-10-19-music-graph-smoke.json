@@ -1,0 +1,469 @@
+{
+  "environment": "Remote Linux; public Apple-only server smoke; no credentials",
+  "cases": [
+    {
+      "case": "capabilities",
+      "status": 200,
+      "milliseconds": 1.11
+    },
+    {
+      "case": "native_album_cold",
+      "status": 200,
+      "milliseconds": 7902.2,
+      "track_list": {
+        "returned": 11,
+        "total": 11,
+        "complete": true
+      },
+      "graph_nodes": 13,
+      "graph_edges": 23,
+      "source": {
+        "status": "ok",
+        "cached": false
+      },
+      "album_matches_full": true
+    },
+    {
+      "case": "native_album_gateway_warm",
+      "status": 200,
+      "milliseconds": 2.32,
+      "track_list": {
+        "returned": 11,
+        "total": 11,
+        "complete": true
+      },
+      "graph_nodes": 13,
+      "graph_edges": 23,
+      "source": {
+        "status": "ok",
+        "cached": true
+      },
+      "album_matches_full": true
+    },
+    {
+      "case": "native_album_production",
+      "status": 200,
+      "milliseconds": 2.14,
+      "track_list": {
+        "returned": 11,
+        "total": 11,
+        "complete": true
+      },
+      "graph_nodes": 13,
+      "graph_edges": 23,
+      "source": null,
+      "album_matches_full": true
+    },
+    {
+      "case": "native_album_limited",
+      "status": 200,
+      "milliseconds": 45.32,
+      "track_list": {
+        "returned": 2,
+        "total": 11,
+        "complete": false,
+        "reason": "limit"
+      },
+      "graph_nodes": 4,
+      "graph_edges": 5,
+      "source": null,
+      "album_matches_full": false
+    },
+    {
+      "case": "recording_graph_production",
+      "status": 200,
+      "milliseconds": 2972.18,
+      "title": "Boyfriend",
+      "graph_nodes": 4,
+      "graph_edges": 3
+    },
+    {
+      "case": "album_url_rejected",
+      "status": 400,
+      "milliseconds": 4.79,
+      "response": {
+        "error": "invalid album provider or native album ID (MusicBrainz requires a release ID)"
+      }
+    },
+    {
+      "case": "disabled_provider",
+      "status": 503,
+      "milliseconds": 0.93,
+      "response": {
+        "error": "album service unavailable"
+      }
+    }
+  ],
+  "recording_graph": {
+    "version": 1,
+    "root": "ommr:recording:ommr_track_f71b51302738bb16",
+    "nodes": [
+      {
+        "id": "applemusic:artist:914892130",
+        "type": "artist",
+        "provider": "applemusic",
+        "native_id": "914892130",
+        "name": "Karan Aujla & Ikky"
+      },
+      {
+        "id": "applemusic:recording:1829591986",
+        "type": "recording",
+        "provider": "applemusic",
+        "native_id": "1829591986",
+        "name": "Boyfriend"
+      },
+      {
+        "id": "applemusic:release:1829591921",
+        "type": "release",
+        "provider": "applemusic",
+        "native_id": "1829591921",
+        "name": "P-POP CULTURE"
+      },
+      {
+        "id": "ommr:recording:ommr_track_f71b51302738bb16",
+        "type": "recording",
+        "provider": "ommr",
+        "native_id": "ommr_track_f71b51302738bb16",
+        "name": "Boyfriend"
+      }
+    ],
+    "edges": [
+      {
+        "from": "applemusic:artist:914892130",
+        "to": "applemusic:recording:1829591986",
+        "type": "credit",
+        "source": "applemusic",
+        "role": "primary_artist",
+        "source_role": "main",
+        "credited_as": "Karan Aujla & Ikky"
+      },
+      {
+        "from": "applemusic:recording:1829591986",
+        "to": "applemusic:release:1829591921",
+        "type": "appears_on",
+        "source": "applemusic"
+      },
+      {
+        "from": "ommr:recording:ommr_track_f71b51302738bb16",
+        "to": "applemusic:recording:1829591986",
+        "type": "matched_catalog_entity",
+        "source": "applemusic"
+      }
+    ],
+    "truncated": false
+  },
+  "album_graph": {
+    "version": 1,
+    "root": "applemusic:release:1829591921",
+    "nodes": [
+      {
+        "id": "applemusic:artist:914892130",
+        "type": "artist",
+        "provider": "applemusic",
+        "native_id": "914892130",
+        "name": "Karan Aujla & Ikky"
+      },
+      {
+        "id": "applemusic:release:1829591921",
+        "type": "release",
+        "provider": "applemusic",
+        "native_id": "1829591921",
+        "name": "P-POP CULTURE"
+      },
+      {
+        "id": "applemusic:track_entry:1829591921/1/1/1829591922",
+        "type": "track_entry",
+        "provider": "applemusic",
+        "native_id": "1829591921/1/1/1829591922",
+        "name": "I Really Do..."
+      },
+      {
+        "id": "applemusic:track_entry:1829591921/1/2/1829591983",
+        "type": "track_entry",
+        "provider": "applemusic",
+        "native_id": "1829591921/1/2/1829591983",
+        "name": "For A Reason"
+      },
+      {
+        "id": "applemusic:track_entry:1829591921/1/3/1829591985",
+        "type": "track_entry",
+        "provider": "applemusic",
+        "native_id": "1829591921/1/3/1829591985",
+        "name": "You're U Tho"
+      },
+      {
+        "id": "applemusic:track_entry:1829591921/1/4/1829591986",
+        "type": "track_entry",
+        "provider": "applemusic",
+        "native_id": "1829591921/1/4/1829591986",
+        "name": "Boyfriend"
+      },
+      {
+        "id": "applemusic:track_entry:1829591921/1/5/1829591989",
+        "type": "track_entry",
+        "provider": "applemusic",
+        "native_id": "1829591921/1/5/1829591989",
+        "name": "HIM."
+      },
+      {
+        "id": "applemusic:track_entry:1829591921/2/1/1829591990",
+        "type": "track_entry",
+        "provider": "applemusic",
+        "native_id": "1829591921/2/1/1829591990",
+        "name": "Flip-Side (Sandy's Interlude)"
+      },
+      {
+        "id": "applemusic:track_entry:1829591921/2/2/1829591991",
+        "type": "track_entry",
+        "provider": "applemusic",
+        "native_id": "1829591921/2/2/1829591991",
+        "name": "I'ma Do My Thiiing"
+      },
+      {
+        "id": "applemusic:track_entry:1829591921/2/3/1829591992",
+        "type": "track_entry",
+        "provider": "applemusic",
+        "native_id": "1829591921/2/3/1829591992",
+        "name": "Daytona"
+      },
+      {
+        "id": "applemusic:track_entry:1829591921/2/4/1829591994",
+        "type": "track_entry",
+        "provider": "applemusic",
+        "native_id": "1829591921/2/4/1829591994",
+        "name": "7.7 Magnitude"
+      },
+      {
+        "id": "applemusic:track_entry:1829591921/2/5/1829591995",
+        "type": "track_entry",
+        "provider": "applemusic",
+        "native_id": "1829591921/2/5/1829591995",
+        "name": "MF Gabhru!"
+      },
+      {
+        "id": "applemusic:track_entry:1829591921/2/6/1829591997",
+        "type": "track_entry",
+        "provider": "applemusic",
+        "native_id": "1829591921/2/6/1829591997",
+        "name": "P-POP CULTURE"
+      }
+    ],
+    "edges": [
+      {
+        "from": "applemusic:artist:914892130",
+        "to": "applemusic:release:1829591921",
+        "type": "credit",
+        "source": "applemusic",
+        "role": "primary_artist",
+        "source_role": "primary_artist",
+        "credited_as": "Karan Aujla & Ikky"
+      },
+      {
+        "from": "applemusic:artist:914892130",
+        "to": "applemusic:track_entry:1829591921/1/1/1829591922",
+        "type": "credit",
+        "source": "applemusic",
+        "role": "primary_artist",
+        "source_role": "primary_artist",
+        "credited_as": "Karan Aujla & Ikky"
+      },
+      {
+        "from": "applemusic:artist:914892130",
+        "to": "applemusic:track_entry:1829591921/1/2/1829591983",
+        "type": "credit",
+        "source": "applemusic",
+        "role": "primary_artist",
+        "source_role": "primary_artist",
+        "credited_as": "Karan Aujla & Ikky"
+      },
+      {
+        "from": "applemusic:artist:914892130",
+        "to": "applemusic:track_entry:1829591921/1/3/1829591985",
+        "type": "credit",
+        "source": "applemusic",
+        "role": "primary_artist",
+        "source_role": "primary_artist",
+        "credited_as": "Karan Aujla & Ikky"
+      },
+      {
+        "from": "applemusic:artist:914892130",
+        "to": "applemusic:track_entry:1829591921/1/4/1829591986",
+        "type": "credit",
+        "source": "applemusic",
+        "role": "primary_artist",
+        "source_role": "primary_artist",
+        "credited_as": "Karan Aujla & Ikky"
+      },
+      {
+        "from": "applemusic:artist:914892130",
+        "to": "applemusic:track_entry:1829591921/1/5/1829591989",
+        "type": "credit",
+        "source": "applemusic",
+        "role": "primary_artist",
+        "source_role": "primary_artist",
+        "credited_as": "Karan Aujla & Ikky"
+      },
+      {
+        "from": "applemusic:artist:914892130",
+        "to": "applemusic:track_entry:1829591921/2/1/1829591990",
+        "type": "credit",
+        "source": "applemusic",
+        "role": "primary_artist",
+        "source_role": "primary_artist",
+        "credited_as": "Karan Aujla & Ikky"
+      },
+      {
+        "from": "applemusic:artist:914892130",
+        "to": "applemusic:track_entry:1829591921/2/2/1829591991",
+        "type": "credit",
+        "source": "applemusic",
+        "role": "primary_artist",
+        "source_role": "primary_artist",
+        "credited_as": "Karan Aujla & Ikky"
+      },
+      {
+        "from": "applemusic:artist:914892130",
+        "to": "applemusic:track_entry:1829591921/2/3/1829591992",
+        "type": "credit",
+        "source": "applemusic",
+        "role": "primary_artist",
+        "source_role": "primary_artist",
+        "credited_as": "Karan Aujla & Ikky"
+      },
+      {
+        "from": "applemusic:artist:914892130",
+        "to": "applemusic:track_entry:1829591921/2/4/1829591994",
+        "type": "credit",
+        "source": "applemusic",
+        "role": "primary_artist",
+        "source_role": "primary_artist",
+        "credited_as": "Karan Aujla & Ikky"
+      },
+      {
+        "from": "applemusic:artist:914892130",
+        "to": "applemusic:track_entry:1829591921/2/5/1829591995",
+        "type": "credit",
+        "source": "applemusic",
+        "role": "primary_artist",
+        "source_role": "primary_artist",
+        "credited_as": "Karan Aujla & Ikky"
+      },
+      {
+        "from": "applemusic:artist:914892130",
+        "to": "applemusic:track_entry:1829591921/2/6/1829591997",
+        "type": "credit",
+        "source": "applemusic",
+        "role": "primary_artist",
+        "source_role": "primary_artist",
+        "credited_as": "Karan Aujla & Ikky"
+      },
+      {
+        "from": "applemusic:track_entry:1829591921/1/1/1829591922",
+        "to": "applemusic:release:1829591921",
+        "type": "appears_on",
+        "source": "applemusic",
+        "position": 1,
+        "disc_number": 1,
+        "track_number": "1"
+      },
+      {
+        "from": "applemusic:track_entry:1829591921/1/2/1829591983",
+        "to": "applemusic:release:1829591921",
+        "type": "appears_on",
+        "source": "applemusic",
+        "position": 2,
+        "disc_number": 1,
+        "track_number": "2"
+      },
+      {
+        "from": "applemusic:track_entry:1829591921/1/3/1829591985",
+        "to": "applemusic:release:1829591921",
+        "type": "appears_on",
+        "source": "applemusic",
+        "position": 3,
+        "disc_number": 1,
+        "track_number": "3"
+      },
+      {
+        "from": "applemusic:track_entry:1829591921/1/4/1829591986",
+        "to": "applemusic:release:1829591921",
+        "type": "appears_on",
+        "source": "applemusic",
+        "position": 4,
+        "disc_number": 1,
+        "track_number": "4"
+      },
+      {
+        "from": "applemusic:track_entry:1829591921/1/5/1829591989",
+        "to": "applemusic:release:1829591921",
+        "type": "appears_on",
+        "source": "applemusic",
+        "position": 5,
+        "disc_number": 1,
+        "track_number": "5"
+      },
+      {
+        "from": "applemusic:track_entry:1829591921/2/1/1829591990",
+        "to": "applemusic:release:1829591921",
+        "type": "appears_on",
+        "source": "applemusic",
+        "position": 1,
+        "disc_number": 2,
+        "track_number": "1"
+      },
+      {
+        "from": "applemusic:track_entry:1829591921/2/2/1829591991",
+        "to": "applemusic:release:1829591921",
+        "type": "appears_on",
+        "source": "applemusic",
+        "position": 2,
+        "disc_number": 2,
+        "track_number": "2"
+      },
+      {
+        "from": "applemusic:track_entry:1829591921/2/3/1829591992",
+        "to": "applemusic:release:1829591921",
+        "type": "appears_on",
+        "source": "applemusic",
+        "position": 3,
+        "disc_number": 2,
+        "track_number": "3"
+      },
+      {
+        "from": "applemusic:track_entry:1829591921/2/4/1829591994",
+        "to": "applemusic:release:1829591921",
+        "type": "appears_on",
+        "source": "applemusic",
+        "position": 4,
+        "disc_number": 2,
+        "track_number": "4"
+      },
+      {
+        "from": "applemusic:track_entry:1829591921/2/5/1829591995",
+        "to": "applemusic:release:1829591921",
+        "type": "appears_on",
+        "source": "applemusic",
+        "position": 5,
+        "disc_number": 2,
+        "track_number": "5"
+      },
+      {
+        "from": "applemusic:track_entry:1829591921/2/6/1829591997",
+        "to": "applemusic:release:1829591921",
+        "type": "appears_on",
+        "source": "applemusic",
+        "position": 6,
+        "disc_number": 2,
+        "track_number": "6"
+      }
+    ],
+    "truncated": false
+  },
+  "musicbrainz_live_probe": {
+    "status": 200,
+    "bytes": 195,
+    "json": false,
+    "site_unavailable": true
+  },
+  "relationship_test_evidence": "Constructed MusicBrainz protocol responses; not live source confirmation"
+}

@@ -11,7 +11,7 @@ type linksResponse struct {
 	Title          string                   `json:"title,omitempty"`
 	Artists        []canonical.Artist       `json:"artists,omitempty"`
 	IdentityStatus string                   `json:"identity_status,omitempty"`
-	ProviderStatus []canonical.SourceStatus `json:"provider_status"`
+	ProviderStatus []canonical.SourceStatus `json:"provider_status,omitempty"`
 }
 
 // ResolutionStrategy provides transparency into how a query was resolved.
@@ -32,7 +32,7 @@ type BulkItemResult struct {
 	QueryIndex int                      `json:"query_index"`
 	Success    bool                     `json:"success"`
 	Error      string                   `json:"error,omitempty"`
-	Track      *canonical.Track         `json:"track,omitempty"`
+	Track      any                      `json:"track,omitempty"`
 	Sources    []canonical.SourceStatus `json:"sources,omitempty"`
 }
 
@@ -46,17 +46,18 @@ type BulkResolveResponse struct {
 
 // SearchResponse payload returned by GET /v1/search.
 type SearchResponse struct {
-	Query   string                   `json:"query"`
-	Results []canonical.SearchResult `json:"results"`
-	Page    int                      `json:"page"`
-	Limit   int                      `json:"limit"`
-	Total   int                      `json:"total"`
+	Query   string `json:"query"`
+	Results []any  `json:"results"`
+	Page    int    `json:"page"`
+	Limit   int    `json:"limit"`
+	Total   int    `json:"total"`
 }
 
 // HealthResponse payload returned by GET /v1/health.
 type HealthResponse struct {
-	Status        string `json:"status"`
-	Version       string `json:"version"`
-	UptimeSeconds int64  `json:"uptime_seconds"`
-	CacheProvider string `json:"cache_provider"`
+	Providers     map[string]int `json:"providers,omitempty"`
+	Status        string         `json:"status"`
+	Version       string         `json:"version"`
+	UptimeSeconds int64          `json:"uptime_seconds"`
+	CacheProvider string         `json:"cache_provider"`
 }

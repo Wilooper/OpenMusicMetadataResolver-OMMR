@@ -1,0 +1,46 @@
+{
+  "recording-offset": 0,
+  "recording-count": 128,
+  "recordings": [
+    {
+      "video": false,
+      "first-release-date": "2023-10-03",
+      "disambiguation": "",
+      "id": "0210e7c9-7b6c-4390-8952-37c57f63f115",
+      "length": 180000,
+      "title": "2 Goliya"
+    },
+    {
+      "title": "23",
+      "length": 152000,
+      "video": false,
+      "first-release-date": "2025-10-12",
+      "id": "74d56a2d-4ead-4c62-8654-71fb9abbdd75",
+      "disambiguation": ""
+    },
+    {
+      "title": "Alarm",
+      "length": 173470,
+      "video": false,
+      "first-release-date": "2025-02-19",
+      "disambiguation": "",
+      "id": "92dbb7eb-8b25-4d97-823f-d134c8114aab"
+    },
+    {
+      "length": 210000,
+      "title": "8 Parche",
+      "disambiguation": "",
+      "id": "f0f11e42-815d-46a7-b5ea-031646009598",
+      "video": false,
+      "first-release-date": "2019-09-12"
+    },
+    {
+      "title": "Afterimage",
+      "length": 153750,
+      "first-release-date": "2026-10-16",
+      "video": false,
+      "disambiguation": "",
+      "id": "ff76e0de-6e72-4454-a26f-a7c615f438a9"
+    }
+  ]
+}

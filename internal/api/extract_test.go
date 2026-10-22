@@ -4,6 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"net/http/httptest"
+	"net/url"
+	"strings"
 	"testing"
 	"time"
 
@@ -39,7 +41,7 @@ func TestHandleExtractReportsPerSourceFieldsWithoutFillingMissingCredits(t *test
 	registry := adapters.NewRegistry()
 	registry.Register(extractionFixtureAdapter{name: "fixture", track: track})
 	handler := NewHandler(nil, registry, &config.Config{ProviderTimeout: time.Second})
-	req := httptest.NewRequest("GET", "/v1/extract?provider=fixture&id=abc", nil)
+	req := httptest.NewRequest("GET", "/v1/extract?provider=fixture&id=abc&debug=true", nil)
 	response := httptest.NewRecorder()
 	handler.HandleExtract(response, req)
 	if response.Code != 200 {
@@ -69,7 +71,7 @@ func TestExtractionLinksAreScopedToTheExtractedProvider(t *testing.T) {
 	registry.Register(extractionFixtureAdapter{name: "tidal", track: canonical.Track{Title: "Song", IDs: map[string]string{"tidal": "123", "spotify": "4cOdK2wGLETKBW3PvgPWqT"}}})
 	handler := NewHandler(nil, registry, &config.Config{ProviderTimeout: time.Second})
 	response := httptest.NewRecorder()
-	handler.HandleExtract(response, httptest.NewRequest("GET", "/v1/extract?provider=tidal&id=123", nil))
+	handler.HandleExtract(response, httptest.NewRequest("GET", "/v1/extract?provider=tidal&id=123&debug=true", nil))
 	var got extractionResponse
 	if err := json.Unmarshal(response.Body.Bytes(), &got); err != nil {
 		t.Fatal(err)
@@ -97,5 +99,69 @@ func TestExtractionSelectsLargestThumbnail(t *testing.T) {
 	got := describeExtractedTrack(canonical.Track{Images: []canonical.Image{{URL: "small", Type: "thumbnail", Width: 120, Height: 90}, {URL: "cover", Type: "cover", Width: 1000, Height: 1000}, {URL: "large", Type: "thumbnail", Width: 480, Height: 360}}})
 	if got.ThumbnailURL != "large" {
 		t.Fatalf("thumbnail = %s", got.ThumbnailURL)
+	}
+}
+
+type idKindFixture struct {
+	extractionFixtureAdapter
+	got   *string
+	gotID *string
+}
+
+func (a idKindFixture) FetchByID(ctx context.Context, kind, id string) (*canonical.TrackCandidate, error) {
+	*a.got = kind
+	if a.gotID != nil {
+		*a.gotID = id
+	}
+	return a.extractionFixtureAdapter.FetchByID(ctx, kind, id)
+}
+func TestJioSaavnExplicitIDKindAcrossGETAndGateway(t *testing.T) {
+	for _, gateway := range []bool{false, true} {
+		got := ""
+		registry := adapters.NewRegistry()
+		registry.Register(idKindFixture{extractionFixtureAdapter: extractionFixtureAdapter{name: "jiosaavn", track: canonical.Track{Title: "Song"}}, got: &got})
+		handler := NewHandler(nil, registry, &config.Config{ProviderTimeout: time.Second})
+		response := httptest.NewRecorder()
+		if gateway {
+			handler.HandleQuery(response, httptest.NewRequest("POST", "/v1/query", strings.NewReader(`{"operation":"extract","provider":"jiosaavn","id":"PUBLIC42","id_type":"share"}`)))
+		} else {
+			handler.HandleExtract(response, httptest.NewRequest("GET", "/v1/extract?provider=jiosaavn&id=PUBLIC42&id_type=share", nil))
+		}
+		if response.Code != 200 || got != "jiosaavn_share" {
+			t.Fatalf("gateway=%v status=%d kind=%q body=%s", gateway, response.Code, got, response.Body.String())
+		}
+		for _, query := range []string{"provider=jiosaavn&id=abc&id_type=wrong", "provider=deezer&id=123&id_type=share", "provider=jiosaavn&id=abc&id_type=share&id_type=native", "artist=A&title=B&id_type=share"} {
+			response = httptest.NewRecorder()
+			handler.HandleExtract(response, httptest.NewRequest("GET", "/v1/extract?"+query, nil))
+			if response.Code != 400 {
+				t.Fatalf("invalid identifier kind accepted: %s", query)
+			}
+		}
+	}
+}
+
+func TestJioSaavnPageURLAcrossGETAndGateway(t *testing.T) {
+	page := "https://www.jiosaavn.com/song/mera-mann/ERIkRAwJf38"
+	for _, gateway := range []bool{false, true} {
+		kind, id := "", ""
+		registry := adapters.NewRegistry()
+		registry.Register(idKindFixture{extractionFixtureAdapter: extractionFixtureAdapter{name: "jiosaavn", track: canonical.Track{Title: "Mera Mann"}}, got: &kind, gotID: &id})
+		handler := NewHandler(nil, registry, &config.Config{ProviderTimeout: time.Second})
+		response := httptest.NewRecorder()
+		if gateway {
+			handler.HandleQuery(response, httptest.NewRequest("POST", "/v1/query", strings.NewReader(`{"operation":"extract","provider":"jiosaavn","url":"`+page+`"}`)))
+		} else {
+			handler.HandleExtract(response, httptest.NewRequest("GET", "/v1/extract?provider=jiosaavn&url="+url.QueryEscape(page), nil))
+		}
+		if response.Code != 200 || kind != "jiosaavn_url" || id != page {
+			t.Fatalf("gateway=%v kind=%s id=%s status=%d body=%s", gateway, kind, id, response.Code, response.Body.String())
+		}
+		for _, query := range []string{"provider=jiosaavn&url=https%3A%2F%2Fforeign.example%2Fsong%2Fs%2Fid", "provider=deezer&url=" + url.QueryEscape(page), "provider=jiosaavn&id=abc&url=" + url.QueryEscape(page), "provider=jiosaavn&id_type=share&url=" + url.QueryEscape(page), "provider=jiosaavn&url=" + url.QueryEscape(page) + "&url=" + url.QueryEscape(page)} {
+			response = httptest.NewRecorder()
+			handler.HandleExtract(response, httptest.NewRequest("GET", "/v1/extract?"+query, nil))
+			if response.Code != 400 {
+				t.Fatalf("invalid page request accepted: %s", query)
+			}
+		}
 	}
 }

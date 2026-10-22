@@ -1,0 +1,343 @@
+[
+  {
+    "query_artist": "Karan Aujla",
+    "query_title": "Boyfriend",
+    "http_status": 200,
+    "public_http_status": 200,
+    "title": "Boyfriend",
+    "artists": [
+      "Karan Aujla",
+      "Ikky"
+    ],
+    "ids": {
+      "applemusic": "1829591986",
+      "applemusic_url": "https://music.apple.com/us/album/boyfriend/1829591921?i=1829591986",
+      "bugs": "126998566",
+      "bugs_url": "https://music.bugs.co.kr/track/126998566",
+      "genie": "111431603",
+      "genie_url": "https://www.genie.co.kr/detail/songInfo?xgnm=111431603",
+      "melon": "39664161",
+      "melon_url": "https://www.melon.com/song/detail.htm?songId=39664161",
+      "ytmusic": "tIjUfo30r4M"
+    },
+    "duration_ms": 161000,
+    "identity_status": "strong",
+    "cold_seconds": 9.506,
+    "warm_seconds": 0.002,
+    "debug_bytes": 17106,
+    "public_bytes": 11840,
+    "same_record": true,
+    "same_provider_data": true
+  },
+  {
+    "query_artist": "Talwiinder",
+    "query_title": "Tu",
+    "http_status": 200,
+    "public_http_status": 200,
+    "title": "Tu",
+    "artists": [
+      "Talwiinder",
+      "Sanjoy"
+    ],
+    "ids": {
+      "applemusic": "1755529616",
+      "applemusic_url": "https://music.apple.com/us/album/tu/1755529615?i=1755529616",
+      "genie": "113365749",
+      "genie_url": "https://www.genie.co.kr/detail/songInfo?xgnm=113365749",
+      "melon": "38356904",
+      "melon_url": "https://www.melon.com/song/detail.htm?songId=38356904",
+      "ytmusic": "uOQG38DriDM"
+    },
+    "duration_ms": 132086,
+    "identity_status": "strong",
+    "cold_seconds": 3.329,
+    "warm_seconds": 0.004,
+    "debug_bytes": 15694,
+    "public_bytes": 10776,
+    "same_record": true,
+    "same_provider_data": true
+  },
+  {
+    "query_artist": "Daft Punk",
+    "query_title": "Get Lucky",
+    "http_status": 200,
+    "public_http_status": 200,
+    "title": "Get Lucky (feat. Pharrell Williams and Nile Rodgers)",
+    "artists": [
+      "Daft Punk",
+      "Pharrell Williams",
+      "Nile Rodgers"
+    ],
+    "ids": {
+      "applemusic": "617154366",
+      "applemusic_url": "https://music.apple.com/us/album/get-lucky/617154241?i=617154366",
+      "bugs": "2981335",
+      "bugs_url": "https://music.bugs.co.kr/track/2981335",
+      "genie": "101721060",
+      "genie_url": "https://www.genie.co.kr/detail/songInfo?xgnm=101721060",
+      "melon": "4118346",
+      "melon_url": "https://www.melon.com/song/detail.htm?songId=4118346",
+      "ytmusic": "4D7u5KF7SP8"
+    },
+    "duration_ms": 370000,
+    "identity_status": "probable",
+    "cold_seconds": 4.294,
+    "warm_seconds": 3.385,
+    "debug_bytes": 18848,
+    "public_bytes": 13320,
+    "same_record": true,
+    "same_provider_data": true
+  },
+  {
+    "query_artist": "The Weeknd",
+    "query_title": "Blinding Lights",
+    "http_status": 200,
+    "public_http_status": 200,
+    "title": "Blinding Lights",
+    "artists": [
+      "The Weeknd"
+    ],
+    "ids": {
+      "applemusic": "1499378607",
+      "applemusic_url": "https://music.apple.com/us/album/blinding-lights/1499378108?i=1499378607",
+      "bugs": "5812157",
+      "bugs_url": "https://music.bugs.co.kr/track/5812157",
+      "genie": "89667873",
+      "genie_url": "https://www.genie.co.kr/detail/songInfo?xgnm=89667873",
+      "melon": "32219271",
+      "melon_url": "https://www.melon.com/song/detail.htm?songId=32219271",
+      "ytmusic": "J7p4bzqLvCw"
+    },
+    "duration_ms": 202000,
+    "identity_status": "strong",
+    "cold_seconds": 5.688,
+    "warm_seconds": 0.004,
+    "debug_bytes": 16500,
+    "public_bytes": 12208,
+    "same_record": true,
+    "same_provider_data": true
+  },
+  {
+    "query_artist": "Adele",
+    "query_title": "Hello",
+    "http_status": 200,
+    "public_http_status": 200,
+    "title": "Hello",
+    "artists": [
+      "Adele"
+    ],
+    "ids": {
+      "applemusic": "1544494392",
+      "applemusic_url": "https://music.apple.com/us/album/hello/1544494115?i=1544494392",
+      "bugs": "30030710",
+      "bugs_url": "https://music.bugs.co.kr/track/30030710",
+      "genie": "85316104",
+      "genie_url": "https://www.genie.co.kr/detail/songInfo?xgnm=85316104",
+      "melon": "7899235",
+      "melon_url": "https://www.melon.com/song/detail.htm?songId=7899235",
+      "ytmusic": "yjo_aXygRDI"
+    },
+    "duration_ms": 296000,
+    "identity_status": "strong",
+    "cold_seconds": 4.495,
+    "warm_seconds": 0.002,
+    "debug_bytes": 15043,
+    "public_bytes": 10926,
+    "same_record": true,
+    "same_provider_data": true
+  },
+  {
+    "query_artist": "BTS",
+    "query_title": "Dynamite",
+    "http_status": 200,
+    "public_http_status": 200,
+    "title": "Dynamite",
+    "artists": [
+      "BTS"
+    ],
+    "ids": {
+      "applemusic": "1596532400",
+      "applemusic_url": "https://music.apple.com/us/album/dynamite/1596532185?i=1596532400",
+      "ytmusic": "HaEYUJ2aRHs"
+    },
+    "duration_ms": 199054,
+    "identity_status": "strong",
+    "cold_seconds": 2.053,
+    "warm_seconds": 0.001,
+    "debug_bytes": 11117,
+    "public_bytes": 7913,
+    "same_record": true,
+    "same_provider_data": true
+  },
+  {
+    "query_artist": "Queen",
+    "query_title": "Bohemian Rhapsody",
+    "http_status": 200,
+    "public_http_status": 200,
+    "title": "Bohemian Rhapsody",
+    "artists": [
+      "Queen"
+    ],
+    "ids": {
+      "applemusic": "6781024437",
+      "applemusic_url": "https://music.apple.com/us/album/bohemian-rhapsody/6781024026?i=6781024437",
+      "bugs": "5456988",
+      "bugs_url": "https://music.bugs.co.kr/track/5456988",
+      "genie": "88314881",
+      "genie_url": "https://www.genie.co.kr/detail/songInfo?xgnm=88314881",
+      "melon": "3087601",
+      "melon_url": "https://www.melon.com/song/detail.htm?songId=3087601",
+      "ytmusic": "BSTsnWoslP4"
+    },
+    "duration_ms": 355000,
+    "identity_status": "strong",
+    "cold_seconds": 4.793,
+    "warm_seconds": 0.003,
+    "debug_bytes": 16564,
+    "public_bytes": 12210,
+    "same_record": true,
+    "same_provider_data": true
+  },
+  {
+    "query_artist": "Arijit Singh",
+    "query_title": "Tum Hi Ho",
+    "http_status": 200,
+    "public_http_status": 200,
+    "title": "Tum Hi Ho (From \"Aashiqui 2)",
+    "artists": [
+      "Arijit Singh"
+    ],
+    "ids": {
+      "applemusic": "1193103463",
+      "applemusic_url": "https://music.apple.com/us/album/tum-hi-ho-from-aashiqui-2/1193103366?i=1193103463",
+      "genie": "114015098",
+      "genie_url": "https://www.genie.co.kr/detail/songInfo?xgnm=114015098",
+      "melon": "115345471",
+      "melon_url": "https://www.melon.com/song/detail.htm?songId=115345471",
+      "ytmusic": "fsiPzT50ZiM"
+    },
+    "duration_ms": 262000,
+    "identity_status": "strong",
+    "cold_seconds": 4.173,
+    "warm_seconds": 0.002,
+    "debug_bytes": 15189,
+    "public_bytes": 11239,
+    "same_record": true,
+    "same_provider_data": true
+  },
+  {
+    "query_artist": "Luis Fonsi",
+    "query_title": "Despacito",
+    "http_status": 200,
+    "public_http_status": 200,
+    "title": "Despacito",
+    "artists": [
+      "Luis Fonsi",
+      "Daddy Yankee"
+    ],
+    "ids": {
+      "applemusic": "1447401620",
+      "applemusic_url": "https://music.apple.com/us/album/despacito/1447401519?i=1447401620",
+      "bugs": "4843542",
+      "bugs_url": "https://music.bugs.co.kr/track/4843542",
+      "melon": "31594506",
+      "melon_url": "https://www.melon.com/song/detail.htm?songId=31594506",
+      "ytmusic": "FXovf5dsRTw"
+    },
+    "duration_ms": 229387,
+    "identity_status": "strong",
+    "cold_seconds": 5.009,
+    "warm_seconds": 0.002,
+    "debug_bytes": 15249,
+    "public_bytes": 11296,
+    "same_record": true,
+    "same_provider_data": true
+  },
+  {
+    "query_artist": "YOASOBI",
+    "query_title": "Idol",
+    "http_status": 200,
+    "public_http_status": 200,
+    "title": "Idol",
+    "artists": [
+      "YOASOBI"
+    ],
+    "ids": {
+      "applemusic": "1679278167",
+      "applemusic_url": "https://music.apple.com/us/album/idol/1679278166?i=1679278167",
+      "bugs": "103106129",
+      "bugs_url": "https://music.bugs.co.kr/track/103106129",
+      "genie": "101849407",
+      "genie_url": "https://www.genie.co.kr/detail/songInfo?xgnm=101849407",
+      "melon": "36471402",
+      "melon_url": "https://www.melon.com/song/detail.htm?songId=36471402",
+      "ytmusic": "IzJ_ioBHrPU"
+    },
+    "duration_ms": 213000,
+    "identity_status": "strong",
+    "cold_seconds": 3.191,
+    "warm_seconds": 0.002,
+    "debug_bytes": 15678,
+    "public_bytes": 11552,
+    "same_record": true,
+    "same_provider_data": true
+  },
+  {
+    "query_artist": "Taylor Swift",
+    "query_title": "Anti-Hero",
+    "http_status": 200,
+    "public_http_status": 200,
+    "title": "Anti-Hero",
+    "artists": [
+      "Taylor Swift"
+    ],
+    "ids": {
+      "applemusic": "1649434293",
+      "applemusic_url": "https://music.apple.com/us/album/anti-hero/1649434004?i=1649434293",
+      "bugs": "95900292",
+      "bugs_url": "https://music.bugs.co.kr/track/95900292",
+      "genie": "98719056",
+      "genie_url": "https://www.genie.co.kr/detail/songInfo?xgnm=98719056",
+      "melon": "35750883",
+      "melon_url": "https://www.melon.com/song/detail.htm?songId=35750883",
+      "ytmusic": "3YgtjHZyCIQ"
+    },
+    "duration_ms": 201000,
+    "identity_status": "strong",
+    "cold_seconds": 4.465,
+    "warm_seconds": 0.002,
+    "debug_bytes": 16421,
+    "public_bytes": 12101,
+    "same_record": true,
+    "same_provider_data": true
+  },
+  {
+    "query_artist": "Billie Eilish",
+    "query_title": "bad guy",
+    "http_status": 200,
+    "public_http_status": 200,
+    "title": "bad guy",
+    "artists": [
+      "Billie Eilish"
+    ],
+    "ids": {
+      "applemusic": "1450695739",
+      "applemusic_url": "https://music.apple.com/us/album/bad-guy/1450695723?i=1450695739",
+      "bugs": "5602584",
+      "bugs_url": "https://music.bugs.co.kr/track/5602584",
+      "genie": "88727092",
+      "genie_url": "https://www.genie.co.kr/detail/songInfo?xgnm=88727092",
+      "melon": "31701428",
+      "melon_url": "https://www.melon.com/song/detail.htm?songId=31701428",
+      "ytmusic": "ZD6rXLXZOEI"
+    },
+    "duration_ms": 194000,
+    "identity_status": "strong",
+    "cold_seconds": 5.073,
+    "warm_seconds": 0.002,
+    "debug_bytes": 17308,
+    "public_bytes": 12864,
+    "same_record": true,
+    "same_provider_data": true
+  }
+]

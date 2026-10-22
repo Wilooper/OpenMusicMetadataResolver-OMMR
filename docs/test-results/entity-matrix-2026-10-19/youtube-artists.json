@@ -1,0 +1,164 @@
+[
+  {
+    "artist_name": null,
+    "biography": false,
+    "images": 0,
+    "metrics": [],
+    "top_tracks": 0,
+    "artist_sources": [
+      {
+        "provider": "ytmusic",
+        "status": "error",
+        "error": "upstream_unavailable",
+        "cached": false
+      }
+    ],
+    "case": "Boyfriend",
+    "http_status": 200,
+    "seconds": 3.123,
+    "title": null,
+    "ids": null,
+    "sources": [
+      {
+        "provider": "ytmusic",
+        "status": "error",
+        "error": "upstream_unavailable"
+      }
+    ],
+    "error": null
+  },
+  {
+    "artist_name": "BTS",
+    "biography": true,
+    "images": 5,
+    "metrics": [
+      {
+        "name": "subscribers",
+        "label": "Subscribers",
+        "display_value": "86.2M",
+        "period": "snapshot",
+        "scope": "artist_channel",
+        "source_field": "subscribers"
+      },
+      {
+        "name": "monthly_audience",
+        "label": "Monthly audience",
+        "display_value": "187M",
+        "period": "monthly",
+        "scope": "artist",
+        "source_field": "monthlyListeners"
+      },
+      {
+        "name": "views",
+        "label": "Views",
+        "value": 29599626474,
+        "display_value": "29,599,626,474 views",
+        "period": "unspecified",
+        "scope": "artist_channel",
+        "source_field": "views"
+      }
+    ],
+    "top_tracks": 3,
+    "artist_sources": [
+      {
+        "provider": "ytmusic",
+        "status": "ok",
+        "cached": false
+      }
+    ],
+    "case": "Dynamite",
+    "http_status": 200,
+    "seconds": 3.169,
+    "title": null,
+    "ids": null,
+    "sources": [
+      {
+        "provider": "ytmusic",
+        "status": "ok",
+        "error": null
+      }
+    ],
+    "error": null
+  },
+  {
+    "artist_name": null,
+    "biography": false,
+    "images": 0,
+    "metrics": [],
+    "top_tracks": 0,
+    "artist_sources": [
+      {
+        "provider": "ytmusic",
+        "status": "error",
+        "error": "upstream_unavailable",
+        "cached": false
+      }
+    ],
+    "case": "Experience (Reimagined)",
+    "http_status": 200,
+    "seconds": 3.007,
+    "title": null,
+    "ids": null,
+    "sources": [
+      {
+        "provider": "ytmusic",
+        "status": "error",
+        "error": "upstream_unavailable"
+      }
+    ],
+    "error": null
+  },
+  {
+    "artist_name": "Glenn Gould",
+    "biography": true,
+    "images": 5,
+    "metrics": [
+      {
+        "name": "subscribers",
+        "label": "Subscribers",
+        "display_value": "158K",
+        "period": "snapshot",
+        "scope": "artist_channel",
+        "source_field": "subscribers"
+      },
+      {
+        "name": "monthly_audience",
+        "label": "Monthly audience",
+        "display_value": "346K",
+        "period": "monthly",
+        "scope": "artist",
+        "source_field": "monthlyListeners"
+      },
+      {
+        "name": "views",
+        "label": "Views",
+        "value": 82168265,
+        "display_value": "82,168,265 views",
+        "period": "unspecified",
+        "scope": "artist_channel",
+        "source_field": "views"
+      }
+    ],
+    "top_tracks": 3,
+    "artist_sources": [
+      {
+        "provider": "ytmusic",
+        "status": "ok",
+        "cached": false
+      }
+    ],
+    "case": "Goldberg Variations, BWV 988: Aria",
+    "http_status": 200,
+    "seconds": 0.35,
+    "title": null,
+    "ids": null,
+    "sources": [
+      {
+        "provider": "ytmusic",
+        "status": "ok",
+        "error": null
+      }
+    ],
+    "error": null
+  }
+]

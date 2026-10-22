@@ -11,6 +11,8 @@ import (
 	"time"
 
 	"github.com/ommr/ommr/internal/adapters"
+	"github.com/ommr/ommr/internal/adapters/jiosaavn"
+	"github.com/ommr/ommr/internal/metadata"
 	"github.com/ommr/ommr/internal/models/canonical"
 	"github.com/ommr/ommr/internal/platformlinks"
 )
@@ -41,17 +43,47 @@ type extractionResponse struct {
 
 // HandleExtract returns each provider's own normalized response and field coverage.
 func (h *Handler) HandleExtract(w http.ResponseWriter, r *http.Request) {
+	debug, valid := parseDebug(w, r)
+	if !valid {
+		return
+	}
 	if r.Method != http.MethodGet {
 		http.Error(w, `{"error":"Method not allowed"}`, http.StatusMethodNotAllowed)
 		return
 	}
 	q := r.URL.Query()
 	providerID := strings.TrimSpace(q.Get("id"))
+	providerURL := strings.TrimSpace(q.Get("url"))
 	providerName := strings.ToLower(strings.TrimSpace(q.Get("provider")))
 	artist, title := strings.TrimSpace(q.Get("artist")), strings.TrimSpace(q.Get("title"))
-	if (providerID != "" && providerName == "") || (providerID == "" && (artist == "" || title == "")) {
-		http.Error(w, `{"error":"Provide provider and id, or both artist and title"}`, http.StatusBadRequest)
+	if (providerID != "" && providerName == "") || (providerID == "" && providerURL == "" && (artist == "" || title == "")) {
+		http.Error(w, `{"error":"Provide provider and id/url, or both artist and title"}`, http.StatusBadRequest)
 		return
+	}
+
+	idType := providerName
+	if q.Has("id_type") {
+		if providerName != "jiosaavn" || providerID == "" || len(q["id_type"]) != 1 || (q.Get("id_type") != "native" && q.Get("id_type") != "share") {
+			http.Error(w, `{"error":"id_type requires a JioSaavn id and must be native or share"}`, http.StatusBadRequest)
+			return
+		}
+		idType = "jiosaavn_track_id"
+		if q.Get("id_type") == "share" {
+			idType = "jiosaavn_share"
+		}
+	}
+
+	if q.Has("url") {
+		if providerName != "jiosaavn" || providerURL == "" || providerID != "" || q.Has("id_type") || len(q["url"]) != 1 {
+			http.Error(w, `{"error":"url requires provider=jiosaavn and cannot be combined with id or id_type"}`, http.StatusBadRequest)
+			return
+		}
+		page, _, err := jiosaavn.ParseSongURL(providerURL)
+		if err != nil {
+			http.Error(w, `{"error":"invalid public JioSaavn song URL"}`, http.StatusBadRequest)
+			return
+		}
+		providerID, idType = page, "jiosaavn_url"
 	}
 
 	var active []adapters.ProviderAdapter
@@ -99,7 +131,7 @@ func (h *Handler) HandleExtract(w http.ResponseWriter, r *http.Request) {
 			var candidates []canonical.TrackCandidate
 			var err error
 			if providerID != "" {
-				candidate, fetchErr := adapter.FetchByID(ctx, providerName, providerID)
+				candidate, fetchErr := adapter.FetchByID(ctx, idType, providerID)
 				err = fetchErr
 				if candidate != nil {
 					candidates = []canonical.TrackCandidate{*candidate}
@@ -116,6 +148,8 @@ func (h *Handler) HandleExtract(w http.ResponseWriter, r *http.Request) {
 				source.Results = make([]extractedTrack, 0, len(candidates))
 				for _, candidate := range candidates {
 					candidate.Track.IDs = platformlinks.ProviderIDs(adapter.Name(), candidate.Track.IDs)
+					metadata.Attach(&candidate.Track, []canonical.TrackCandidate{candidate})
+					metadata.AttachGraph(&candidate.Track, []canonical.TrackCandidate{candidate})
 					source.Results = append(source.Results, describeExtractedTrack(candidate.Track))
 				}
 			}
@@ -124,7 +158,19 @@ func (h *Handler) HandleExtract(w http.ResponseWriter, r *http.Request) {
 	}
 	wg.Wait()
 	w.Header().Set("Content-Type", "application/json")
-	_ = json.NewEncoder(w).Encode(response)
+	if debug {
+		_ = json.NewEncoder(w).Encode(response)
+		return
+	}
+	results := make([]any, 0)
+	for _, source := range response.Sources {
+		for _, result := range source.Results {
+			results = append(results, trackResponse(&result.Track, false))
+		}
+	}
+	_ = json.NewEncoder(w).Encode(struct {
+		Results []any `json:"results"`
+	}{results})
 }
 
 func describeExtractedTrack(track canonical.Track) extractedTrack {

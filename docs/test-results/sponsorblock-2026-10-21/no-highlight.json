@@ -1,0 +1,331 @@
+{
+  "track": {
+    "canonical_id": "ommr_track_2a01a46d3adef36c",
+    "identity_status": "strong",
+    "identity_reasons": [
+      "exact_title_artist_match"
+    ],
+    "title": "Boyfriend",
+    "artists": [
+      {
+        "name": "Karan Aujla",
+        "role": "main"
+      }
+    ],
+    "album": {
+      "title": ""
+    },
+    "duration_ms": 161000,
+    "release_date": "",
+    "explicit": false,
+    "genres": [],
+    "credits": [],
+    "images": [
+      {
+        "url": "https://i.ytimg.com/vi/tIjUfo30r4M/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLBsJHxLIDnPyp1qd2ZcLsoh_m4vUQ",
+        "width": 168,
+        "height": 94,
+        "type": "thumbnail"
+      },
+      {
+        "url": "https://i.ytimg.com/vi/tIjUfo30r4M/hqdefault.jpg?sqp=-oaymwEbCMQBEG5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLC9uCYOqc2t8e7ZtkFYPgyMhKxOEw",
+        "width": 196,
+        "height": 110,
+        "type": "thumbnail"
+      },
+      {
+        "url": "https://i.ytimg.com/vi/tIjUfo30r4M/hqdefault.jpg?sqp=-oaymwEcCPYBEIoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDfM8WLok0rYSNTkvf-We3hg3dPkg",
+        "width": 246,
+        "height": 138,
+        "type": "thumbnail"
+      },
+      {
+        "url": "https://i.ytimg.com/vi/tIjUfo30r4M/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCAs6vUbxFk_XnBPQ8uhjW4XS3ZFg",
+        "width": 336,
+        "height": 188,
+        "type": "thumbnail"
+      },
+      {
+        "url": "https://i.ytimg.com/vi_webp/tIjUfo30r4M/maxresdefault.webp",
+        "width": 1920,
+        "height": 1080,
+        "type": "thumbnail"
+      }
+    ],
+    "ids": {
+      "ytmusic": "tIjUfo30r4M"
+    },
+    "identity_matches": [
+      {
+        "provider": "ytmusic",
+        "id": "tIjUfo30r4M",
+        "confidence": 0.8,
+        "method": "direct_id"
+      }
+    ],
+    "sources": [
+      "ytmusic"
+    ],
+    "field_sources": {
+      "artists": [
+        "ytmusic"
+      ],
+      "duration": [
+        "ytmusic"
+      ],
+      "duration_ms": [
+        "ytmusic"
+      ],
+      "images": [
+        "ytmusic"
+      ],
+      "title": [
+        "ytmusic"
+      ]
+    },
+    "match_score": 1,
+    "match_breakdown": {
+      "title": 1,
+      "artists": 1,
+      "duration": 1
+    },
+    "confidence": {
+      "level": "exact",
+      "score": 1
+    },
+    "completeness": 0.4,
+    "relations": {},
+    "extensions": {
+      "credit_details": {
+        "contributors": [
+          {
+            "id": "ytmusic:local_artist:ff11b1b5912a584d96727e98",
+            "name": "Karan Aujla",
+            "provider": "ytmusic",
+            "local": true
+          }
+        ],
+        "credits": [
+          {
+            "from": "ytmusic:local_artist:ff11b1b5912a584d96727e98",
+            "to": "ytmusic:recording:tIjUfo30r4M",
+            "type": "credit",
+            "source": "ytmusic",
+            "role": "primary_artist",
+            "source_role": "main",
+            "credited_as": "Karan Aujla"
+          }
+        ]
+      },
+      "explicit_status": "unknown",
+      "music_graph": {
+        "version": 1,
+        "root": "ommr:recording:ommr_track_2a01a46d3adef36c",
+        "nodes": [
+          {
+            "id": "ommr:recording:ommr_track_2a01a46d3adef36c",
+            "type": "recording",
+            "provider": "ommr",
+            "native_id": "ommr_track_2a01a46d3adef36c",
+            "name": "Boyfriend"
+          },
+          {
+            "id": "ytmusic:local_artist:ff11b1b5912a584d96727e98",
+            "type": "artist",
+            "provider": "ytmusic",
+            "name": "Karan Aujla",
+            "local": true
+          },
+          {
+            "id": "ytmusic:recording:tIjUfo30r4M",
+            "type": "recording",
+            "provider": "ytmusic",
+            "native_id": "tIjUfo30r4M",
+            "name": "Boyfriend"
+          }
+        ],
+        "edges": [
+          {
+            "from": "ommr:recording:ommr_track_2a01a46d3adef36c",
+            "to": "ytmusic:recording:tIjUfo30r4M",
+            "type": "matched_catalog_entity",
+            "source": "ytmusic"
+          },
+          {
+            "from": "ytmusic:local_artist:ff11b1b5912a584d96727e98",
+            "to": "ytmusic:recording:tIjUfo30r4M",
+            "type": "credit",
+            "source": "ytmusic",
+            "role": "primary_artist",
+            "source_role": "main",
+            "credited_as": "Karan Aujla"
+          }
+        ],
+        "truncated": false
+      },
+      "platform_links": {
+        "ommr_id": "ommr_track_2a01a46d3adef36c",
+        "platforms": {
+          "youtube": {
+            "id": "tIjUfo30r4M",
+            "id_type": "video_id",
+            "url": "https://www.youtube.com/watch?v=tIjUfo30r4M",
+            "url_source": "id_template",
+            "confidence": 0.8,
+            "match_method": "direct_id"
+          },
+          "ytmusic": {
+            "id": "tIjUfo30r4M",
+            "id_type": "video_id",
+            "url": "https://music.youtube.com/watch?v=tIjUfo30r4M",
+            "url_source": "id_template",
+            "confidence": 0.8,
+            "match_method": "direct_id"
+          }
+        },
+        "unavailable_platforms": [
+          "amazonmusic",
+          "applemusic",
+          "bugs",
+          "deezer",
+          "genie",
+          "jiosaavn",
+          "melon",
+          "musicbrainz",
+          "pandora",
+          "qobuz",
+          "soundcloud",
+          "spotify",
+          "tidal"
+        ]
+      },
+      "provider_data": {
+        "ytmusic": {
+          "catalog": {
+            "author": "Karan Aujla - Topic",
+            "channelId": "UCSmK5WX5U4gdtebWjoL81og",
+            "keywords": [
+              "Karan Aujla",
+              "Ikky",
+              "P-POP CULTURE",
+              "Boyfriend"
+            ],
+            "lengthSeconds": "161",
+            "shortDescription": "Provided to YouTube by WM Canada\n\nBoyfriend · Karan Aujla · Ikky\n\nP-POP CULTURE\n\n℗ 2025 Karan Aujla Music Inc.\n\nMasterer: Chris Gehringer\nProducer: Ikky\nBass, Drums, Programming, Synthesizer: Ikwinder Sahota\nEngineer: Ikwinder Sahota\nMixer: Josh Gudwin\nVocals: Karan Aujla\nBass, Guitar, Programming, Synthesizer: Milano\nProducer: Milano\nComposer, Lyricist, Writer: Ikwinder Sahota\nComposer, Lyricist, Writer: Karan Aujla\nComposer, Lyricist, Writer: Milan D'Agostini\n\nAuto-generated by YouTube.",
+            "thumbnail": {
+              "thumbnails": [
+                {
+                  "height": 94,
+                  "url": "https://i.ytimg.com/vi/tIjUfo30r4M/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLBsJHxLIDnPyp1qd2ZcLsoh_m4vUQ",
+                  "width": 168
+                },
+                {
+                  "height": 110,
+                  "url": "https://i.ytimg.com/vi/tIjUfo30r4M/hqdefault.jpg?sqp=-oaymwEbCMQBEG5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLC9uCYOqc2t8e7ZtkFYPgyMhKxOEw",
+                  "width": 196
+                },
+                {
+                  "height": 138,
+                  "url": "https://i.ytimg.com/vi/tIjUfo30r4M/hqdefault.jpg?sqp=-oaymwEcCPYBEIoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDfM8WLok0rYSNTkvf-We3hg3dPkg",
+                  "width": 246
+                },
+                {
+                  "height": 188,
+                  "url": "https://i.ytimg.com/vi/tIjUfo30r4M/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCAs6vUbxFk_XnBPQ8uhjW4XS3ZFg",
+                  "width": 336
+                },
+                {
+                  "height": 1080,
+                  "url": "https://i.ytimg.com/vi_webp/tIjUfo30r4M/maxresdefault.webp",
+                  "width": 1920
+                }
+              ]
+            },
+            "title": "Boyfriend",
+            "videoId": "tIjUfo30r4M"
+          },
+          "metadata": {
+            "album": {
+              "title": ""
+            },
+            "artists": [
+              {
+                "name": "Karan Aujla",
+                "role": "main"
+              }
+            ],
+            "credits": null,
+            "duration_ms": 161000,
+            "explicit": false,
+            "genres": null,
+            "ids": {
+              "ytmusic": "tIjUfo30r4M"
+            },
+            "images": [
+              {
+                "height": 94,
+                "type": "thumbnail",
+                "url": "https://i.ytimg.com/vi/tIjUfo30r4M/hqdefault.jpg?sqp=-oaymwEbCKgBEF5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLBsJHxLIDnPyp1qd2ZcLsoh_m4vUQ",
+                "width": 168
+              },
+              {
+                "height": 110,
+                "type": "thumbnail",
+                "url": "https://i.ytimg.com/vi/tIjUfo30r4M/hqdefault.jpg?sqp=-oaymwEbCMQBEG5IVfKriqkDDggBFQAAiEIYAXABwAEG&rs=AOn4CLC9uCYOqc2t8e7ZtkFYPgyMhKxOEw",
+                "width": 196
+              },
+              {
+                "height": 138,
+                "type": "thumbnail",
+                "url": "https://i.ytimg.com/vi/tIjUfo30r4M/hqdefault.jpg?sqp=-oaymwEcCPYBEIoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDfM8WLok0rYSNTkvf-We3hg3dPkg",
+                "width": 246
+              },
+              {
+                "height": 188,
+                "type": "thumbnail",
+                "url": "https://i.ytimg.com/vi/tIjUfo30r4M/hqdefault.jpg?sqp=-oaymwEcCNACELwBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCAs6vUbxFk_XnBPQ8uhjW4XS3ZFg",
+                "width": 336
+              },
+              {
+                "height": 1080,
+                "type": "thumbnail",
+                "url": "https://i.ytimg.com/vi_webp/tIjUfo30r4M/maxresdefault.webp",
+                "width": 1920
+              }
+            ],
+            "release_date": "",
+            "title": "Boyfriend"
+          }
+        }
+      }
+    }
+  },
+  "metadata_sources": [
+    "ytmusic"
+  ],
+  "provider_status": [
+    {
+      "name": "ytmusic",
+      "success": true,
+      "matched": true,
+      "contributed": true,
+      "cached": false,
+      "latency_ms": 64,
+      "version": "ytmusic-innertube-v2"
+    }
+  ],
+  "resolution_strategy": {
+    "input_type": "youtube_id",
+    "primary_source": "ytmusic",
+    "cross_resolved": false
+  },
+  "enrichment_status": {
+    "sponsorblock": "no_data"
+  },
+  "resolver_stats": {
+    "providers_queried": 1,
+    "providers_matched": 1,
+    "providers_contributed": 1,
+    "candidates_evaluated": 1
+  }
+}

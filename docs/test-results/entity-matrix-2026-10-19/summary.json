@@ -1,0 +1,21 @@
+{
+  "songs_resolved": 14,
+  "album_responses": 13,
+  "complete_albums": 11,
+  "partial_albums": 2,
+  "artist_profiles": 14,
+  "native_artist_profiles": 13,
+  "independent_name_artist_profiles": 1,
+  "song_graphs_valid": 14,
+  "album_memberships_valid": 13,
+  "album_graphs_valid": 13,
+  "material_duration_conflicts_remaining": [],
+  "inconsistent_reported_totals": [],
+  "flat_detailed_credits_missing": 14,
+  "notes": [
+    "Categories are test labels, not an inferred genre taxonomy",
+    "Album/artist IDs are followed from accepted Apple metadata; Lana Del Rey uses a separate unique exact-name artist search",
+    "No fingerprint-based or authenticated verification performed; unknown durations are not proof of matching audio",
+    "Intermediate run predates post-hydration duration filtering; final rechecks supersede those rows"
+  ]
+}

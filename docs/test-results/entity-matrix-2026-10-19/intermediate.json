@@ -1,0 +1,907 @@
+[
+  {
+    "category": "punjabi_pop",
+    "query_artist": "Karan Aujla",
+    "query_title": "Boyfriend",
+    "song_http": 200,
+    "song_seconds": 12.797,
+    "song_resolved": true,
+    "title": "Boyfriend",
+    "artists": [
+      "Karan Aujla",
+      "Ikky"
+    ],
+    "ids": {
+      "applemusic": "1829591986",
+      "applemusic_url": "https://music.apple.com/us/album/boyfriend/1829591921?i=1829591986",
+      "melon": "39664161",
+      "melon_url": "https://www.melon.com/song/detail.htm?songId=39664161",
+      "ytmusic": "tIjUfo30r4M"
+    },
+    "duration_ms": 160796,
+    "genres": [
+      "POP",
+      "Pop"
+    ],
+    "explicit": false,
+    "credits_count": 0,
+    "song_graph_valid": true,
+    "album": {
+      "http": 200,
+      "seconds": 0.023,
+      "id": "1829591921",
+      "title": "P-POP CULTURE",
+      "track_list": {
+        "returned": 11,
+        "total": 11,
+        "complete": true
+      },
+      "discs": 2,
+      "contains_source_track": true,
+      "graph_valid": true,
+      "song_reported_album_total": null,
+      "album_total": 11,
+      "reported_totals_consistent": true,
+      "source_disc_count": 2
+    },
+    "artist": {
+      "http": 200,
+      "seconds": 2.997,
+      "id": "914892130",
+      "name": "Karan Aujla",
+      "identity_method": "exact_id",
+      "images": 0,
+      "recent_tracks": 5,
+      "biography": false,
+      "counts": {},
+      "metrics": [],
+      "sources": [
+        {
+          "provider": "applemusic",
+          "status": "ok",
+          "cached": false
+        }
+      ]
+    }
+  },
+  {
+    "category": "hindi_soundtrack",
+    "query_artist": "Arijit Singh",
+    "query_title": "Tum Hi Ho",
+    "song_http": 200,
+    "song_seconds": 3.557,
+    "song_resolved": true,
+    "title": "Tum Hi Ho (From \"Aashiqui 2)",
+    "artists": [
+      "Arijit Singh"
+    ],
+    "ids": {
+      "applemusic": "1193103463",
+      "applemusic_url": "https://music.apple.com/us/album/tum-hi-ho-from-aashiqui-2/1193103366?i=1193103463",
+      "genie": "114015098",
+      "genie_url": "https://www.genie.co.kr/detail/songInfo?xgnm=114015098",
+      "melon": "115345471",
+      "melon_url": "https://www.melon.com/song/detail.htm?songId=115345471",
+      "ytmusic": "fsiPzT50ZiM"
+    },
+    "duration_ms": 262000,
+    "genres": [
+      "Bollywood",
+      "POP / 월드뮤직",
+      "월드뮤직"
+    ],
+    "explicit": false,
+    "credits_count": 0,
+    "song_graph_valid": true,
+    "album": {
+      "http": 200,
+      "seconds": 2.448,
+      "id": "1193103366",
+      "title": "Love Dose Arijit Singh",
+      "track_list": {
+        "returned": 10,
+        "total": 10,
+        "complete": true
+      },
+      "discs": 1,
+      "contains_source_track": true,
+      "graph_valid": true,
+      "song_reported_album_total": null,
+      "album_total": 10,
+      "reported_totals_consistent": true,
+      "source_disc_count": 1
+    },
+    "artist": {
+      "http": 200,
+      "seconds": 2.988,
+      "id": "484568188",
+      "name": "Arijit Singh",
+      "identity_method": "exact_id",
+      "images": 0,
+      "recent_tracks": 5,
+      "biography": false,
+      "counts": {},
+      "metrics": [],
+      "sources": [
+        {
+          "provider": "applemusic",
+          "status": "ok",
+          "cached": false
+        }
+      ]
+    }
+  },
+  {
+    "category": "english_pop",
+    "query_artist": "The Weeknd",
+    "query_title": "Blinding Lights",
+    "song_http": 200,
+    "song_seconds": 3.668,
+    "song_resolved": true,
+    "title": "Blinding Lights",
+    "artists": [
+      "The Weeknd"
+    ],
+    "ids": {
+      "applemusic": "1499386265",
+      "applemusic_url": "https://music.apple.com/us/album/blinding-lights/1499385848?i=1499386265",
+      "bugs": "5812157",
+      "bugs_url": "https://music.bugs.co.kr/track/5812157",
+      "genie": "89667873",
+      "genie_url": "https://www.genie.co.kr/detail/songInfo?xgnm=89667873",
+      "melon": "32219271",
+      "melon_url": "https://www.melon.com/song/detail.htm?songId=32219271",
+      "ytmusic": "J7p4bzqLvCw"
+    },
+    "duration_ms": 202000,
+    "genres": [
+      "POP / R&B/소울",
+      "R&B/Soul"
+    ],
+    "explicit": false,
+    "credits_count": 0,
+    "song_graph_valid": true,
+    "album": {
+      "http": 200,
+      "seconds": 2.335,
+      "id": "1499385848",
+      "title": "After Hours",
+      "track_list": {
+        "returned": 14,
+        "total": 14,
+        "complete": true
+      },
+      "discs": 1,
+      "contains_source_track": true,
+      "graph_valid": true,
+      "song_reported_album_total": null,
+      "album_total": 14,
+      "reported_totals_consistent": true,
+      "source_disc_count": 1
+    },
+    "artist": {
+      "http": 200,
+      "seconds": 3.003,
+      "id": "479756766",
+      "name": "The Weeknd",
+      "identity_method": "exact_id",
+      "images": 0,
+      "recent_tracks": 5,
+      "biography": false,
+      "counts": {},
+      "metrics": [],
+      "sources": [
+        {
+          "provider": "applemusic",
+          "status": "ok",
+          "cached": false
+        }
+      ]
+    }
+  },
+  {
+    "category": "hip_hop",
+    "query_artist": "Kendrick Lamar",
+    "query_title": "HUMBLE.",
+    "song_http": 200,
+    "song_seconds": 3.663,
+    "song_resolved": true,
+    "title": "HUMBLE.",
+    "artists": [
+      "Kendrick Lamar"
+    ],
+    "ids": {
+      "applemusic": "1440882165",
+      "applemusic_url": "https://music.apple.com/us/album/humble/1440881722?i=1440882165",
+      "bugs": "5111221",
+      "bugs_url": "https://music.bugs.co.kr/track/5111221",
+      "genie": "87048153",
+      "genie_url": "https://www.genie.co.kr/detail/songInfo?xgnm=87048153",
+      "melon": "30337906",
+      "melon_url": "https://www.melon.com/song/detail.htm?songId=30337906",
+      "ytmusic": "H4RELGc9su8"
+    },
+    "duration_ms": 177000,
+    "genres": [
+      "Hip-Hop/Rap",
+      "랩/힙합"
+    ],
+    "explicit": false,
+    "credits_count": 0,
+    "song_graph_valid": true,
+    "album": {
+      "http": 200,
+      "seconds": 2.336,
+      "id": "1440881722",
+      "title": "DAMN.",
+      "track_list": {
+        "returned": 14,
+        "total": 15,
+        "complete": false,
+        "reason": "incomplete_response"
+      },
+      "discs": 1,
+      "contains_source_track": true,
+      "graph_valid": true,
+      "song_reported_album_total": null,
+      "album_total": 15,
+      "reported_totals_consistent": true,
+      "source_disc_count": 1
+    },
+    "artist": {
+      "http": 200,
+      "seconds": 2.996,
+      "id": "368183298",
+      "name": "Kendrick Lamar",
+      "identity_method": "exact_id",
+      "images": 0,
+      "recent_tracks": 5,
+      "biography": false,
+      "counts": {},
+      "metrics": [],
+      "sources": [
+        {
+          "provider": "applemusic",
+          "status": "ok",
+          "cached": false
+        }
+      ]
+    }
+  },
+  {
+    "category": "k_pop",
+    "query_artist": "BTS",
+    "query_title": "Dynamite",
+    "song_http": 200,
+    "song_seconds": 3.001,
+    "song_resolved": true,
+    "title": "Dynamite",
+    "artists": [
+      "BTS"
+    ],
+    "ids": {
+      "applemusic": "1627575419",
+      "applemusic_url": "https://music.apple.com/us/album/dynamite/1627573936?i=1627575419",
+      "ytmusic": "HaEYUJ2aRHs"
+    },
+    "duration_ms": 199293,
+    "genres": [
+      "K-Pop"
+    ],
+    "explicit": false,
+    "credits_count": 0,
+    "song_graph_valid": true,
+    "album": {
+      "http": 200,
+      "seconds": 3.001,
+      "id": "1627573936",
+      "title": "Proof",
+      "track_list": {
+        "returned": 35,
+        "total": 35,
+        "complete": true
+      },
+      "discs": 3,
+      "contains_source_track": true,
+      "graph_valid": true,
+      "song_reported_album_total": null,
+      "album_total": 35,
+      "reported_totals_consistent": true,
+      "source_disc_count": 3
+    },
+    "artist": {
+      "http": 200,
+      "seconds": 2.99,
+      "id": "883131348",
+      "name": "BTS",
+      "identity_method": "exact_id",
+      "images": 0,
+      "recent_tracks": 5,
+      "biography": false,
+      "counts": {},
+      "metrics": [],
+      "sources": [
+        {
+          "provider": "applemusic",
+          "status": "ok",
+          "cached": false
+        }
+      ]
+    }
+  },
+  {
+    "category": "japanese_pop",
+    "query_artist": "YOASOBI",
+    "query_title": "Idol",
+    "song_http": 200,
+    "song_seconds": 3.528,
+    "song_resolved": true,
+    "title": "Idol",
+    "artists": [
+      "YOASOBI"
+    ],
+    "ids": {
+      "applemusic": "1679278167",
+      "applemusic_url": "https://music.apple.com/us/album/idol/1679278166?i=1679278167",
+      "bugs": "103106129",
+      "bugs_url": "https://music.bugs.co.kr/track/103106129",
+      "genie": "101849407",
+      "genie_url": "https://www.genie.co.kr/detail/songInfo?xgnm=101849407",
+      "melon": "36471402",
+      "melon_url": "https://www.melon.com/song/detail.htm?songId=36471402",
+      "ytmusic": "IzJ_ioBHrPU"
+    },
+    "duration_ms": 213000,
+    "genres": [
+      "J-POP",
+      "J-POP / 전체",
+      "J-Pop"
+    ],
+    "explicit": false,
+    "credits_count": 0,
+    "song_graph_valid": true,
+    "album": {
+      "http": 200,
+      "seconds": 2.469,
+      "id": "1679278166",
+      "title": "アイドル - Single",
+      "track_list": {
+        "returned": 1,
+        "total": 1,
+        "complete": true
+      },
+      "discs": 1,
+      "contains_source_track": true,
+      "graph_valid": true,
+      "song_reported_album_total": null,
+      "album_total": 1,
+      "reported_totals_consistent": true,
+      "source_disc_count": 1
+    },
+    "artist": {
+      "http": 200,
+      "seconds": 2.996,
+      "id": "1490256993",
+      "name": "YOASOBI",
+      "identity_method": "exact_id",
+      "images": 0,
+      "recent_tracks": 5,
+      "biography": false,
+      "counts": {},
+      "metrics": [],
+      "sources": [
+        {
+          "provider": "applemusic",
+          "status": "ok",
+          "cached": false
+        }
+      ]
+    }
+  },
+  {
+    "category": "latin_pop",
+    "query_artist": "Luis Fonsi",
+    "query_title": "Despacito",
+    "song_http": 200,
+    "song_seconds": 3.667,
+    "song_resolved": true,
+    "title": "Despacito",
+    "artists": [
+      "Luis Fonsi",
+      "Daddy Yankee"
+    ],
+    "ids": {
+      "applemusic": "1447401620",
+      "applemusic_url": "https://music.apple.com/us/album/despacito/1447401519?i=1447401620",
+      "bugs": "4843542",
+      "bugs_url": "https://music.bugs.co.kr/track/4843542",
+      "melon": "31594506",
+      "melon_url": "https://www.melon.com/song/detail.htm?songId=31594506",
+      "ytmusic": "FXovf5dsRTw"
+    },
+    "duration_ms": 229387,
+    "genres": [
+      "Pop Latino",
+      "월드뮤직, 라틴"
+    ],
+    "explicit": false,
+    "credits_count": 0,
+    "song_graph_valid": true,
+    "album": {
+      "http": 200,
+      "seconds": 2.335,
+      "id": "1447401519",
+      "title": "VIDA",
+      "track_list": {
+        "returned": 15,
+        "total": 15,
+        "complete": true
+      },
+      "discs": 1,
+      "contains_source_track": true,
+      "graph_valid": true,
+      "song_reported_album_total": null,
+      "album_total": 15,
+      "reported_totals_consistent": true,
+      "source_disc_count": 1
+    },
+    "artist": {
+      "http": 200,
+      "seconds": 2.99,
+      "id": "102834",
+      "name": "Luis Fonsi",
+      "identity_method": "exact_id",
+      "images": 0,
+      "recent_tracks": 5,
+      "biography": false,
+      "counts": {},
+      "metrics": [],
+      "sources": [
+        {
+          "provider": "applemusic",
+          "status": "ok",
+          "cached": false
+        }
+      ]
+    }
+  },
+  {
+    "category": "rock",
+    "query_artist": "Queen",
+    "query_title": "Bohemian Rhapsody",
+    "song_http": 200,
+    "song_seconds": 3.844,
+    "song_resolved": true,
+    "title": "Bohemian Rhapsody",
+    "artists": [
+      "Queen"
+    ],
+    "ids": {
+      "applemusic": "6781024437",
+      "applemusic_url": "https://music.apple.com/us/album/bohemian-rhapsody/6781024026?i=6781024437",
+      "bugs": "5456988",
+      "bugs_url": "https://music.bugs.co.kr/track/5456988",
+      "genie": "88314881",
+      "genie_url": "https://www.genie.co.kr/detail/songInfo?xgnm=88314881",
+      "melon": "3087601",
+      "melon_url": "https://www.melon.com/song/detail.htm?songId=3087601",
+      "ytmusic": "BSTsnWoslP4"
+    },
+    "duration_ms": 355000,
+    "genres": [
+      "OST / 해외영화",
+      "Rock",
+      "록/메탈"
+    ],
+    "explicit": false,
+    "credits_count": 0,
+    "song_graph_valid": true,
+    "album": {
+      "http": 200,
+      "seconds": 2.162,
+      "id": "6781024026",
+      "title": "A Night At The Opera (Deluxe Edition)",
+      "track_list": {
+        "returned": 18,
+        "total": 18,
+        "complete": true
+      },
+      "discs": 2,
+      "contains_source_track": true,
+      "graph_valid": true,
+      "song_reported_album_total": null,
+      "album_total": 18,
+      "reported_totals_consistent": true,
+      "source_disc_count": 2
+    },
+    "artist": {
+      "http": 200,
+      "seconds": 3.032,
+      "id": "3296287",
+      "name": "Queen",
+      "identity_method": "exact_id",
+      "images": 0,
+      "recent_tracks": 5,
+      "biography": false,
+      "counts": {},
+      "metrics": [],
+      "sources": [
+        {
+          "provider": "applemusic",
+          "status": "ok",
+          "cached": false
+        }
+      ]
+    }
+  },
+  {
+    "category": "electronic",
+    "query_artist": "Daft Punk",
+    "query_title": "One More Time",
+    "song_http": 200,
+    "song_seconds": 3.678,
+    "song_resolved": true,
+    "title": "One More Time",
+    "artists": [
+      "Daft Punk"
+    ],
+    "ids": {
+      "applemusic": "697195462",
+      "applemusic_url": "https://music.apple.com/us/album/one-more-time/697194953?i=697195462",
+      "bugs": "80041743",
+      "bugs_url": "https://music.bugs.co.kr/track/80041743",
+      "genie": "16349052",
+      "genie_url": "https://www.genie.co.kr/detail/songInfo?xgnm=16349052",
+      "melon": "1002911",
+      "melon_url": "https://www.melon.com/song/detail.htm?songId=1002911",
+      "ytmusic": "fa5IWHDbftI"
+    },
+    "duration_ms": 321000,
+    "genres": [
+      "Dance",
+      "POP / 일렉트로니카",
+      "일렉트로니카"
+    ],
+    "explicit": false,
+    "credits_count": 0,
+    "song_graph_valid": true,
+    "album": {
+      "http": 200,
+      "seconds": 2.285,
+      "id": "697194953",
+      "title": "Discovery",
+      "track_list": {
+        "returned": 14,
+        "total": 14,
+        "complete": true
+      },
+      "discs": 1,
+      "contains_source_track": true,
+      "graph_valid": true,
+      "song_reported_album_total": null,
+      "album_total": 14,
+      "reported_totals_consistent": true,
+      "source_disc_count": 1
+    },
+    "artist": {
+      "http": 200,
+      "seconds": 2.995,
+      "id": "5468295",
+      "name": "Daft Punk",
+      "identity_method": "exact_id",
+      "images": 0,
+      "recent_tracks": 5,
+      "biography": false,
+      "counts": {},
+      "metrics": [],
+      "sources": [
+        {
+          "provider": "applemusic",
+          "status": "ok",
+          "cached": false
+        }
+      ]
+    }
+  },
+  {
+    "category": "instrumental",
+    "query_artist": "Ludovico Einaudi",
+    "query_title": "Experience",
+    "song_http": 200,
+    "song_seconds": 3.318,
+    "song_resolved": true,
+    "title": "Experience",
+    "artists": [
+      "Ludovico Einaudi, Daniel Hope & I Virtuosi Italiani"
+    ],
+    "ids": {
+      "applemusic": "1559739399",
+      "applemusic_url": "https://music.apple.com/us/album/experience/1559739125?i=1559739399",
+      "genie": "81785038",
+      "genie_url": "https://www.genie.co.kr/detail/songInfo?xgnm=81785038"
+    },
+    "duration_ms": 316947,
+    "genres": [
+      "Classical",
+      "클래식 / 크로스오버"
+    ],
+    "explicit": false,
+    "credits_count": 0,
+    "song_graph_valid": true,
+    "album": {
+      "http": 200,
+      "seconds": 2.929,
+      "id": "1559739125",
+      "title": "Cinema",
+      "track_list": {
+        "returned": 28,
+        "total": 28,
+        "complete": true
+      },
+      "discs": 1,
+      "contains_source_track": true,
+      "graph_valid": true,
+      "song_reported_album_total": null,
+      "album_total": 28,
+      "reported_totals_consistent": true,
+      "source_disc_count": 1
+    },
+    "artist": {
+      "http": 200,
+      "seconds": 2.747,
+      "id": "7420827",
+      "name": "Ludovico Einaudi",
+      "identity_method": "exact_id",
+      "images": 0,
+      "recent_tracks": 5,
+      "biography": false,
+      "counts": {},
+      "metrics": [],
+      "sources": [
+        {
+          "provider": "applemusic",
+          "status": "ok",
+          "cached": false
+        }
+      ]
+    }
+  },
+  {
+    "category": "classical",
+    "query_artist": "Glenn Gould",
+    "query_title": "Goldberg Variations, BWV 988: Aria",
+    "song_http": 200,
+    "song_seconds": 3.548,
+    "song_resolved": true,
+    "title": "Goldberg Variations, BWV 988: Aria",
+    "artists": [
+      "Glenn Gould"
+    ],
+    "ids": {
+      "applemusic": "594521563",
+      "applemusic_url": "https://music.apple.com/us/album/goldberg-variations-bwv-988-1955-recording-aria/594521223?i=594521563",
+      "bugs": "4994978",
+      "bugs_url": "https://music.bugs.co.kr/track/4994978",
+      "genie": "87449111",
+      "genie_url": "https://www.genie.co.kr/detail/songInfo?xgnm=87449111",
+      "melon": "33473380",
+      "melon_url": "https://www.melon.com/song/detail.htm?songId=33473380",
+      "ytmusic": "43sTxRVpRBM"
+    },
+    "duration_ms": 112939,
+    "genres": [
+      "Classical",
+      "클래식 / 관현악",
+      "클래식, 교향/관현악"
+    ],
+    "explicit": false,
+    "credits_count": 0,
+    "song_graph_valid": true,
+    "album": {
+      "http": 200,
+      "seconds": 2.463,
+      "id": "594521223",
+      "title": "Bach: Goldberg Variations, BWV 988 (The 1955 & 1981 Recordings)",
+      "track_list": {
+        "returned": 64,
+        "total": 65,
+        "complete": false,
+        "reason": "incomplete_response"
+      },
+      "discs": 1,
+      "contains_source_track": true,
+      "graph_valid": true,
+      "song_reported_album_total": null,
+      "album_total": 65,
+      "reported_totals_consistent": true,
+      "source_disc_count": 1
+    },
+    "artist": {
+      "http": 200,
+      "seconds": 2.982,
+      "id": "804479",
+      "name": "Glenn Gould",
+      "identity_method": "exact_id",
+      "images": 0,
+      "recent_tracks": 5,
+      "biography": false,
+      "counts": {},
+      "metrics": [],
+      "sources": [
+        {
+          "provider": "applemusic",
+          "status": "ok",
+          "cached": false
+        }
+      ]
+    }
+  },
+  {
+    "category": "live",
+    "query_artist": "Eagles",
+    "query_title": "Hotel California (Live)",
+    "song_http": 200,
+    "song_seconds": 7.0,
+    "song_resolved": true,
+    "title": "Hotel California (Live)",
+    "artists": [
+      "Eagles"
+    ],
+    "ids": {
+      "applemusic": "193434880",
+      "applemusic_url": "https://music.apple.com/us/album/hotel-california-live/193434857?i=193434880",
+      "bugs": "11650028",
+      "bugs_url": "https://music.bugs.co.kr/track/11650028",
+      "genie": "83723381",
+      "genie_url": "https://www.genie.co.kr/detail/songInfo?xgnm=83723381",
+      "melon": "38072216",
+      "melon_url": "https://www.melon.com/song/detail.htm?songId=38072216"
+    },
+    "duration_ms": 420000,
+    "genres": [
+      "POP / 락",
+      "Rock",
+      "록/메탈"
+    ],
+    "explicit": false,
+    "credits_count": 0,
+    "song_graph_valid": true,
+    "album": {
+      "http": 200,
+      "seconds": 0.024,
+      "id": "193434857",
+      "title": "Eagles Live",
+      "track_list": {
+        "returned": 15,
+        "total": 15,
+        "complete": true
+      },
+      "discs": 2,
+      "contains_source_track": true,
+      "graph_valid": true,
+      "song_reported_album_total": null,
+      "album_total": 15,
+      "reported_totals_consistent": true,
+      "source_disc_count": 2
+    },
+    "artist": {
+      "http": 200,
+      "seconds": 2.993,
+      "id": "1053549",
+      "name": "Eagles",
+      "identity_method": "exact_id",
+      "images": 0,
+      "recent_tracks": 5,
+      "biography": false,
+      "counts": {},
+      "metrics": [],
+      "sources": [
+        {
+          "provider": "applemusic",
+          "status": "ok",
+          "cached": false
+        }
+      ]
+    }
+  },
+  {
+    "category": "acoustic",
+    "query_artist": "Foo Fighters",
+    "query_title": "Everlong (Acoustic Version)",
+    "song_http": 200,
+    "song_seconds": 7.866,
+    "song_resolved": true,
+    "title": "Everlong (Acoustic Version)",
+    "artists": [
+      "Foo Fighters"
+    ],
+    "ids": {
+      "applemusic": "334812065",
+      "applemusic_url": "https://music.apple.com/us/album/everlong-acoustic-version/334811953?i=334812065",
+      "bugs": "1830293",
+      "bugs_url": "https://music.bugs.co.kr/track/1830293",
+      "melon": "35761068",
+      "melon_url": "https://www.melon.com/song/detail.htm?songId=35761068",
+      "ytmusic": "YLRlOvzs-XU"
+    },
+    "duration_ms": 250907,
+    "genres": [
+      "Rock",
+      "록/메탈"
+    ],
+    "explicit": false,
+    "credits_count": 0,
+    "song_graph_valid": true,
+    "album": {
+      "http": 200,
+      "seconds": 0.025,
+      "id": "334811953",
+      "title": "Greatest Hits",
+      "track_list": {
+        "returned": 16,
+        "total": 16,
+        "complete": true
+      },
+      "discs": 1,
+      "contains_source_track": true,
+      "graph_valid": true,
+      "song_reported_album_total": null,
+      "album_total": 16,
+      "reported_totals_consistent": true,
+      "source_disc_count": 1
+    },
+    "artist": {
+      "http": 200,
+      "seconds": 2.991,
+      "id": "6906197",
+      "name": "Foo Fighters",
+      "identity_method": "exact_id",
+      "images": 0,
+      "recent_tracks": 5,
+      "biography": false,
+      "counts": {},
+      "metrics": [],
+      "sources": [
+        {
+          "provider": "applemusic",
+          "status": "ok",
+          "cached": false
+        }
+      ]
+    }
+  },
+  {
+    "category": "remix",
+    "query_artist": "Lana Del Rey",
+    "query_title": "Summertime Sadness (Cedric Gervais Remix)",
+    "song_http": 200,
+    "song_seconds": 3.623,
+    "song_resolved": true,
+    "title": "Summertime Sadness (Cedric Gervais Remix)",
+    "artists": [
+      "Lana Del Rey"
+    ],
+    "ids": {
+      "bugs": "2913211",
+      "bugs_url": "https://music.bugs.co.kr/track/2913211",
+      "genie": "81821447",
+      "genie_url": "https://www.genie.co.kr/detail/songInfo?xgnm=81821447",
+      "melon": "4051554",
+      "melon_url": "https://www.melon.com/song/detail.htm?songId=4051554"
+    },
+    "duration_ms": 412000,
+    "genres": [
+      "POP / 팝",
+      "일렉트로니카"
+    ],
+    "explicit": false,
+    "credits_count": 0,
+    "song_graph_valid": true,
+    "album": {
+      "status": "no_native_id"
+    },
+    "artist": {
+      "status": "no_native_id"
+    }
+  }
+]

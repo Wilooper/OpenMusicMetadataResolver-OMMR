@@ -1,0 +1,111 @@
+[
+  {
+    "case": "bugs",
+    "http_status": 200,
+    "seconds": 5.042,
+    "title": "Dynamite",
+    "ids": {
+      "bugs": "31999479",
+      "bugs_url": "https://music.bugs.co.kr/track/31999479"
+    },
+    "sources": [
+      {
+        "provider": "bugs",
+        "status": "ok",
+        "error": null
+      }
+    ],
+    "error": null
+  },
+  {
+    "case": "genie",
+    "http_status": 200,
+    "seconds": 3.674,
+    "title": "Dynamite",
+    "ids": {
+      "genie": "90705547",
+      "genie_url": "https://www.genie.co.kr/detail/songInfo?xgnm=90705547"
+    },
+    "sources": [
+      {
+        "provider": "genie",
+        "status": "ok",
+        "error": null
+      }
+    ],
+    "error": null
+  },
+  {
+    "case": "melon",
+    "http_status": 200,
+    "seconds": 6.577,
+    "title": "Dynamite",
+    "ids": {
+      "melon": "32872978",
+      "melon_url": "https://www.melon.com/song/detail.htm?songId=32872978"
+    },
+    "sources": [
+      {
+        "provider": "melon",
+        "status": "ok",
+        "error": null
+      }
+    ],
+    "error": null
+  },
+  {
+    "case": "dynamite-korean",
+    "http_status": 200,
+    "seconds": 1.861,
+    "title": "Dynamite",
+    "ids": {
+      "bugs": "31999479",
+      "bugs_url": "https://music.bugs.co.kr/track/31999479",
+      "genie": "90705547",
+      "genie_url": "https://www.genie.co.kr/detail/songInfo?xgnm=90705547",
+      "melon": "32872978",
+      "melon_url": "https://www.melon.com/song/detail.htm?songId=32872978"
+    },
+    "sources": [],
+    "error": null
+  },
+  {
+    "case": "youtube-song",
+    "http_status": 503,
+    "seconds": 0.003,
+    "title": null,
+    "ids": null,
+    "sources": [],
+    "error": "YouTube catalog extractor is not enabled or available"
+  },
+  {
+    "case": "youtube-artist",
+    "http_status": 503,
+    "seconds": 0.002,
+    "title": null,
+    "ids": null,
+    "sources": [],
+    "error": "YouTube catalog extractor is not enabled or available"
+  },
+  {
+    "case": "youtube-album",
+    "http_status": 503,
+    "seconds": 0.001,
+    "title": null,
+    "ids": null,
+    "sources": [],
+    "error": "YouTube catalog extractor is not enabled or available"
+  },
+  {
+    "case": "boyfriend-context",
+    "http_status": 200,
+    "seconds": 14.514,
+    "title": "Boyfriend",
+    "ids": {
+      "applemusic": "1829591986",
+      "applemusic_url": "https://music.apple.com/us/album/boyfriend/1829591921?i=1829591986"
+    },
+    "sources": [],
+    "error": null
+  }
+]

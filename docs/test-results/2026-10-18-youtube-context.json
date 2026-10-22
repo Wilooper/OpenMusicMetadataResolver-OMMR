@@ -1,0 +1,50 @@
+{
+  "source_status": [
+    {
+      "name": "applemusic",
+      "success": true,
+      "matched": true,
+      "contributed": true,
+      "cached": false,
+      "latency_ms": 5331,
+      "version": "applemusic-v1"
+    },
+    {
+      "name": "ytmusic",
+      "success": true,
+      "matched": true,
+      "contributed": true,
+      "cached": false,
+      "latency_ms": 10970,
+      "version": "ytmusic-innertube-v2+python-v1",
+      "enrichment_status": "partial"
+    }
+  ],
+  "context_keys": [
+    "album:MPREb_qTDpBqltt6c",
+    "artist:UCSmK5WX5U4gdtebWjoL81og",
+    "song:tIjUfo30r4M"
+  ],
+  "context_fields": {
+    "album:MPREb_qTDpBqltt6c": [
+      "id",
+      "kind",
+      "limit",
+      "metadata",
+      "truncated"
+    ],
+    "artist:UCSmK5WX5U4gdtebWjoL81og": [
+      "id",
+      "kind",
+      "limit",
+      "metadata",
+      "scope"
+    ],
+    "song:tIjUfo30r4M": [
+      "id",
+      "kind",
+      "partial",
+      "song"
+    ]
+  }
+}

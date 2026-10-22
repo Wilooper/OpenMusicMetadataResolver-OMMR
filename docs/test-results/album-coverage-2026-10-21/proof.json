@@ -1,0 +1,2634 @@
+{
+  "album": {
+    "music_graph": {
+      "version": 1,
+      "root": "applemusic:release:1627573936",
+      "nodes": [
+        {
+          "id": "applemusic:artist:883131348",
+          "type": "artist",
+          "provider": "applemusic",
+          "native_id": "883131348",
+          "name": "BTS"
+        },
+        {
+          "id": "applemusic:release:1627573936",
+          "type": "release",
+          "provider": "applemusic",
+          "native_id": "1627573936",
+          "name": "Proof"
+        },
+        {
+          "id": "applemusic:track_entry:1627573936/1/1/1627573946",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1627573936/1/1/1627573946",
+          "name": "Born Singer"
+        },
+        {
+          "id": "applemusic:track_entry:1627573936/1/10/1627574950",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1627573936/1/10/1627574950",
+          "name": "Spring Day"
+        },
+        {
+          "id": "applemusic:track_entry:1627573936/1/11/1627574962",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1627573936/1/11/1627574962",
+          "name": "DNA"
+        },
+        {
+          "id": "applemusic:track_entry:1627573936/1/12/1627574973",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1627573936/1/12/1627574973",
+          "name": "FAKE LOVE"
+        },
+        {
+          "id": "applemusic:track_entry:1627573936/1/13/1627575301",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1627573936/1/13/1627575301",
+          "name": "IDOL"
+        },
+        {
+          "id": "applemusic:track_entry:1627573936/1/14/1627575407",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1627573936/1/14/1627575407",
+          "name": "Boy With Luv (feat. Halsey)"
+        },
+        {
+          "id": "applemusic:track_entry:1627573936/1/15/1627575411",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1627573936/1/15/1627575411",
+          "name": "ON"
+        },
+        {
+          "id": "applemusic:track_entry:1627573936/1/16/1627575419",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1627573936/1/16/1627575419",
+          "name": "Dynamite"
+        },
+        {
+          "id": "applemusic:track_entry:1627573936/1/17/1627575756",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1627573936/1/17/1627575756",
+          "name": "Life Goes On"
+        },
+        {
+          "id": "applemusic:track_entry:1627573936/1/18/1627575769",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1627573936/1/18/1627575769",
+          "name": "Butter"
+        },
+        {
+          "id": "applemusic:track_entry:1627573936/1/19/1627575774",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1627573936/1/19/1627575774",
+          "name": "Yet To Come"
+        },
+        {
+          "id": "applemusic:track_entry:1627573936/1/2/1627573953",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1627573936/1/2/1627573953",
+          "name": "No More Dream"
+        },
+        {
+          "id": "applemusic:track_entry:1627573936/1/3/1627574239",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1627573936/1/3/1627574239",
+          "name": "N.O"
+        },
+        {
+          "id": "applemusic:track_entry:1627573936/1/4/1627574247",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1627573936/1/4/1627574247",
+          "name": "Boy In Luv"
+        },
+        {
+          "id": "applemusic:track_entry:1627573936/1/5/1627574484",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1627573936/1/5/1627574484",
+          "name": "Danger"
+        },
+        {
+          "id": "applemusic:track_entry:1627573936/1/6/1627574646",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1627573936/1/6/1627574646",
+          "name": "I NEED U"
+        },
+        {
+          "id": "applemusic:track_entry:1627573936/1/7/1627574655",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1627573936/1/7/1627574655",
+          "name": "RUN"
+        },
+        {
+          "id": "applemusic:track_entry:1627573936/1/8/1627574665",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1627573936/1/8/1627574665",
+          "name": "Burning Up (FIRE)"
+        },
+        {
+          "id": "applemusic:track_entry:1627573936/1/9/1627574672",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1627573936/1/9/1627574672",
+          "name": "Blood Sweat & Tears"
+        },
+        {
+          "id": "applemusic:track_entry:1627573936/2/1/1627575780",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1627573936/2/1/1627575780",
+          "name": "Run BTS"
+        },
+        {
+          "id": "applemusic:track_entry:1627573936/2/10/1627577139",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1627573936/2/10/1627577139",
+          "name": "Filter"
+        },
+        {
+          "id": "applemusic:track_entry:1627573936/2/11/1627577143",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1627573936/2/11/1627577143",
+          "name": "Friends"
+        },
+        {
+          "id": "applemusic:track_entry:1627573936/2/12/1627577161",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1627573936/2/12/1627577161",
+          "name": "Singularity"
+        },
+        {
+          "id": "applemusic:track_entry:1627573936/2/13/1627577468",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1627573936/2/13/1627577468",
+          "name": "00:00 (Zero O'Clock)"
+        },
+        {
+          "id": "applemusic:track_entry:1627573936/2/14/1627577481",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1627573936/2/14/1627577481",
+          "name": "Euphoria"
+        },
+        {
+          "id": "applemusic:track_entry:1627573936/2/15/1627577706",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1627573936/2/15/1627577706",
+          "name": "Dimple"
+        },
+        {
+          "id": "applemusic:track_entry:1627573936/2/2/1627576154",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1627573936/2/2/1627576154",
+          "name": "Intro : Persona"
+        },
+        {
+          "id": "applemusic:track_entry:1627573936/2/3/1627576161",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1627573936/2/3/1627576161",
+          "name": "Stay"
+        },
+        {
+          "id": "applemusic:track_entry:1627573936/2/4/1627576167",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1627573936/2/4/1627576167",
+          "name": "Moon"
+        },
+        {
+          "id": "applemusic:track_entry:1627573936/2/5/1627576169",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1627573936/2/5/1627576169",
+          "name": "Jamais Vu"
+        },
+        {
+          "id": "applemusic:track_entry:1627573936/2/6/1627576695",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1627573936/2/6/1627576695",
+          "name": "Trivia 轉 : Seesaw"
+        },
+        {
+          "id": "applemusic:track_entry:1627573936/2/7/1627576704",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1627573936/2/7/1627576704",
+          "name": "BTS Cypher PT.3 : KILLER (feat. Supreme Boi)"
+        },
+        {
+          "id": "applemusic:track_entry:1627573936/2/8/1627576711",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1627573936/2/8/1627576711",
+          "name": "Outro : Ego"
+        },
+        {
+          "id": "applemusic:track_entry:1627573936/2/9/1627576715",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1627573936/2/9/1627576715",
+          "name": "Her"
+        },
+        {
+          "id": "applemusic:track_entry:1627573936/3/1/1627577723",
+          "type": "track_entry",
+          "provider": "applemusic",
+          "native_id": "1627573936/3/1/1627577723",
+          "name": "For Youth"
+        }
+      ],
+      "edges": [
+        {
+          "from": "applemusic:artist:883131348",
+          "to": "applemusic:release:1627573936",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "BTS"
+        },
+        {
+          "from": "applemusic:artist:883131348",
+          "to": "applemusic:track_entry:1627573936/1/1/1627573946",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "BTS"
+        },
+        {
+          "from": "applemusic:artist:883131348",
+          "to": "applemusic:track_entry:1627573936/1/10/1627574950",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "BTS"
+        },
+        {
+          "from": "applemusic:artist:883131348",
+          "to": "applemusic:track_entry:1627573936/1/11/1627574962",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "BTS"
+        },
+        {
+          "from": "applemusic:artist:883131348",
+          "to": "applemusic:track_entry:1627573936/1/12/1627574973",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "BTS"
+        },
+        {
+          "from": "applemusic:artist:883131348",
+          "to": "applemusic:track_entry:1627573936/1/13/1627575301",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "BTS"
+        },
+        {
+          "from": "applemusic:artist:883131348",
+          "to": "applemusic:track_entry:1627573936/1/14/1627575407",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "BTS"
+        },
+        {
+          "from": "applemusic:artist:883131348",
+          "to": "applemusic:track_entry:1627573936/1/15/1627575411",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "BTS"
+        },
+        {
+          "from": "applemusic:artist:883131348",
+          "to": "applemusic:track_entry:1627573936/1/16/1627575419",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "BTS"
+        },
+        {
+          "from": "applemusic:artist:883131348",
+          "to": "applemusic:track_entry:1627573936/1/17/1627575756",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "BTS"
+        },
+        {
+          "from": "applemusic:artist:883131348",
+          "to": "applemusic:track_entry:1627573936/1/18/1627575769",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "BTS"
+        },
+        {
+          "from": "applemusic:artist:883131348",
+          "to": "applemusic:track_entry:1627573936/1/19/1627575774",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "BTS"
+        },
+        {
+          "from": "applemusic:artist:883131348",
+          "to": "applemusic:track_entry:1627573936/1/2/1627573953",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "BTS"
+        },
+        {
+          "from": "applemusic:artist:883131348",
+          "to": "applemusic:track_entry:1627573936/1/3/1627574239",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "BTS"
+        },
+        {
+          "from": "applemusic:artist:883131348",
+          "to": "applemusic:track_entry:1627573936/1/4/1627574247",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "BTS"
+        },
+        {
+          "from": "applemusic:artist:883131348",
+          "to": "applemusic:track_entry:1627573936/1/5/1627574484",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "BTS"
+        },
+        {
+          "from": "applemusic:artist:883131348",
+          "to": "applemusic:track_entry:1627573936/1/6/1627574646",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "BTS"
+        },
+        {
+          "from": "applemusic:artist:883131348",
+          "to": "applemusic:track_entry:1627573936/1/7/1627574655",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "BTS"
+        },
+        {
+          "from": "applemusic:artist:883131348",
+          "to": "applemusic:track_entry:1627573936/1/8/1627574665",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "BTS"
+        },
+        {
+          "from": "applemusic:artist:883131348",
+          "to": "applemusic:track_entry:1627573936/1/9/1627574672",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "BTS"
+        },
+        {
+          "from": "applemusic:artist:883131348",
+          "to": "applemusic:track_entry:1627573936/2/1/1627575780",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "BTS"
+        },
+        {
+          "from": "applemusic:artist:883131348",
+          "to": "applemusic:track_entry:1627573936/2/10/1627577139",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "BTS"
+        },
+        {
+          "from": "applemusic:artist:883131348",
+          "to": "applemusic:track_entry:1627573936/2/11/1627577143",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "BTS"
+        },
+        {
+          "from": "applemusic:artist:883131348",
+          "to": "applemusic:track_entry:1627573936/2/12/1627577161",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "BTS"
+        },
+        {
+          "from": "applemusic:artist:883131348",
+          "to": "applemusic:track_entry:1627573936/2/13/1627577468",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "BTS"
+        },
+        {
+          "from": "applemusic:artist:883131348",
+          "to": "applemusic:track_entry:1627573936/2/14/1627577481",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "BTS"
+        },
+        {
+          "from": "applemusic:artist:883131348",
+          "to": "applemusic:track_entry:1627573936/2/15/1627577706",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "BTS"
+        },
+        {
+          "from": "applemusic:artist:883131348",
+          "to": "applemusic:track_entry:1627573936/2/2/1627576154",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "BTS"
+        },
+        {
+          "from": "applemusic:artist:883131348",
+          "to": "applemusic:track_entry:1627573936/2/3/1627576161",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "BTS"
+        },
+        {
+          "from": "applemusic:artist:883131348",
+          "to": "applemusic:track_entry:1627573936/2/4/1627576167",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "BTS"
+        },
+        {
+          "from": "applemusic:artist:883131348",
+          "to": "applemusic:track_entry:1627573936/2/5/1627576169",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "BTS"
+        },
+        {
+          "from": "applemusic:artist:883131348",
+          "to": "applemusic:track_entry:1627573936/2/6/1627576695",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "BTS"
+        },
+        {
+          "from": "applemusic:artist:883131348",
+          "to": "applemusic:track_entry:1627573936/2/7/1627576704",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "BTS"
+        },
+        {
+          "from": "applemusic:artist:883131348",
+          "to": "applemusic:track_entry:1627573936/2/8/1627576711",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "BTS"
+        },
+        {
+          "from": "applemusic:artist:883131348",
+          "to": "applemusic:track_entry:1627573936/2/9/1627576715",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "BTS"
+        },
+        {
+          "from": "applemusic:artist:883131348",
+          "to": "applemusic:track_entry:1627573936/3/1/1627577723",
+          "type": "credit",
+          "source": "applemusic",
+          "role": "primary_artist",
+          "source_role": "primary_artist",
+          "credited_as": "BTS"
+        },
+        {
+          "from": "applemusic:track_entry:1627573936/1/1/1627573946",
+          "to": "applemusic:release:1627573936",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 1,
+          "disc_number": 1,
+          "track_number": "1"
+        },
+        {
+          "from": "applemusic:track_entry:1627573936/1/10/1627574950",
+          "to": "applemusic:release:1627573936",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 10,
+          "disc_number": 1,
+          "track_number": "10"
+        },
+        {
+          "from": "applemusic:track_entry:1627573936/1/11/1627574962",
+          "to": "applemusic:release:1627573936",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 11,
+          "disc_number": 1,
+          "track_number": "11"
+        },
+        {
+          "from": "applemusic:track_entry:1627573936/1/12/1627574973",
+          "to": "applemusic:release:1627573936",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 12,
+          "disc_number": 1,
+          "track_number": "12"
+        },
+        {
+          "from": "applemusic:track_entry:1627573936/1/13/1627575301",
+          "to": "applemusic:release:1627573936",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 13,
+          "disc_number": 1,
+          "track_number": "13"
+        },
+        {
+          "from": "applemusic:track_entry:1627573936/1/14/1627575407",
+          "to": "applemusic:release:1627573936",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 14,
+          "disc_number": 1,
+          "track_number": "14"
+        },
+        {
+          "from": "applemusic:track_entry:1627573936/1/15/1627575411",
+          "to": "applemusic:release:1627573936",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 15,
+          "disc_number": 1,
+          "track_number": "15"
+        },
+        {
+          "from": "applemusic:track_entry:1627573936/1/16/1627575419",
+          "to": "applemusic:release:1627573936",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 16,
+          "disc_number": 1,
+          "track_number": "16"
+        },
+        {
+          "from": "applemusic:track_entry:1627573936/1/17/1627575756",
+          "to": "applemusic:release:1627573936",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 17,
+          "disc_number": 1,
+          "track_number": "17"
+        },
+        {
+          "from": "applemusic:track_entry:1627573936/1/18/1627575769",
+          "to": "applemusic:release:1627573936",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 18,
+          "disc_number": 1,
+          "track_number": "18"
+        },
+        {
+          "from": "applemusic:track_entry:1627573936/1/19/1627575774",
+          "to": "applemusic:release:1627573936",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 19,
+          "disc_number": 1,
+          "track_number": "19"
+        },
+        {
+          "from": "applemusic:track_entry:1627573936/1/2/1627573953",
+          "to": "applemusic:release:1627573936",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 2,
+          "disc_number": 1,
+          "track_number": "2"
+        },
+        {
+          "from": "applemusic:track_entry:1627573936/1/3/1627574239",
+          "to": "applemusic:release:1627573936",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 3,
+          "disc_number": 1,
+          "track_number": "3"
+        },
+        {
+          "from": "applemusic:track_entry:1627573936/1/4/1627574247",
+          "to": "applemusic:release:1627573936",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 4,
+          "disc_number": 1,
+          "track_number": "4"
+        },
+        {
+          "from": "applemusic:track_entry:1627573936/1/5/1627574484",
+          "to": "applemusic:release:1627573936",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 5,
+          "disc_number": 1,
+          "track_number": "5"
+        },
+        {
+          "from": "applemusic:track_entry:1627573936/1/6/1627574646",
+          "to": "applemusic:release:1627573936",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 6,
+          "disc_number": 1,
+          "track_number": "6"
+        },
+        {
+          "from": "applemusic:track_entry:1627573936/1/7/1627574655",
+          "to": "applemusic:release:1627573936",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 7,
+          "disc_number": 1,
+          "track_number": "7"
+        },
+        {
+          "from": "applemusic:track_entry:1627573936/1/8/1627574665",
+          "to": "applemusic:release:1627573936",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 8,
+          "disc_number": 1,
+          "track_number": "8"
+        },
+        {
+          "from": "applemusic:track_entry:1627573936/1/9/1627574672",
+          "to": "applemusic:release:1627573936",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 9,
+          "disc_number": 1,
+          "track_number": "9"
+        },
+        {
+          "from": "applemusic:track_entry:1627573936/2/1/1627575780",
+          "to": "applemusic:release:1627573936",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 1,
+          "disc_number": 2,
+          "track_number": "1"
+        },
+        {
+          "from": "applemusic:track_entry:1627573936/2/10/1627577139",
+          "to": "applemusic:release:1627573936",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 10,
+          "disc_number": 2,
+          "track_number": "10"
+        },
+        {
+          "from": "applemusic:track_entry:1627573936/2/11/1627577143",
+          "to": "applemusic:release:1627573936",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 11,
+          "disc_number": 2,
+          "track_number": "11"
+        },
+        {
+          "from": "applemusic:track_entry:1627573936/2/12/1627577161",
+          "to": "applemusic:release:1627573936",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 12,
+          "disc_number": 2,
+          "track_number": "12"
+        },
+        {
+          "from": "applemusic:track_entry:1627573936/2/13/1627577468",
+          "to": "applemusic:release:1627573936",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 13,
+          "disc_number": 2,
+          "track_number": "13"
+        },
+        {
+          "from": "applemusic:track_entry:1627573936/2/14/1627577481",
+          "to": "applemusic:release:1627573936",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 14,
+          "disc_number": 2,
+          "track_number": "14"
+        },
+        {
+          "from": "applemusic:track_entry:1627573936/2/15/1627577706",
+          "to": "applemusic:release:1627573936",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 15,
+          "disc_number": 2,
+          "track_number": "15"
+        },
+        {
+          "from": "applemusic:track_entry:1627573936/2/2/1627576154",
+          "to": "applemusic:release:1627573936",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 2,
+          "disc_number": 2,
+          "track_number": "2"
+        },
+        {
+          "from": "applemusic:track_entry:1627573936/2/3/1627576161",
+          "to": "applemusic:release:1627573936",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 3,
+          "disc_number": 2,
+          "track_number": "3"
+        },
+        {
+          "from": "applemusic:track_entry:1627573936/2/4/1627576167",
+          "to": "applemusic:release:1627573936",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 4,
+          "disc_number": 2,
+          "track_number": "4"
+        },
+        {
+          "from": "applemusic:track_entry:1627573936/2/5/1627576169",
+          "to": "applemusic:release:1627573936",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 5,
+          "disc_number": 2,
+          "track_number": "5"
+        },
+        {
+          "from": "applemusic:track_entry:1627573936/2/6/1627576695",
+          "to": "applemusic:release:1627573936",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 6,
+          "disc_number": 2,
+          "track_number": "6"
+        },
+        {
+          "from": "applemusic:track_entry:1627573936/2/7/1627576704",
+          "to": "applemusic:release:1627573936",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 7,
+          "disc_number": 2,
+          "track_number": "7"
+        },
+        {
+          "from": "applemusic:track_entry:1627573936/2/8/1627576711",
+          "to": "applemusic:release:1627573936",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 8,
+          "disc_number": 2,
+          "track_number": "8"
+        },
+        {
+          "from": "applemusic:track_entry:1627573936/2/9/1627576715",
+          "to": "applemusic:release:1627573936",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 9,
+          "disc_number": 2,
+          "track_number": "9"
+        },
+        {
+          "from": "applemusic:track_entry:1627573936/3/1/1627577723",
+          "to": "applemusic:release:1627573936",
+          "type": "appears_on",
+          "source": "applemusic",
+          "position": 1,
+          "disc_number": 3,
+          "track_number": "1"
+        }
+      ],
+      "truncated": false
+    },
+    "provider": "applemusic",
+    "id": "1627573936",
+    "title": "Proof",
+    "url": "https://music.apple.com/us/album/proof/1627573936?uo=4",
+    "artists": [
+      {
+        "id": "883131348",
+        "name": "BTS"
+      }
+    ],
+    "release_date": "2022-06-10T07:00:00Z",
+    "copyright": "℗ 2022 BIGHIT MUSIC",
+    "images": [
+      "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/100x100bb.jpg"
+    ],
+    "discs": [
+      {
+        "track_list": {
+          "returned": 19,
+          "total": 19,
+          "complete": true
+        },
+        "number": 1,
+        "total_tracks": 19
+      },
+      {
+        "track_list": {
+          "returned": 15,
+          "total": 15,
+          "complete": true
+        },
+        "number": 2,
+        "total_tracks": 15
+      },
+      {
+        "track_list": {
+          "returned": 1,
+          "total": 1,
+          "complete": true
+        },
+        "number": 3,
+        "total_tracks": 1
+      }
+    ],
+    "tracks": [
+      {
+        "id": "1627573946",
+        "title": "Born Singer",
+        "position": 1,
+        "disc_number": 1,
+        "track_number": "1",
+        "duration_ms": 238628,
+        "artists": [
+          {
+            "id": "883131348",
+            "name": "BTS"
+          }
+        ],
+        "provider_data": {
+          "artistId": 883131348,
+          "artistName": "BTS",
+          "artistViewUrl": "https://music.apple.com/us/artist/bts/883131348?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/60x60bb.jpg",
+          "collectionCensoredName": "Proof",
+          "collectionExplicitness": "notExplicit",
+          "collectionId": 1627573936,
+          "collectionName": "Proof",
+          "collectionPrice": 17.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/born-singer/1627573936?i=1627573946&uo=4",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 3,
+          "discNumber": 1,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/81/af/55/81af5519-941d-4e2a-21b1-13336ee44d16/mzaf_10201019386439909081.plus.aac.p.m4a",
+          "primaryGenreName": "K-Pop",
+          "releaseDate": "2022-06-10T12:00:00Z",
+          "trackCensoredName": "Born Singer",
+          "trackCount": 19,
+          "trackExplicitness": "notExplicit",
+          "trackId": 1627573946,
+          "trackName": "Born Singer",
+          "trackNumber": 1,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 238628,
+          "trackViewUrl": "https://music.apple.com/us/album/born-singer/1627573936?i=1627573946&uo=4",
+          "wrapperType": "track"
+        }
+      },
+      {
+        "id": "1627573953",
+        "title": "No More Dream",
+        "position": 2,
+        "disc_number": 1,
+        "track_number": "2",
+        "duration_ms": 222067,
+        "artists": [
+          {
+            "id": "883131348",
+            "name": "BTS"
+          }
+        ],
+        "provider_data": {
+          "artistId": 883131348,
+          "artistName": "BTS",
+          "artistViewUrl": "https://music.apple.com/us/artist/bts/883131348?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/60x60bb.jpg",
+          "collectionCensoredName": "Proof",
+          "collectionExplicitness": "notExplicit",
+          "collectionId": 1627573936,
+          "collectionName": "Proof",
+          "collectionPrice": 17.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/no-more-dream/1627573936?i=1627573953&uo=4",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 3,
+          "discNumber": 1,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/9d/16/a2/9d16a2bc-d262-0281-1963-40d31dcb57bf/mzaf_1282098908416337789.plus.aac.p.m4a",
+          "primaryGenreName": "K-Pop",
+          "releaseDate": "2013-06-12T12:00:00Z",
+          "trackCensoredName": "No More Dream",
+          "trackCount": 19,
+          "trackExplicitness": "notExplicit",
+          "trackId": 1627573953,
+          "trackName": "No More Dream",
+          "trackNumber": 2,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 222067,
+          "trackViewUrl": "https://music.apple.com/us/album/no-more-dream/1627573936?i=1627573953&uo=4",
+          "wrapperType": "track"
+        }
+      },
+      {
+        "id": "1627574239",
+        "title": "N.O",
+        "position": 3,
+        "disc_number": 1,
+        "track_number": "3",
+        "duration_ms": 209752,
+        "artists": [
+          {
+            "id": "883131348",
+            "name": "BTS"
+          }
+        ],
+        "provider_data": {
+          "artistId": 883131348,
+          "artistName": "BTS",
+          "artistViewUrl": "https://music.apple.com/us/artist/bts/883131348?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/60x60bb.jpg",
+          "collectionCensoredName": "Proof",
+          "collectionExplicitness": "notExplicit",
+          "collectionId": 1627573936,
+          "collectionName": "Proof",
+          "collectionPrice": 17.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/n-o/1627573936?i=1627574239&uo=4",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 3,
+          "discNumber": 1,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/a0/fa/cd/a0facdaf-3cae-23bd-47f0-54fa98988c29/mzaf_13714171571566578470.plus.aac.p.m4a",
+          "primaryGenreName": "K-Pop",
+          "releaseDate": "2013-09-11T12:00:00Z",
+          "trackCensoredName": "N.O",
+          "trackCount": 19,
+          "trackExplicitness": "notExplicit",
+          "trackId": 1627574239,
+          "trackName": "N.O",
+          "trackNumber": 3,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 209752,
+          "trackViewUrl": "https://music.apple.com/us/album/n-o/1627573936?i=1627574239&uo=4",
+          "wrapperType": "track"
+        }
+      },
+      {
+        "id": "1627574247",
+        "title": "Boy In Luv",
+        "position": 4,
+        "disc_number": 1,
+        "track_number": "4",
+        "duration_ms": 231384,
+        "artists": [
+          {
+            "id": "883131348",
+            "name": "BTS"
+          }
+        ],
+        "provider_data": {
+          "artistId": 883131348,
+          "artistName": "BTS",
+          "artistViewUrl": "https://music.apple.com/us/artist/bts/883131348?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/60x60bb.jpg",
+          "collectionCensoredName": "Proof",
+          "collectionExplicitness": "notExplicit",
+          "collectionId": 1627573936,
+          "collectionName": "Proof",
+          "collectionPrice": 17.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/boy-in-luv/1627573936?i=1627574247&uo=4",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 3,
+          "discNumber": 1,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/e4/eb/ad/e4ebad8f-47ab-5754-0ac6-6044439627f4/mzaf_18409282776696680212.plus.aac.p.m4a",
+          "primaryGenreName": "K-Pop",
+          "releaseDate": "2014-02-12T12:00:00Z",
+          "trackCensoredName": "Boy In Luv",
+          "trackCount": 19,
+          "trackExplicitness": "notExplicit",
+          "trackId": 1627574247,
+          "trackName": "Boy In Luv",
+          "trackNumber": 4,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 231384,
+          "trackViewUrl": "https://music.apple.com/us/album/boy-in-luv/1627573936?i=1627574247&uo=4",
+          "wrapperType": "track"
+        }
+      },
+      {
+        "id": "1627574484",
+        "title": "Danger",
+        "position": 5,
+        "disc_number": 1,
+        "track_number": "5",
+        "duration_ms": 245810,
+        "artists": [
+          {
+            "id": "883131348",
+            "name": "BTS"
+          }
+        ],
+        "provider_data": {
+          "artistId": 883131348,
+          "artistName": "BTS",
+          "artistViewUrl": "https://music.apple.com/us/artist/bts/883131348?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/60x60bb.jpg",
+          "collectionCensoredName": "Proof",
+          "collectionExplicitness": "notExplicit",
+          "collectionId": 1627573936,
+          "collectionName": "Proof",
+          "collectionPrice": 17.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/danger/1627573936?i=1627574484&uo=4",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 3,
+          "discNumber": 1,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/ca/02/0f/ca020fba-8299-91a1-ab96-fb94ef78c9dc/mzaf_7213730003242902962.plus.aac.p.m4a",
+          "primaryGenreName": "K-Pop",
+          "releaseDate": "2014-08-20T12:00:00Z",
+          "trackCensoredName": "Danger",
+          "trackCount": 19,
+          "trackExplicitness": "notExplicit",
+          "trackId": 1627574484,
+          "trackName": "Danger",
+          "trackNumber": 5,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 245810,
+          "trackViewUrl": "https://music.apple.com/us/album/danger/1627573936?i=1627574484&uo=4",
+          "wrapperType": "track"
+        }
+      },
+      {
+        "id": "1627574646",
+        "title": "I NEED U",
+        "position": 6,
+        "disc_number": 1,
+        "track_number": "6",
+        "duration_ms": 210987,
+        "artists": [
+          {
+            "id": "883131348",
+            "name": "BTS"
+          }
+        ],
+        "provider_data": {
+          "artistId": 883131348,
+          "artistName": "BTS",
+          "artistViewUrl": "https://music.apple.com/us/artist/bts/883131348?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/60x60bb.jpg",
+          "collectionCensoredName": "Proof",
+          "collectionExplicitness": "notExplicit",
+          "collectionId": 1627573936,
+          "collectionName": "Proof",
+          "collectionPrice": 17.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/i-need-u/1627573936?i=1627574646&uo=4",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 3,
+          "discNumber": 1,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/0e/9e/39/0e9e3914-02b3-7b51-bd88-a96df5e63c97/mzaf_7601643093051095680.plus.aac.p.m4a",
+          "primaryGenreName": "K-Pop",
+          "releaseDate": "2015-04-29T12:00:00Z",
+          "trackCensoredName": "I NEED U",
+          "trackCount": 19,
+          "trackExplicitness": "notExplicit",
+          "trackId": 1627574646,
+          "trackName": "I NEED U",
+          "trackNumber": 6,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 210987,
+          "trackViewUrl": "https://music.apple.com/us/album/i-need-u/1627573936?i=1627574646&uo=4",
+          "wrapperType": "track"
+        }
+      },
+      {
+        "id": "1627574655",
+        "title": "RUN",
+        "position": 7,
+        "disc_number": 1,
+        "track_number": "7",
+        "duration_ms": 236748,
+        "artists": [
+          {
+            "id": "883131348",
+            "name": "BTS"
+          }
+        ],
+        "provider_data": {
+          "artistId": 883131348,
+          "artistName": "BTS",
+          "artistViewUrl": "https://music.apple.com/us/artist/bts/883131348?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/60x60bb.jpg",
+          "collectionCensoredName": "Proof",
+          "collectionExplicitness": "notExplicit",
+          "collectionId": 1627573936,
+          "collectionName": "Proof",
+          "collectionPrice": 17.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/run/1627573936?i=1627574655&uo=4",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 3,
+          "discNumber": 1,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/04/ce/71/04ce71b8-9b61-ad07-2960-fe2716067cc2/mzaf_17474506921215339375.plus.aac.p.m4a",
+          "primaryGenreName": "K-Pop",
+          "releaseDate": "2015-11-30T12:00:00Z",
+          "trackCensoredName": "RUN",
+          "trackCount": 19,
+          "trackExplicitness": "notExplicit",
+          "trackId": 1627574655,
+          "trackName": "RUN",
+          "trackNumber": 7,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 236748,
+          "trackViewUrl": "https://music.apple.com/us/album/run/1627573936?i=1627574655&uo=4",
+          "wrapperType": "track"
+        }
+      },
+      {
+        "id": "1627574665",
+        "title": "Burning Up (FIRE)",
+        "position": 8,
+        "disc_number": 1,
+        "track_number": "8",
+        "duration_ms": 203958,
+        "artists": [
+          {
+            "id": "883131348",
+            "name": "BTS"
+          }
+        ],
+        "provider_data": {
+          "artistId": 883131348,
+          "artistName": "BTS",
+          "artistViewUrl": "https://music.apple.com/us/artist/bts/883131348?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/60x60bb.jpg",
+          "collectionCensoredName": "Proof",
+          "collectionExplicitness": "notExplicit",
+          "collectionId": 1627573936,
+          "collectionName": "Proof",
+          "collectionPrice": 17.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/burning-up-fire/1627573936?i=1627574665&uo=4",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 3,
+          "discNumber": 1,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/3f/1a/01/3f1a015a-616a-c1ee-ef20-043c1c662e37/mzaf_6288710531420356045.plus.aac.p.m4a",
+          "primaryGenreName": "K-Pop",
+          "releaseDate": "2016-05-02T12:00:00Z",
+          "trackCensoredName": "Burning Up (FIRE)",
+          "trackCount": 19,
+          "trackExplicitness": "notExplicit",
+          "trackId": 1627574665,
+          "trackName": "Burning Up (FIRE)",
+          "trackNumber": 8,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 203958,
+          "trackViewUrl": "https://music.apple.com/us/album/burning-up-fire/1627573936?i=1627574665&uo=4",
+          "wrapperType": "track"
+        }
+      },
+      {
+        "id": "1627574672",
+        "title": "Blood Sweat & Tears",
+        "position": 9,
+        "disc_number": 1,
+        "track_number": "9",
+        "duration_ms": 217052,
+        "artists": [
+          {
+            "id": "883131348",
+            "name": "BTS"
+          }
+        ],
+        "provider_data": {
+          "artistId": 883131348,
+          "artistName": "BTS",
+          "artistViewUrl": "https://music.apple.com/us/artist/bts/883131348?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/60x60bb.jpg",
+          "collectionCensoredName": "Proof",
+          "collectionExplicitness": "notExplicit",
+          "collectionId": 1627573936,
+          "collectionName": "Proof",
+          "collectionPrice": 17.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/blood-sweat-tears/1627573936?i=1627574672&uo=4",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 3,
+          "discNumber": 1,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/54/b9/0b/54b90b2c-327f-3317-7536-aa73f5dea106/mzaf_672151335337863434.plus.aac.p.m4a",
+          "primaryGenreName": "K-Pop",
+          "releaseDate": "2016-10-10T12:00:00Z",
+          "trackCensoredName": "Blood Sweat & Tears",
+          "trackCount": 19,
+          "trackExplicitness": "notExplicit",
+          "trackId": 1627574672,
+          "trackName": "Blood Sweat & Tears",
+          "trackNumber": 9,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 217052,
+          "trackViewUrl": "https://music.apple.com/us/album/blood-sweat-tears/1627573936?i=1627574672&uo=4",
+          "wrapperType": "track"
+        }
+      },
+      {
+        "id": "1627574950",
+        "title": "Spring Day",
+        "position": 10,
+        "disc_number": 1,
+        "track_number": "10",
+        "duration_ms": 274704,
+        "artists": [
+          {
+            "id": "883131348",
+            "name": "BTS"
+          }
+        ],
+        "provider_data": {
+          "artistId": 883131348,
+          "artistName": "BTS",
+          "artistViewUrl": "https://music.apple.com/us/artist/bts/883131348?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/60x60bb.jpg",
+          "collectionCensoredName": "Proof",
+          "collectionExplicitness": "notExplicit",
+          "collectionId": 1627573936,
+          "collectionName": "Proof",
+          "collectionPrice": 17.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/spring-day/1627573936?i=1627574950&uo=4",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 3,
+          "discNumber": 1,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/67/9b/be/679bbe52-6932-b636-f8f5-84ec7a054318/mzaf_8438824638252695234.plus.aac.p.m4a",
+          "primaryGenreName": "K-Pop",
+          "releaseDate": "2017-02-13T12:00:00Z",
+          "trackCensoredName": "Spring Day",
+          "trackCount": 19,
+          "trackExplicitness": "notExplicit",
+          "trackId": 1627574950,
+          "trackName": "Spring Day",
+          "trackNumber": 10,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 274704,
+          "trackViewUrl": "https://music.apple.com/us/album/spring-day/1627573936?i=1627574950&uo=4",
+          "wrapperType": "track"
+        }
+      },
+      {
+        "id": "1627574962",
+        "title": "DNA",
+        "position": 11,
+        "disc_number": 1,
+        "track_number": "11",
+        "duration_ms": 223442,
+        "artists": [
+          {
+            "id": "883131348",
+            "name": "BTS"
+          }
+        ],
+        "provider_data": {
+          "artistId": 883131348,
+          "artistName": "BTS",
+          "artistViewUrl": "https://music.apple.com/us/artist/bts/883131348?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/60x60bb.jpg",
+          "collectionCensoredName": "Proof",
+          "collectionExplicitness": "notExplicit",
+          "collectionId": 1627573936,
+          "collectionName": "Proof",
+          "collectionPrice": 17.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/dna/1627573936?i=1627574962&uo=4",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 3,
+          "discNumber": 1,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/f6/ad/1a/f6ad1a4e-4ecc-3989-69a9-ed63d47efc84/mzaf_5164811125896083762.plus.aac.p.m4a",
+          "primaryGenreName": "K-Pop",
+          "releaseDate": "2017-09-18T12:00:00Z",
+          "trackCensoredName": "DNA",
+          "trackCount": 19,
+          "trackExplicitness": "notExplicit",
+          "trackId": 1627574962,
+          "trackName": "DNA",
+          "trackNumber": 11,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 223442,
+          "trackViewUrl": "https://music.apple.com/us/album/dna/1627573936?i=1627574962&uo=4",
+          "wrapperType": "track"
+        }
+      },
+      {
+        "id": "1627574973",
+        "title": "FAKE LOVE",
+        "position": 12,
+        "disc_number": 1,
+        "track_number": "12",
+        "duration_ms": 242334,
+        "artists": [
+          {
+            "id": "883131348",
+            "name": "BTS"
+          }
+        ],
+        "provider_data": {
+          "artistId": 883131348,
+          "artistName": "BTS",
+          "artistViewUrl": "https://music.apple.com/us/artist/bts/883131348?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/60x60bb.jpg",
+          "collectionCensoredName": "Proof",
+          "collectionExplicitness": "notExplicit",
+          "collectionId": 1627573936,
+          "collectionName": "Proof",
+          "collectionPrice": 17.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/fake-love/1627573936?i=1627574973&uo=4",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 3,
+          "discNumber": 1,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/2f/90/44/2f90442a-2fb2-fca7-117a-d3c4580b439a/mzaf_13070336551553187195.plus.aac.p.m4a",
+          "primaryGenreName": "K-Pop",
+          "releaseDate": "2018-05-18T12:00:00Z",
+          "trackCensoredName": "FAKE LOVE",
+          "trackCount": 19,
+          "trackExplicitness": "notExplicit",
+          "trackId": 1627574973,
+          "trackName": "FAKE LOVE",
+          "trackNumber": 12,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 242334,
+          "trackViewUrl": "https://music.apple.com/us/album/fake-love/1627573936?i=1627574973&uo=4",
+          "wrapperType": "track"
+        }
+      },
+      {
+        "id": "1627575301",
+        "title": "IDOL",
+        "position": 13,
+        "disc_number": 1,
+        "track_number": "13",
+        "duration_ms": 222732,
+        "artists": [
+          {
+            "id": "883131348",
+            "name": "BTS"
+          }
+        ],
+        "provider_data": {
+          "artistId": 883131348,
+          "artistName": "BTS",
+          "artistViewUrl": "https://music.apple.com/us/artist/bts/883131348?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/60x60bb.jpg",
+          "collectionCensoredName": "Proof",
+          "collectionExplicitness": "notExplicit",
+          "collectionId": 1627573936,
+          "collectionName": "Proof",
+          "collectionPrice": 17.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/idol/1627573936?i=1627575301&uo=4",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 3,
+          "discNumber": 1,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/c9/7a/bc/c97abc0b-c464-b7ed-6667-224a27db5065/mzaf_2011385680248413996.plus.aac.p.m4a",
+          "primaryGenreName": "K-Pop",
+          "releaseDate": "2018-08-24T12:00:00Z",
+          "trackCensoredName": "IDOL",
+          "trackCount": 19,
+          "trackExplicitness": "notExplicit",
+          "trackId": 1627575301,
+          "trackName": "IDOL",
+          "trackNumber": 13,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 222732,
+          "trackViewUrl": "https://music.apple.com/us/album/idol/1627573936?i=1627575301&uo=4",
+          "wrapperType": "track"
+        }
+      },
+      {
+        "id": "1627575407",
+        "title": "Boy With Luv (feat. Halsey)",
+        "position": 14,
+        "disc_number": 1,
+        "track_number": "14",
+        "duration_ms": 229773,
+        "artists": [
+          {
+            "id": "883131348",
+            "name": "BTS"
+          }
+        ],
+        "provider_data": {
+          "artistId": 883131348,
+          "artistName": "BTS",
+          "artistViewUrl": "https://music.apple.com/us/artist/bts/883131348?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/60x60bb.jpg",
+          "collectionCensoredName": "Proof",
+          "collectionExplicitness": "notExplicit",
+          "collectionId": 1627573936,
+          "collectionName": "Proof",
+          "collectionPrice": 17.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/boy-with-luv-feat-halsey/1627573936?i=1627575407&uo=4",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 3,
+          "discNumber": 1,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/ce/92/d1/ce92d128-2c24-d98a-be2d-3c1812885201/mzaf_2283986623690827059.plus.aac.p.m4a",
+          "primaryGenreName": "K-Pop",
+          "releaseDate": "2019-04-12T12:00:00Z",
+          "trackCensoredName": "Boy With Luv (feat. Halsey)",
+          "trackCount": 19,
+          "trackExplicitness": "notExplicit",
+          "trackId": 1627575407,
+          "trackName": "Boy With Luv (feat. Halsey)",
+          "trackNumber": 14,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 229773,
+          "trackViewUrl": "https://music.apple.com/us/album/boy-with-luv-feat-halsey/1627573936?i=1627575407&uo=4",
+          "wrapperType": "track"
+        }
+      },
+      {
+        "id": "1627575411",
+        "title": "ON",
+        "position": 15,
+        "disc_number": 1,
+        "track_number": "15",
+        "duration_ms": 246817,
+        "artists": [
+          {
+            "id": "883131348",
+            "name": "BTS"
+          }
+        ],
+        "provider_data": {
+          "artistId": 883131348,
+          "artistName": "BTS",
+          "artistViewUrl": "https://music.apple.com/us/artist/bts/883131348?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/60x60bb.jpg",
+          "collectionCensoredName": "Proof",
+          "collectionExplicitness": "notExplicit",
+          "collectionId": 1627573936,
+          "collectionName": "Proof",
+          "collectionPrice": 17.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/on/1627573936?i=1627575411&uo=4",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 3,
+          "discNumber": 1,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/cf/19/41/cf194130-786e-b775-774d-8b0108e80076/mzaf_7609621431046990886.plus.aac.p.m4a",
+          "primaryGenreName": "K-Pop",
+          "releaseDate": "2020-02-21T12:00:00Z",
+          "trackCensoredName": "ON",
+          "trackCount": 19,
+          "trackExplicitness": "notExplicit",
+          "trackId": 1627575411,
+          "trackName": "ON",
+          "trackNumber": 15,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 246817,
+          "trackViewUrl": "https://music.apple.com/us/album/on/1627573936?i=1627575411&uo=4",
+          "wrapperType": "track"
+        }
+      },
+      {
+        "id": "1627575419",
+        "title": "Dynamite",
+        "position": 16,
+        "disc_number": 1,
+        "track_number": "16",
+        "duration_ms": 199293,
+        "artists": [
+          {
+            "id": "883131348",
+            "name": "BTS"
+          }
+        ],
+        "provider_data": {
+          "artistId": 883131348,
+          "artistName": "BTS",
+          "artistViewUrl": "https://music.apple.com/us/artist/bts/883131348?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/60x60bb.jpg",
+          "collectionCensoredName": "Proof",
+          "collectionExplicitness": "notExplicit",
+          "collectionId": 1627573936,
+          "collectionName": "Proof",
+          "collectionPrice": 17.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/dynamite/1627573936?i=1627575419&uo=4",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 3,
+          "discNumber": 1,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/43/06/1e/43061eb6-9052-60da-7e95-aed315c0b34c/mzaf_2639750113226374892.plus.aac.p.m4a",
+          "primaryGenreName": "K-Pop",
+          "releaseDate": "2020-08-21T12:00:00Z",
+          "trackCensoredName": "Dynamite",
+          "trackCount": 19,
+          "trackExplicitness": "notExplicit",
+          "trackId": 1627575419,
+          "trackName": "Dynamite",
+          "trackNumber": 16,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 199293,
+          "trackViewUrl": "https://music.apple.com/us/album/dynamite/1627573936?i=1627575419&uo=4",
+          "wrapperType": "track"
+        }
+      },
+      {
+        "id": "1627575756",
+        "title": "Life Goes On",
+        "position": 17,
+        "disc_number": 1,
+        "track_number": "17",
+        "duration_ms": 208088,
+        "artists": [
+          {
+            "id": "883131348",
+            "name": "BTS"
+          }
+        ],
+        "provider_data": {
+          "artistId": 883131348,
+          "artistName": "BTS",
+          "artistViewUrl": "https://music.apple.com/us/artist/bts/883131348?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/60x60bb.jpg",
+          "collectionCensoredName": "Proof",
+          "collectionExplicitness": "notExplicit",
+          "collectionId": 1627573936,
+          "collectionName": "Proof",
+          "collectionPrice": 17.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/life-goes-on/1627573936?i=1627575756&uo=4",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 3,
+          "discNumber": 1,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/1e/d6/9f/1ed69f87-d08c-b0c5-d030-f660dbd36c8a/mzaf_353594035614469840.plus.aac.p.m4a",
+          "primaryGenreName": "K-Pop",
+          "releaseDate": "2020-11-20T12:00:00Z",
+          "trackCensoredName": "Life Goes On",
+          "trackCount": 19,
+          "trackExplicitness": "notExplicit",
+          "trackId": 1627575756,
+          "trackName": "Life Goes On",
+          "trackNumber": 17,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 208088,
+          "trackViewUrl": "https://music.apple.com/us/album/life-goes-on/1627573936?i=1627575756&uo=4",
+          "wrapperType": "track"
+        }
+      },
+      {
+        "id": "1627575769",
+        "title": "Butter",
+        "position": 18,
+        "disc_number": 1,
+        "track_number": "18",
+        "duration_ms": 164952,
+        "artists": [
+          {
+            "id": "883131348",
+            "name": "BTS"
+          }
+        ],
+        "provider_data": {
+          "artistId": 883131348,
+          "artistName": "BTS",
+          "artistViewUrl": "https://music.apple.com/us/artist/bts/883131348?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/60x60bb.jpg",
+          "collectionCensoredName": "Proof",
+          "collectionExplicitness": "notExplicit",
+          "collectionId": 1627573936,
+          "collectionName": "Proof",
+          "collectionPrice": 17.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/butter/1627573936?i=1627575769&uo=4",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 3,
+          "discNumber": 1,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/80/c8/46/80c84615-efb7-b538-d818-226cf7803358/mzaf_11498582023380901573.plus.aac.p.m4a",
+          "primaryGenreName": "K-Pop",
+          "releaseDate": "2021-05-21T12:00:00Z",
+          "trackCensoredName": "Butter",
+          "trackCount": 19,
+          "trackExplicitness": "notExplicit",
+          "trackId": 1627575769,
+          "trackName": "Butter",
+          "trackNumber": 18,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 164952,
+          "trackViewUrl": "https://music.apple.com/us/album/butter/1627573936?i=1627575769&uo=4",
+          "wrapperType": "track"
+        }
+      },
+      {
+        "id": "1627575774",
+        "title": "Yet To Come",
+        "position": 19,
+        "disc_number": 1,
+        "track_number": "19",
+        "duration_ms": 193594,
+        "artists": [
+          {
+            "id": "883131348",
+            "name": "BTS"
+          }
+        ],
+        "provider_data": {
+          "artistId": 883131348,
+          "artistName": "BTS",
+          "artistViewUrl": "https://music.apple.com/us/artist/bts/883131348?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/60x60bb.jpg",
+          "collectionCensoredName": "Proof",
+          "collectionExplicitness": "notExplicit",
+          "collectionId": 1627573936,
+          "collectionName": "Proof",
+          "collectionPrice": 17.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/yet-to-come/1627573936?i=1627575774&uo=4",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 3,
+          "discNumber": 1,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/12/a9/3d/12a93d0b-036b-170b-09fa-379d785e63b7/mzaf_17633343337902112849.plus.aac.p.m4a",
+          "primaryGenreName": "K-Pop",
+          "releaseDate": "2022-06-10T12:00:00Z",
+          "trackCensoredName": "Yet To Come",
+          "trackCount": 19,
+          "trackExplicitness": "notExplicit",
+          "trackId": 1627575774,
+          "trackName": "Yet To Come",
+          "trackNumber": 19,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 193594,
+          "trackViewUrl": "https://music.apple.com/us/album/yet-to-come/1627573936?i=1627575774&uo=4",
+          "wrapperType": "track"
+        }
+      },
+      {
+        "id": "1627575780",
+        "title": "Run BTS",
+        "position": 1,
+        "disc_number": 2,
+        "track_number": "1",
+        "duration_ms": 204940,
+        "artists": [
+          {
+            "id": "883131348",
+            "name": "BTS"
+          }
+        ],
+        "provider_data": {
+          "artistId": 883131348,
+          "artistName": "BTS",
+          "artistViewUrl": "https://music.apple.com/us/artist/bts/883131348?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/60x60bb.jpg",
+          "collectionCensoredName": "Proof",
+          "collectionExplicitness": "notExplicit",
+          "collectionId": 1627573936,
+          "collectionName": "Proof",
+          "collectionPrice": 17.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/run-bts/1627573936?i=1627575780&uo=4",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 3,
+          "discNumber": 2,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/e5/af/24/e5af24e2-2774-9b79-65ff-1e1996e35fc0/mzaf_17704554323833805410.plus.aac.p.m4a",
+          "primaryGenreName": "K-Pop",
+          "releaseDate": "2022-06-10T12:00:00Z",
+          "trackCensoredName": "Run BTS",
+          "trackCount": 15,
+          "trackExplicitness": "notExplicit",
+          "trackId": 1627575780,
+          "trackName": "Run BTS",
+          "trackNumber": 1,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 204940,
+          "trackViewUrl": "https://music.apple.com/us/album/run-bts/1627573936?i=1627575780&uo=4",
+          "wrapperType": "track"
+        }
+      },
+      {
+        "id": "1627576154",
+        "title": "Intro : Persona",
+        "position": 2,
+        "disc_number": 2,
+        "track_number": "2",
+        "duration_ms": 171023,
+        "artists": [
+          {
+            "id": "883131348",
+            "name": "BTS"
+          }
+        ],
+        "provider_data": {
+          "artistId": 883131348,
+          "artistName": "BTS",
+          "artistViewUrl": "https://music.apple.com/us/artist/bts/883131348?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/60x60bb.jpg",
+          "collectionCensoredName": "Proof",
+          "collectionExplicitness": "notExplicit",
+          "collectionId": 1627573936,
+          "collectionName": "Proof",
+          "collectionPrice": 17.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/intro-persona/1627573936?i=1627576154&uo=4",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 3,
+          "discNumber": 2,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/d3/bf/cd/d3bfcda8-604a-9825-b763-4aaf38b83e0f/mzaf_17874507409263605193.plus.aac.p.m4a",
+          "primaryGenreName": "K-Pop",
+          "releaseDate": "2019-04-12T12:00:00Z",
+          "trackCensoredName": "Intro : Persona",
+          "trackCount": 15,
+          "trackExplicitness": "notExplicit",
+          "trackId": 1627576154,
+          "trackName": "Intro : Persona",
+          "trackNumber": 2,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 171023,
+          "trackViewUrl": "https://music.apple.com/us/album/intro-persona/1627573936?i=1627576154&uo=4",
+          "wrapperType": "track"
+        }
+      },
+      {
+        "id": "1627576161",
+        "title": "Stay",
+        "position": 3,
+        "disc_number": 2,
+        "track_number": "3",
+        "duration_ms": 206208,
+        "artists": [
+          {
+            "id": "883131348",
+            "name": "BTS"
+          }
+        ],
+        "provider_data": {
+          "artistId": 883131348,
+          "artistName": "BTS",
+          "artistViewUrl": "https://music.apple.com/us/artist/bts/883131348?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/60x60bb.jpg",
+          "collectionCensoredName": "Proof",
+          "collectionExplicitness": "notExplicit",
+          "collectionId": 1627573936,
+          "collectionName": "Proof",
+          "collectionPrice": 17.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/stay/1627573936?i=1627576161&uo=4",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 3,
+          "discNumber": 2,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/a3/f1/8c/a3f18c6a-21ce-236a-3f24-17df97e6bc04/mzaf_15708107206207193868.plus.aac.p.m4a",
+          "primaryGenreName": "K-Pop",
+          "releaseDate": "2020-11-20T12:00:00Z",
+          "trackCensoredName": "Stay",
+          "trackCount": 15,
+          "trackExplicitness": "notExplicit",
+          "trackId": 1627576161,
+          "trackName": "Stay",
+          "trackNumber": 3,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 206208,
+          "trackViewUrl": "https://music.apple.com/us/album/stay/1627573936?i=1627576161&uo=4",
+          "wrapperType": "track"
+        }
+      },
+      {
+        "id": "1627576167",
+        "title": "Moon",
+        "position": 4,
+        "disc_number": 2,
+        "track_number": "4",
+        "duration_ms": 208201,
+        "artists": [
+          {
+            "id": "883131348",
+            "name": "BTS"
+          }
+        ],
+        "provider_data": {
+          "artistId": 883131348,
+          "artistName": "BTS",
+          "artistViewUrl": "https://music.apple.com/us/artist/bts/883131348?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/60x60bb.jpg",
+          "collectionCensoredName": "Proof",
+          "collectionExplicitness": "notExplicit",
+          "collectionId": 1627573936,
+          "collectionName": "Proof",
+          "collectionPrice": 17.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/moon/1627573936?i=1627576167&uo=4",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 3,
+          "discNumber": 2,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/93/7a/19/937a19a9-66ca-729b-8623-77458daca792/mzaf_5905163969616265592.plus.aac.p.m4a",
+          "primaryGenreName": "K-Pop",
+          "releaseDate": "2020-02-21T12:00:00Z",
+          "trackCensoredName": "Moon",
+          "trackCount": 15,
+          "trackExplicitness": "notExplicit",
+          "trackId": 1627576167,
+          "trackName": "Moon",
+          "trackNumber": 4,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 208201,
+          "trackViewUrl": "https://music.apple.com/us/album/moon/1627573936?i=1627576167&uo=4",
+          "wrapperType": "track"
+        }
+      },
+      {
+        "id": "1627576169",
+        "title": "Jamais Vu",
+        "position": 5,
+        "disc_number": 2,
+        "track_number": "5",
+        "duration_ms": 227275,
+        "artists": [
+          {
+            "id": "883131348",
+            "name": "BTS"
+          }
+        ],
+        "provider_data": {
+          "artistId": 883131348,
+          "artistName": "BTS",
+          "artistViewUrl": "https://music.apple.com/us/artist/bts/883131348?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/60x60bb.jpg",
+          "collectionCensoredName": "Proof",
+          "collectionExplicitness": "notExplicit",
+          "collectionId": 1627573936,
+          "collectionName": "Proof",
+          "collectionPrice": 17.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/jamais-vu/1627573936?i=1627576169&uo=4",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 3,
+          "discNumber": 2,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/32/a3/12/32a31254-b85e-0e88-3e2a-2042625c1155/mzaf_451446997226522853.plus.aac.p.m4a",
+          "primaryGenreName": "K-Pop",
+          "releaseDate": "2019-04-12T12:00:00Z",
+          "trackCensoredName": "Jamais Vu",
+          "trackCount": 15,
+          "trackExplicitness": "notExplicit",
+          "trackId": 1627576169,
+          "trackName": "Jamais Vu",
+          "trackNumber": 5,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 227275,
+          "trackViewUrl": "https://music.apple.com/us/album/jamais-vu/1627573936?i=1627576169&uo=4",
+          "wrapperType": "track"
+        }
+      },
+      {
+        "id": "1627576695",
+        "title": "Trivia 轉 : Seesaw",
+        "position": 6,
+        "disc_number": 2,
+        "track_number": "6",
+        "duration_ms": 246334,
+        "artists": [
+          {
+            "id": "883131348",
+            "name": "BTS"
+          }
+        ],
+        "provider_data": {
+          "artistId": 883131348,
+          "artistName": "BTS",
+          "artistViewUrl": "https://music.apple.com/us/artist/bts/883131348?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/60x60bb.jpg",
+          "collectionCensoredName": "Proof",
+          "collectionExplicitness": "notExplicit",
+          "collectionId": 1627573936,
+          "collectionName": "Proof",
+          "collectionPrice": 17.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/trivia-%E8%BD%89-seesaw/1627573936?i=1627576695&uo=4",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 3,
+          "discNumber": 2,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/7f/9c/5a/7f9c5abc-76d6-f63a-083b-7d19f0007366/mzaf_7797018776092270286.plus.aac.p.m4a",
+          "primaryGenreName": "K-Pop",
+          "releaseDate": "2018-08-24T12:00:00Z",
+          "trackCensoredName": "Trivia 轉 : Seesaw",
+          "trackCount": 15,
+          "trackExplicitness": "notExplicit",
+          "trackId": 1627576695,
+          "trackName": "Trivia 轉 : Seesaw",
+          "trackNumber": 6,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 246334,
+          "trackViewUrl": "https://music.apple.com/us/album/trivia-%E8%BD%89-seesaw/1627573936?i=1627576695&uo=4",
+          "wrapperType": "track"
+        }
+      },
+      {
+        "id": "1627576704",
+        "title": "BTS Cypher PT.3 : KILLER (feat. Supreme Boi)",
+        "position": 7,
+        "disc_number": 2,
+        "track_number": "7",
+        "duration_ms": 268605,
+        "artists": [
+          {
+            "id": "883131348",
+            "name": "BTS"
+          }
+        ],
+        "provider_data": {
+          "artistId": 883131348,
+          "artistName": "BTS",
+          "artistViewUrl": "https://music.apple.com/us/artist/bts/883131348?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/60x60bb.jpg",
+          "collectionCensoredName": "Proof",
+          "collectionExplicitness": "notExplicit",
+          "collectionId": 1627573936,
+          "collectionName": "Proof",
+          "collectionPrice": 17.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/bts-cypher-pt-3-killer-feat-supreme-boi/1627573936?i=1627576704&uo=4",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 3,
+          "discNumber": 2,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/3e/3c/f9/3e3cf929-6f32-5e7a-5049-eb9b0a200b4b/mzaf_4802790133050559096.plus.aac.p.m4a",
+          "primaryGenreName": "K-Pop",
+          "releaseDate": "2014-08-20T12:00:00Z",
+          "trackCensoredName": "BTS Cypher PT.3 : KILLER (feat. Supreme Boi)",
+          "trackCount": 15,
+          "trackExplicitness": "notExplicit",
+          "trackId": 1627576704,
+          "trackName": "BTS Cypher PT.3 : KILLER (feat. Supreme Boi)",
+          "trackNumber": 7,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 268605,
+          "trackViewUrl": "https://music.apple.com/us/album/bts-cypher-pt-3-killer-feat-supreme-boi/1627573936?i=1627576704&uo=4",
+          "wrapperType": "track"
+        }
+      },
+      {
+        "id": "1627576711",
+        "title": "Outro : Ego",
+        "position": 8,
+        "disc_number": 2,
+        "track_number": "8",
+        "duration_ms": 196353,
+        "artists": [
+          {
+            "id": "883131348",
+            "name": "BTS"
+          }
+        ],
+        "provider_data": {
+          "artistId": 883131348,
+          "artistName": "BTS",
+          "artistViewUrl": "https://music.apple.com/us/artist/bts/883131348?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/60x60bb.jpg",
+          "collectionCensoredName": "Proof",
+          "collectionExplicitness": "notExplicit",
+          "collectionId": 1627573936,
+          "collectionName": "Proof",
+          "collectionPrice": 17.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/outro-ego/1627573936?i=1627576711&uo=4",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 3,
+          "discNumber": 2,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/12/69/18/126918bf-27a3-f060-aca9-3850fd62d213/mzaf_15137122126208348600.plus.aac.p.m4a",
+          "primaryGenreName": "K-Pop",
+          "releaseDate": "2020-02-21T12:00:00Z",
+          "trackCensoredName": "Outro : Ego",
+          "trackCount": 15,
+          "trackExplicitness": "notExplicit",
+          "trackId": 1627576711,
+          "trackName": "Outro : Ego",
+          "trackNumber": 8,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 196353,
+          "trackViewUrl": "https://music.apple.com/us/album/outro-ego/1627573936?i=1627576711&uo=4",
+          "wrapperType": "track"
+        }
+      },
+      {
+        "id": "1627576715",
+        "title": "Her",
+        "position": 9,
+        "disc_number": 2,
+        "track_number": "9",
+        "duration_ms": 228613,
+        "artists": [
+          {
+            "id": "883131348",
+            "name": "BTS"
+          }
+        ],
+        "provider_data": {
+          "artistId": 883131348,
+          "artistName": "BTS",
+          "artistViewUrl": "https://music.apple.com/us/artist/bts/883131348?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/60x60bb.jpg",
+          "collectionCensoredName": "Proof",
+          "collectionExplicitness": "notExplicit",
+          "collectionId": 1627573936,
+          "collectionName": "Proof",
+          "collectionPrice": 17.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/her/1627573936?i=1627576715&uo=4",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 3,
+          "discNumber": 2,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/8d/0d/29/8d0d29f2-aa1f-25db-1802-8b5864384854/mzaf_16394969971353302896.plus.aac.p.m4a",
+          "primaryGenreName": "K-Pop",
+          "releaseDate": "2017-09-18T12:00:00Z",
+          "trackCensoredName": "Her",
+          "trackCount": 15,
+          "trackExplicitness": "notExplicit",
+          "trackId": 1627576715,
+          "trackName": "Her",
+          "trackNumber": 9,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 228613,
+          "trackViewUrl": "https://music.apple.com/us/album/her/1627573936?i=1627576715&uo=4",
+          "wrapperType": "track"
+        }
+      },
+      {
+        "id": "1627577139",
+        "title": "Filter",
+        "position": 10,
+        "disc_number": 2,
+        "track_number": "10",
+        "duration_ms": 180221,
+        "artists": [
+          {
+            "id": "883131348",
+            "name": "BTS"
+          }
+        ],
+        "provider_data": {
+          "artistId": 883131348,
+          "artistName": "BTS",
+          "artistViewUrl": "https://music.apple.com/us/artist/bts/883131348?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/60x60bb.jpg",
+          "collectionCensoredName": "Proof",
+          "collectionExplicitness": "notExplicit",
+          "collectionId": 1627573936,
+          "collectionName": "Proof",
+          "collectionPrice": 17.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/filter/1627573936?i=1627577139&uo=4",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 3,
+          "discNumber": 2,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/40/41/84/404184a2-608d-0e72-376d-23a5bf48432a/mzaf_11767971157171301793.plus.aac.p.m4a",
+          "primaryGenreName": "K-Pop",
+          "releaseDate": "2020-02-21T12:00:00Z",
+          "trackCensoredName": "Filter",
+          "trackCount": 15,
+          "trackExplicitness": "notExplicit",
+          "trackId": 1627577139,
+          "trackName": "Filter",
+          "trackNumber": 10,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 180221,
+          "trackViewUrl": "https://music.apple.com/us/album/filter/1627573936?i=1627577139&uo=4",
+          "wrapperType": "track"
+        }
+      },
+      {
+        "id": "1627577143",
+        "title": "Friends",
+        "position": 11,
+        "disc_number": 2,
+        "track_number": "11",
+        "duration_ms": 199339,
+        "artists": [
+          {
+            "id": "883131348",
+            "name": "BTS"
+          }
+        ],
+        "provider_data": {
+          "artistId": 883131348,
+          "artistName": "BTS",
+          "artistViewUrl": "https://music.apple.com/us/artist/bts/883131348?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/60x60bb.jpg",
+          "collectionCensoredName": "Proof",
+          "collectionExplicitness": "notExplicit",
+          "collectionId": 1627573936,
+          "collectionName": "Proof",
+          "collectionPrice": 17.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/friends/1627573936?i=1627577143&uo=4",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 3,
+          "discNumber": 2,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/97/b7/77/97b7774b-0b5a-25b1-c3bc-5071207ba4d1/mzaf_1660494399512694156.plus.aac.p.m4a",
+          "primaryGenreName": "K-Pop",
+          "releaseDate": "2020-02-21T12:00:00Z",
+          "trackCensoredName": "Friends",
+          "trackCount": 15,
+          "trackExplicitness": "notExplicit",
+          "trackId": 1627577143,
+          "trackName": "Friends",
+          "trackNumber": 11,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 199339,
+          "trackViewUrl": "https://music.apple.com/us/album/friends/1627573936?i=1627577143&uo=4",
+          "wrapperType": "track"
+        }
+      },
+      {
+        "id": "1627577161",
+        "title": "Singularity",
+        "position": 12,
+        "disc_number": 2,
+        "track_number": "12",
+        "duration_ms": 196998,
+        "artists": [
+          {
+            "id": "883131348",
+            "name": "BTS"
+          }
+        ],
+        "provider_data": {
+          "artistId": 883131348,
+          "artistName": "BTS",
+          "artistViewUrl": "https://music.apple.com/us/artist/bts/883131348?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/60x60bb.jpg",
+          "collectionCensoredName": "Proof",
+          "collectionExplicitness": "notExplicit",
+          "collectionId": 1627573936,
+          "collectionName": "Proof",
+          "collectionPrice": 17.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/singularity/1627573936?i=1627577161&uo=4",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 3,
+          "discNumber": 2,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/40/a8/63/40a8632d-c92d-6ac4-8bee-6e74b7023aff/mzaf_9216789883440492425.plus.aac.p.m4a",
+          "primaryGenreName": "K-Pop",
+          "releaseDate": "2018-05-18T12:00:00Z",
+          "trackCensoredName": "Singularity",
+          "trackCount": 15,
+          "trackExplicitness": "notExplicit",
+          "trackId": 1627577161,
+          "trackName": "Singularity",
+          "trackNumber": 12,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 196998,
+          "trackViewUrl": "https://music.apple.com/us/album/singularity/1627573936?i=1627577161&uo=4",
+          "wrapperType": "track"
+        }
+      },
+      {
+        "id": "1627577468",
+        "title": "00:00 (Zero O'Clock)",
+        "position": 13,
+        "disc_number": 2,
+        "track_number": "13",
+        "duration_ms": 250296,
+        "artists": [
+          {
+            "id": "883131348",
+            "name": "BTS"
+          }
+        ],
+        "provider_data": {
+          "artistId": 883131348,
+          "artistName": "BTS",
+          "artistViewUrl": "https://music.apple.com/us/artist/bts/883131348?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/60x60bb.jpg",
+          "collectionCensoredName": "Proof",
+          "collectionExplicitness": "notExplicit",
+          "collectionId": 1627573936,
+          "collectionName": "Proof",
+          "collectionPrice": 17.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/00-00-zero-oclock/1627573936?i=1627577468&uo=4",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 3,
+          "discNumber": 2,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview211/v4/08/2a/81/082a8113-11dd-967d-be24-5a38adacd512/mzaf_3154080103526213121.plus.aac.p.m4a",
+          "primaryGenreName": "K-Pop",
+          "releaseDate": "2020-02-21T12:00:00Z",
+          "trackCensoredName": "00:00 (Zero O'Clock)",
+          "trackCount": 15,
+          "trackExplicitness": "notExplicit",
+          "trackId": 1627577468,
+          "trackName": "00:00 (Zero O'Clock)",
+          "trackNumber": 13,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 250296,
+          "trackViewUrl": "https://music.apple.com/us/album/00-00-zero-oclock/1627573936?i=1627577468&uo=4",
+          "wrapperType": "track"
+        }
+      },
+      {
+        "id": "1627577481",
+        "title": "Euphoria",
+        "position": 14,
+        "disc_number": 2,
+        "track_number": "14",
+        "duration_ms": 228615,
+        "artists": [
+          {
+            "id": "883131348",
+            "name": "BTS"
+          }
+        ],
+        "provider_data": {
+          "artistId": 883131348,
+          "artistName": "BTS",
+          "artistViewUrl": "https://music.apple.com/us/artist/bts/883131348?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/60x60bb.jpg",
+          "collectionCensoredName": "Proof",
+          "collectionExplicitness": "notExplicit",
+          "collectionId": 1627573936,
+          "collectionName": "Proof",
+          "collectionPrice": 17.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/euphoria/1627573936?i=1627577481&uo=4",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 3,
+          "discNumber": 2,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/80/f2/49/80f24946-407c-d0ed-3c72-273547842a0d/mzaf_7917426487886326204.plus.aac.p.m4a",
+          "primaryGenreName": "K-Pop",
+          "releaseDate": "2018-04-06T12:00:00Z",
+          "trackCensoredName": "Euphoria",
+          "trackCount": 15,
+          "trackExplicitness": "notExplicit",
+          "trackId": 1627577481,
+          "trackName": "Euphoria",
+          "trackNumber": 14,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 228615,
+          "trackViewUrl": "https://music.apple.com/us/album/euphoria/1627573936?i=1627577481&uo=4",
+          "wrapperType": "track"
+        }
+      },
+      {
+        "id": "1627577706",
+        "title": "Dimple",
+        "position": 15,
+        "disc_number": 2,
+        "track_number": "15",
+        "duration_ms": 196776,
+        "artists": [
+          {
+            "id": "883131348",
+            "name": "BTS"
+          }
+        ],
+        "provider_data": {
+          "artistId": 883131348,
+          "artistName": "BTS",
+          "artistViewUrl": "https://music.apple.com/us/artist/bts/883131348?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/60x60bb.jpg",
+          "collectionCensoredName": "Proof",
+          "collectionExplicitness": "notExplicit",
+          "collectionId": 1627573936,
+          "collectionName": "Proof",
+          "collectionPrice": 17.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/dimple/1627573936?i=1627577706&uo=4",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 3,
+          "discNumber": 2,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/4f/3c/a5/4f3ca5ab-aa28-1cb9-daec-069dc043d49e/mzaf_11709481333426149436.plus.aac.p.m4a",
+          "primaryGenreName": "K-Pop",
+          "releaseDate": "2017-09-18T12:00:00Z",
+          "trackCensoredName": "Dimple",
+          "trackCount": 15,
+          "trackExplicitness": "notExplicit",
+          "trackId": 1627577706,
+          "trackName": "Dimple",
+          "trackNumber": 15,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 196776,
+          "trackViewUrl": "https://music.apple.com/us/album/dimple/1627573936?i=1627577706&uo=4",
+          "wrapperType": "track"
+        }
+      },
+      {
+        "id": "1627577723",
+        "title": "For Youth",
+        "position": 1,
+        "disc_number": 3,
+        "track_number": "1",
+        "duration_ms": 264481,
+        "artists": [
+          {
+            "id": "883131348",
+            "name": "BTS"
+          }
+        ],
+        "provider_data": {
+          "artistId": 883131348,
+          "artistName": "BTS",
+          "artistViewUrl": "https://music.apple.com/us/artist/bts/883131348?uo=4",
+          "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/100x100bb.jpg",
+          "artworkUrl30": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/30x30bb.jpg",
+          "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/60x60bb.jpg",
+          "collectionCensoredName": "Proof",
+          "collectionExplicitness": "notExplicit",
+          "collectionId": 1627573936,
+          "collectionName": "Proof",
+          "collectionPrice": 17.99,
+          "collectionViewUrl": "https://music.apple.com/us/album/for-youth/1627573936?i=1627577723&uo=4",
+          "country": "USA",
+          "currency": "USD",
+          "discCount": 3,
+          "discNumber": 3,
+          "isStreamable": true,
+          "kind": "song",
+          "previewUrl": "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview221/v4/e6/7d/f5/e67df505-2182-e8a2-663e-4804e31e1843/mzaf_10104120108728519175.plus.aac.p.m4a",
+          "primaryGenreName": "K-Pop",
+          "releaseDate": "2022-06-10T12:00:00Z",
+          "trackCensoredName": "For Youth",
+          "trackCount": 1,
+          "trackExplicitness": "notExplicit",
+          "trackId": 1627577723,
+          "trackName": "For Youth",
+          "trackNumber": 1,
+          "trackPrice": 1.29,
+          "trackTimeMillis": 264481,
+          "trackViewUrl": "https://music.apple.com/us/album/for-youth/1627573936?i=1627577723&uo=4",
+          "wrapperType": "track"
+        }
+      }
+    ],
+    "track_list": {
+      "returned": 35,
+      "total": 35,
+      "complete": true
+    },
+    "provider_data": {
+      "amgArtistId": 2838463,
+      "artistId": 883131348,
+      "artistName": "BTS",
+      "artistViewUrl": "https://music.apple.com/us/artist/bts/883131348?uo=4",
+      "artworkUrl100": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/100x100bb.jpg",
+      "artworkUrl60": "https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/f7/68/9c/f7689ce3-6d41-60cd-62d2-57a91ddf5b9d/196922067341_Cover.jpg/60x60bb.jpg",
+      "collectionCensoredName": "Proof",
+      "collectionExplicitness": "notExplicit",
+      "collectionId": 1627573936,
+      "collectionName": "Proof",
+      "collectionPrice": 17.99,
+      "collectionType": "Album",
+      "collectionViewUrl": "https://music.apple.com/us/album/proof/1627573936?uo=4",
+      "copyright": "℗ 2022 BIGHIT MUSIC",
+      "country": "USA",
+      "currency": "USD",
+      "primaryGenreName": "K-Pop",
+      "releaseDate": "2022-06-10T07:00:00Z",
+      "trackCount": 35,
+      "wrapperType": "collection"
+    },
+    "observed_at": "2026-10-21T10:54:33.262070211Z"
+  },
+  "source": {
+    "status": "ok",
+    "cached": false
+  }
+}

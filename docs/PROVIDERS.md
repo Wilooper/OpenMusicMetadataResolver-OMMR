@@ -8,16 +8,16 @@ OMMR integrates 11 metadata provider adapters implementing the `adapters.Provide
 
 | Provider | Adapter Name | Version | Integration Method | API Keys | Rate Limits |
 | --- | --- | --- | --- | --- | --- |
-| **Spotify** | `spotify` | `spotify-web-v2` | Official Web API (optional keys) + anonymous Web API / oEmbed / embed scraping | **Optional** | Token Bucket (10 RPS) |
-| **YouTube Music** | `ytmusic` | `ytmusic-innertube-v1` | InnerTube search & player (public API key) + oEmbed fallback | **Zero** | Token Bucket (20 RPS) |
-| **Apple Music** | `applemusic` | `applemusic-v1` | iTunes Search & Lookup API | **Zero** | Token Bucket (20 RPS) |
-| **Deezer** | `deezer` | `deezer-v1` | Public API (`api.deezer.com`) | **Zero** | Token Bucket (50 RPS) |
+| **Spotify** | `spotify` | `spotify-web-v3` | Official Web API (optional keys) + anonymous Web API / oEmbed / embed scraping | **Optional** | Token Bucket (10 RPS) |
+| **YouTube Music** | `ytmusic` | `ytmusic-innertube-v2` | InnerTube search & player (public API key) + oEmbed fallback | **Zero** | Token Bucket (20 RPS) |
+| **Apple Music** | `applemusic` | `applemusic-v1` | iTunes Search & Lookup API | **Zero** | Keyless: approximately 20/minute, burst 1; token catalog: conservative 5 RPS |
+| **Deezer** | `deezer` | `deezer-v3-search` | Public API (`api.deezer.com`) | **Zero** | Token Bucket (50 RPS) |
 | **MusicBrainz** | `musicbrainz` | `musicbrainz-v2` | MusicBrainz REST API v2 | **Zero** | Token Bucket (1 RPS) |
 | **SoundCloud** | `soundcloud` | `soundcloud-oembed-v1` | Public oEmbed endpoint | **Zero** | Token Bucket (10 RPS) |
-| **JioSaavn** | `jiosaavn` | `jiosaavn-search-v1` | Public `api.php` search & getDetails endpoints | **Zero** | Token Bucket (5 RPS) |
+| **JioSaavn** | `jiosaavn` | `jiosaavn-search-v6-pages` | Public `api.php` search, native details & share-token lookup | **Zero** | Token Bucket (5 RPS) |
 | **Qobuz** | `qobuz` | `qobuz-api-v1` | Track metadata and search endpoints | Issued application ID; optional bearer token | Token Bucket (5 RPS) |
-| **TIDAL** | `tidal` | `tidal-webapi-v2` | TIDAL Web API v2 track and search endpoints | Authorized OAuth token | Token Bucket (10 RPS) |
-| **Amazon Music** | `amazonmusic` | `amazonmusic-webapi-v2` | Amazon Music Web API v2 catalog track search and lookup | Approved API access, OAuth token, security profile ID | Token Bucket (5 RPS) |
+| **TIDAL** | `tidal` | `tidal-webapi-v3` | TIDAL Web API v2 track and search endpoints | Authorized OAuth token | Token Bucket (10 RPS) |
+| **Amazon Music** | `amazonmusic` | `amazonmusic-webapi-v3` | Amazon Music Web API v2 catalog track search and lookup | Approved API access, OAuth token, security profile ID | Token Bucket (5 RPS) |
 | **Pandora** | `pandora` | `pandora-graphql-v1` | Pandora GraphQL entity metadata lookup | Approved OAuth bearer token | Token Bucket (5 RPS) |
 
 ---
@@ -26,29 +26,29 @@ OMMR integrates 11 metadata provider adapters implementing the `adapters.Provide
 
 ### 1. Spotify Adapter (`internal/adapters/spotify/`)
 
-Dual-mode adapter (`spotify-web-v2`):
+Dual-mode adapter (`spotify-web-v3`):
 
 - **Official mode**: When `OMMR_SPOTIFY_CLIENT_ID` / `OMMR_SPOTIFY_CLIENT_SECRET` are configured, it authenticates via the OAuth client-credentials flow (`/api/token`) and queries the Web API (`/v1/tracks/{id}`).
-- Spotify Development Mode currently requires the app owner to have Premium. The service does not accept Spotify browser cookies.
-- **Zero-key fallback mode** (default): Fetches an anonymous web-player access token from `https://open.spotify.com/get_access_token`, then calls the Web API. If the anonymous token is unavailable, it falls back to scraping the embed page's `__NEXT_DATA__` (`ParseEmbedNextData` in `internal/adapters/spotify/parser.go`), and finally to the public oEmbed endpoint.
+- Private Spotify browser sessions/cookies are supported subject to protected startup validation; see [PROVIDER_LIFECYCLE.md](PROVIDER_LIFECYCLE.md). Browser refresh remains challenge-dependent.
+- **Zero-key fallback mode** (default): Attempts the current web-player token endpoint `/api/token?reason=transport&productType=web-player`. Anonymous access can be rejected (observed HTTP 400 on 2026-10-16); this produces an actionable error without echoing the response body. Text search has no embed fallback. Direct Spotify track-ID lookup additionally tries the public embed page and oEmbed. No challenge or access-control bypass is implemented.
 - Accepts Spotify URLs (`https://open.spotify.com/track/4cOdK2wGLETKBW3PvgPWqT`) or 22-character IDs (`4cOdK2wGLETKBW3PvgPWqT`).
 
 ### 2. YouTube Music Adapter (`internal/adapters/ytmusic/`)
 
-- Uses the public InnerTube API (search & player endpoints, public web API key) to search by artist/title and fetch full player metadata for a video ID, including duration and rich track details (`internal/adapters/ytmusic/innertube.go`).
+- Artist/title search first uses YouTube Music's signed-out `WEB_REMIX` songs filter. Catalog audio rows supply separate artists and their channel IDs, album/browse ID, duration, explicit badges, artwork and additional display metadata. Only audio-track rows are accepted on this path; music-video rows are excluded. Empty/failed music search falls back to general YouTube video search. Player and direct-ID oEmbed lookup remain available. This is an unofficial interface and may change.
 - Optional `OMMR_YTMUSIC_COOKIE` or owner-only `OMMR_YTMUSIC_COOKIE_FILE` signs these YouTube requests with SAPISIDHASH. This is an unofficial interface; the browser cookie may expire or the response shape may change. Do not interpret the video channel as a verified recording artist or credits.
 - Falls back to YouTube oEmbed for direct video-ID lookups.
 - Strips channel suffixes (`- Topic`, `VEVO`) and video noise tags (`Official Music Video`, `4K`, `Remastered`).
 
 ### 3. Apple Music Adapter (`internal/adapters/applemusic/`)
-- Queries the iTunes Search & Lookup public endpoints.
+- Queries the iTunes Search & Lookup public endpoints with the configured `OMMR_APPLE_STOREFRONT` (default `us`). The 15-second HTTP safety cap is still bounded by the resolver's configured operation deadline (default 10 seconds), allowing public requests that exceed the former five-second cap.
 - With `OMMR_APPLE_DEVELOPER_TOKEN`, queries the official Apple Music catalog at `https://api.music.apple.com/v1/catalog/{storefront}/songs/{id}` (or catalog search / exact ISRC filter). `OMMR_APPLE_STOREFRONT` defaults to `us`. The operator supplies and rotates an Apple-issued developer token. Composer is a display string, not a lyricist claim.
 - Filters search results by ISRC when the query carries one.
 - Returns high-resolution album artwork (`600x600bb.jpg`), primary genres, explicit flags, 30s preview URLs, track/disc numbers, and ISRC.
 
 ### 4. Deezer Adapter (`internal/adapters/deezer/`)
-- Queries Deezer public REST endpoints.
-- Provides ISRC/ISWC codes, album metadata, duration, track & disc positions, barcode, label, preview URL, and fan counts.
+- Queries Deezer public REST endpoints with `Accept-Language: en`. Artist/title search uses at most five text candidates and requires an exact normalized reported artist name; this excludes near-name tribute artists before resolver scoring. Exact-ID and ISRC routing are unchanged.
+- Normalizes ISRC/ISWC codes when supplied, album metadata, duration, track & disc positions, barcode, label, preview URL, and fan counts.
 
 ### 5. MusicBrainz Adapter (`internal/adapters/musicbrainz/`)
 - After strict candidate acceptance, resolution looks up the accepted recording MBID for credited recording/work relationships. Identity disagreement or lookup failure skips enrichment without replacing the accepted recording. ISRC search/lookup retains the requested code even when a recording reports several codes in a different order.
@@ -62,7 +62,7 @@ Dual-mode adapter (`spotify-web-v2`):
 - Accepts `soundcloud_id` queries; no key required. Text search is not supported in zero-key mode (SoundCloud's search API requires OAuth).
 
 ### 7. JioSaavn Adapter (`internal/adapters/jiosaavn/`)
-- Queries JioSaavn's public `api.php` endpoints: `search.getResults` and `song.getDetails`.
+- Queries JioSaavn's public `api.php` endpoints: `search.getResults`, `song.getDetails` for native IDs, and `webapi.get&type=song` for public share tokens. Details support keyed records and `songs` arrays. Accepted candidates hydrate with their native ID when available.
 - Returns song ID (from `perma_url`), album, label, language, play counts, duration, explicit flag, release date, and upscaled cover art.
 - The `JSONString` model type tolerates JioSaavn's inconsistent field typing (e.g. `"duration": 367` vs `"duration": "367"`).
 
@@ -114,3 +114,41 @@ oEmbed widget may expose a numeric track ID; JioSaavn's API song ID is retained
 separately from its share token. Amazon requests `id` and `url` in sparse track
 fieldsets. `/v1/links` and `extensions.platform_links` expose accepted IDs/URLs
 with their identifier namespace. See [PLATFORM_LINKS.md](PLATFORM_LINKS.md).
+
+## Response modes
+
+Per-source execution/version/error and field coverage described above require `debug=true`. Default `/v1/extract` returns an independent flat `results` array of public tracks; it does not claim these records match each other. Default resolve/bulk responses omit provenance and matching diagnostics. See [API_SPEC.md](API_SPEC.md#production-and-debug-responses).
+
+## Catalog enrichment services
+
+Four post-merge services complement the 11 identity adapters: Cover Art Archive (keyless), MusicBrainz release details (keyless), Last.fm (`OMMR_LASTFM_API_KEY`) and Discogs (`OMMR_DISCOGS_TOKEN`). AcoustID (`OMMR_ACOUSTID_API_KEY`) is available through a separate fingerprint endpoint. These are not streaming adapter IDs and do not create unverified recording matches. See [ENRICHMENT.md](ENRICHMENT.md) for fields and access conditions.
+
+Local limits are implementation budgets, not guaranteed upstream quotas: MusicBrainz 1 RPS with burst 1; keyless iTunes one request every 3 seconds; Apple catalog 5 RPS; Cover Art Archive/Last.fm/AcoustID 3 RPS; Discogs 1 RPS. Search now uses the same limiter as resolution/extraction. Each catalog enrichment request passes through its budget; multiple server processes do not share budgets. Existing adapter-internal fallback/detail requests do not yet all have transport-level accounting.
+
+## Startup selection and session import
+
+Spotify, Apple Music and YouTube Music can import private browser sessions/cookies, subject to the actual token requirements of each service. Validated modes are selected before registration; unsupported/failed credentials use public metadata fallbacks. Required-key providers and enrichers stay out of the active registry unless startup access checks succeed. Runtime circuit breakers remove repeatedly failing sources from selection. Cookie-only Spotify exchange is challenge-dependent; Apple user cookies require a developer/browser bearer. Full details and safe status fields: [PROVIDER_LIFECYCLE.md](PROVIDER_LIFECYCLE.md).
+
+## Credential-free live regression
+
+See [LIVE_TEST_BOYFRIEND.md](LIVE_TEST_BOYFRIEND.md) for the 2026-10-16 retry, before/after metadata, observed access failures and cache timings. Apple requires JSON; Deezer, MusicBrainz and JioSaavn additionally decode recognized HTML catalog structures. Empty HTML access-error pages remain failures.
+
+## Accuracy and detail update
+
+Accepted Deezer search hits now hydrate exact track details; Spotify hydrates the known album with ID/title checks. Apple public track counts populate `album.total_tracks`. Structured collaborators and same-provider artist-ID ownership are preserved. TIDAL requests JSON:API track resources with related artists/albums/artwork; Amazon requests quality and parental fields. Authenticated paths remain conditional on validated access and matching catalog entities. See [ACCURACY_IMPROVEMENTS.md](ACCURACY_IMPROVEMENTS.md) and [ENRICHMENT.md](ENRICHMENT.md) for behavior, tests and access limits.
+
+## Rich public catalogs
+
+See [RICH_CATALOGS.md](RICH_CATALOGS.md) for native Bugs/Genie/Melon song adapters, `bugs_id`/`genie_id`/`melon_id`, accepted YouTube artist/album context in provider data, optional Python pooling and `/v1/catalog` (also `operation: catalog` through the JSON gateway). These Korean adapters require no credentials; the optional Python path currently uses public YouTube access.
+
+HTML recovery: [decoder behavior, official-page fallbacks and live availability limits](HTML_RECOVERY.md). The empty 195-byte “Site Unavailable” response contains no recoverable song data.
+
+JioSaavn public song URLs: `GET /v1/extract?provider=jiosaavn&url=<encoded HTTPS song URL>` reads the exact official page before the share-token API. Known native app state and JSON-LD supply metadata; empty error pages remain errors. See [public-page extraction](JIOSAAVN_PUBLIC_PAGES.md).
+
+Termux live verification: [confirmed public-page decoding and Deezer search/locale fixes, recording results, intermittent MusicBrainz failures and commands](TERMUX_PROVIDER_VERIFICATION.md).
+
+Public [artist profiles](ARTIST_PROFILES.md) use the existing Deezer, JioSaavn, Apple and MusicBrainz sources, with optional YouTube worker profiles. The artist service reuses source enable/circuit/rate budgets but does not merge artist identities into track candidates.
+
+Detailed-credit follow-up: Melon now reads its explicit contributor section outside the main song-info block, preserving source IDs or local identities and Korean role labels. MusicBrainz retains specialized performance/engineering/production roles in its flat view as well as the scoped graph. See [extraction evidence and limitations](DETAILED_PRODUCTION_METADATA.md).
+
+SponsorBlock is an optional keyless enrichment service for an accepted YouTube video's community highlight points, not a recording identity adapter. It appears in lifecycle status, honors `providers.enabled.sponsorblock`, and requires no startup probe or credentials. Its API/database data retains SponsorBlock's CC BY-NC-SA 4.0 attribution. See [exact video scope, timing checks and controls](SPONSORBLOCK.md).

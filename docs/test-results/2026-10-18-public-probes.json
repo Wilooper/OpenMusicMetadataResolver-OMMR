@@ -1,0 +1,44 @@
+[
+  {
+    "provider": "bugs",
+    "status": 200,
+    "content_type": "text/html;charset=UTF-8",
+    "bytes": 249306,
+    "start": "<!DOCTYPE html>\r\n<html lang=\"ko\">\r\n<head>\r\n\t<!-- bgsw-wbugs-ca905 -->\r\n<!-- Google tag (gtag.js) -->\n<script async src=\""
+  },
+  {
+    "provider": "genie",
+    "status": 200,
+    "content_type": "text/html;charset=utf-8",
+    "bytes": 204911,
+    "start": "\r\n\r\n\r\n\r\n\r\n\r\n<!DOCTYPE html>\r\n<html lang=\"ko\">\r\n<head>\r\n\t\n\n\n\n\n<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\" />\n<!-"
+  },
+  {
+    "provider": "melon",
+    "status": 200,
+    "content_type": "text/html;charset=utf-8",
+    "bytes": 151215,
+    "start": "\n<!DOCTYPE html>\n<html lang=\"ko\">\n<head>\n\t\r\n\t\r\n\t\r\n\t\r\n\t\r\n\r\n\t\r\n\r\n\t\r\n\t\r\n\t\r\n\t\r\n\r\n\t<meta http-equiv=\"Content-Type\" content=\"t"
+  },
+  {
+    "provider": "jiosaavn",
+    "status": 200,
+    "content_type": "text/html",
+    "bytes": 195,
+    "start": "<html>\n    <head><title>Site Unavailable</title></head>\n    <body>\n      <center>\n        <h1>Site Unavailable</h1>\n    "
+  },
+  {
+    "provider": "musicbrainz",
+    "status": 200,
+    "content_type": "text/html",
+    "bytes": 195,
+    "start": "<html>\n    <head><title>Site Unavailable</title></head>\n    <body>\n      <center>\n        <h1>Site Unavailable</h1>\n    "
+  },
+  {
+    "provider": "deezer",
+    "status": 200,
+    "content_type": "text/html",
+    "bytes": 195,
+    "start": "<html>\n    <head><title>Site Unavailable</title></head>\n    <body>\n      <center>\n        <h1>Site Unavailable</h1>\n    "
+  }
+]

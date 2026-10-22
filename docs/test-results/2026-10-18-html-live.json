@@ -1,0 +1,44 @@
+[
+  {
+    "case": "affected",
+    "status": 200,
+    "seconds": 11.345,
+    "sources": [
+      {
+        "provider": "deezer",
+        "status": "error",
+        "error": "public catalog request failed"
+      },
+      {
+        "provider": "jiosaavn",
+        "status": "error",
+        "error": "provider returned an unavailable HTML page without catalog data"
+      },
+      {
+        "provider": "musicbrainz",
+        "status": "error",
+        "error": "provider returned an unavailable HTML page without catalog data"
+      }
+    ],
+    "track_title": null,
+    "ids": null
+  },
+  {
+    "case": "control",
+    "status": 200,
+    "seconds": 9.139,
+    "sources": [],
+    "track_title": "Boyfriend",
+    "ids": {
+      "applemusic": "1829591986",
+      "applemusic_url": "https://music.apple.com/us/album/boyfriend/1829591921?i=1829591986",
+      "bugs": "126998566",
+      "bugs_url": "https://music.bugs.co.kr/track/126998566",
+      "genie": "111431603",
+      "genie_url": "https://www.genie.co.kr/detail/songInfo?xgnm=111431603",
+      "melon": "39664161",
+      "melon_url": "https://www.melon.com/song/detail.htm?songId=39664161",
+      "ytmusic": "tIjUfo30r4M"
+    }
+  }
+]

@@ -22,6 +22,10 @@ Music metadata across streaming services is heavily fragmented:
 ### The OMMR Solution
 OMMR accepts a platform identifier or artist and title and returns a canonical record with field provenance and identity confidence. Public paths require no keys; richer official catalog modes and some partner APIs require credentials and may have account restrictions. See [metadata fields and provider evidence](docs/METADATA_CATALOG.md).
 
+### Native album catalogs
+
+Fetch album metadata and ordered track lists with `/v1/albums?provider=applemusic&id=1829591921`. Native Go support covers Apple Music, Deezer, JioSaavn and MusicBrainz releases. Responses report whether the list is complete and preserve source totals, disc positions and extra catalog fields. See [native albums](docs/NATIVE_ALBUMS.md) for limits, JSON queries and live verification.
+
 ### Private configuration
 
 Cross-platform identifiers and song URLs are available at
@@ -36,18 +40,18 @@ header value containing `SAPISID` or `__Secure-3PAPISID`; invalid configuration
 fails at startup without echoing the cookie. Apple and Spotify credentialed
 clients refuse HTTP redirects.
 
-Copy `.env.example` to `.env`, fill only the credentials you have, run `chmod 600 .env`, and start with `OMMR_ENV_FILE=.env ./bin/ommr-server`. Alternatively copy `ommr.example.yaml` to `ommr.yaml`, run `chmod 600 ommr.yaml`, and set `OMMR_CONFIG_FILE=ommr.yaml`. Process environment overrides the file. Neither file is committed. Never put cookies or tokens in API URLs or logs. `OMMR_YTMUSIC_COOKIE_FILE` points to a private file containing a browser Cookie header; the optional cookie is used only on YouTube InnerTube calls. Apple uses an operator-generated **developer token** and storefront for the official catalog endpoint; the public iTunes lookup remains the keyless fallback. Spotify uses client credentials; current Spotify Development Mode requires the app owner to have Premium. Amazon Music V2 requires approved beta access. Optional credentialed modes have fixture tests, but live provider calls require your own authorized credentials.
+Copy `.env.example` to `.env`, fill only the credentials you have, run `chmod 600 .env`, and start with `OMMR_ENV_FILE=.env ./bin/ommr-server`. Alternatively copy `ommr.example.yaml` to `ommr.yaml`, run `chmod 600 ommr.yaml`, and set `OMMR_CONFIG_FILE=ommr.yaml`. Process environment overrides the file. Neither file is committed. Never put cookies or tokens in API URLs or logs. `OMMR_YTMUSIC_COOKIE_FILE` points to a private file containing a browser Cookie header; the optional cookie is used only on YouTube InnerTube calls. Apple uses an operator-generated **developer token** and storefront for the official catalog endpoint; the public iTunes lookup remains the keyless fallback. Spotify supports official credentials and imported browser sessions; current Spotify Development Mode requires the app owner to have Premium. Amazon Music V2 requires approved beta access. Optional credentialed modes have fixture tests, but live provider calls require your own authorized credentials.
 
 ---
 
 ## ✨ Key Features
 
-* **🌐 Zero-Key Architecture**: Resolves metadata via unauthenticated public endpoints and web embeds across Spotify (dual-mode), YouTube Music (InnerTube), Apple Music, Deezer, MusicBrainz, SoundCloud, and JioSaavn — 7 providers, zero keys required.
+* **🌐 Keyless-first resolution**: Public Apple and YouTube Music catalog search plus optional public lookup adapters; source access and supported query types vary. Spotify anonymous search can be rejected, and SoundCloud keyless mode supports permalinks. Authorized sources are optional upgrades.
 * **🔗 6-Stage Cross-Platform Identity Pipeline**: Translates input IDs into cross-platform identifiers (`spotify`, `youtube`, `applemusic`, `deezer`, `soundcloud`, `jiosaavn`, `musicbrainz`, `isrc`).
-* **🆔 Path-Independent Canonical Track IDs**: Generates deterministic, collision-resistant track identifiers (`ommr_track_<hash>`) that collapse the same recording to identical IDs regardless of query entry point.
+* **🆔 Path-Independent Canonical Track IDs**: Generates deterministic, collision-resistant track identifiers (`ommr_track_<hash>`) from normalized metadata regardless of query entry point; identically named recording versions can still share a seed.
 * **📊 Multi-Source Metadata Merging**: Prioritizes higher-quality metadata fields across providers (e.g. MusicBrainz credits, Spotify genres, Apple Music cover art) with deduplicated source attribution.
-* **🕵️ Source Transparency & Field Provenance**: Returns `metadata_sources`, `provider_status` diagnostics (latency, cached status, rejection reasons), and `field_sources` (attributing every field to its source provider).
-* **🧠 Composite Matching & Calibrated Scores**: Combines Jaro-Winkler + Token Set Ratio composites, strict candidate acceptance (score threshold + artist gate), and provider trust coefficients (`MusicBrainz: 1.00`, `Apple: 0.95`, `Spotify: 0.95`, `Deezer: 0.90`, `JioSaavn: 0.85`, `YTMusic: 0.80`, `SoundCloud: 0.75`).
+* **🕵️ Source Transparency & Field Provenance**: With `debug=true`, returns `metadata_sources`, `provider_status` diagnostics (latency, cached status, rejection reasons), and `field_sources` (attributing every field to its source provider).
+* **🧠 Composite Matching & Weighted Scores**: Combines Jaro-Winkler + Token Set Ratio composites, strict candidate acceptance (score threshold + artist gate), and provider trust coefficients (`MusicBrainz: 1.00`, `Apple: 0.95`, `Spotify: 0.95`, `Deezer: 0.90`, `JioSaavn: 0.85`, `YTMusic: 0.80`, `SoundCloud: 0.75`).
 * **🎯 Structured Identity Verification**: Assigns `identity_status` (`verified`, `strong`, `probable`, `weak`) and `identity_reasons` (`isrc_match`, `musicbrainz_match`, `exact_title_artist_match`).
 * **⚡ Dual-Tier Caching**: Sub-divided local disk cache (`raw/`, `normalized/`, `resolved/`) and Redis caching.
 * **📦 Operations**: Includes Prometheus metrics (`/metrics`), request IDs, provider rate limiting, bulk resolution, and Docker Compose deployment. Credentialed integrations still require live validation with your accounts.
@@ -267,17 +271,22 @@ OMMR is configured via environment variables or a `.env` file:
 
 | Variable | Type | Default | Description |
 | --- | --- | --- | --- |
-| `PORT` | Integer | `8080` | HTTP server listening port |
-| `CACHE_PROVIDER` | String | `disk` | Caching backend (`disk` or `redis`) |
-| `CACHE_DIR` | String | `./cache` | Storage directory for disk cache |
-| `REDIS_URL` | String | `redis://localhost:6379/0` | Redis connection URL |
-| `CACHE_TTL` | Duration | `168h` (7 days) | Cache expiration TTL |
-| `RATE_LIMIT_RPS` | Float | `100.0` | Global API rate limit in requests/sec |
-| `PROVIDER_TIMEOUT` | Duration | `5s` | Timeout per provider HTTP request |
-| `BULK_MAX_ITEMS` | Integer | `100` | Maximum queries allowed in `POST /v1/bulk` |
-| `BULK_WORKERS` | Integer | `10` | Worker pool concurrency for bulk resolution |
-| `SPOTIFY_CLIENT_ID` | String | *(empty)* | Optional: Spotify official Web API client ID |
-| `SPOTIFY_CLIENT_SECRET` | String | *(empty)* | Optional: Spotify official Web API client secret |
+| `OMMR_PORT` | Integer | `8080` | HTTP listening port |
+| `OMMR_CACHE_PROVIDER` | String | `disk` | `disk` or `redis` |
+| `OMMR_CACHE_DIR` | String | `./cache_data` | Disk storage |
+| `OMMR_REDIS_URL` | String | `redis://localhost:6379/0` | Redis URL |
+| `OMMR_CACHE_TTL` | Duration | `24h` | Positive resolution TTL |
+| `OMMR_RATE_LIMIT_RPS` | Float | `50` | Process-wide API request budget |
+| `OMMR_PROVIDER_TIMEOUT` | Duration | `10s` | Entire resolution/search operation budget |
+| `OMMR_BULK_MAX_ITEMS` | Integer | `100` | Max queries per batch |
+| `OMMR_BULK_WORKERS` | Integer | `10` | Bulk workers |
+| `OMMR_ENABLE_ENRICHMENT` | Boolean | `true` | Post-merge catalog context/artwork |
+| `OMMR_METADATA_POLICY` | JSON string | consensus | Field voting and trust overrides |
+| `OMMR_LASTFM_API_KEY` | String | empty | Optional Last.fm context |
+| `OMMR_DISCOGS_TOKEN` | String | empty | Optional Discogs edition context |
+| `OMMR_ACOUSTID_API_KEY` | String | empty | Optional fingerprint lookup |
+| `OMMR_SPOTIFY_CLIENT_ID` / `OMMR_SPOTIFY_CLIENT_SECRET` | String | empty | Optional official Spotify mode |
+
 
 ---
 
@@ -339,3 +348,46 @@ Contributions are warmly welcome! Please read [docs/CONTRIBUTING.md](docs/CONTRI
 OMMR is open-source software licensed under the [MIT License](LICENSE).
 
 hi
+
+### Compact API output
+
+Data endpoints return production metadata by default. Add `&debug=true` to a resolve/search/links/extract query, or use `POST /v1/bulk?debug=true`, for provider execution details and matching diagnostics. Use `?debug=true` when it is the first query parameter. `debug=false` keeps the compact format; malformed or repeated values return 400. Both modes reuse the same complete resolver cache. Existing clients that consume provider diagnostics or per-source extraction envelopes should explicitly enable debug. See [response modes](docs/API_SPEC.md#production-and-debug-responses).
+
+### Rich provider metadata
+
+Accepted provider alternatives and extra catalog fields are now retained in production `track.provider_data`. Canonical fields use deterministic consensus or configured trust; diagnostics remain opt-in. The new catalog services add Cover Art Archive artwork, MusicBrainz release details, optional Last.fm and Discogs context, and a separate AcoustID fingerprint endpoint. See [ENRICHMENT.md](docs/ENRICHMENT.md) for the exact schema, access settings, identity checks and remaining limitations. [CACHING.md](docs/CACHING.md) describes actual cache integration.
+
+### Startup sessions, health and API policy
+
+A private `ommr.yaml` now loads automatically; `--config` selects another file. Named files in an owner-only credential directory are discovered at boot. Supplied credentials must pass source-specific probes; public-capable sources fall back, and required-key sources stay unloaded when access is absent or fails. Runtime failures trigger a configurable circuit and controlled recovery. `POST /v1/query` uses configured operation/source/debug defaults, and `/v1/providers` shows redacted lifecycle status. See [PROVIDER_LIFECYCLE.md](docs/PROVIDER_LIFECYCLE.md) for formats, session limits and the full sample configuration.
+
+Accuracy improvements: structured collaborator records with owned artist IDs, stricter artist evidence for text queries, guarded accepted-record detail hydration, and debug field comparison. See [ACCURACY_IMPROVEMENTS.md](docs/ACCURACY_IMPROVEMENTS.md) for accuracy behavior and remaining access limits. See [the 12-song live matrix](docs/LIVE_SONG_MATRIX.md) and [credential checklist](docs/CREDENTIALS_CHECKLIST.md).
+
+Rich catalog expansion: [Bugs/Genie/Melon and optional Python YouTube extraction](docs/RICH_CATALOGS.md) adds Korean song catalogs, credits, artist/album context and a bounded Go `/v1/catalog` endpoint. Public-source failures and live results are documented separately from authenticated access.
+
+HTML recovery: [decoder behavior, official-page fallbacks and live availability limits](docs/HTML_RECOVERY.md). The empty 195-byte “Site Unavailable” response contains no recoverable song data.
+
+Provider troubleshooting: [isolated Go checks and browser observations](docs/PROVIDER_DIAGNOSTICS.md) record the real adapter requests independently of configuration and caches. JioSaavn native IDs and public song-link tokens use separate lookup methods.
+
+JioSaavn [public song-page input](docs/JIOSAAVN_PUBLIC_PAGES.md) reads known page metadata before using the share-token API, through GET extraction or the JSON gateway.
+
+[Termux provider verification](docs/TERMUX_PROVIDER_VERIFICATION.md) records real Android connectivity, captured JioSaavn page decoding, Deezer artist-safe text search and remaining MusicBrainz availability limits.
+
+[Known Unknowns album verification](docs/YOUTUBE_KNOWN_UNKNOWNS_VERIFICATION.md) includes all 10 songs, public YouTube credits, source metadata, and a fixed same-album/wrong-title identity leak.
+
+[Artist profiles](docs/ARTIST_PROFILES.md): `GET /v1/artists?artist=Gur%20Sidhu` returns public source-owned bios, artist images, top/recent tracks, audience metrics with time periods and explicitly reported catalog totals. Exact artist IDs and ambiguity choices are supported; no credentials are required for the native sources.
+
+
+Share a track link directly with `/v1/resolve?url=...` or the JSON/bulk APIs. [Share links and discovery](docs/SHARE_LINKS_AND_CAPABILITIES.md) covers nine supported services, JioSaavn/MusicBrainz direct seeds and `/v1/capabilities`. The [2026-10-19 status review](docs/STATUS_2026-10-19.md) summarizes the latest Termux results and remaining limitations.
+
+## Recording relationships and structured credits
+
+Track and native album responses include a source-owned `music_graph`: recordings, exact release editions, release groups, compositions and contributors, with directed relationships and scoped credits. Debug tracks keep the graph under `extensions.music_graph`; production tracks expose it directly. Related versions do not become accepted recording IDs. See [graph schema, scope and source coverage](docs/MUSIC_GRAPH.md).
+
+[Full verification (2026-10-19)](docs/FULL_VERIFICATION_2026-10-19.md): fresh Go race/coverage and Python tests, 58 running API checks, a 12-song live matrix, provider limitations, Android ARM64 cross-build and reproducible Termux-friendly commands.
+
+[Song/album/artist matrix](docs/ENTITY_MATRIX_2026-10-19.md): 14 styles and versions, source-owned album membership and artist profiles, explicit partial lists, and fixes for album-count semantics and recording-version/timing mismatches.
+
+Production data now includes source-owned album placements and a detailed contributor/credit index. Direct song IDs keep their edition-specific disc/track numbers together. Negotiated gzip retains all metadata while reducing measured live packets by about 75% for songs and 90% for a 35-track album. See [detailed production metadata](docs/DETAILED_PRODUCTION_METADATA.md) for schema, policy migration, source limits and evidence.
+
+Resolved tracks with an accepted YouTube ID can now include SponsorBlock community highlight points under `video_annotations.sponsorblock`, preserving exact-video timing, votes and attribution. Missing/unavailable highlights remain absent. See [SponsorBlock POIs](docs/SPONSORBLOCK.md) for schema, timeout/cache controls, dataset license and live results.

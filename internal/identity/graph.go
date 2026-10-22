@@ -21,10 +21,15 @@ var ProviderTrustWeights = map[string]float64{
 	"tidal":       0.90,
 	"amazonmusic": 0.88,
 	"pandora":     0.80,
+	"bugs":        0.85, "genie": 0.85, "melon": 0.85,
 }
 
 // IdentityGraph stores canonical identity mappings across platform IDs.
 type IdentityGraph struct {
+	BugsID  string `json:"bugs_id,omitempty"`
+	GenieID string `json:"genie_id,omitempty"`
+	MelonID string `json:"melon_id,omitempty"`
+
 	CanonicalID   string                    `json:"canonical_id"`
 	SpotifyID     string                    `json:"spotify_id,omitempty"`
 	YouTubeID     string                    `json:"youtube_id,omitempty"`
@@ -54,7 +59,11 @@ func CalculateIdentityConfidence(score float64, provider string) float64 {
 // BuildGraph constructs an IdentityGraph from a resolved canonical Track.
 func BuildGraph(t canonical.Track) IdentityGraph {
 	return IdentityGraph{
-		CanonicalID:   t.CanonicalID,
+		CanonicalID: t.CanonicalID,
+		BugsID:      t.IDs["bugs"],
+		GenieID:     t.IDs["genie"],
+		MelonID:     t.IDs["melon"],
+
 		SpotifyID:     t.IDs["spotify"],
 		YouTubeID:     t.IDs["ytmusic"],
 		AppleMusicID:  t.IDs["applemusic"],

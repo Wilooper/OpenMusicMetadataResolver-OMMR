@@ -1,0 +1,122 @@
+[
+  {
+    "name": "jio_legacy",
+    "url": "https://www.jiosaavn.com/api.php?__call=search.getResults&q=Karan%20Aujla%20Boyfriend&_format=json&_marker=0&ctx=web6dot0",
+    "status": 200,
+    "bytes": 195,
+    "truncated": false,
+    "headers": {
+      "Content-Type": "text/html",
+      "Server": "openresty/1.27.1.1",
+      "Content-Length": "195"
+    },
+    "sha256": "5b131ca14aa96311d3432b0062c7443d3b0e6346ec279bd376a75f0a76bcd5d7",
+    "json_valid": false,
+    "site_unavailable": true
+  },
+  {
+    "name": "jio_python_autocomplete",
+    "url": "https://www.jiosaavn.com/api.php?__call=autocomplete.get&_format=json&_marker=0&cc=in&includeMetaTags=1&query=Karan%20Aujla%20Boyfriend",
+    "status": 200,
+    "bytes": 195,
+    "truncated": false,
+    "headers": {
+      "Content-Type": "text/html",
+      "Server": "openresty/1.27.1.1",
+      "Content-Length": "195"
+    },
+    "sha256": "5b131ca14aa96311d3432b0062c7443d3b0e6346ec279bd376a75f0a76bcd5d7",
+    "json_valid": false,
+    "site_unavailable": true
+  },
+  {
+    "name": "jio_python_v4",
+    "url": "https://www.jiosaavn.com/api.php?__call=search.getResults&p=0&_format=json&_marker=0&api_version=4&ctx=web6dot0&n=20&q=Karan%20Aujla%20Boyfriend",
+    "status": 200,
+    "bytes": 195,
+    "truncated": false,
+    "headers": {
+      "Content-Type": "text/html",
+      "Server": "openresty/1.27.1.1",
+      "Content-Length": "195"
+    },
+    "sha256": "5b131ca14aa96311d3432b0062c7443d3b0e6346ec279bd376a75f0a76bcd5d7",
+    "json_valid": false,
+    "site_unavailable": true
+  },
+  {
+    "name": "jio_python_detail",
+    "url": "https://www.jiosaavn.com/api.php?__call=song.getDetails&cc=in&_marker=0%3F_marker%3D0&_format=json&pids=e0kCEwoC",
+    "status": 200,
+    "bytes": 195,
+    "truncated": false,
+    "headers": {
+      "Content-Type": "text/html",
+      "Server": "openresty/1.27.1.1",
+      "Content-Length": "195"
+    },
+    "sha256": "5b131ca14aa96311d3432b0062c7443d3b0e6346ec279bd376a75f0a76bcd5d7",
+    "json_valid": false,
+    "site_unavailable": true
+  },
+  {
+    "name": "jio_home",
+    "url": "https://www.jiosaavn.com/",
+    "status": 200,
+    "bytes": 195,
+    "truncated": false,
+    "headers": {
+      "Content-Type": "text/html",
+      "Server": "openresty/1.27.1.1",
+      "Content-Length": "195"
+    },
+    "sha256": "5b131ca14aa96311d3432b0062c7443d3b0e6346ec279bd376a75f0a76bcd5d7",
+    "json_valid": false,
+    "site_unavailable": true
+  },
+  {
+    "name": "deezer",
+    "url": "https://api.deezer.com/search?q=Daft%20Punk",
+    "status": 200,
+    "bytes": 195,
+    "truncated": false,
+    "headers": {
+      "Content-Type": "text/html",
+      "Server": "openresty/1.27.1.1",
+      "Content-Length": "195"
+    },
+    "sha256": "5b131ca14aa96311d3432b0062c7443d3b0e6346ec279bd376a75f0a76bcd5d7",
+    "json_valid": false,
+    "site_unavailable": true
+  },
+  {
+    "name": "musicbrainz",
+    "url": "https://musicbrainz.org/ws/2/recording/?query=recording%3AGet%20Lucky&fmt=json&limit=1",
+    "status": 200,
+    "bytes": 195,
+    "truncated": false,
+    "headers": {
+      "Content-Type": "text/html",
+      "Server": "openresty/1.27.1.1",
+      "Content-Length": "195"
+    },
+    "sha256": "5b131ca14aa96311d3432b0062c7443d3b0e6346ec279bd376a75f0a76bcd5d7",
+    "json_valid": false,
+    "site_unavailable": true
+  },
+  {
+    "name": "apple_control",
+    "url": "https://itunes.apple.com/search?term=Karan%20Aujla%20Boyfriend&entity=song&limit=1",
+    "status": 200,
+    "bytes": 1527,
+    "truncated": false,
+    "headers": {
+      "Content-Type": "text/javascript; charset=utf-8",
+      "Server": "daiquiri/5",
+      "Content-Length": "1527"
+    },
+    "sha256": "9c6c42cb4bb5736b58f43e7849f2d2768fb336f97cebff3bf0a9fd7a3ca1d7e5",
+    "json_valid": true,
+    "site_unavailable": false
+  }
+]

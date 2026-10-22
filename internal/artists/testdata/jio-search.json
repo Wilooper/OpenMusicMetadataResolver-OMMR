@@ -1,0 +1,71 @@
+{
+  "total": 121,
+  "start": 1,
+  "results": [
+    {
+      "name": "Gur Sidhu",
+      "id": "2613966",
+      "ctr": 1380,
+      "entity": 1,
+      "image": "https://c.saavncdn.com/artists/Gur_Sidhu_001_20230314123602_50x50.jpg",
+      "role": "Artist",
+      "perma_url": "https://www.jiosaavn.com/artist/gur-sidhu-songs/HWJH1XCGtSQ_",
+      "type": "artist",
+      "mini_obj": true,
+      "isRadioPresent": true,
+      "is_followed": false
+    },
+    {
+      "name": "Gurman Sandhu, Gur Sidhu",
+      "id": "8877929",
+      "ctr": 0,
+      "entity": 0,
+      "image": "https://www.jiosaavn.com/_i/3.0/artist-default-film.png",
+      "role": "Artist",
+      "perma_url": "https://www.jiosaavn.com/artist/gurman-sandhu-gur-sidhu-songs/yPQGx91woeg_",
+      "type": "artist",
+      "mini_obj": true,
+      "isRadioPresent": false,
+      "is_followed": false
+    },
+    {
+      "name": "Darsh Dhaliwal , Gurlez Akhtar & Gur Sidhu",
+      "id": "9936699",
+      "ctr": 0,
+      "entity": 0,
+      "image": "https://www.jiosaavn.com/_i/3.0/artist-default-music.png",
+      "role": "Artist",
+      "perma_url": "https://www.jiosaavn.com/artist/darsh-dhaliwal-gurlez-akhtar-gur-sidhu-songs/pd9i2DnLFcw_",
+      "type": "artist",
+      "mini_obj": true,
+      "isRadioPresent": false,
+      "is_followed": false
+    },
+    {
+      "name": "Gur Sidhu, Jassa Dhillon",
+      "id": "8696442",
+      "ctr": 0,
+      "entity": 0,
+      "image": "https://www.jiosaavn.com/_i/3.0/artist-default-film.png",
+      "role": "Artist",
+      "perma_url": "https://www.jiosaavn.com/artist/gur-sidhu-jassa-dhillon-songs/UOmJp76vbi8_",
+      "type": "artist",
+      "mini_obj": true,
+      "isRadioPresent": false,
+      "is_followed": false
+    },
+    {
+      "name": "Gurjas Sidhu",
+      "id": "740174",
+      "ctr": 16,
+      "entity": 0,
+      "image": "https://c.saavncdn.com/041/Tu-Jo-Mila-Hindi-2018-20180112135707-50x50.jpg",
+      "role": "Artist",
+      "perma_url": "https://www.jiosaavn.com/artist/gurjas-sidhu-songs/24IUwF96AgI_",
+      "type": "artist",
+      "mini_obj": true,
+      "isRadioPresent": true,
+      "is_followed": false
+    }
+  ]
+}

@@ -18,7 +18,7 @@ import (
 
 const (
 	ProviderName    = "spotify"
-	ProviderVersion = "spotify-web-v2" // dual-mode: official Web API + anonymous Web API / oEmbed / embed scraping
+	ProviderVersion = "spotify-web-v3" // dual-mode: official Web API + anonymous Web API / oEmbed / embed scraping
 	apiBaseURL      = "https://api.spotify.com/v1"
 )
 
@@ -28,6 +28,9 @@ const (
 type Config struct {
 	ClientID     string
 	ClientSecret string
+	Cookie       string
+	AccessToken  string
+	ExpiresAt    int64
 }
 
 type Provider struct {
@@ -39,11 +42,20 @@ type Provider struct {
 var _ adapters.ProviderAdapter = (*Provider)(nil)
 
 func New(cfg Config) *Provider {
-	return &Provider{
+	p := &Provider{
 		httpClient: &http.Client{Timeout: 8 * time.Second, CheckRedirect: func(_ *http.Request, _ []*http.Request) error { return http.ErrUseLastResponse }},
 		tokens:     newTokenManager(&http.Client{Timeout: 8 * time.Second, CheckRedirect: func(_ *http.Request, _ []*http.Request) error { return http.ErrUseLastResponse }}, cfg.ClientID, cfg.ClientSecret),
 		config:     cfg,
 	}
+	p.tokens.cookie = cfg.Cookie
+	if cfg.AccessToken != "" {
+		p.tokens.token = cfg.AccessToken
+		p.tokens.expiry = time.Now().Add(time.Hour)
+		if cfg.ExpiresAt > 0 {
+			p.tokens.expiry = time.Unix(cfg.ExpiresAt, 0)
+		}
+	}
+	return p
 }
 
 func (p *Provider) Name() string {
@@ -104,7 +116,7 @@ func (p *Provider) Search(ctx context.Context, q adapters.Query) ([]canonical.Tr
 		return nil, err
 	}
 	if resp.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("spotify web search status %d: %s", resp.StatusCode, string(body))
+		return nil, fmt.Errorf("spotify web search status %d", resp.StatusCode)
 	}
 
 	var searchResp provider.SpotifyWebSearchResponse
@@ -159,7 +171,7 @@ func (p *Provider) fetchByWebAPI(ctx context.Context, id string) (*canonical.Tra
 	if err := json.Unmarshal(body, &track); err != nil {
 		return nil, err
 	}
-	if track.ID == "" && track.Name == "" {
+	if track.ID != id || track.Name == "" {
 		return nil, fmt.Errorf("spotify track %s not found", id)
 	}
 
@@ -202,6 +214,9 @@ func (p *Provider) fetchByEmbed(ctx context.Context, id string) (*canonical.Trac
 	if err != nil {
 		return nil, err
 	}
+	if track == nil || track.Title == "" {
+		return nil, fmt.Errorf("Spotify embed returned no track metadata")
+	}
 
 	return &canonical.TrackCandidate{
 		Provider:    ProviderName,
@@ -241,6 +256,9 @@ func (p *Provider) fetchByOembed(ctx context.Context, id string) (*canonical.Tra
 		return nil, err
 	}
 
+	if strings.TrimSpace(oembed.Title) == "" {
+		return nil, fmt.Errorf("Spotify oEmbed returned no track title")
+	}
 	track := ParseOembed(id, oembed)
 	return &canonical.TrackCandidate{
 		Provider:    ProviderName,

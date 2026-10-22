@@ -1,0 +1,12 @@
+{
+  "get_post_equal": true,
+  "production_diagnostics_omitted": true,
+  "native_artist_lists_bounded": true,
+  "cached_observation_time_preserved": true,
+  "youtube_fetch_timestamp_present": true,
+  "abbreviated_subscriber_value_not_fabricated": true,
+  "monthly_audience_semantics_preserved": true,
+  "go_build_vet_tests_passed": true,
+  "go_only_native_profiles_work": true,
+  "disabled_worker_does_not_block_native_profiles": true
+}

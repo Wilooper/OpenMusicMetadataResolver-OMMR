@@ -11,23 +11,27 @@ import (
 
 // Priorities for metadata fields per provider
 var (
-	titlePriority   = []string{"spotify", "applemusic", "tidal", "qobuz", "amazonmusic", "pandora", "musicbrainz", "deezer", "soundcloud", "jiosaavn", "ytmusic"}
-	creditsPriority = []string{"musicbrainz", "applemusic", "spotify", "tidal", "qobuz", "amazonmusic", "pandora", "deezer", "soundcloud", "jiosaavn", "ytmusic"}
-	genresPriority  = []string{"spotify", "applemusic", "tidal", "qobuz", "amazonmusic", "pandora", "musicbrainz", "deezer", "soundcloud", "jiosaavn", "ytmusic"}
-	isrcPriority    = []string{"spotify", "musicbrainz", "applemusic", "tidal", "qobuz", "amazonmusic", "pandora", "deezer", "soundcloud", "jiosaavn", "ytmusic"}
-	labelPriority   = []string{"spotify", "applemusic", "tidal", "qobuz", "amazonmusic", "pandora", "deezer", "musicbrainz", "jiosaavn"}
+	titlePriority   = []string{"spotify", "applemusic", "tidal", "qobuz", "amazonmusic", "pandora", "bugs", "genie", "melon", "musicbrainz", "deezer", "soundcloud", "jiosaavn", "ytmusic"}
+	creditsPriority = []string{"musicbrainz", "applemusic", "spotify", "tidal", "qobuz", "amazonmusic", "pandora", "bugs", "genie", "melon", "deezer", "soundcloud", "jiosaavn", "ytmusic"}
+	genresPriority  = []string{"spotify", "applemusic", "tidal", "qobuz", "amazonmusic", "pandora", "bugs", "genie", "melon", "musicbrainz", "deezer", "soundcloud", "jiosaavn", "ytmusic"}
+	isrcPriority    = []string{"spotify", "musicbrainz", "applemusic", "tidal", "qobuz", "amazonmusic", "pandora", "bugs", "genie", "melon", "deezer", "soundcloud", "jiosaavn", "ytmusic"}
+	labelPriority   = []string{"spotify", "applemusic", "tidal", "qobuz", "amazonmusic", "pandora", "bugs", "genie", "melon", "deezer", "musicbrainz", "jiosaavn"}
 	previewPriority = []string{"spotify", "applemusic", "tidal", "qobuz", "amazonmusic", "deezer"}
 )
 
 type Merger struct {
 	identityEngine *identity.IdentityEngine
+	policy         Policy
 }
 
 func New() *Merger {
 	return &Merger{
 		identityEngine: identity.New(),
+		policy:         Policy{Mode: "consensus"},
 	}
 }
+
+func NewWithPolicy(policy Policy) *Merger { m := New(); m.policy = policy; return m }
 
 // MergeCandidates merges a slice of scored TrackCandidates into a single unified canonical Track.
 func (m *Merger) MergeCandidates(candidates []canonical.TrackCandidate) *canonical.Track {
@@ -35,6 +39,25 @@ func (m *Merger) MergeCandidates(candidates []canonical.TrackCandidate) *canonic
 		return nil
 	}
 
+	candidates = append([]canonical.TrackCandidate(nil), candidates...)
+	sort.SliceStable(candidates, func(i, j int) bool {
+		if candidates[i].Provider != candidates[j].Provider {
+			return candidates[i].Provider < candidates[j].Provider
+		}
+		if candidates[i].MatchScore != candidates[j].MatchScore {
+			return candidates[i].MatchScore > candidates[j].MatchScore
+		}
+		a, _ := json.Marshal(candidates[i].Track)
+		b, _ := json.Marshal(candidates[j].Track)
+		return string(a) < string(b)
+	})
+	unique := candidates[:0]
+	for _, candidate := range candidates {
+		if len(unique) == 0 || !strings.EqualFold(unique[len(unique)-1].Provider, candidate.Provider) {
+			unique = append(unique, candidate)
+		}
+	}
+	candidates = unique
 	byProvider := make(map[string]canonical.TrackCandidate)
 	for _, c := range candidates {
 		byProvider[strings.ToLower(c.Provider)] = c
@@ -208,6 +231,9 @@ func (m *Merger) MergeCandidates(candidates []canonical.TrackCandidate) *canonic
 	}
 	// Sort ascending: lowest resolution (width*height) to highest resolution
 	sort.Slice(images, func(i, j int) bool {
+		if images[i].Width*images[i].Height == images[j].Width*images[j].Height {
+			return images[i].URL < images[j].URL
+		}
 		return (images[i].Width * images[i].Height) < (images[j].Width * images[j].Height)
 	})
 	res.Images = images
@@ -220,22 +246,6 @@ func (m *Merger) MergeCandidates(candidates []canonical.TrackCandidate) *canonic
 		if cand, ok := byProvider[prov]; ok && cand.Track.PreviewURL != "" {
 			res.PreviewURL = cand.Track.PreviewURL
 			res.FieldSources["preview_url"] = []string{prov}
-			break
-		}
-	}
-
-	// 9c. Track / Disc Number
-	for _, prov := range titlePriority {
-		if cand, ok := byProvider[prov]; ok && cand.Track.TrackNumber > 0 {
-			res.TrackNumber = cand.Track.TrackNumber
-			res.FieldSources["track_number"] = []string{prov}
-			break
-		}
-	}
-	for _, cand := range candidates {
-		if cand.Track.DiscNumber > 0 {
-			res.DiscNumber = cand.Track.DiscNumber
-			res.FieldSources["disc_number"] = []string{cand.Provider}
 			break
 		}
 	}
@@ -367,6 +377,19 @@ func (m *Merger) MergeCandidates(candidates []canonical.TrackCandidate) *canonic
 	}
 
 	// Canonical ID & Completeness calculation
+	m.applyPolicy(res, candidates)
+	res.Confidence.Level = canonical.GetConfidenceLevel(topScore, len(res.FieldSources["isrc"]))
+	sort.Strings(res.Genres)
+	for i := range res.Credits {
+		sort.Strings(res.Credits[i].Roles)
+	}
+	sort.Slice(res.Credits, func(i, j int) bool { return res.Credits[i].Name < res.Credits[j].Name })
+	sort.Slice(res.Copyrights, func(i, j int) bool {
+		return res.Copyrights[i].Type+res.Copyrights[i].Text < res.Copyrights[j].Type+res.Copyrights[j].Text
+	})
+	sort.Slice(res.Album.Copyrights, func(i, j int) bool {
+		return res.Album.Copyrights[i].Type+res.Album.Copyrights[i].Text < res.Album.Copyrights[j].Type+res.Album.Copyrights[j].Text
+	})
 	res.CanonicalID = m.identityEngine.GenerateID(*res)
 	res.Completeness = canonical.CalculateCompleteness(*res)
 

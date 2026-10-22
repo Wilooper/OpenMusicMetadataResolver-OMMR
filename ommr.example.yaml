@@ -1,5 +1,86 @@
-# Copy to ommr.yaml, chmod 600 ommr.yaml, and set OMMR_CONFIG_FILE=ommr.yaml.
-# Environment variables override these values. Prefer environment secrets.
+# Copy to ommr.yaml and chmod 600 ommr.yaml; it loads automatically at startup.
+# Or use: ./bin/ommr-server --config /path/to/private/config.yaml
 port: 8080
-provider_timeout: 8s
+cache_provider: disk
+cache_dir: ./cache_data
+cache_ttl: 24h
+redis_url: redis://localhost:6379/0
+rate_limit_rps: 50
+provider_timeout: 10s
+bulk_max_items: 100
+bulk_workers: 10
+credentials_dir: ./credentials
 apple_storefront: us
+enable_enrichment: true
+sponsorblock_timeout: 2s
+metadata_policy: '{"mode":"consensus"}'
+
+api:
+  default_operation: resolve
+  default_sources: [] # All currently selectable identity adapters.
+  debug: false
+  bypass_cache: false
+  search_limit: 10
+  allow_overrides: true
+  allow_debug: true
+  endpoints:
+    resolve: true
+    links: true
+    search: true
+    extract: true
+    bulk: true
+    fingerprint: true
+    catalog: true
+    artists: true
+    albums: true
+    capabilities: true
+    query: true
+    providers: true
+    health: true
+    metrics: true
+
+providers:
+  failure_threshold: 3
+  cooldown: 1m # Set 0s to require restart after suspension.
+  probe_timeout: 8s
+  startup_timeout: 45s
+  probe_workers: 4
+  pandora_probe_id: "" # A real accessible track ID is required for Pandora validation.
+  enabled:
+    spotify: true
+    applemusic: true
+    ytmusic: true
+    deezer: true
+    musicbrainz: true
+    soundcloud: true
+    jiosaavn: true
+    bugs: true
+    genie: true
+    melon: true
+    qobuz: true
+    tidal: true
+    amazonmusic: true
+    pandora: true
+    coverartarchive: true
+    musicbrainz_release: true
+    sponsorblock: true
+    lastfm: true
+    discogs: true
+    acoustid: true
+
+# Missing optional keys/sessions are discovered from private named JSON files.
+# Required-credential sources are activated only after startup probes succeed.
+# Explicit paths can be provided instead of directory discovery:
+# spotify_session_file: /private/spotify.session.json
+# applemusic_session_file: /private/applemusic.session.json
+# ytmusic_session_file: /private/ytmusic.session.json
+
+# Optional Python metadata worker. The Go-only API remains usable without it.
+extractor:
+  enabled: false
+  python: python3 # Prefer an absolute virtualenv interpreter path.
+  script: workers/ytmusic/worker.py # Relative to server working directory; or absolute.
+  workers: 2 # 1–8 persistent processes; queue capacity = workers * 4.
+  timeout: 5s # Per background job, including queue wait; max 30s.
+  ttl: 6h
+  profiles: true # Enrich accepted YouTube IDs with known album/artist references.

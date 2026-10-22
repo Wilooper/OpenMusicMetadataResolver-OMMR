@@ -1,0 +1,179 @@
+[
+  {
+    "name": "gur-sidhu-cold",
+    "params": {
+      "artist": "Gur Sidhu",
+      "limit": 5,
+      "debug": "true",
+      "bypass_cache": "true"
+    },
+    "payload": null,
+    "status": 200,
+    "elapsed_ms": 2609
+  },
+  {
+    "name": "gur-sidhu-warm",
+    "params": {
+      "artist": "Gur Sidhu",
+      "limit": 5,
+      "debug": "true"
+    },
+    "payload": null,
+    "status": 200,
+    "elapsed_ms": 17
+  },
+  {
+    "name": "gur-sidhu-production",
+    "params": {
+      "artist": "Gur Sidhu",
+      "limit": 5
+    },
+    "payload": null,
+    "status": 200,
+    "elapsed_ms": 20
+  },
+  {
+    "name": "daft-punk-cold",
+    "params": {
+      "artist": "Daft Punk",
+      "limit": 5,
+      "debug": "true",
+      "bypass_cache": "true"
+    },
+    "payload": null,
+    "status": 200,
+    "elapsed_ms": 4066
+  },
+  {
+    "name": "daft-punk-warm",
+    "params": {
+      "artist": "Daft Punk",
+      "limit": 5,
+      "debug": "true"
+    },
+    "payload": null,
+    "status": 200,
+    "elapsed_ms": 2930
+  },
+  {
+    "name": "daft-punk-production",
+    "params": {
+      "artist": "Daft Punk",
+      "limit": 5
+    },
+    "payload": null,
+    "status": 200,
+    "elapsed_ms": 14
+  },
+  {
+    "name": "arijit-singh-cold",
+    "params": {
+      "artist": "Arijit Singh",
+      "limit": 5,
+      "debug": "true",
+      "bypass_cache": "true"
+    },
+    "payload": null,
+    "status": 200,
+    "elapsed_ms": 2911
+  },
+  {
+    "name": "arijit-singh-warm",
+    "params": {
+      "artist": "Arijit Singh",
+      "limit": 5,
+      "debug": "true"
+    },
+    "payload": null,
+    "status": 200,
+    "elapsed_ms": 15
+  },
+  {
+    "name": "arijit-singh-production",
+    "params": {
+      "artist": "Arijit Singh",
+      "limit": 5
+    },
+    "payload": null,
+    "status": 200,
+    "elapsed_ms": 9
+  },
+  {
+    "name": "apple-exact",
+    "params": {
+      "provider": "applemusic",
+      "id": "862626825",
+      "limit": 5,
+      "debug": "true"
+    },
+    "payload": null,
+    "status": 200,
+    "elapsed_ms": 683
+  },
+  {
+    "name": "youtube-exact",
+    "params": {
+      "provider": "ytmusic",
+      "id": "UC5RFfy546sgeEdO03RBqKyg",
+      "limit": 5,
+      "debug": "true"
+    },
+    "payload": null,
+    "status": 200,
+    "elapsed_ms": 672
+  },
+  {
+    "name": "deezer-exact-get",
+    "params": {
+      "provider": "deezer",
+      "id": "5810099",
+      "limit": 5
+    },
+    "payload": null,
+    "status": 200,
+    "elapsed_ms": 1227
+  },
+  {
+    "name": "deezer-exact-post",
+    "params": null,
+    "payload": {
+      "operation": "artists",
+      "provider": "deezer",
+      "id": "5810099",
+      "limit": 5
+    },
+    "status": 200,
+    "elapsed_ms": 6
+  },
+  {
+    "name": "invalid-url",
+    "params": {
+      "provider": "deezer",
+      "id": "https://evil.test"
+    },
+    "payload": null,
+    "status": 400,
+    "elapsed_ms": 6
+  },
+  {
+    "name": "unknown-source",
+    "params": {
+      "artist": "Gur Sidhu",
+      "sources": "spotify"
+    },
+    "payload": null,
+    "status": 400,
+    "elapsed_ms": 4
+  },
+  {
+    "name": "unknown-artist",
+    "params": {
+      "artist": "OMMR Unknown Exact Artist 7eaba04a",
+      "sources": "deezer,jiosaavn",
+      "debug": "true"
+    },
+    "payload": null,
+    "status": 200,
+    "elapsed_ms": 726
+  }
+]

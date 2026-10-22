@@ -1,0 +1,249 @@
+{
+  "id": "UC5RFfy546sgeEdO03RBqKyg",
+  "kind": "artist",
+  "limit": 20,
+  "metadata": {
+    "channelId": "UChWa5ghfaiI_yLCbxvya1aw",
+    "description": "Gursimran Singh Sidhu is an Indian singer, rapper, and record producer known for his contributions to Punjabi music and cinema. He gained widespread recognition for his unique style, blending rap, hip-hop, and traditional Punjabi sounds. Sidhu is best known for his hit songs such as \"California Love\", \"Bamb Aagya\", \"Vaddi Galbaat\", \"8 Parche\", \"Gabhru\", \"Dekhi Jau\", \"Ashke Ashke\", and \"Taakre\", among many others.\n\nFrom Wikipedia (https://en.wikipedia.org/wiki/Gur_Sidhu) under Creative Commons Attribution CC-BY-SA 3.0 (http://creativecommons.org/licenses/b...)",
+    "descriptionRuns": [
+      {
+        "text": "Gursimran Singh Sidhu is an Indian singer, rapper, and record producer known for his contributions to Punjabi music and cinema. He gained widespread recognition for his unique style, blending rap, hip-hop, and traditional Punjabi sounds. Sidhu is best known for his hit songs such as \"California Love\", \"Bamb Aagya\", \"Vaddi Galbaat\", \"8 Parche\", \"Gabhru\", \"Dekhi Jau\", \"Ashke Ashke\", and \"Taakre\", among many others.\n\nFrom Wikipedia ("
+      },
+      {
+        "text": "https://en.wikipedia.org/wiki/Gur_Sidhu",
+        "url": "https://en.wikipedia.org/wiki/Gur_Sidhu"
+      },
+      {
+        "text": ") under Creative Commons Attribution CC-BY-SA 3.0 ("
+      },
+      {
+        "text": "http://creativecommons.org/licenses/b...",
+        "url": "http://creativecommons.org/licenses/by-sa/3.0/legalcode"
+      },
+      {
+        "text": ")"
+      }
+    ],
+    "monthlyListeners": "105M",
+    "name": "Gur Sidhu",
+    "songs": {
+      "browseId": "VLOLAK5uy_mryFXStwk9Xr67pjtMYX3KvVS7Ll_9JjM",
+      "results": [
+        {
+          "album": {
+            "id": "MPREb_ojpt9nH95dl",
+            "name": "ANYWAY"
+          },
+          "artists": [
+            {
+              "id": "UCENfSbhakhx_AkS2SsPSf_g",
+              "name": "Cheema Y"
+            },
+            {
+              "id": "UC5RFfy546sgeEdO03RBqKyg",
+              "name": "Gur Sidhu"
+            }
+          ],
+          "communityVoteStatus": null,
+          "creditsBrowseId": "MPTCeD8lmkBCma4",
+          "isAvailable": true,
+          "isExplicit": true,
+          "pinnedToListenAgain": false,
+          "thumbnails": [
+            {
+              "height": 60,
+              "url": "https://yt3.googleusercontent.com/guUWYbLZmnFni3hnbfDWJA4VgzxBE4o6Y9uSDNfaXuo-VITYNtRmLob-gbLhtoNGjAnhAQaC--18a2PI3A=w60-h60-l90-rj",
+              "width": 60
+            },
+            {
+              "height": 120,
+              "url": "https://yt3.googleusercontent.com/guUWYbLZmnFni3hnbfDWJA4VgzxBE4o6Y9uSDNfaXuo-VITYNtRmLob-gbLhtoNGjAnhAQaC--18a2PI3A=w120-h120-l90-rj",
+              "width": 120
+            }
+          ],
+          "title": "California Love",
+          "videoId": "eD8lmkBCma4",
+          "videoType": "MUSIC_VIDEO_TYPE_ATV",
+          "views": null
+        },
+        {
+          "album": {
+            "id": "MPREb_UTZTTU624nj",
+            "name": "8 Parche"
+          },
+          "artists": [
+            {
+              "id": "UC-BV84G2hJwFEhEzC7B7w6w",
+              "name": "Baani Sandhu"
+            },
+            {
+              "id": "UC5RFfy546sgeEdO03RBqKyg",
+              "name": "Gur Sidhu"
+            }
+          ],
+          "communityVoteStatus": null,
+          "creditsBrowseId": "MPTCdZxW83XtbGg",
+          "isAvailable": true,
+          "isExplicit": false,
+          "pinnedToListenAgain": false,
+          "thumbnails": [
+            {
+              "height": 60,
+              "url": "https://yt3.googleusercontent.com/wQBIOIEQCx1l136Ex_zVwlfPy8qS4oOn9KY2nM3cQFdNvFAkBRtT9WaTSw_rk1dWrnlov5RX5i6WK0j-=w60-h60-l90-rj",
+              "width": 60
+            },
+            {
+              "height": 120,
+              "url": "https://yt3.googleusercontent.com/wQBIOIEQCx1l136Ex_zVwlfPy8qS4oOn9KY2nM3cQFdNvFAkBRtT9WaTSw_rk1dWrnlov5RX5i6WK0j-=w120-h120-l90-rj",
+              "width": 120
+            }
+          ],
+          "title": "8 Parche",
+          "videoId": "dZxW83XtbGg",
+          "videoType": "MUSIC_VIDEO_TYPE_ATV",
+          "views": null
+        },
+        {
+          "album": {
+            "id": "MPREb_wHrbzA78E8H",
+            "name": "Bermuda Triangle"
+          },
+          "artists": [
+            {
+              "id": "UCENfSbhakhx_AkS2SsPSf_g",
+              "name": "Cheema Y"
+            },
+            {
+              "id": "UC5RFfy546sgeEdO03RBqKyg",
+              "name": "Gur Sidhu"
+            }
+          ],
+          "communityVoteStatus": null,
+          "creditsBrowseId": "MPTCfImgNQqBxOA",
+          "isAvailable": true,
+          "isExplicit": false,
+          "pinnedToListenAgain": false,
+          "thumbnails": [
+            {
+              "height": 60,
+              "url": "https://yt3.googleusercontent.com/k7EhssfWdyj13vBTA56N3bJo6sHFvg236UG7dz-qRIAyn5Whdns59cVIkzkBo8DgWT7Y31sJM7UmZU5aqA=w60-h60-l90-rj",
+              "width": 60
+            },
+            {
+              "height": 120,
+              "url": "https://yt3.googleusercontent.com/k7EhssfWdyj13vBTA56N3bJo6sHFvg236UG7dz-qRIAyn5Whdns59cVIkzkBo8DgWT7Y31sJM7UmZU5aqA=w120-h120-l90-rj",
+              "width": 120
+            }
+          ],
+          "title": "Jackpot",
+          "videoId": "fImgNQqBxOA",
+          "videoType": "MUSIC_VIDEO_TYPE_ATV",
+          "views": null
+        },
+        {
+          "album": {
+            "id": "MPREb_i0HB2flsG7V",
+            "name": "FYI (For Your Information)"
+          },
+          "artists": [
+            {
+              "id": "UC7a1tClTvIIttpI-r2PwiQA",
+              "name": "Jordan Sandhu"
+            },
+            {
+              "id": "UC5RFfy546sgeEdO03RBqKyg",
+              "name": "Gur Sidhu"
+            },
+            {
+              "id": "UC2ENe6xNmRRD3QbpRck-6Aw",
+              "name": "Kaptaan"
+            }
+          ],
+          "communityVoteStatus": null,
+          "creditsBrowseId": "MPTC_6_OJJpfKtc",
+          "isAvailable": true,
+          "isExplicit": false,
+          "pinnedToListenAgain": false,
+          "thumbnails": [
+            {
+              "height": 60,
+              "url": "https://yt3.googleusercontent.com/uK5u2jWmpbKTfc0sdAappUd3erRWKnKCxoeVuPycLbFWQBpBjohxAPIt2ErV5PViknzUzpM9k2dmD6T4=w60-h60-l90-rj",
+              "width": 60
+            },
+            {
+              "height": 120,
+              "url": "https://yt3.googleusercontent.com/uK5u2jWmpbKTfc0sdAappUd3erRWKnKCxoeVuPycLbFWQBpBjohxAPIt2ErV5PViknzUzpM9k2dmD6T4=w120-h120-l90-rj",
+              "width": 120
+            }
+          ],
+          "title": "Banda Bamb",
+          "videoId": "_6_OJJpfKtc",
+          "videoType": "MUSIC_VIDEO_TYPE_ATV",
+          "views": null
+        },
+        {
+          "album": {
+            "id": "MPREb_wHrbzA78E8H",
+            "name": "Bermuda Triangle"
+          },
+          "artists": [
+            {
+              "id": "UCENfSbhakhx_AkS2SsPSf_g",
+              "name": "Cheema Y"
+            },
+            {
+              "id": "UC5RFfy546sgeEdO03RBqKyg",
+              "name": "Gur Sidhu"
+            }
+          ],
+          "communityVoteStatus": null,
+          "creditsBrowseId": "MPTClqx1ffdgFlQ",
+          "isAvailable": true,
+          "isExplicit": false,
+          "pinnedToListenAgain": false,
+          "thumbnails": [
+            {
+              "height": 60,
+              "url": "https://yt3.googleusercontent.com/k7EhssfWdyj13vBTA56N3bJo6sHFvg236UG7dz-qRIAyn5Whdns59cVIkzkBo8DgWT7Y31sJM7UmZU5aqA=w60-h60-l90-rj",
+              "width": 60
+            },
+            {
+              "height": 120,
+              "url": "https://yt3.googleusercontent.com/k7EhssfWdyj13vBTA56N3bJo6sHFvg236UG7dz-qRIAyn5Whdns59cVIkzkBo8DgWT7Y31sJM7UmZU5aqA=w120-h120-l90-rj",
+              "width": 120
+            }
+          ],
+          "title": "CEO",
+          "videoId": "lqx1ffdgFlQ",
+          "videoType": "MUSIC_VIDEO_TYPE_ATV",
+          "views": null
+        }
+      ]
+    },
+    "subscribers": "162K",
+    "thumbnails": [
+      {
+        "height": 225,
+        "url": "https://yt3.googleusercontent.com/QdPfCNLIFDY4vMedmsKbCx5cISWjNUad5Rv5FK8_bw4C60y5KDVeB2AVBrGKIwl6BB9LFERnyg=w540-h225-l90-rj-dcGSaOK5YK",
+        "width": 540
+      },
+      {
+        "height": 340,
+        "url": "https://yt3.googleusercontent.com/QdPfCNLIFDY4vMedmsKbCx5cISWjNUad5Rv5FK8_bw4C60y5KDVeB2AVBrGKIwl6BB9LFERnyg=w816-h340-l90-rj-dcGSaOK5YK",
+        "width": 816
+      },
+      {
+        "height": 600,
+        "url": "https://yt3.googleusercontent.com/QdPfCNLIFDY4vMedmsKbCx5cISWjNUad5Rv5FK8_bw4C60y5KDVeB2AVBrGKIwl6BB9LFERnyg=w1440-h600-l90-rj-dcGSaOK5YK",
+        "width": 1440
+      },
+      {
+        "height": 647,
+        "url": "https://yt3.googleusercontent.com/QdPfCNLIFDY4vMedmsKbCx5cISWjNUad5Rv5FK8_bw4C60y5KDVeB2AVBrGKIwl6BB9LFERnyg=w1554-h647-l90-rj-dcGSaOK5YK",
+        "width": 1554
+      }
+    ],
+    "views": "172,808,309 views"
+  },
+  "scope": "profile_and_top_releases"
+}
