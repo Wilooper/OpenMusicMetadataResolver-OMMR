@@ -1,69 +1,59 @@
-# Contributing to OMMR
+# Contribute to OMMR
 
-Thank you for your interest in contributing to Open Music Metadata Resolver (OMMR)! We welcome pull requests, bug reports, feature requests, and documentation improvements.
+[Docs](README.md) · [Repository rules](../AGENTS.md) · [Testing](guides/testing.md)
 
----
+Bug reports, source fixtures, documentation and implementation improvements are
+welcome. Check existing issues and describe the concrete recording/edition or
+operation involved. Keep operator credentials out of examples and reports.
 
-## Local Development Setup
+## Local development
 
-### 1. Prerequisites
-* **Go**: 1.25 or higher (see `go.mod`)
-* **Git**: Latest version
-* **Docker & Docker Compose** (optional for Redis testing)
+Use the [installation guide](getting-started/installation.md). Go 1.26 is the tested
+build path; the module declares 1.25.0 and dependencies can request newer toolchains.
 
-### 2. Clone & Build
-
-```bash
+```sh
 git clone https://github.com/Wilooper/OpenMusicMetadataResolver-OMMR.git
 cd OpenMusicMetadataResolver-OMMR
-
-# Download Go dependencies
+git switch -c docs/your-topic
 go mod download
-
-# Run test suite
-go test -v -cover ./...
-
-# Build server binary
-go build -o bin/ommr-server.exe ./cmd/server
+go build ./...
+go vet ./...
+go test ./...
+go test -race ./...
+go build -o bin/ommr-server ./cmd/server
 ```
 
----
+Follow `AGENTS.md`. For Go code or architectural changes, consult the relevant
+local `cc-skills-golang/skills/*/SKILL.md` guidance. Android race-test limitations
+and worker/live checks are documented in [testing](guides/testing.md).
 
-## Skill Library Integration (`cc-skills-golang`)
+## Implementation rules
 
-Before making architectural or code modifications, consult the local Go skills library:
+- Keep base resolution usable without paid keys. Credential-only integrations are
+  optional and must remain unloaded until valid startup access checks pass.
+- Never weaken score, artist, source-ID or recording/version gates to improve a
+  live success count. Emit identity matches only for accepted candidates.
+- Wire providers through `internal/bootstrap`, adapters, local rate budgets,
+  identity/merge priorities, models, tests and docs as required by `AGENTS.md`.
+- Context sources implement catalog enrichment and must not invent recording IDs.
+- Preserve source ownership, release positions and contributor scope. Add meaningful
+  deterministic fixtures for new behavior and rejection cases.
+- Format Go with `gofmt`; keep source errors sanitized and credential redirects refused.
+- Append architectural decisions to `ARCHITECTURE_DECISIONS.md`; do not rewrite history.
 
-```text
-cc-skills-golang/skills/
-├── golang-architecture/
-├── golang-api/
-├── golang-testing/
-├── golang-concurrency/
-├── golang-security/
-├── golang-performance/
-└── golang-database/
-```
+## Documentation and pull requests
 
-Follow the best practices outlined in `SKILL.md` files within those directories.
+Keep the root README short. Add focused pages under `docs/`, link them from the
+index, and validate relative links and examples. Explain unsupported access and
+partial data where users encounter them. Preserve dated reports as historical
+snapshots; describe current behavior in reference guides.
 
----
+Lead a PR with the concrete problem and resulting behavior, followed by relevant
+validation and limitations. Do not claim authenticated live coverage from fixtures.
+Use descriptive commits such as `docs: add deployment guides` or
+`fix: preserve source album placement`.
 
-## Pull Request Guidelines
+## Licensing
 
-1. **Feature Branches**: Create a descriptive branch (e.g. `git checkout -b feature/jiosaavn-adapter` or `fix/lucene-escaping`).
-2. **Formatting**: Ensure your code is formatted with `gofmt` or `goimports`.
-3. **Tests**: Add unit tests for new functionality in `*_test.go`. All tests must pass:
-   ```bash
-   go test -v -cover ./...
-   ```
-4. **Zero-Key Requirement**: Provider adapters **MUST NOT require** API keys or developer authentication credentials to function. A key-based mode is permitted only as an *optional* upgrade on top of a working zero-key path (e.g. Spotify's official Web API mode).
-5. **Clean Commit Messages**: Use conventional commits (e.g. `feat: add Deezer genre parsing`, `fix: correct ISRC merge priority`).
-
----
-
-## License
-By contributing to OMMR, you agree that your contributions will be licensed under the project's [MIT License](../LICENSE).
-
-## Automated checks and enrichment
-
-The Go checks workflow builds, vets and race-tests pull requests. New identity adapters must follow the wiring/acceptance rules in `AGENTS.md`. Context-only sources should implement the catalog `Enricher` interface and must not manufacture recording IDs. Add deterministic request, identity-rejection, access-error and metadata-preservation fixtures. Never commit operator credentials; external access must remain optional. See [ENRICHMENT.md](ENRICHMENT.md).
+This checkout has no root code license grant. Do not assume the old README's MIT
+badge established one. See [licensing and source attribution](guides/licensing.md).
