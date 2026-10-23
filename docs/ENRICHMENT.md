@@ -45,7 +45,7 @@ These sources are enrichment services, not additional streaming adapters. `/v1/e
 
 MusicBrainz release IDs are retained from same-title accepted album records even when another provider supplies the preferred album display fields. Edition context is not promoted into canonical recording facts. A source with no access, no catalog match or no remaining request time is omitted; debug `enrichment_status` distinguishes `ok`, `no_data` and `unavailable`.
 
-Catalog services run concurrently after the merge, with a maximum 5-second window bounded by the remaining request deadline. MusicBrainz recording and release requests share its one-per-second local budget. Successful catalog GET JSON is cached for 24 hours. Cover Art Archive's public JSON redirect is followed only over HTTPS to `archive.org` or its subdomains; credentialed services do not follow redirects.
+Catalog services run concurrently after the merge. Most use a maximum 5-second window bounded by the remaining request deadline; SponsorBlock uses its separate configurable source budget within that same operation deadline. MusicBrainz recording and release requests share its one-per-second local budget. Successful catalog GET JSON is cached for 24 hours. Cover Art Archive's public JSON redirect is followed only over HTTPS to `archive.org` or its subdomains; credentialed services do not follow redirects.
 
 ## Fingerprint API
 
@@ -70,7 +70,7 @@ Override individual fields or select priority mode using a JSON string:
 export OMMR_METADATA_POLICY='{"mode":"consensus","priorities":{"title":["musicbrainz","spotify"],"release_date":["musicbrainz","applemusic"]}}'
 ```
 
-An explicit field priority overrides consensus **for that field**. `mode=priority` uses priorities throughout. Supported fields: `title`, `artists`, `album`, `duration_ms`, `release_date`, `isrc`, `iswc`, `language`, `label`, `barcode`, `preview_url`, `track_number`, `disc_number`, `explicit`. Unknown modes/fields, duplicate priority names and unknown configured providers fail startup. Union fields (credits, images, genres, copyrights) retain contributions rather than choosing one value.
+An explicit field priority overrides consensus **for that field**. `mode=priority` uses priorities throughout. Supported fields: `title`, `artists`, `album`, `duration_ms`, `release_date`, `isrc`, `iswc`, `language`, `label`, `barcode`, `preview_url`, `explicit`. Album and position are selected together through `album`; configuring separate `track_number` or `disc_number` priorities is rejected. See [edition placement](DETAILED_PRODUCTION_METADATA.md#exact-album-placement). Unknown modes/fields, duplicate priority names and unknown configured providers fail startup. Union fields (credits, images, genres, copyrights) retain contributions rather than choosing one value.
 
 `explicit_status` is `explicit`, `clean` or `unknown`. Missing false flags do not vote against positively known explicit/clean flags. The legacy boolean remains for compatibility. Provider data preserves conflicts instead of erasing them.
 

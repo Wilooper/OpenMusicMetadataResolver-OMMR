@@ -1,65 +1,157 @@
-name: Build & Publish Docker Container
+name: Validate and publish Docker images
 
 on:
   push:
-    branches:
-      - main
-    tags:
-      - 'v*.*.*'
   pull_request:
-    branches:
-      - main
   workflow_dispatch:
 
-env:
-  REGISTRY: ghcr.io
-  IMAGE_NAME: wilooper/ommr
-  ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: "true"
+permissions:
+  contents: read
 
 jobs:
+  documentation:
+    if: github.event_name != 'push' || !github.event.deleted
+    uses: ./.github/workflows/documentation.yml
+
+  go-checks:
+    if: github.event_name != 'push' || !github.event.deleted
+    uses: ./.github/workflows/test.yml
+
   build-and-push:
+    needs: [documentation, go-checks]
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     permissions:
       contents: read
       packages: write
-
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - variant: go
+            target: final
+            suffix: ''
+          - variant: python
+            target: with-python
+            suffix: '-python'
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-
-      - name: Set up QEMU for Multi-Architecture Builds
-        uses: docker/setup-qemu-action@v3
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Log in to GitHub Container Registry
-        if: github.event_name != 'pull_request'
-        uses: docker/login-action@v3
+      - uses: actions/checkout@v7
         with:
-          registry: ${{ env.REGISTRY }}
+          persist-credentials: false
+      - name: Name the commit image
+        id: image
+        uses: actions/github-script@v9
+        env:
+          SUFFIX: ${{ matrix.suffix }}
+        with:
+          script: |
+            const { imagePlan } = require('./scripts/image-tags.cjs');
+            const plan = imagePlan({ owner: context.repo.owner, ref: context.eventName === 'pull_request' ? 'refs/heads/pr-validation' : context.ref, sha: context.sha, currentSha: context.sha, defaultBranch: context.payload.repository.default_branch, suffix: process.env.SUFFIX });
+            core.setOutput('tag', plan.immutableTag);
+      - uses: docker/setup-qemu-action@v4
+      - uses: docker/setup-buildx-action@v4
+      - name: Log in to GHCR
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Extract Docker Metadata & Tags
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-          tags: |
-            type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' }}
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
-            type=sha,prefix=sha-
-
-      - name: Build and Push Docker Image
-        uses: docker/build-push-action@v6
+      - name: Build both architectures and publish the commit image
+        id: build
+        uses: docker/build-push-action@v7
         with:
           context: .
           file: ./Dockerfile
+          target: ${{ matrix.target }}
           platforms: linux/amd64,linux/arm64
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          tags: ${{ steps.image.outputs.tag }}
+          labels: |
+            org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}
+            org.opencontainers.image.revision=${{ github.sha }}
+          cache-from: type=gha,scope=ommr-${{ matrix.variant }}
+          cache-to: type=gha,mode=max,scope=ommr-${{ matrix.variant }}
+      - name: Record immutable image
+        if: github.event_name != 'pull_request'
+        env:
+          IMAGE_TAG: ${{ steps.image.outputs.tag }}
+          IMAGE_DIGEST: ${{ steps.build.outputs.digest }}
+        run: |
+          printf '### Commit image\n\n%s\n\nDigest: %s\n' "$IMAGE_TAG" "$IMAGE_DIGEST" >> "$GITHUB_STEP_SUMMARY"
+
+  promote:
+    needs: build-and-push
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      packages: write
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - variant: go
+            suffix: ''
+          - variant: python
+            suffix: '-python'
+    concurrency:
+      group: ommr-promote-${{ github.ref }}-${{ matrix.variant }}
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: docker/setup-buildx-action@v4
+      - uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Confirm this is still the current ref
+        id: aliases
+        uses: actions/github-script@v9
+        env:
+          SUFFIX: ${{ matrix.suffix }}
+        with:
+          script: |
+            const { imagePlan } = require('./scripts/image-tags.cjs');
+            const kind = context.ref.startsWith('refs/heads/') ? 'branch' : 'tag';
+            const name = context.ref.replace(/^refs\/(heads|tags)\//, '');
+            let current;
+            try {
+              if (kind === 'branch') {
+                const response = await github.rest.repos.getBranch({ ...context.repo, branch: name });
+                current = response.data.commit.sha;
+              } else {
+                let object = (await github.rest.git.getRef({ ...context.repo, ref: 'tags/' + name })).data.object;
+                for (let depth = 0; object.type === 'tag' && depth < 10; depth++) {
+                  object = (await github.rest.git.getTag({ ...context.repo, tag_sha: object.sha })).data.object;
+                }
+                current = object.type === 'commit' ? object.sha : null;
+              }
+            } catch (error) {
+              if (error.status !== 404) throw error;
+            }
+            if (current !== context.sha) {
+              core.notice('Ref moved or was deleted; commit image remains available, floating tags are not changed.');
+              core.setOutput('current', 'false');
+              return;
+            }
+            const plan = imagePlan({ owner: context.repo.owner, ref: context.ref, sha: context.sha, currentSha: current, defaultBranch: context.payload.repository.default_branch, suffix: process.env.SUFFIX });
+            core.setOutput('image', plan.image);
+            core.setOutput('tags', plan.aliases.join('\n'));
+            core.setOutput('current', 'true');
+      - name: Advance current branch or release aliases
+        if: steps.aliases.outputs.current == 'true'
+        env:
+          IMAGE: ${{ steps.aliases.outputs.image }}
+          ALIASES: ${{ steps.aliases.outputs.tags }}
+          COMMIT_SHA: ${{ github.sha }}
+          SUFFIX: ${{ matrix.suffix }}
+        run: |
+          while IFS= read -r alias; do
+            docker buildx imagetools create --tag "$IMAGE:$alias" "$IMAGE:sha-$COMMIT_SHA$SUFFIX"
+            printf '%s\n' "$IMAGE:$alias" >> "$GITHUB_STEP_SUMMARY"
+          done <<< "$ALIASES"
