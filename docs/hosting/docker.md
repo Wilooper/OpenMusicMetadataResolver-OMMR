@@ -5,6 +5,10 @@
 Run commands from the repository root. Docker Engine and the Compose plugin are
 required. The default image contains the Go service; Python is an explicit target.
 
+Published images are rebuilt after every successful pushed commit. See
+[automatic builds, image variants and tag policy](container-publishing.md).
+Publishing does not restart an existing container.
+
 ## Build the checked-out source
 
 ```sh

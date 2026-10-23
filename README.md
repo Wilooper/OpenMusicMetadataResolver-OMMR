@@ -62,6 +62,7 @@ The second request returns `{"track": {...}}` when a match passes the gates, or
 health. Add `debug=true` to inspect provider outcomes.
 
 Prefer a container? [Build and run with Docker](docs/hosting/docker.md).
+[Automatic builds and image tags](docs/hosting/container-publishing.md) keep published images tied to successful commits.
 Using your phone? [Follow the Termux guide](docs/getting-started/termux.md).
 
 ## Rich data, manageable responses

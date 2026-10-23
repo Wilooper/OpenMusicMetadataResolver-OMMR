@@ -49,10 +49,14 @@ weaken matching gates to make a live matrix pass.
 
 ## Documentation checks
 
-Check relative Markdown links and heading fragments after moving content. Validate
-JSON/YAML/TOML examples and shell syntax. Run snippets from their documented working
-directory. Distinguish configuration examples from files actually shipped in the
-repository, and deployment recipes from completed platform deployments.
+Documentation validation is now automated on every branch/tag push and pull request
+through the main container pipeline. It checks local links/anchors/images and
+example syntax, with tests for the checker and image-tag policy. See
+[run commands and scope](documentation-checks.md).
+
+The Go checks workflow is reusable and is called by the same pipeline before
+container publication. It also supports manual dispatch. See
+[container build triggers and tag policy](../hosting/container-publishing.md).
 
 Historical counts and timing/byte measurements belong to their dated evidence
 report. Do not turn one live observation into a release badge or general benchmark.

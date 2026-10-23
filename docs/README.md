@@ -25,6 +25,8 @@ Examples use `http://localhost:8080`; replace it with your instance URL.
 [Railway](hosting/railway.md) · [Fly.io](hosting/fly.md) ·
 [Serverless compatibility](hosting/serverless.md)
 
+- [Automatic container builds and tags](hosting/container-publishing.md)
+- [Automated documentation checks](guides/documentation-checks.md)
 - [Operations, monitoring, scaling and updates](guides/operations.md)
 - [Disk/Redis cache implementation](CACHING.md)
 - [Credentials checklist](CREDENTIALS_CHECKLIST.md)
