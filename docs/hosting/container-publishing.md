@@ -42,7 +42,9 @@ image names and digests. Release tags do not overwrite default-branch latest.
 Commit tags are commit-addressed; pin an image digest when registry-level immutability
 is required. A manual rerun can rebuild the same commit from updated base images.
 
-Every successful pushed commit keeps its commit image even if newer commits arrive.
+Each push builds the pushed ref's head commit; a batch push does not build every
+intermediate historical commit. Every successful push keeps that commit image
+even if newer commits arrive.
 Only the alias-promotion job is serialized per ref/variant; superseded pending
 promotions may be skipped. Builds are not canceled by that concurrency group.
 The promoter checks the live ref before updating aliases, preventing an older
@@ -69,3 +71,8 @@ they do not update default-branch latest before those changes are merged.
 The Docker build context excludes common local secrets, credential/session files,
 cache directories and virtual environments. Add any custom private paths to
 .dockerignore before building; do not put credentials in the image.
+
+The Go builder runs on the runner's native platform and cross-compiles using
+BuildKit's TARGETOS/TARGETARCH values with CGO disabled. Runtime images still target
+the selected architecture; emulation remains available for ARM64 runtime/package
+steps. See [Docker's cross-compilation guide](https://docs.docker.com/build/building/multi-platform/).
