@@ -1,0 +1,16 @@
+.git
+.github
+.env
+.env.*
+!.env.example
+ommr.yaml
+ommr.*.yaml
+!ommr.example.yaml
+credentials
+**/*.session.json
+cache_data
+cache
+.venv*
+**/__pycache__
+bin
+*.log

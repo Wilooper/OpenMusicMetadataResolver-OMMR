@@ -1,6 +1,6 @@
 # OMMR Provider Adapters
 
-OMMR integrates 11 metadata provider adapters implementing the `adapters.ProviderAdapter` interface (`internal/adapters/adapter.go`). Public sources continue to work without credentials; TIDAL, Qobuz, Amazon Music, and Pandora integrations require provider-issued credentials or access.
+OMMR integrates 14 recording metadata provider adapters implementing the `adapters.ProviderAdapter` interface (`internal/adapters/adapter.go`). Public-capable sources need no credentials but remain subject to upstream/network availability; TIDAL, Qobuz, Amazon Music, and Pandora integrations require provider-issued credentials or access.
 
 ---
 
@@ -10,15 +10,18 @@ OMMR integrates 11 metadata provider adapters implementing the `adapters.Provide
 | --- | --- | --- | --- | --- | --- |
 | **Spotify** | `spotify` | `spotify-web-v3` | Official Web API (optional keys) + anonymous Web API / oEmbed / embed scraping | **Optional** | Token Bucket (10 RPS) |
 | **YouTube Music** | `ytmusic` | `ytmusic-innertube-v2` | InnerTube search & player (public API key) + oEmbed fallback | **Zero** | Token Bucket (20 RPS) |
-| **Apple Music** | `applemusic` | `applemusic-v1` | iTunes Search & Lookup API | **Zero** | Keyless: approximately 20/minute, burst 1; token catalog: conservative 5 RPS |
+| **Apple Music** | `applemusic` | `applemusic-v2-album-counts` | iTunes Search & Lookup API | **Zero** | Keyless: approximately 20/minute, burst 1; token catalog: conservative 5 RPS |
 | **Deezer** | `deezer` | `deezer-v3-search` | Public API (`api.deezer.com`) | **Zero** | Token Bucket (50 RPS) |
-| **MusicBrainz** | `musicbrainz` | `musicbrainz-v2` | MusicBrainz REST API v2 | **Zero** | Token Bucket (1 RPS) |
+| **MusicBrainz** | `musicbrainz` | `musicbrainz-v4-relationships` | MusicBrainz REST API v2 | **Zero** | Token Bucket (1 RPS) |
 | **SoundCloud** | `soundcloud` | `soundcloud-oembed-v1` | Public oEmbed endpoint | **Zero** | Token Bucket (10 RPS) |
 | **JioSaavn** | `jiosaavn` | `jiosaavn-search-v6-pages` | Public `api.php` search, native details & share-token lookup | **Zero** | Token Bucket (5 RPS) |
 | **Qobuz** | `qobuz` | `qobuz-api-v1` | Track metadata and search endpoints | Issued application ID; optional bearer token | Token Bucket (5 RPS) |
 | **TIDAL** | `tidal` | `tidal-webapi-v3` | TIDAL Web API v2 track and search endpoints | Authorized OAuth token | Token Bucket (10 RPS) |
 | **Amazon Music** | `amazonmusic` | `amazonmusic-webapi-v3` | Amazon Music Web API v2 catalog track search and lookup | Approved API access, OAuth token, security profile ID | Token Bucket (5 RPS) |
 | **Pandora** | `pandora` | `pandora-graphql-v1` | Pandora GraphQL entity metadata lookup | Approved OAuth bearer token | Token Bucket (5 RPS) |
+| **Bugs** | `bugs` | `bugs-public-v2-credits` | Public song search and exact detail pages | **Zero** | 1 RPS |
+| **Genie** | `genie` | `genie-public-v2-credits` | Public song search and exact detail pages | **Zero** | 1 RPS |
+| **Melon** | `melon` | `melon-public-v2-credits` | Public song search and exact detail pages | **Zero** | 1 RPS |
 
 ---
 
@@ -121,7 +124,7 @@ Per-source execution/version/error and field coverage described above require `d
 
 ## Catalog enrichment services
 
-Four post-merge services complement the 11 identity adapters: Cover Art Archive (keyless), MusicBrainz release details (keyless), Last.fm (`OMMR_LASTFM_API_KEY`) and Discogs (`OMMR_DISCOGS_TOKEN`). AcoustID (`OMMR_ACOUSTID_API_KEY`) is available through a separate fingerprint endpoint. These are not streaming adapter IDs and do not create unverified recording matches. See [ENRICHMENT.md](ENRICHMENT.md) for fields and access conditions.
+Five post-merge services complement the 14 recording identity adapters: Cover Art Archive (keyless), MusicBrainz release details (keyless), SponsorBlock highlight POIs (keyless), Last.fm (`OMMR_LASTFM_API_KEY`) and Discogs (`OMMR_DISCOGS_TOKEN`). AcoustID (`OMMR_ACOUSTID_API_KEY`) is available through a separate fingerprint endpoint. These are not streaming adapter IDs and do not create unverified recording matches. See [ENRICHMENT.md](ENRICHMENT.md) for fields and access conditions.
 
 Local limits are implementation budgets, not guaranteed upstream quotas: MusicBrainz 1 RPS with burst 1; keyless iTunes one request every 3 seconds; Apple catalog 5 RPS; Cover Art Archive/Last.fm/AcoustID 3 RPS; Discogs 1 RPS. Search now uses the same limiter as resolution/extraction. Each catalog enrichment request passes through its budget; multiple server processes do not share budgets. Existing adapter-internal fallback/detail requests do not yet all have transport-level accounting.
 

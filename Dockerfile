@@ -1,5 +1,5 @@
 # Build Stage
-FROM golang:1.26-alpine AS builder
+FROM --platform=$BUILDPLATFORM golang:1.26-alpine AS builder
 
 ENV GOTOOLCHAIN=auto
 
@@ -12,7 +12,10 @@ RUN go mod download
 
 COPY . .
 
-RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-w -s" -o /app/bin/ommr-server ./cmd/server
+ARG TARGETOS
+ARG TARGETARCH
+
+RUN CGO_ENABLED=0 GOOS=$TARGETOS GOARCH=$TARGETARCH go build -ldflags="-w -s" -o /app/bin/ommr-server ./cmd/server
 
 # Final Runtime Stage
 FROM alpine:3.21 AS runtime

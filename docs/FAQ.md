@@ -31,7 +31,7 @@ type ProviderAdapter interface {
     Search(ctx context.Context, query Query) ([]canonical.TrackCandidate, error)
 }
 ```
-Then register it in `cmd/server/main.go` using `registry.Register(myAdapter)`, add a rate limit in `internal/ratelimit/provider_limiter.go`, and a trust weight in `internal/identity/graph.go`. Note that Shazam's public web search now returns HTTP 405 for non-browser clients; prefer providers with stable public endpoints like JioSaavn.
+Wire it through `internal/bootstrap`, the registry, rate budgets, identity/merge priorities, models, fixtures and documentation as described in [AGENTS.md](../AGENTS.md) and [contributing](CONTRIBUTING.md). Existing public web interfaces can change; validate the actual source response and retain access failures as failures.
 
 ### 7. Can I configure requests once and import cookies?
 Yes. Use private `ommr.yaml`, named session/key JSON files and `POST /v1/query`. The server checks supplied credentials at startup, uses supported public fallbacks, and excludes unavailable required-key sources. Session formats and their limits are in [PROVIDER_LIFECYCLE.md](PROVIDER_LIFECYCLE.md).

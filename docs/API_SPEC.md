@@ -1,309 +1,59 @@
-# OMMR API Specification
+# OMMR API reference
 
-Base Path: `/v1`
+[Docs](README.md) · [User guide](guides/user-guide.md) · [Schema](SCHEMA.md)
 
----
+Base URL in examples: `http://localhost:8080`. The API serves JSON; request JSON
+POST bodies with `Content-Type: application/json`. Use `curl --get --data-urlencode`
+for titles, names and URLs. No official client SDK is bundled.
 
 ## Production and debug responses
 
-All data endpoints (`resolve`, `links`, `bulk`, `search`, `extract`) default to compact production JSON. Append `debug=true` to request the detailed response. `debug=false` is identical to omitting it. The flag uses Go boolean syntax (`true`/`false`, `1`/`0`, `t`/`f`, and supported case variants); empty, invalid, or repeated values return HTTP 400 before provider calls. It is a URL query parameter, including for `POST /v1/bulk?debug=true`.
+Production is the default. Resolve returns `{"track": ...}` or `{"track": null}`.
+Add `debug=true` to inspect provider outcomes, match scores and provenance. Debug
+is controlled by instance policy; it is not an authentication boundary. Production
+still retains accepted source metadata and useful graphs.
+[Field locations, units and migration](guides/responses.md)
 
-```text
-/v1/resolve?artist=Example&title=Song
-/v1/resolve?artist=Example&title=Song&debug=true
-```
-
-| Endpoint | Default | With `debug=true` |
-| --- | --- | --- |
-| `/resolve` | `{ "track": ... }`, or `{ "track": null }` when no match passes the gates | Full canonical track, provider statuses, metadata sources, strategy, resolver statistics |
-| `/bulk` | Item index, success/error, public track; batch totals | Full canonical track and per-item provider statuses (`sources`) |
-| `/links` | Track identity and accepted platform IDs/URLs | Also provider statuses, unavailable platforms, link match methods/confidence and URL provenance |
-| `/search` | Title, artists, album, images, canonical ID, available platforms; pagination | Also matching scores, confidence, identity diagnostics, source count |
-| `/albums` | Exact album metadata, source-owned extra fields, ordered tracks and explicit completion | Also source execution/cache status |
-| `/artists` | Independent artist profiles, metrics and catalog context | Also per-source execution status |
-| `/extract` | `{ "results": [ ...public tracks ] }` (independent records, never merged) | Existing per-source `query`/`sources` response, execution status/error, version and field coverage |
-
-Production tracks retain music metadata, credits, artwork, accepted provider IDs, artist/album IDs, identity status, and compact `extensions.platform_links`. They omit matching scores/breakdowns, confidence calculations, completeness, identity reasons/methods, field provenance, contributing sources and internal relation graphs. Provider metadata is exposed in `track.provider_data`; only the public extensions `platform_links` and `wikipedia` remain under `extensions`; Wikipedia context keeps its attribution. Platform names in IDs/links represent usable catalog identifiers, not fetch diagnostics. Optional empty metadata arrays are omitted. No country code is added to the unified root; source-reported territory/country information is retained within provider data.
-
-Production tracks also include `explicit_status` (`explicit`, `clean`, `unknown`). The internal canonical schema and shared disk/Redis cache remain complete. The presentation flag is not part of the resolver request/cache key: switching modes reuses the same cached resolution without changing its diagnostics or repeating provider work. It reduces transmitted bytes; it does not reduce stored cache-entry bytes or upstream work on a cache miss. Debug is an output mode, not an authorization boundary. Hosts can disable it with `api.allow_debug: false`; see [runtime policy](PROVIDER_LIFECYCLE.md).
-
-**Migration:** clients relying on the previous diagnostic fields or extraction source envelopes must add `debug=true`. Detailed response examples below show debug mode unless otherwise noted. Default extraction returns an empty results array if all providers fail or find nothing; use debug mode to distinguish those outcomes.
-
----
+The debug parser accepts Go boolean syntax, including true/false and 1/0. With
+request overrides enabled, empty, invalid or repeated debug values return 400.
+Operator policy may replace or suppress a caller's debug value before parsing.
+Production/debug share the full cached resolution. Eligible JSON supports gzip
+negotiation; use `curl --compressed`.
 
 ## Endpoints
 
-| Method | Route | Description |
+| Method | Route | Contract |
 | --- | --- | --- |
-| `GET` | `/v1/albums` | Exact native album/release metadata and complete or explicitly partial track lists |
-| `GET` | `/v1/capabilities` | Configuration-aware endpoint/provider capability discovery |
-| `POST` | `/v1/query` | JSON gateway with an explicit or configured operation |
-| `GET` | `/v1/catalog` | Optional YouTube artist/album/playlist/song catalog worker |
-| `GET` | `/v1/providers` | Provider lifecycle and circuit status |
-| `GET` | `/v1/artists` | Public source-owned artist profiles, audience metrics, biographies and catalog context |
-| `GET` | `/v1/resolve` | Resolves unified track metadata and cross-platform identities by ID or Query |
-| `GET` | `/v1/links` | Returns accepted recording IDs and links |
-| `GET` | `/v1/extract` | Returns independent normalized metadata and field coverage from one or more providers |
-| `POST` | `/v1/fingerprint` | AcoustID candidate lookup from a client-supplied fingerprint and duration |
-| `POST` | `/v1/bulk` | Batch resolves up to 100 queries in a single request |
-| `GET` | `/v1/search` | Performs raw search across metadata providers returning lightweight `SearchResult` objects |
-| `GET` | `/v1/health` | System health check and uptime probe |
-| `GET` | `/metrics` | Prometheus metrics endpoint |
+| GET | `/v1/resolve` | [Unified track and accepted identities](api/resolve.md) |
+| GET | `/v1/links` | [Recording links](PLATFORM_LINKS.md) |
+| GET | `/v1/extract` | [Independent provider tracks](api/extract.md) |
+| GET | `/v1/search` | [Lightweight discovery](api/search.md) |
+| POST | `/v1/bulk` | [Bounded batch resolution](api/bulk.md) |
+| POST | `/v1/query` | [JSON operation gateway](api/query.md) |
+| GET | `/v1/albums` | [Native edition and track list](NATIVE_ALBUMS.md) |
+| GET | `/v1/artists` | [Independent artist profiles](ARTIST_PROFILES.md) |
+| GET | `/v1/catalog` | [Optional YouTube catalog worker](RICH_CATALOGS.md#go-catalog-endpoint) |
+| POST | `/v1/fingerprint` | [AcoustID candidates](api/fingerprint.md) |
+| GET | `/v1/capabilities` | [Configuration-aware discovery](SHARE_LINKS_AND_CAPABILITIES.md#capability-discovery) |
+| GET | `/v1/providers` | [Provider selection/circuit state](api/system.md) |
+| GET | `/v1/health` | [HTTP service health](api/system.md) |
+| GET | `/metrics` | [Prometheus metrics](api/system.md) |
 
----
+## Settings and errors
 
-## 1. Provider Extraction Endpoint
+`sources` selects recording identity adapters, not enrichers such as SponsorBlock
+or Last.fm. Source enable flags, API defaults, debug policy and disabled routes
+apply through both direct endpoints and the gateway. See [configuration](guides/configuration.md).
 
-`GET /v1/extract`
+| Outcome | Handling |
+| --- | --- |
+| 200 with `track: null` | No accepted resolution; inspect debug output |
+| 400 | Invalid input, unknown source or invalid query shape; correct the request |
+| 404 | Unknown or policy-disabled route; some entity lookups use it for not-found |
+| 405 | Wrong method |
+| 429 | Local API request budget exceeded; back off |
+| 502 / 503 / 504 | Endpoint-specific upstream, readiness/capacity or timeout failure |
 
-Pass `provider` and `id` to fetch a single provider's track, or pass `artist` and `title` to compare provider search results independently. For title/artist extraction, `sources` can limit the comma-separated provider list. For JioSaavn exact lookups, optional `id_type=native` or `id_type=share` selects the identifier protocol explicitly. Without it, eight-character identifiers use native lookup and other identifiers use share lookup for compatibility. Explicit kinds are recommended when the caller knows the ID type; share tokens and native IDs are different identifiers. `id_type` is also accepted by `POST /v1/query` with `operation: extract`; invalid, repeated, or non-JioSaavn ID kinds are rejected.
-
-```text
-/v1/extract?artist=Example%20artist&title=Example%20track&sources=deezer,tidal,qobuz
-/v1/extract?provider=deezer&id=123456
-/v1/extract?provider=jiosaavn&id=OQsEfQFVUXk&id_type=share
-```
-
-With `debug=true`, each source result includes the normalized `track`, `year`, `thumbnail_url`, and `present_fields` / `missing_fields` arrays. Coverage fields include title, artists, album, year, artwork, duration, ISRC, credits, and lyricist. Missing optional fields are reported as missing; OMMR does not infer or synthesize credits. Provider failures are isolated to that source's `status` and `error`.
-
-## 2. Single Resolution Endpoint
-
-`GET /v1/resolve`
-
-### Query Parameters
-
-| Parameter | Type | Required | Description |
-| --- | --- | --- | --- |
-| `spotify_id` | string | Optional | Spotify track ID or full track URL |
-| `youtube_id` | string | Optional | YouTube video ID or full video URL |
-| `deezer_id` | string | Optional | Deezer track ID or full track URL |
-| `apple_id` | string | Optional | Apple Music track ID or full track URL |
-| `soundcloud_id` | string | Optional | SoundCloud permalink (`artist/track`) or full track URL |
-| `qobuz_id` | string | Optional | Qobuz track ID |
-| `tidal_id` | string | Optional | TIDAL track ID |
-| `amazonmusic_id` | string | Optional | Amazon Music track ID (also accepts `amazon_music_id`) |
-| `pandora_id` | string | Optional | Pandora track entity ID (with or without `TR:` prefix) |
-| `artist` | string | Optional | Artist name (used together with `title`) |
-| `title` | string | Optional | Track title (used together with `artist`) |
-| `album` | string | Optional | Album title (used together with `artist`/`title` for disambiguation) |
-| `isrc` | string | Optional | International Standard Recording Code |
-| `sources` | string | Optional | Comma-separated adapter filter (`spotify,ytmusic,applemusic,deezer,musicbrainz,soundcloud,jiosaavn,qobuz,tidal,amazonmusic,pandora`) |
-| `bypass_cache` | boolean | Optional | If `true`, forces live provider fetch bypassing cache |
-
-For ID-based resolution, providers may report `rejection_reason: "unverified_candidate"` when their result cannot be tied to the exact source-ID result, or `"identity_mismatch"` when its metadata fails the source-track identity checks.
-
-### Response 200 OK
-
-> Note: The payload below is illustrative. Track/video IDs shown are example values and do not represent a specific real release.
-
-```json
-{
-  "track": {
-    "canonical_id": "ommr_track_2c15190166124384",
-    "identity_status": "verified",
-    "identity_reasons": [
-      "isrc_match",
-      "musicbrainz_match",
-      "exact_title_artist_match"
-    ],
-    "title": "Example Song",
-    "artists": [
-      { "name": "Example Artist", "role": "main" }
-    ],
-    "album": {
-      "title": "Example Album",
-      "release_date": "2024-06-21"
-    },
-    "duration_ms": 218400,
-    "release_date": "2024-06-21",
-    "explicit": false,
-    "isrc": "XX-XXX-24-00001",
-    "genres": ["Punjabi Pop"],
-    "credits": [
-      { "name": "Talwiinder", "roles": ["Artist", "Composer"] }
-    ],
-    "images": [
-      { "url": "https://is1-ssl.mzstatic.com/.../100x100bb.jpg", "width": 100, "height": 100, "type": "cover" },
-      { "url": "https://is1-ssl.mzstatic.com/.../600x600bb.jpg", "width": 600, "height": 600, "type": "cover" }
-    ],
-    "ids": {
-      "ytmusic": "example-video-id",
-      "applemusic": "example-track-id",
-      "musicbrainz": "00000000-0000-0000-0000-000000000000"
-    },
-    "identity_matches": [
-      { "provider": "applemusic", "id": "1749982113", "confidence": 0.94, "method": "title_artist_duration" },
-      { "provider": "musicbrainz", "id": "400436a5-99fa-44d9-b51f-5c63be233454", "confidence": 1.0, "method": "isrc" }
-    ],
-    "sources": ["ytmusic", "applemusic", "musicbrainz"],
-    "field_sources": {
-      "album": ["applemusic"],
-      "artists": ["applemusic"],
-      "credits": ["musicbrainz"],
-      "duration": ["applemusic"],
-      "genres": ["applemusic"],
-      "images": ["ytmusic", "applemusic"],
-      "isrc": ["musicbrainz"],
-      "release_date": ["applemusic"],
-      "title": ["applemusic"]
-    },
-    "match_score": 0.96,
-    "match_breakdown": {
-      "title": 1.0,
-      "artists": 1.0,
-      "album": 0.88,
-      "duration": 1.0,
-      "release_date": 1.0,
-      "isrc": 1.0
-    },
-    "confidence": {
-      "level": "exact",
-      "score": 0.96
-    },
-    "completeness": 1.0
-  },
-  "metadata_sources": ["ytmusic", "applemusic", "musicbrainz"],
-  "provider_status": [
-    { "name": "applemusic", "success": true, "matched": true, "contributed": true, "cached": false, "latency_ms": 61, "version": "applemusic-v1" },
-    { "name": "ytmusic", "success": true, "matched": true, "contributed": true, "cached": false, "latency_ms": 153, "version": "ytmusic-innertube-v1" },
-    { "name": "musicbrainz", "success": true, "matched": true, "contributed": true, "cached": false, "latency_ms": 340, "version": "musicbrainz-v2" },
-    { "name": "deezer", "success": true, "matched": false, "contributed": false, "cached": false, "latency_ms": 286, "rejection_reason": "no_results", "version": "deezer-v1" },
-    { "name": "spotify", "success": true, "matched": false, "contributed": false, "cached": false, "latency_ms": 0, "rejection_reason": "no_results", "version": "spotify-web-v2" }
-  ],
-  "resolution_strategy": {
-    "input_type": "youtube_id",
-    "primary_source": "ytmusic",
-    "cross_resolved": true
-  },
-  "resolver_stats": {
-    "providers_queried": 7,
-    "providers_matched": 3,
-    "providers_contributed": 3,
-    "candidates_evaluated": 6
-  }
-}
-```
-
----
-
-## 3. Bulk Resolution Endpoint
-
-`POST /v1/bulk`
-
-### Constraints
-* Max array length: **100 items**
-* Concurrency: Configurable worker pool (default: 10 workers)
-* Request body: **1 MiB maximum** and must contain exactly one JSON object
-
-### Request Payload
-
-```json
-{
-  "queries": [
-    { "youtube_id": "example-video-id" },
-    { "artist": "Example Artist", "title": "Example Song" }
-  ],
-  "sources": ["applemusic", "deezer", "musicbrainz"]
-}
-```
-
----
-
-## 3. Search Endpoint
-
-`GET /v1/search`
-
-### Query Parameters
-* `q` (string, required): Raw search term
-* `page` (integer, default: 1)
-* `limit` (integer, default: 10, max: 50)
-
-### Response 200 OK
-
-```json
-{
-  "query": "boom shaka",
-  "results": [
-    {
-      "canonical_id": "ommr_track_3dbef6050029a577",
-      "title": "Boom Shaka",
-      "artists": [
-        { "name": "Muzi", "role": "main" }
-      ],
-      "album": "Boom Shaka",
-      "images": [
-        { "url": "https://is1-ssl.mzstatic.com/.../600x600bb.jpg", "width": 600, "height": 600 }
-      ],
-      "match_score": 0.91,
-      "confidence": { "level": "high", "score": 0.91 },
-      "identity_status": "strong",
-      "identity_reasons": ["exact_title_artist_match"],
-      "source_count": 1,
-      "available_on": ["applemusic"]
-    }
-  ],
-  "page": 1,
-  "limit": 10,
-  "total": 5
-}
-```
-
-
-## GET /v1/links
-
-Uses the same query parameters and identity gates as `/v1/resolve`. Returns
-`links` (OMMR ID, ISRC, accepted native IDs and song URLs, unavailable platforms),
-title, artists, identity status and provider status. Unknown IDs/URLs are omitted.
-See [PLATFORM_LINKS.md](PLATFORM_LINKS.md) for field definitions and supported services.
-Resolved and bulk tracks include the same catalog in `extensions.platform_links`;
-per-source extraction adds `links` without asserting cross-provider equivalence.
-
-## Catalog enrichment, provider extras and fingerprint lookup
-
-See [ENRICHMENT.md](ENRICHMENT.md) for `provider_data`, field trust/consensus, exact source activation and the fingerprint request/response contract. Debug responses store extra data inside `track.extensions.provider_data`; production promotes it to `track.provider_data`. Search remains a lightweight provider result pool; retrieve a full resolution for all accepted provider metadata. `sources` filters identity adapters; it does not select post-merge catalog services.
-
-## Configured JSON gateway and lifecycle
-
-`POST /v1/query` accepts an optional `operation` plus the selected operation's input fields. A configured default removes the need to select operation/sources/debug per request. Startup YAML controls enabled endpoints, permitted overrides and debug access. `GET /v1/providers` returns redacted lifecycle status; no token/cookie/profile data is included. Required-credential sources are not registered until a startup probe succeeds, and runtime-suspended sources are skipped. See [PROVIDER_LIFECYCLE.md](PROVIDER_LIFECYCLE.md).
-
-When the configured/default source selection has no available identity adapters, resolve/links return HTTP 503. Unknown source names return 400. Existing endpoint routes remain available unless disabled in configuration.
-
-## Rich public catalogs
-
-See [RICH_CATALOGS.md](RICH_CATALOGS.md) for native Bugs/Genie/Melon song adapters, `bugs_id`/`genie_id`/`melon_id`, accepted YouTube artist/album context in provider data, optional Python pooling and `/v1/catalog` (also `operation: catalog` through the JSON gateway). These Korean adapters require no credentials; the optional Python path currently uses public YouTube access.
-
-
-### JioSaavn public song-page input
-
-For source extraction, `provider=jiosaavn&url=<percent-encoded HTTPS song URL>` reads the exact official song page before falling back to `webapi.get&type=song`. The JSON gateway accepts `{"operation":"extract","provider":"jiosaavn","url":"https://www.jiosaavn.com/song/mera-mann/ERIkRAwJf38"}`. URL input cannot be combined with `id` or `id_type`; repeated URLs, other providers, foreign hosts, credentials, ports, query strings, fragments and non-song paths are rejected. Only the fixed official JioSaavn host is fetched. Existing endpoint/debug policy applies. See [supported structures and live limits](JIOSAAVN_PUBLIC_PAGES.md).
-
-YouTube catalog also supports `type=credits&id=MPTC<11-character identifier>` through GET `/v1/catalog` or POST `/v1/query` with `operation: catalog`. It returns bounded public credit sections as source context. See [catalog operations](RICH_CATALOGS.md).
-
-## Artist profiles
-
-`GET /v1/artists?artist=Gur%20Sidhu&limit=10` and `POST /v1/query` with `operation: artists` return independent public artist profiles. Optional `sources` filters supported providers; exact lookups use `provider` and a native artist `id`. Debug adds source status, cache and partial/error details. Bios, artist images, top/recent/catalog tracks and precise source-scoped audience/count semantics are described in [ARTIST_PROFILES.md](ARTIST_PROFILES.md). No song-list length is presented as a total track count, and no monthly/yearly plays are inferred from listeners or views.
-
-
-## Share links and capability discovery
-
-Resolve/links and bulk accept `url` as an alternative to typed IDs or ISRC, including the JSON gateway. Supported direct track links cover Spotify, YouTube/YouTube Music, Apple Music, Deezer, JioSaavn, SoundCloud, MusicBrainz recordings, TIDAL and Qobuz. New typed resolver fields are `jiosaavn_id`, `jiosaavn_url` and `musicbrainz_id`. Malformed/ambiguous/non-track/foreign links fail before provider access; invalid bulk items remain independent. Normalized links reuse typed-input cache identity. Existing source-specific extraction URL semantics remain unchanged.
-
-`GET /v1/capabilities` and `{"operation":"capabilities"}` return schema-versioned endpoint, input, provider readiness and limit metadata without upstream requests or secrets. `api.endpoints.capabilities` controls both paths; `capabilities` can be configured as the default JSON operation. See [the full input formats, response semantics and examples](SHARE_LINKS_AND_CAPABILITIES.md).
-
-## Native album catalog
-
-`GET /v1/albums?provider=applemusic&id=1829591921` and `POST /v1/query` with `operation: albums` return exact source-owned albums. Supported providers: `applemusic`, `deezer`, `jiosaavn`, `musicbrainz` (release UUID). `limit` is 1–1000, default 1000. Every response reports `album.track_list.returned`, a source-reported `total` when known, and `complete`; incomplete lists carry a reason. `debug=true` adds execution/cache status. See [native album fields, pagination and runtime policy](NATIVE_ALBUMS.md).
-
-## Recording relationships and structured credits
-
-Track and native album responses include a source-owned `music_graph`: recordings, exact release editions, release groups, compositions and contributors, with directed relationships and scoped credits. Debug tracks keep the graph under `extensions.music_graph`; production tracks expose it directly. Related versions do not become accepted recording IDs. See [graph schema, scope and source coverage](MUSIC_GRAPH.md).
-
-## Recording timing and album-count semantics
-
-Material duration contradictions can reject text-query outliers when a strict majority of distinct timed providers agrees, or contradictory cross-source candidates when a direct-ID recording supplies timing. The check is repeated after accepted detail hydration; exact requested ISRC identity remains unchanged. Unrequested Reimagined versions are rejected. Apple song-row `trackCount` is retained as source data and is no longer mislabeled as canonical album-wide total; use `/v1/albums` for declared collection totals/completion. See [varied entity verification](ENTITY_MATRIX_2026-10-19.md).
-
-## Detailed production metadata and compression
-
-`/v1/` JSON responses negotiate gzip above a 1024-byte threshold, preserving every response field. Clients can request `Accept-Encoding: gzip`; `curl --compressed` negotiates and decodes it. Responses vary on encoding. Production song data includes exact source album placements and a detailed contributor/credit index; direct IDs anchor edition positions where provided. Independent disc/track policy overrides are rejected: configure album priority instead. See [schema, migration, source coverage and measured packet sizes](DETAILED_PRODUCTION_METADATA.md).
-
-Resolved production tracks can additionally expose `video_annotations.sponsorblock` for an accepted YouTube ID. Source-specific millisecond highlight timestamps, votes and license attribution are retained; missing/unavailable points remain absent. Debug tracks retain this under extensions with enrichment status. Gzip and the JSON gateway preserve the same data. See [SponsorBlock schema and operator settings](SPONSORBLOCK.md).
+Resolve can return 200 with some provider failures while retaining accepted
+metadata. Error behavior and envelopes differ by operation; use the relevant
+contract. There is no application-wide authentication or CORS middleware.
